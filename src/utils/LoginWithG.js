@@ -1,48 +1,78 @@
-import React, { useState } from 'react';
-import { TouchableOpacity, Image } from 'react-native'
+import React, { useEffect, useState } from 'react';
+import { TouchableOpacity, Image, View } from 'react-native'
 import {
     GoogleSignin,
     statusCodes,
 } from '@react-native-google-signin/google-signin';
+import auth from '@react-native-firebase/auth';
 import styles from '../screens/LogIn/styles'
 
-GoogleSignin.configure({
-    webClientId: '647996429943-cs1j8dodiif2a8hdtrkm3a45ms6k2o92.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
-    offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
-
-})
 function LoginWithG() {
-    const [user, setUser] = useState({})
+    //video
+    const [userData, setUserData] = useState({});
+    const [loggedIn, setloggedIn] = useState(false);
 
-    const signIn = async () => {
+    useEffect(() => {
+        GoogleSignin.configure({
+            offlineAccess: true,
+            webClientId: '75137545387-5qco7pkdn4sa3b9aogu76e689rj09orn.apps.googleusercontent.com', // client ID 
+        })
+    }, [])
 
+
+    //
+    const onGoogleButtonPress = async () => {
+
+        // Check if your device supports Google Play
+        await GoogleSignin.hasPlayServices();
+        // Get the users ID token
+        const { idToken } = await GoogleSignin.signIn();
+        // Create a Google credential with the token
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+        // Sign-in the user with the credential
+        //console.log(idToken)
+        return auth().signInWithCredential(googleCredential);
+    }
+    const signOut = async () => {
         try {
-            await GoogleSignin.hasPlayServices();
-            const userInfo = await GoogleSignin.signIn();
-            setUser(user => userInfo)
-            console.log(userInfo)
+            await GoogleSignin.revokeAccess();
+            await auth().signOut();
+            console.log('Sign out Success:::');
+            setloggedIn(false)
+            setUserData({})
         } catch (error) {
-            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-                console.log("user cancelled the login flow")
-            } else if (error.code === statusCodes.IN_PROGRESS) {
-                console.log("operation (e.g. sign in) is in progress already")
-            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-                console.log("play services not available or outdated")
-            } else {
-                console.log(error.message)
-            }
+            console.log(error);
         }
     };
+    //
+
     return (
-        <TouchableOpacity
-            style={styles.twoSquaresStyle}
-            onPress={signIn}
-        >
-            <Image
-                source={require('../assets/Images/google.png')}
-                style={styles.imagestyle}
-            />
-        </TouchableOpacity>
+        <View>
+            <TouchableOpacity
+                style={styles.twoSquaresStyle}
+                onPress={
+                    () =>
+                        onGoogleButtonPress().then(res => {
+                            loggedIn == true ?
+                                console.log("you have logged in already")
+                                :
+
+                                console.log(res.user) //المفروض الداتا دي تتبعت لللباك وتحطي هنا النفجيشن
+                            alert(JSON.stringify(res.user))
+                            setloggedIn(true)
+                            setUserData(res.user)
+
+
+
+                        }).catch(error => console.log(error))
+                }
+            >
+                <Image
+                    source={require('../assets/Images/google.png')}
+                    style={styles.imagestyle}
+                />
+            </TouchableOpacity>
+        </View >
     )
 }
 export default LoginWithG;
