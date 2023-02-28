@@ -52,14 +52,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: '3%',
+    marginTop: '4%',
   },
   viewForSecondTextAfterTextinputs: {
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: '8%',
+    marginBottom: '4%',
   },
   textAfterTextinputsStyle: {
     color: COLORS.darkGray3,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   viewforheaderstyle: {
     marginBottom: '2%',
   }, buttonMargin: {
-    marginBottom: '5%'
+    marginBottom: '2%'
   }, scrollViewStyle: {
     backgroundColor: COLORS.white
   },errorTextColor:{
