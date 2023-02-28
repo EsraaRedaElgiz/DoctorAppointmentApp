@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   buttonMargin: {
-    marginTop: '16%',
+    marginTop: '17%',
   },
   dropDownMarginBottom: {
     marginBottom: '0%',

@@ -197,7 +197,7 @@ function SignUp() {
                   errors.password?.type === "maxLength" ? "كلمة المرور يجب ان لا تزيد عن 20 حرف ورقم" : ""}
             </Text>
           </View>
-          <View style={styles.eachtextinputmargin}>
+          <View style={[styles.eachtextinputmargin,{marginBottom:'0%'}]}>
             <Controller
               control={control}
               rules={{

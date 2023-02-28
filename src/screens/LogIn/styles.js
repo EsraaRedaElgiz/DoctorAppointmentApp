@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: '15%',
+    marginVertical: '14%',
   },
   viewforheaderstyle: {
     marginBottom: '2%',
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   orWordStyle: {
     color: COLORS.darkGray2,
   }, buttonMargin: {
-    marginBottom: '5%'
+    marginBottom: '2%'
   }, scrollViewStyle: {
     backgroundColor: COLORS.white
   }, textErrorColor: {
