@@ -40,103 +40,106 @@ function ResetPassword() {
 
         <View style={styles.container}>
             <StatusBar backgroundColor={COLORS.blue} />
-            <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle} >
-                <View style={styles.viewForScrollviewContainer}>
-                    <HeaderArrowAndWord
-                        text="إعاده تعيين كلمة المرور"
-                        arrowButtonStyle={styles.arrowButtonStyle}
-                        textColor={COLORS.black}
-                        textStyle={styles.textHeaderStyle}
-                        onPress={()=>{
-                            dispatch(setPassword(""))
-                            dispatch(setConfirmPassword(""))
-                        }}
-                    />
-                    <View style={styles.viewForTextStyle}>
-                        <Text style={styles.textStyle} >يجب ان تكون كلمة المرور الجديدة مختلفه عن كلمة المرور المستخدمه سابقا</Text>
-                    </View>
-                    <View style={styles.viewTextInputAndTextMargin}>
-                        <Controller
-                            control={control}
-                            rules={{
-                                required: true,
-                                pattern: /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
-                                maxLength: 20
-
+            <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContentContainerStyle} >
+                <View style={styles.viewForScrollviewContainer} >
+                    <View>
+                        <HeaderArrowAndWord
+                            text="إعاده تعيين كلمة المرور"
+                            arrowButtonStyle={styles.arrowButtonStyle}
+                            textColor={COLORS.black}
+                            textStyle={styles.textHeaderStyle}
+                            onPress={() => {
+                                dispatch(setPassword(""))
+                                dispatch(setConfirmPassword(""))
                             }}
-                            render={({ field: { onChange, onBlur, value } }) => (
-                                <Reusabletextinput
-                                    placeholder="كلمة المرور الجديده"
-                                    right={
-                                        <TextInput.Icon
-                                            icon={secured_pass ? 'eye' : 'eye'}
-                                            iconColor={COLORS.darkGray}
-                                            onPress={pass_secured}
-                                        />
-                                    }
-                                    bordercolor={errors.password ? "#f00" : COLORS.gray}
-                                    secureTextEntry={secured_pass}
-                                    onChangeText={onChange}
-                                    onBlur={onBlur}
-                                />
-                            )}
-                            name="password"
-
                         />
-                        {/*{errors.password?.type === "required" && <Text style={{ color: "#f00" }}>يجب ادخال كلمة المرور الجديده</Text>}
-                        {errors.password?.type === "pattern" && <Text style={{ color: "#f00" }}>كلمه المرور يجب لا تقل عن 6ارقام و حرف كبير و حرف صغير وعلامه مميزه</Text>}
+                        <View style={styles.viewForTextStyle}>
+                            <Text style={styles.textStyle} >يجب ان تكون كلمة المرور الجديدة مختلفه عن كلمة المرور المستخدمه سابقا</Text>
+                        </View>
+                        <View style={styles.viewTextInputAndTextMargin}>
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: true,
+                                    pattern: /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
+                                    maxLength: 20
+
+                                }}
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <Reusabletextinput
+                                        placeholder="كلمة المرور الجديده"
+                                        right={
+                                            <TextInput.Icon
+                                                icon={secured_pass ? 'eye' : 'eye'}
+                                                iconColor={COLORS.darkGray}
+                                                onPress={pass_secured}
+                                            />
+                                        }
+                                        bordercolor={errors.password ? "#f00" : COLORS.gray}
+                                        secureTextEntry={secured_pass}
+                                        onChangeText={onChange}
+                                        onBlur={onBlur}
+                                    />
+                                )}
+                                name="password"
+
+                            />
+                            {/*{errors.password?.type === "required" && <Text style={{ color: "#f00" }}>يجب ادخال كلمة المرور الجديده</Text>}
+                            {errors.password?.type === "pattern" && <Text style={{ color: "#f00" }}>كلمه المرور يجب لا تقل عن 6ارقام و حرف كبير و حرف صغير وعلامه مميزه</Text>}
                                 {errors.password?.type === 'maxLength' && <Text style={{ color: "#f00" }}>كلمة المرور يجب ان لا تزيد عن 20 حرف ورقم</Text>}*/}
-                        <Text style={styles.textErrorColor}>
-                            {errors.password?.type === "required" ? "يجب ادخال كلمة المرور الجديده" :
-                                errors.password?.type === "pattern" ? "كلمه المرور يجب لا تقل عن 8 ارقام وحرف كبير وحرف صغير وعلامه مميزه" :
-                                    errors.password?.type === "maxLength" ? "كلمة المرور يجب ان لا تزيد عن 20 حرف ورقم" : ""}
-                        </Text>
-                    </View>
-                    <View style={styles.viewTextInputAndTextMargin}>
-                        <Controller
-                            control={control}
-                            rules={{
-                                required: true,
-                                validate: (val) => {
-                                    if (watch('password') != val) {
-                                        return "Your passwords do no match";
+                            <Text style={styles.textErrorColor}>
+                                {errors.password?.type === "required" ? "يجب ادخال كلمة المرور الجديده" :
+                                    errors.password?.type === "pattern" ? "كلمه المرور يجب لا تقل عن 8 ارقام وحرف كبير وحرف صغير وعلامه مميزه" :
+                                        errors.password?.type === "maxLength" ? "كلمة المرور يجب ان لا تزيد عن 20 حرف ورقم" : ""}
+                            </Text>
+                        </View>
+                        <View style={styles.viewTextInputAndTextMargin}>
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: true,
+                                    validate: (val) => {
+                                        if (watch('password') != val) {
+                                            return "Your passwords do no match";
+                                        }
                                     }
-                                }
-                            }}
-                            render={({ field: { onChange, onBlur, value } }) => (
-                                <Reusabletextinput
-                                    placeholder="تأكيد كلمة المرور الجديده"
-                                    right={
-                                        <TextInput.Icon
-                                            icon={secured_pass ? 'eye' : 'eye'}
-                                            iconColor={COLORS.darkGray}
-                                            onPress={pass_secured}
+                                }}
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <Reusabletextinput
+                                        placeholder="تأكيد كلمة المرور الجديده"
+                                        right={
+                                            <TextInput.Icon
+                                                icon={secured_pass ? 'eye' : 'eye'}
+                                                iconColor={COLORS.darkGray}
+                                                onPress={pass_secured}
 
-                                        />
-                                    }
-                                    bordercolor={errors.confirmPassword ? "#f00" : COLORS.gray}
-                                    secureTextEntry={secured_pass}
-                                    onChangeText={onChange}
-                                    onBlur={onBlur}
-                                />
-                            )}
-                            name="confirmPassword"
+                                            />
+                                        }
+                                        bordercolor={errors.confirmPassword ? "#f00" : COLORS.gray}
+                                        secureTextEntry={secured_pass}
+                                        onChangeText={onChange}
+                                        onBlur={onBlur}
+                                    />
+                                )}
+                                name="confirmPassword"
+                            />
+                            {/* {errors.confirmPassword?.type === "required" && <Text style={{ color: "#f00" }}>يجب ادخال تأكيد كلمة المرور الجديده</Text>}
+                            {errors.confirmPassword?.type === "validate" && <Text style={{ color: "#f00" }}>كلمة المرور غير متطابقه</Text>}*/}
+                            <Text style={styles.textErrorColor}>
+                                {errors.confirmPassword?.type === "required" ? "يجب ادخال تأكيد كلمة المرور الجديده" :
+                                    errors.confirmPassword?.type === "validate" ? "كلمة المرور غير متطابقه" : ""
+                                }
+                            </Text>
+                        </View>
+                    </View>
+                    <View style={styles.buttonContainerStyle}>
+                        <GeneralButton title="حفظ"
+                            onPress={handleSubmit(onSubmit)}
                         />
-                        {/* {errors.confirmPassword?.type === "required" && <Text style={{ color: "#f00" }}>يجب ادخال تأكيد كلمة المرور الجديده</Text>}
-                        {errors.confirmPassword?.type === "validate" && <Text style={{ color: "#f00" }}>كلمة المرور غير متطابقه</Text>}*/}
-                        <Text style={styles.textErrorColor}>
-                            {errors.confirmPassword?.type === "required" ? "يجب ادخال تأكيد كلمة المرور الجديده" :
-                                errors.confirmPassword?.type === "validate" ? "كلمة المرور غير متطابقه" : ""
-                            }
-                        </Text>
                     </View>
                 </View>
             </ScrollView>
-            <View style={styles.buttonContainerStyle}>
-                <GeneralButton title="حفظ"
-                    onPress={handleSubmit(onSubmit)}
-                />
-            </View>
+
 
         </View>
 

@@ -24,58 +24,61 @@ function ForgetPassword() {
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor={COLORS.blue} />
-            <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle} >
+            <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContentContainerStyle} >
                 <View style={styles.viewForScrollviewContainer}>
-                    <HeaderArrowAndWord
-                        text="نسيت كلمه المرور"
-                        arrowButtonStyle={styles.arrowButtonStyle}
-                        textColor={COLORS.black}
-                        textStyle={styles.textHeaderStyle}
-                        onPress={()=>{
-                            dispatch(setEmailToSendVerificationCode(""))
-                        }}
-                    />
-                    <View style={styles.viewImage}>
-                        <Image source={require('../../assets/Images/ForgetPassword.png')} style={styles.imageStyle} />
-                    </View>
-                    <View style={styles.viewForTextStyle}>
-                        <Text style={styles.textStyle} >قم بإدخال بريدك الالكتروني او رقم الهاتف لارسال رمز التأكيد</Text>
-                    </View>
-                    <View style={styles.textInputContainerMargin}>
-                        <Controller
-                            control={control}
-                            rules={{
-                                required: true,
-                                pattern: /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/
-
+                    <View>
+                        <HeaderArrowAndWord
+                            text="نسيت كلمه المرور"
+                            arrowButtonStyle={styles.arrowButtonStyle}
+                            textColor={COLORS.black}
+                            textStyle={styles.textHeaderStyle}
+                            onPress={() => {
+                                dispatch(setEmailToSendVerificationCode(""))
                             }}
-                            render={({ field: { onChange, onBlur, value } }) => (
-
-                                <Reusabletextinput
-                                    placeholder="عنوان البريد الالكتروني/رقم الهاتف"
-                                    bordercolor={errors.email ? "#f00" : COLORS.gray}
-                                    onChangeText={onChange}
-                                    onBlur={onBlur}
-                                />)}
-                            name="email"
                         />
-                        {/*{errors.email?.type === "required" && <Text style={styles.errorTextStyle}>يجب ادخال عنوان البريد الالكتروني لارسال رمز التأكيد</Text>}
+                        <View style={styles.viewImage}>
+                            <Image source={require('../../assets/Images/ForgetPassword.png')} style={styles.imageStyle} />
+                        </View>
+                        <View style={styles.viewForTextStyle}>
+                            <Text style={styles.textStyle} >قم بإدخال بريدك الالكتروني او رقم الهاتف لارسال رمز التأكيد</Text>
+                        </View>
+                        <View style={styles.textInputContainerMargin}>
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: true,
+                                    pattern: /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/
+
+                                }}
+                                render={({ field: { onChange, onBlur, value } }) => (
+
+                                    <Reusabletextinput
+                                        placeholder="عنوان البريد الالكتروني/رقم الهاتف"
+                                        bordercolor={errors.email ? "#f00" : COLORS.gray}
+                                        onChangeText={onChange}
+                                        onBlur={onBlur}
+                                    />)}
+                                name="email"
+                            />
+                            {/*{errors.email?.type === "required" && <Text style={styles.errorTextStyle}>يجب ادخال عنوان البريد الالكتروني لارسال رمز التأكيد</Text>}
                         {errors.email?.type === "pattern" && <Text style={styles.errorTextStyle}>يجب ادخال عنوان بريد الكتروني صحيح</Text>}*/}
-                        <Text style={styles.errorTextStyle}>
-                            {errors.email?.type === "required" ? "يجب ادخال عنوان البريد الالكتروني لارسال رمز التأكيد" :
-                                errors.email?.type === "pattern" ? "يجب ادخال عنوان بريد الكتروني صحيح" : ""
-                            }
-                        </Text>
+                            <Text style={styles.errorTextStyle}>
+                                {errors.email?.type === "required" ? "يجب ادخال عنوان البريد الالكتروني لارسال رمز التأكيد" :
+                                    errors.email?.type === "pattern" ? "يجب ادخال عنوان بريد الكتروني صحيح" : ""
+                                }
+                            </Text>
+                        </View>
+                    </View>
+                    <View style={styles.buttonContainerStyle}>
+                        <GeneralButton
+                            title="ارسال"
+                            style={styles.buttonStyle}
+                            onPress={handleSubmit(onSubmit)}
+                        />
                     </View>
                 </View>
             </ScrollView>
-            <View style={styles.buttonContainerStyle}>
-                <GeneralButton
-                    title="ارسال"
-                    style={styles.buttonStyle}
-                    onPress={handleSubmit(onSubmit)}
-                />
-            </View>
+
         </View>
     )
 

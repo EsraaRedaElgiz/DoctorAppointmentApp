@@ -4,13 +4,9 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 const styles = StyleSheet.create({
     container: {
-        // flex:1,
         height: "100%",
         width: "100%",
         backgroundColor: COLORS.white,
-        //paddingHorizontal: PADDINGS.mdPadding,
-        // paddingTop: '5%',
-        paddingBottom: '1%'
     }, arrowButtonStyle: {
         elevation: RFValue(3)
     }, textHeaderStyle: {
@@ -18,10 +14,16 @@ const styles = StyleSheet.create({
     }, viewForTextStyle: {
         marginTop: '5%',
         marginBottom: '15%'
-    }, viewForScrollviewContainer:{
+    }, viewForScrollviewContainer: {
         paddingHorizontal: PADDINGS.mdPadding,
         paddingTop: '5%',
-        paddingBottom: '1%'
+        paddingBottom: '1%',
+        //backgroundColor: "#ff0",
+        flex: 1,
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+    }, scrollViewContentContainerStyle: {
+        minHeight: '100%'
     }, textStyle: {
         color: COLORS.darkGray,
         fontSize: FONTS.h5,
@@ -30,11 +32,11 @@ const styles = StyleSheet.create({
     }, eachTextInputMargin: {
         marginBottom: '10%',
     }, scrollViewStyle: {
-        backgroundColor: COLORS.white
+        backgroundColor: COLORS.white,
     }, viewButtonContainerStyle: {
-        paddingHorizontal: PADDINGS.mdPadding
-    },textErrorColor:{
-        color:"#f00"
+        //paddingHorizontal: PADDINGS.mdPadding
+    }, textErrorColor: {
+        color: "#f00"
     }
 
 
