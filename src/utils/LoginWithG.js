@@ -18,6 +18,15 @@ function LoginWithG() {
             webClientId: '75137545387-5qco7pkdn4sa3b9aogu76e689rj09orn.apps.googleusercontent.com', // client ID 
         })
     }, [])
+    //
+    const firstLoginSucceed = (res) => {
+        //nav and back here
+
+        console.log(res.user) //المفروض الداتا دي تتبعت لللباك وتحطي هنا النفجيشن
+        alert(JSON.stringify(res.user))
+        setloggedIn(true)
+        setUserData(res.user)
+    }
 
 
     //
@@ -56,14 +65,7 @@ function LoginWithG() {
                             loggedIn == true ?
                                 console.log("you have logged in already")
                                 :
-
-                                console.log(res.user) //المفروض الداتا دي تتبعت لللباك وتحطي هنا النفجيشن
-                            alert(JSON.stringify(res.user))
-                            setloggedIn(true)
-                            setUserData(res.user)
-
-
-
+                                firstLoginSucceed(res)
                         }).catch(error => console.log(error))
                 }
             >
