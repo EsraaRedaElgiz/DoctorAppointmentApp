@@ -11,7 +11,7 @@ import { COLORS, } from "../../../constants/Constants";
 import GeneralButton from "../../../components/GeneralButton/GeneralButton";
 function DoctorOrPatient() {
     return (
-        <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle}>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContentContainerStyle}>
             <View style={styles.container}>
                 <StatusBar backgroundColor={COLORS.blue} />
                 <View style={styles.viewForImageStyle}>

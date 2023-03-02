@@ -30,7 +30,9 @@ const styles = StyleSheet.create({
         marginBottom: '10%',
     }, scrollViewStyle: {
         backgroundColor: COLORS.white
-    }
+    }, scrollViewContentContainerStyle: {
+        minHeight: '100%'
+    },
 
 
 })

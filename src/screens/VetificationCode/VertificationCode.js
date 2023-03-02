@@ -59,67 +59,70 @@ function VertificationCode() {
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor={COLORS.blue} />
-            <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle}>
+            <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContentContainerStyle}>
                 <View style={styles.viewForScrollviewContainer}>
-                    <HeaderArrowAndWord
-                        text="رمز التأكيد"
-                        arrowButtonStyle={styles.arrowButtonStyle}
-                        textColor={COLORS.black}
-                        textStyle={styles.textHeaderStyle}
-                        onPress={() => {
-                            dispatch(setVertificationCode(""))
-                        }}
-                    />
-                    <View style={styles.viewImage}>
-                        <View style={styles.viewBlueStyle}>
-                            <Entypo name="check" size={RFValue(120)} color={COLORS.white} />
+                    <View>
+                        <HeaderArrowAndWord
+                            text="رمز التأكيد"
+                            arrowButtonStyle={styles.arrowButtonStyle}
+                            textColor={COLORS.black}
+                            textStyle={styles.textHeaderStyle}
+                            onPress={() => {
+                                dispatch(setVertificationCode(""))
+                            }}
+                        />
+                        <View style={styles.viewImage}>
+                            <View style={styles.viewBlueStyle}>
+                                <Entypo name="check" size={RFValue(120)} color={COLORS.white} />
+                            </View>
+                        </View>
+                        <View style={styles.viewForTextStyle}>
+                            <Text style={styles.textStyle} >قم بإدخال رمز التأكيد المرسل لك عبر عبر البريد الالكتروني</Text>
+                        </View>
+                        <View style={styles.viewCodeFieldStyle}>
+                            <Controller
+                                control={control}
+                                rules={{
+                                    required: true,
+                                    minLength: 4
+
+                                }}
+                                render={({ field: { onChange, onBlur, value } }) => (
+                                    <CodeField
+                                        ref={ref}
+                                        {...props}
+                                        value={value}
+                                        //onChangeText={setValue}
+                                        onChangeText={onChange}
+                                        onBlur={onBlur}
+                                        cellCount={4}
+                                        keyboardType="number-pad"
+                                        textContentType="oneTimeCode"
+                                        // onFulfill={handlerOnFulfill(value)}
+                                        renderCell={({ index, symbol, isFocused }) => (
+                                            <Text
+                                                key={index}
+                                                style={[styles.cell, { borderColor: errors.code ? COLORS.red : COLORS.gray }, isFocused && styles.focusCell]}
+                                                onLayout={getCellOnLayoutHandler(index)}>
+                                                {symbol || (isFocused ? <Cursor /> : null)}
+                                            </Text>
+                                        )}
+                                    />)}
+                                name="code"
+                            />
+                            <Text style={styles.errorTestStyle}>
+                                {errors.code?.type === "required" ? "يجب ادخال رمز التأكيد" :
+                                    errors.code?.type === "minLength" ? "يجب ادخال الارقام المرسله بالكامل" : ""
+                                }
+                            </Text>
                         </View>
                     </View>
-                    <View style={styles.viewForTextStyle}>
-                        <Text style={styles.textStyle} >قم بإدخال رمز التأكيد المرسل لك عبر عبر البريد الالكتروني</Text>
-                    </View>
-                    <View style={styles.viewCodeFieldStyle}>
-                        <Controller
-                            control={control}
-                            rules={{
-                                required: true,
-                                minLength: 4
-
-                            }}
-                            render={({ field: { onChange, onBlur, value } }) => (
-                                <CodeField
-                                    ref={ref}
-                                    {...props}
-                                    value={value}
-                                    //onChangeText={setValue}
-                                    onChangeText={onChange}
-                                    onBlur={onBlur}
-                                    cellCount={4}
-                                    keyboardType="number-pad"
-                                    textContentType="oneTimeCode"
-                                    // onFulfill={handlerOnFulfill(value)}
-                                    renderCell={({ index, symbol, isFocused }) => (
-                                        <Text
-                                            key={index}
-                                            style={[styles.cell, { borderColor: errors.code ? COLORS.red : COLORS.gray }, isFocused && styles.focusCell]}
-                                            onLayout={getCellOnLayoutHandler(index)}>
-                                            {symbol || (isFocused ? <Cursor /> : null)}
-                                        </Text>
-                                    )}
-                                />)}
-                            name="code"
-                        />
-                        <Text style={styles.errorTestStyle}>
-                            {errors.code?.type === "required" ? "يجب ادخال رمز التأكيد" :
-                                errors.code?.type === "minLength" ? "يجب ادخال الارقام المرسله بالكامل" : ""
-                            }
-                        </Text>
+                    <View style={styles.buttonContainerStyle}>
+                        <GeneralButton title="تأكيد" style={styles.buttonStyle} onPress={handleSubmit(onSubmit)} />
                     </View>
                 </View>
             </ScrollView>
-            <View style={styles.buttonContainerStyle}>
-                <GeneralButton title="تأكيد" style={styles.buttonStyle} onPress={handleSubmit(onSubmit)} />
-            </View>
+
         </View>
     )
 

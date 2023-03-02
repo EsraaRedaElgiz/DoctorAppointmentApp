@@ -8,19 +8,20 @@ import { RFValue } from "react-native-responsive-fontsize";
 
 const styles = StyleSheet.create({
     container: {
-        // flex:1,
         height: "100%",
         width: "100%",
         backgroundColor: COLORS.white,
-        //paddingHorizontal: PADDINGS.mdPadding,
-        //paddingTop: '5%',
-        //alignItems: 'center',
-        paddingBottom: '1%'
     }, viewForScrollviewContainer: {
         paddingHorizontal: PADDINGS.mdPadding,
         paddingTop: '5%',
-        alignItems: 'center',
-        paddingBottom: '1%'
+        //alignItems: 'center',
+        paddingBottom: '1%',
+        flex: 1,
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+        //backgroundColor:"#f00"
+    }, scrollViewContentContainerStyle: {
+        minHeight: '100%'
     }, arrowButtonStyle: {
         elevation: RFValue(3)
     }, viewBlueStyle: {
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
     }, scrollViewStyle: {
         backgroundColor: COLORS.white
     }, buttonContainerStyle: {
-        paddingHorizontal: PADDINGS.mdPadding
+        //paddingHorizontal: PADDINGS.mdPadding
     }, errorTestStyle: {
         color: "#f00",
     }
