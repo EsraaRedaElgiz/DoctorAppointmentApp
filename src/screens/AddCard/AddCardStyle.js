@@ -25,5 +25,8 @@ const styles = StyleSheet.create({
   smallTextInput: {
     flex: 1,
   },
+  button: {
+    marginTop: '73%',
+  },
 });
 export default styles;
