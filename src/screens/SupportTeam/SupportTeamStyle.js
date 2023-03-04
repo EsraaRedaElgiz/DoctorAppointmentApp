@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     height: RFValue(60),
   },
   button: {
-    margin: PADDINGS.smPadding,
+    margin: MARGIN.mdMargin,
   },
 });
 
