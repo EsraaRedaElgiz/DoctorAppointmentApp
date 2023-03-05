@@ -11,6 +11,9 @@ import { RFValue } from 'react-native-responsive-fontsize';
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.blue,
+    flex: 1,
+    justifyContent: 'space-between',
+    flexDirection: 'column',
   },
   wordHeaderMargin: {
     marginLeft: RFValue(-25),
@@ -18,7 +21,7 @@ const styles = StyleSheet.create({
   topViewStyle: {
     paddingHorizontal: PADDINGS.mdPadding,
     paddingTop: '5%',
-    flex: 1,
+    //flex: 1,
   },
   customButtonIconAndWordMargin: {
     marginBottom: '5%',
@@ -35,10 +38,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: PADDINGS.mdPadding,
     //flex: 5,
     paddingTop: '15%',
-    paddingBottom: '1%',
+    paddingBottom: '5%',
+    flex: 1,
+    justifyContent: 'space-between',
+    flexDirection: 'column',
   },
   firstTextInputMargun: {
-    marginTop: '1%',
+    //marginTop: '1%',
     marginBottom: '1%',
   },
   eachTextInputMargin: {
@@ -48,7 +54,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   buttonMargin: {
-    marginTop: '17%',
+   // marginTop: '17%',
   },
   dropDownMarginBottom: {
     marginBottom: '0%',

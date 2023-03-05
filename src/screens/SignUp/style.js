@@ -11,12 +11,15 @@ import { RFValue } from 'react-native-responsive-fontsize';
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.blue,
+    flex: 1,
+    justifyContent: 'space-between',
+    flexDirection: 'column',
   },
   topViewStyle: {
-    marginBottom: '10%',
     paddingHorizontal: PADDINGS.mdPadding,
     paddingTop: "5%",
-    flex: 1
+    paddingBottom:'10%'
+    //flex: 1
   }, afterArrowButtonMargin: {
     marginBottom: '5%'
   }, viewHeaderTextStyle: {
@@ -28,21 +31,24 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontSize: FONTS.h3,
     fontFamily: 'Amaranth-Regular',
-    textAlign:'center'
+    textAlign: 'center'
   },
   secondTextHeaderStyle: {
     color: COLORS.white,
     fontSize: FONTS.h4,
     fontFamily: 'Amaranth-Regular',
-    textAlign:'center'
+    textAlign: 'center'
   },
   viewAfterHeaderStyle: {
     backgroundColor: COLORS.white,
     borderTopRightRadius: RFValue(85),
     paddingHorizontal: PADDINGS.mdPadding,
-    flex: 5,
+    //flex: 5,
     paddingTop: '15%',
-    paddingBottom: '1%'
+    //paddingBottom: '1%'
+    flex: 1,
+    justifyContent: 'space-between',
+    flexDirection: 'column',
 
   }, eachtextinputmargin: {
     marginBottom: '.5%',
@@ -81,11 +87,11 @@ const styles = StyleSheet.create({
   viewforheaderstyle: {
     marginBottom: '2%',
   }, buttonMargin: {
-    marginBottom: '2%'
+    // marginBottom: '2%'
   }, scrollViewStyle: {
     backgroundColor: COLORS.white
-  },errorTextColor:{
-    color:"#f00"
+  }, errorTextColor: {
+    color: "#f00"
   }
 });
 export default styles;
