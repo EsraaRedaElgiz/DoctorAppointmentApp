@@ -58,7 +58,9 @@ function AddCard(props) {
             />
           </View>
         </View>
-        <GeneralButton title="تأكيد" style={{marginTop: height * 0.3}} />
+        <View style={styles.button}>
+          <GeneralButton title="تأكيد" />
+        </View>
       </View>
     </GeneralPage>
   );

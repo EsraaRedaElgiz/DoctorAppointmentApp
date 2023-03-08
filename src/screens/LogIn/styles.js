@@ -11,21 +11,27 @@ import { RFValue } from 'react-native-responsive-fontsize';
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.blue,
+    flex: 1,
+    justifyContent: 'space-between',
+    flexDirection: 'column',
   },
   topViewStyle: {
     //minHeight: height * .2,
     paddingHorizontal: PADDINGS.mdPadding,
-    paddingTop: '5%',
-    flex: 1,
+    //paddingTop: '5%',///
+    //flex: 1,
     paddingBottom: '20%'
   },
   custombuttonIconStyle: {
-    marginBottom: '10%',
+    //marginBottom: '10%',
   },
   viewHeaderStyle: {
+    marginTop: '10%',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  }, scrollViewContentContainerStyle: {
+    minHeight: '100%'
   },
   firstTextHeaderStyle: {
     color: COLORS.white,
@@ -43,9 +49,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     borderTopRightRadius: RFValue(85),
     paddingHorizontal: PADDINGS.mdPadding,
-    flex: 5,
+    //flex: 5,
     paddingTop: '15%',
-    paddingBottom: '1%'
+    //paddingBottom: '.01%',
+    flex: 1,
+    justifyContent: 'space-between',
+    flexDirection: 'column',
   },
   eachTextinputAndErrorTextContainer: {
     marginBottom: '3%',
@@ -113,7 +122,7 @@ const styles = StyleSheet.create({
   orWordStyle: {
     color: COLORS.darkGray2,
   }, buttonMargin: {
-    marginBottom: '2%'
+    //marginBottom: '2%'
   }, scrollViewStyle: {
     backgroundColor: COLORS.white
   }, textErrorColor: {

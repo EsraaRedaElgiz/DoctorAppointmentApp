@@ -62,7 +62,7 @@ function VertificationCode() {
             <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContentContainerStyle}>
                 <View style={styles.viewForScrollviewContainer}>
                     <View>
-                        <HeaderArrowAndWord
+                        {/*<HeaderArrowAndWord
                             text="رمز التأكيد"
                             arrowButtonStyle={styles.arrowButtonStyle}
                             textColor={COLORS.black}
@@ -70,7 +70,7 @@ function VertificationCode() {
                             onPress={() => {
                                 dispatch(setVertificationCode(""))
                             }}
-                        />
+                        />*/}
                         <View style={styles.viewImage}>
                             <View style={styles.viewBlueStyle}>
                                 <Entypo name="check" size={RFValue(120)} color={COLORS.white} />

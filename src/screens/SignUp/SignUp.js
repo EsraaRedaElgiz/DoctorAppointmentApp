@@ -66,12 +66,11 @@ function SignUp() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle} >
-
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContentContainerStyle} >
+      <StatusBar backgroundColor={COLORS.blue} />
       <View style={styles.container}>
-        <StatusBar backgroundColor={COLORS.blue} />
         <View style={styles.topViewStyle}>
-          <ReusableArrowButton
+          {/*<ReusableArrowButton
             style={styles.afterArrowButtonMargin}
             onPress={() => {
               dispatch(setName(""))
@@ -80,7 +79,7 @@ function SignUp() {
               dispatch(setPassword(""))
               dispatch(setConfirmPassword(""))
             }}
-          />
+          />*/}
           <View style={styles.viewHeaderTextStyle}>
             <View style={styles.viewforheaderstyle}>
               <Text style={styles.firstTextHeaderStyle}>تسجيل</Text>
@@ -94,179 +93,180 @@ function SignUp() {
         </View>
 
         <View style={styles.viewAfterHeaderStyle}>
-          <View style={styles.eachtextinputmargin}>
-            <Controller
-              control={control}
-              rules={{
-                required: true,
-                minLength: 2,
-                maxLength: 30
+          <View>
+            <View style={styles.eachtextinputmargin}>
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                  minLength: 2,
+                  maxLength: 30
 
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Reusabletextinput
-                  placeholder="الاسم"
-                  bordercolor={errors.name ? COLORS.red : COLORS.gray}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                />)}
-              name="name"
-            />
-            <Text style={styles.errorTextColor}>
-              {errors.name?.type === "required" ? "يجب ادخال الاسم" :
-                errors.name?.type === "minLength" ? "الاسم يجب ان لا يقل عن حرفين" :
-                  errors.name?.type === "maxLength" ? "الاسم يجب ان لا يزيد عن 30 حرف" : ""}
-            </Text>
-          </View>
-          <View style={styles.eachtextinputmargin}>
-            <Controller
-              control={control}
-              rules={{
-                required: true,
-                pattern: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{5,6}$/im
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <Reusabletextinput
+                    placeholder="الاسم"
+                    bordercolor={errors.name ? COLORS.red : COLORS.gray}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                  />)}
+                name="name"
+              />
+              <Text style={styles.errorTextColor}>
+                {errors.name?.type === "required" ? "يجب ادخال الاسم" :
+                  errors.name?.type === "minLength" ? "الاسم يجب ان لا يقل عن حرفين" :
+                    errors.name?.type === "maxLength" ? "الاسم يجب ان لا يزيد عن 30 حرف" : ""}
+              </Text>
+            </View>
+            <View style={styles.eachtextinputmargin}>
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                  pattern: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{5,6}$/im
 
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Reusabletextinput
-                  placeholder="رقم الهاتف"
-                  keyboardType="phone-pad"
-                  bordercolor={errors.phoneNum ? COLORS.red : COLORS.gray}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                />)}
-              name="phoneNum"
-            />
-            <Text style={styles.errorTextColor}>
-              {errors.phoneNum?.type === "required" ? "يجب ادخال رقم الهاتف" :
-                errors.phoneNum?.type === "pattern" ? "يجب ادخال رقم هاتف صحيح" : ""}
-            </Text>
-          </View>
-          <View style={styles.eachtextinputmargin}>
-            <Controller
-              control={control}
-              rules={{
-                required: true,
-                pattern: /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <Reusabletextinput
+                    placeholder="رقم الهاتف"
+                    keyboardType="phone-pad"
+                    bordercolor={errors.phoneNum ? COLORS.red : COLORS.gray}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                  />)}
+                name="phoneNum"
+              />
+              <Text style={styles.errorTextColor}>
+                {errors.phoneNum?.type === "required" ? "يجب ادخال رقم الهاتف" :
+                  errors.phoneNum?.type === "pattern" ? "يجب ادخال رقم هاتف صحيح" : ""}
+              </Text>
+            </View>
+            <View style={styles.eachtextinputmargin}>
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                  pattern: /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/
 
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Reusabletextinput
-                  placeholder="عنوان البريد الالكتروني"
-                  keyboardType="email-address"
-                  bordercolor={errors.email ? COLORS.red : COLORS.gray}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                />)}
-              name="email"
-            />
-            <Text style={styles.errorTextColor}>
-              {errors.email?.type === "required" ? "يجب ادخال عنوان البريد الالكتروني" :
-                errors.email?.type === "pattern" ? "يجب ادخال عنوان بريد الكتروني صحيح" : ""
-              }
-            </Text>
-          </View>
-          <View style={styles.eachtextinputmargin}>
-            <Controller
-              control={control}
-              rules={{
-                required: true,
-                pattern: /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
-                maxLength: 20
-
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Reusabletextinput
-                  placeholder="كلمه المرور"
-                  right={
-                    <TextInput.Icon
-                      icon="eye"
-                      iconColor={COLORS.darkGray}
-                      onPress={pass_secured}
-                    />
-                  }
-                  bordercolor={errors.password ? COLORS.red : COLORS.gray}
-                  secureTextEntry={secured_pass}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                />)}
-              name="password"
-            />
-            <Text style={styles.errorTextColor}>
-              {errors.password?.type === "required" ? "يجب ادخال كلمة المرور" :
-                errors.password?.type === "pattern" ? "كلمه المرور يجب لا تقل عن 8 ارقام وحرف كبير وحرف صغير وعلامه مميزه" :
-                  errors.password?.type === "maxLength" ? "كلمة المرور يجب ان لا تزيد عن 20 حرف ورقم" : ""}
-            </Text>
-          </View>
-          <View style={[styles.eachtextinputmargin,{marginBottom:'0%'}]}>
-            <Controller
-              control={control}
-              rules={{
-                required: true,
-                validate: (val) => {
-                  if (watch('password') != val) {
-                    return "Your passwords do no match";
-                  }
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <Reusabletextinput
+                    placeholder="عنوان البريد الالكتروني"
+                    keyboardType="email-address"
+                    bordercolor={errors.email ? COLORS.red : COLORS.gray}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                  />)}
+                name="email"
+              />
+              <Text style={styles.errorTextColor}>
+                {errors.email?.type === "required" ? "يجب ادخال عنوان البريد الالكتروني" :
+                  errors.email?.type === "pattern" ? "يجب ادخال عنوان بريد الكتروني صحيح" : ""
                 }
-              }}
-              render={({ field: { onChange, onBlur, value } }) => (
-                <Reusabletextinput
-                  placeholder="تأكيد كلمه المرور"
-                  right={
-                    <TextInput.Icon
-                      icon="eye"
-                      iconColor={COLORS.darkGray}
-                      onPress={pass_secured}
-                    />
+              </Text>
+            </View>
+            <View style={styles.eachtextinputmargin}>
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                  pattern: /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
+                  maxLength: 20
+
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <Reusabletextinput
+                    placeholder="كلمه المرور"
+                    right={
+                      <TextInput.Icon
+                        icon="eye"
+                        iconColor={COLORS.darkGray}
+                        onPress={pass_secured}
+                      />
+                    }
+                    bordercolor={errors.password ? COLORS.red : COLORS.gray}
+                    secureTextEntry={secured_pass}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                  />)}
+                name="password"
+              />
+              <Text style={styles.errorTextColor}>
+                {errors.password?.type === "required" ? "يجب ادخال كلمة المرور" :
+                  errors.password?.type === "pattern" ? "كلمه المرور يجب لا تقل عن 8 ارقام وحرف كبير وحرف صغير وعلامه مميزه" :
+                    errors.password?.type === "maxLength" ? "كلمة المرور يجب ان لا تزيد عن 20 حرف ورقم" : ""}
+              </Text>
+            </View>
+            <View style={styles.eachtextinputmargin}>
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                  validate: (val) => {
+                    if (watch('password') != val) {
+                      return "Your passwords do no match";
+                    }
                   }
-                  bordercolor={errors.confirmPassword ? COLORS.red : COLORS.gray}
-                  secureTextEntry={secured_pass}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
+                }}
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <Reusabletextinput
+                    placeholder="تأكيد كلمه المرور"
+                    right={
+                      <TextInput.Icon
+                        icon="eye"
+                        iconColor={COLORS.darkGray}
+                        onPress={pass_secured}
+                      />
+                    }
+                    bordercolor={errors.confirmPassword ? COLORS.red : COLORS.gray}
+                    secureTextEntry={secured_pass}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
 
-                />)}
-              name="confirmPassword"
+                  />)}
+                name="confirmPassword"
+              />
+              <Text style={styles.errorTextColor}>
+                {errors.confirmPassword?.type === "required" ? "يجب ادخال تأكيد كلمة المرور" :
+                  errors.confirmPassword?.type === "validate" ? "كلمة المرور غير متطابقه" : ""
+                }
+              </Text>
+            </View>
+            <View style={styles.viewForfirstTextAfterTextinputs}>
+              <View>
+                <Text style={styles.textAfterTextinputsStyle}>
+                  بتسجيل الدخول فانك توافق علي
+                </Text>
+              </View>
+              <TouchableOpacity>
+                <Text style={styles.bluetextstyle}> شروط الاستخدام</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={styles.viewForSecondTextAfterTextinputs}>
+              <View>
+                <Text style={styles.textAfterTextinputsStyle}>و</Text>
+              </View>
+              <TouchableOpacity>
+                <Text style={styles.bluetextstyle}> سياسه الخصوصيه</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View>
+            <GeneralButton
+              style={styles.buttonMargin}
+              title="متابعه"
+              onPress={handleSubmit(onSubmit)}
             />
-            <Text style={styles.errorTextColor}>
-              {errors.confirmPassword?.type === "required" ? "يجب ادخال تأكيد كلمة المرور" :
-                errors.confirmPassword?.type === "validate" ? "كلمة المرور غير متطابقه" : ""
-              }
-            </Text>
-          </View>
-          <View style={styles.viewForfirstTextAfterTextinputs}>
-            <View>
-              <Text style={styles.textAfterTextinputsStyle}>
-                بتسجيل الدخول فانك توافق علي
-              </Text>
+            <View style={styles.viewForLastTextStyle}>
+              <View>
+                <Text style={styles.textAfterTextinputsStyle}>
+                  لديك حساب بالفعل؟
+                </Text>
+              </View>
+              <TouchableOpacity>
+                <Text style={styles.bluetextstyle}> تسجيل الدخول </Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity>
-              <Text style={styles.bluetextstyle}> شروط الاستخدام</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.viewForSecondTextAfterTextinputs}>
-            <View>
-              <Text style={styles.textAfterTextinputsStyle}>و</Text>
-            </View>
-            <TouchableOpacity>
-              <Text style={styles.bluetextstyle}> سياسه الخصوصيه</Text>
-            </TouchableOpacity>
-          </View>
-
-          <GeneralButton
-            style={styles.buttonMargin}
-            title="متابعه"
-            onPress={handleSubmit(onSubmit)}
-
-
-          />
-          <View style={styles.viewForLastTextStyle}>
-            <View>
-              <Text style={styles.textAfterTextinputsStyle}>
-                لديك حساب بالفعل؟
-              </Text>
-            </View>
-            <TouchableOpacity>
-              <Text style={styles.bluetextstyle}> تسجيل الدخول </Text>
-            </TouchableOpacity>
           </View>
         </View>
       </View>

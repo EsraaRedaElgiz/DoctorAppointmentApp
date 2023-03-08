@@ -43,7 +43,7 @@ function History() {
         month={month}
         year={year}
         style={styles.afterEachCardMargin}
-        //onPress={()=>alert(index)}
+      //onPress={()=>alert(index)}
       />
 
     )
@@ -53,21 +53,21 @@ function History() {
 
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.blue} />
-      <View style={styles.headerViewStyleAndFlatListContainerStyle}>
+      {/*<View style={styles.headerViewStyleAndFlatListContainerStyle}>
         <HeaderArrowAndWord
           text="التاريخ"
           arrowButtonStyle={styles.arrowButtonStyle}
           textColor={COLORS.black}
           textStyle={styles.textHeaderStyle}
         />
-      </View>
+      </View>*/}
       <FlatList
         keyExtractor={keyextractor}
         data={history}
         renderItem={renderitems}
         style={styles.flatListStyle}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={[styles.headerViewStyleAndFlatListContainerStyle, { paddingTop: '5%' }]}
+        contentContainerStyle={styles.flatListContentContainerStyle}
 
       />
 
