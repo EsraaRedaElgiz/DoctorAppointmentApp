@@ -60,21 +60,21 @@ function Appointment() {
 
         <View style={styles.container}>
             <StatusBar backgroundColor={COLORS.blue} />
-            <View style={styles.headerViewStyleAndFlatListContainerStyle}>
+            {/*<View style={styles.headerViewStyleAndFlatListContainerStyle}>
                 <HeaderArrowAndWord
                     text="المواعيد"
                     arrowButtonStyle={styles.arrowButtonStyle}
                     textColor={COLORS.black}
                     textStyle={styles.textHeaderStyle}
                 />
-            </View>
+            </View>*/}
             <FlatList
                 keyExtractor={keyextractor}
                 data={appointments}
                 renderItem={renderitems}
                 style={styles.flatListStyle}
                 showsVerticalScrollIndicator={false}
-                contentContainerStyle={[styles.headerViewStyleAndFlatListContainerStyle, { paddingTop: '5%' }]}
+                contentContainerStyle={styles.flatListContentContainerStyle}
 
             />
         </View>

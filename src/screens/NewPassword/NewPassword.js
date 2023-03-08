@@ -43,7 +43,7 @@ function NewPassword() {
             <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContentContainerStyle}>
                 <View style={styles.viewForScrollviewContainer}>
                     <View>
-                        <HeaderArrowAndWord
+                        {/*<HeaderArrowAndWord
                             text="تغيير كلمه المرور"
                             arrowButtonStyle={styles.arrowButtonStyle}
                             textColor={COLORS.black}
@@ -53,7 +53,7 @@ function NewPassword() {
                                 dispatch(setNewPassword(""))
                                 dispatch(setConfirmNewPassword(""))
                             }}
-                        />
+                        />*/}
                         <View style={styles.viewForTextStyle}>
                             <Text style={styles.textStyle} >يجب ان تكون كلمة المرور الجديدة مختلفه عن كلمه المرور المستخدمه المستخدمه سابقا</Text>
                         </View>

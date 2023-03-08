@@ -20,17 +20,20 @@ const styles = StyleSheet.create({
   },
   topViewStyle: {
     paddingHorizontal: PADDINGS.mdPadding,
-    paddingTop: '5%',
+    //paddingTop: '5%',
     //flex: 1,
   },
   customButtonIconAndWordMargin: {
     marginBottom: '5%',
   },
   viewHeaderStyle: {
+    marginTop: '5%',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: '5%',
+  }, scrollViewContentContainerStyle: {
+    minHeight: '100%'
   },
   viewAfterHeaderStyle: {
     backgroundColor: COLORS.white,
@@ -54,7 +57,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   buttonMargin: {
-   // marginTop: '17%',
+    // marginTop: '17%',
   },
   dropDownMarginBottom: {
     marginBottom: '0%',

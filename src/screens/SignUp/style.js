@@ -17,15 +17,18 @@ const styles = StyleSheet.create({
   },
   topViewStyle: {
     paddingHorizontal: PADDINGS.mdPadding,
-    paddingTop: "5%",
-    paddingBottom:'10%'
+    //paddingTop: "5%",//
+    paddingBottom: '10%'
     //flex: 1
   }, afterArrowButtonMargin: {
-    marginBottom: '5%'
+    //marginBottom: '5%'//
   }, viewHeaderTextStyle: {
+    marginTop: '5%',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  }, scrollViewContentContainerStyle: {
+    minHeight: '100%'
   },
   firstTextHeaderStyle: {
     color: COLORS.white,

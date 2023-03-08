@@ -27,7 +27,7 @@ function ForgetPassword() {
             <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContentContainerStyle} >
                 <View style={styles.viewForScrollviewContainer}>
                     <View>
-                        <HeaderArrowAndWord
+                        {/*<HeaderArrowAndWord
                             text="نسيت كلمه المرور"
                             arrowButtonStyle={styles.arrowButtonStyle}
                             textColor={COLORS.black}
@@ -35,7 +35,7 @@ function ForgetPassword() {
                             onPress={() => {
                                 dispatch(setEmailToSendVerificationCode(""))
                             }}
-                        />
+                        />*/}
                         <View style={styles.viewImage}>
                             <Image source={require('../../assets/Images/ForgetPassword.png')} style={styles.imageStyle} />
                         </View>

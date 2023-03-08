@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
         marginBottom: '15%'
     }, viewForScrollviewContainer: {
         paddingHorizontal: PADDINGS.mdPadding,
-        paddingTop: '5%',
+        //paddingTop: '5%',
         paddingBottom: '5%',
         //backgroundColor: "#ff0",
         flex: 1,

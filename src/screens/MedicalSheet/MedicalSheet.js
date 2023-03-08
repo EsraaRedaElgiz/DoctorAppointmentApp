@@ -111,12 +111,12 @@ function MedicalSheet() {
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={styles.scrollViewStyle}
-      contentContainerStyle={{ minHeight: '100%' }}
+      contentContainerStyle={styles.scrollViewContentContainerStyle}
     >
       <StatusBar backgroundColor={COLORS.blue} />
       <View style={styles.container}>
         <View style={styles.topViewStyle}>
-          <HeaderArrowAndWord
+          {/*<HeaderArrowAndWord
             text="بيانات طبيه"
             textColor={COLORS.white}
             textStyle={styles.wordHeaderMargin}
@@ -129,7 +129,7 @@ function MedicalSheet() {
               dispatch(setAge(''));
               dispatch(setGender(''));
             }}
-          />
+          />*/}
           <View style={styles.viewHeaderStyle}>
             {photo_uri ? (
               <ProfileImage

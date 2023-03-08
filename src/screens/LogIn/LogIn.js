@@ -45,18 +45,18 @@ function LogIn() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle} contentContainerStyle={{ minHeight: '100%' }}>
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContentContainerStyle}>
       <StatusBar backgroundColor={COLORS.blue} />
       <View style={styles.container}>
         <View style={styles.topViewStyle}>
-          <ReusableArrowButton
+          {/*<ReusableArrowButton
             style={styles.custombuttonIconStyle}
             onPress={() => {
               dispatch(setEmail(""))
               dispatch(setPassword(""))
               dispatch(setRememberMe(""))
             }}
-          />
+          />*/}
           <View style={styles.viewHeaderStyle}>
             <View style={styles.viewforheaderstyle}>
               <Text style={styles.firstTextHeaderStyle}>اهلا بعودتك !</Text>
