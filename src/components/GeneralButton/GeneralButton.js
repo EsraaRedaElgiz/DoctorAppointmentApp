@@ -6,7 +6,7 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
-import {COLORS, FONTS, PADDINGS, RADIUS} from '../../constants/Constants';
+import {COLORS, FONTS, PADDINGS, RADIUS,MARGIN} from '../../constants/Constants';
 
 function GeneralButton(props) {
   const {title, backgroundColor, style, isLoading, ...rest} = props;
@@ -36,6 +36,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: RADIUS.xsRadius,
     backgroundColor: COLORS.blue,
+    marginBottom:MARGIN.mdMargin
   },
   title: {
     fontSize: FONTS.h4,
