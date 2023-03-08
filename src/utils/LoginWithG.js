@@ -23,7 +23,7 @@ function LoginWithG() {
         //nav and back here
 
         console.log(res.user) //المفروض الداتا دي تتبعت لللباك وتحطي هنا النفجيشن
-        alert(JSON.stringify(res.user))
+        //alert(JSON.stringify(res.user))
         setloggedIn(true)
         setUserData(res.user)
     }

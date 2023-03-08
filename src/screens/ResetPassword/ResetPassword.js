@@ -43,7 +43,7 @@ function ResetPassword() {
             <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContentContainerStyle} >
                 <View style={styles.viewForScrollviewContainer} >
                     <View>
-                        <HeaderArrowAndWord
+                        {/*<HeaderArrowAndWord
                             text="إعاده تعيين كلمة المرور"
                             arrowButtonStyle={styles.arrowButtonStyle}
                             textColor={COLORS.black}
@@ -52,7 +52,7 @@ function ResetPassword() {
                                 dispatch(setPassword(""))
                                 dispatch(setConfirmPassword(""))
                             }}
-                        />
+                        />*/}
                         <View style={styles.viewForTextStyle}>
                             <Text style={styles.textStyle} >يجب ان تكون كلمة المرور الجديدة مختلفه عن كلمة المرور المستخدمه سابقا</Text>
                         </View>

@@ -11,9 +11,9 @@ const styles = StyleSheet.create({
         elevation: RFValue(3)
     }, viewForScrollviewContainer: {
         paddingHorizontal: PADDINGS.mdPadding,
-        paddingTop: '5%',
+       // paddingTop: '5%',//
        // alignItems: 'center',
-        paddingBottom: '1%',
+        paddingBottom: '5%',
         flex:1,
         justifyContent: 'space-between',
         flexDirection: 'column',
