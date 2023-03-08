@@ -18,17 +18,20 @@ const styles = StyleSheet.create({
   topViewStyle: {
     //minHeight: height * .2,
     paddingHorizontal: PADDINGS.mdPadding,
-    paddingTop: '5%',
+    //paddingTop: '5%',///
     //flex: 1,
     paddingBottom: '20%'
   },
   custombuttonIconStyle: {
-    marginBottom: '10%',
+    //marginBottom: '10%',
   },
   viewHeaderStyle: {
+    marginTop: '10%',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  }, scrollViewContentContainerStyle: {
+    minHeight: '100%'
   },
   firstTextHeaderStyle: {
     color: COLORS.white,

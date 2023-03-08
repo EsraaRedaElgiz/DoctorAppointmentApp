@@ -66,11 +66,11 @@ function SignUp() {
   };
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle} contentContainerStyle={{ minHeight: '100%' }} >
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.scrollViewStyle} contentContainerStyle={styles.scrollViewContentContainerStyle} >
       <StatusBar backgroundColor={COLORS.blue} />
       <View style={styles.container}>
         <View style={styles.topViewStyle}>
-          <ReusableArrowButton
+          {/*<ReusableArrowButton
             style={styles.afterArrowButtonMargin}
             onPress={() => {
               dispatch(setName(""))
@@ -79,7 +79,7 @@ function SignUp() {
               dispatch(setPassword(""))
               dispatch(setConfirmPassword(""))
             }}
-          />
+          />*/}
           <View style={styles.viewHeaderTextStyle}>
             <View style={styles.viewforheaderstyle}>
               <Text style={styles.firstTextHeaderStyle}>تسجيل</Text>
