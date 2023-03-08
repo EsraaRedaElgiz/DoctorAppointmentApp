@@ -14,6 +14,8 @@ export const COLORS = {
   darkGray2: '#707070',
   darkGray3: '#303135',
   red: '#f00',
+  star:"#FFE900",
+  searchCostumeColor:"#CFCECE"
 };
 export const ICONS = {
   xsIcon: RFValue(10) >= 10 ? RFValue(10) : 5,
@@ -31,6 +33,8 @@ export const FONTS = {
   h5: RFValue(15) >= 15 ? RFValue(15) : 14,
   h6: RFValue(13) >= 13 ? RFValue(12) : 13,
   h7: RFValue(11) >= 11 ? RFValue(10) : 11,
+  AmaranthRegular:"Amaranth-Regular",
+  Amaranth:"Amaranth"
 };
 export const RADIUS = {
   // general radius
