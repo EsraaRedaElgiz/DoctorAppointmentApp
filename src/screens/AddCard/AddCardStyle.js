@@ -4,8 +4,8 @@ import {COLORS, FONTS, MARGIN, PADDINGS} from '../../constants/Constants';
 
 const styles = StyleSheet.create({
   container: {
-    padding: PADDINGS.mdPadding,
-    paddingVertical: PADDINGS.xlPadding,
+    paddingTop: PADDINGS.mdPadding,
+    paddingHorizontal: PADDINGS.mdPadding,
   },
   visaTypeView: {
     flexDirection: 'row',
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    marginTop: '73%',
+    marginTop: '76%',
   },
 });
 export default styles;

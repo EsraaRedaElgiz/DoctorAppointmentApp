@@ -10,7 +10,7 @@ function MedicalID1(props) {
   return (
     <GeneralPage>
       <View style={styles.container}>
-        <ProfileImage />
+        <ProfileImage nameAfterImage />
         <UserData data="A+" label="نوع الدم" />
         <UserData data="70" label="الوزن" />
         <UserData data="189" label="الطول" />
