@@ -26,9 +26,9 @@ import Appointment from './src/screens/Appointment/Appointment';
 import Prescription from './src/screens/Prescription/Prescription';
 import InrtoSlider from './src/screens/Intro/IntroSlider/IntroSlider';
 import SupportTeam from './src/screens/SupportTeam/SupportTeam';
-import SignUp from './src/screens/SignUp/SignUp'
-import LogIn from './src/screens/LogIn/LogIn'
+import SignUp from './src/screens/SignUp/SignUp';
+import LogIn from './src/screens/LogIn/LogIn';
 function App() {
-  return <ForgetPassword/>;
+  return <Prescription />;
 }
 export default App;
