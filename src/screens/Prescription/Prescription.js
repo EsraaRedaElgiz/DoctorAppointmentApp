@@ -206,7 +206,7 @@ function Prescription(props) {
       </Modal>
       <RBSheet
         ref={refRBSheet}
-        height={RFValue(200)}
+        height={RFValue(150)}
         openDuration={250}
         customStyles={{
           container: {
@@ -232,8 +232,8 @@ function Prescription(props) {
           style={styles.eachOptionInBottonTab}>
           <Text style={styles.optionTextStyle}>اختيار صورة</Text>
         </TouchableOpacity>
-        <View style={styles.line} />
-        <TouchableOpacity
+        {/* <View style={styles.line} /> */}
+        {/* <TouchableOpacity
           onPress={() => {
             refRBSheet.current.close();
             setphoto_uri(photo_uri => '');
@@ -242,7 +242,7 @@ function Prescription(props) {
           <Text style={[styles.optionTextStyle, {color: COLORS.red}]}>
             مسح الصورة
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={styles.line} />
         <TouchableOpacity
           onPress={() => refRBSheet.current.close()}
