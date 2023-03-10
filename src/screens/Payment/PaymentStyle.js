@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   buttonView: {
-    margin: MARGIN.mdMargin,
+    marginHorizontal: MARGIN.mdMargin,
   },
 });
 
