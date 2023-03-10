@@ -284,14 +284,14 @@ function SignUp({navigation}) {
                   <Text style={styles.textAfterTextinputsStyle}>و</Text>
                 </View>
                 <TouchableOpacity>
-                  <Text style={styles.bluetextstyle}> سياسه الخصوصيه</Text>
+                  <Text style={styles.bluetextstyle}> سياسه الخصوصية</Text>
                 </TouchableOpacity>
               </View>
             </View>
             <View>
               <GeneralButton
                 style={styles.buttonMargin}
-                title="متابعه"
+                title="متابعة"
                 onPress={handleSubmit(onSubmit)}
               />
               <View style={styles.viewForLastTextStyle}>

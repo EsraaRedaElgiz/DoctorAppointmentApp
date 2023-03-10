@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
-import {COLORS, FONTS} from '../../constants/Constants';
+import {COLORS, FONTS, PADDINGS} from '../../constants/Constants';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import HeaderArrowAndWord from '../../components/HeaderArrowAndWord/HeaderArrowAndWord';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
@@ -27,7 +27,7 @@ import * as ImagePicker from 'react-native-image-picker';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {requestCameraPermission} from '../../utils/CameraPermissin';
 import {RFValue} from 'react-native-responsive-fontsize';
-import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 
 function MedicalSheet({navigation}) {
   useEffect(() => {
@@ -107,16 +107,18 @@ function MedicalSheet({navigation}) {
     dispatch(setAge(data.age));
     dispatch(setGender(data.gender));
     //console.log(photo_uri);
-    navigation.navigate('HomeNavi');
+    // navigation.navigate('Homescreen');
+    //TODO -> dispatch(action) using redux
   };
   return (
     <>
       <HeaderNavigation
-        title= "بيانات طبيه"
+        padding={PADDINGS.mdPadding}
+        title="بيانات طبية"
         backgroundColor={COLORS.blue}
         color={COLORS.white}
         onPress={() => {
-          navigation.goBack()
+          navigation.goBack();
         }}
       />
       <ScrollView

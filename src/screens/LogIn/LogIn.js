@@ -22,7 +22,7 @@ import {
 } from '../../Redux/Reducers/LoginSlice';
 import {useForm, Controller} from 'react-hook-form';
 import LoginWithG from '../../utils/LoginWithG';
-import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 function LogIn({navigation}) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
@@ -56,20 +56,18 @@ function LogIn({navigation}) {
   };
   return (
     <>
-     
-
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={styles.scrollViewStyle}
         contentContainerStyle={styles.scrollViewContentContainerStyle}>
         <StatusBar backgroundColor={COLORS.blue} />
         <HeaderNavigation
-        backgroundColor={COLORS.blue}
-        padding={PADDINGS.smPadding}
-        onPress={() => {
-          navigation.goBack();
-        }}
-      />
+          backgroundColor={COLORS.blue}
+          padding={PADDINGS.smPadding}
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
         <View style={[styles.container]}>
           <View style={styles.topViewStyle}>
             {/* <ReusableArrowButton
@@ -195,7 +193,7 @@ function LogIn({navigation}) {
             </View>
             <View>
               <GeneralButton
-                title="متابعه"
+                title="متابعة"
                 style={styles.buttonMargin}
                 // onPress={()=>alert(toggleCheckBox)}
                 onPress={handleSubmit(onSubmit)}
