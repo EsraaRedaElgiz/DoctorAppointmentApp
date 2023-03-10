@@ -1,15 +1,24 @@
 import React from 'react';
 import {Text, View, Image, StatusBar, ScrollView} from 'react-native';
 import styles from './styles';
+<<<<<<< HEAD
 import {COLORS, PADDINGS} from '../../constants/Constants';
 
+=======
+import {COLORS} from '../../constants/Constants';
+import HeaderArrowAndWord from '../../components/HeaderArrowAndWord/HeaderArrowAndWord';
+>>>>>>> 868081e461a87f641dee47529e27331aeba03430
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import {useSelector, useDispatch} from 'react-redux';
 import {setEmailToSendVerificationCode} from '../../Redux/Reducers/SendEmailSlice';
 import {useForm, Controller} from 'react-hook-form';
+<<<<<<< HEAD
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 function ForgetPassword({navigation}) {
+=======
+function ForgetPassword() {
+>>>>>>> 868081e461a87f641dee47529e27331aeba03430
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   const {
