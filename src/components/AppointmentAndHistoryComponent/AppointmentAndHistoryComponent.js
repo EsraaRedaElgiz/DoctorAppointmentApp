@@ -5,10 +5,10 @@ import { RADIUS, FONTS, COLORS, PADDINGS, ICONS } from '../../constants/Constant
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Feather from 'react-native-vector-icons/Feather'
 function AppointmentAndHistoryComponent(props) {
-    const { style, doctorName, doctorSpeciality, dateShow, day, month, year, timeShow, time, status,onPress } = props
+    const { style, doctorName, doctorSpeciality, dateShow, day, month, year, timeShow, time, status,onPress,disabled } = props
 
     return (
-        <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
+        <TouchableOpacity style={[styles.container, style]} onPress={onPress} disabled={disabled}>
             <View style={styles.innerContainer}>
                 <View style={styles.imageContainer}>
                     <Image source={require('../../assets/Images/download.png')} style={styles.imageStyle} />

@@ -28,9 +28,10 @@ import Icon from 'react-native-vector-icons/Feather';
 import * as ImagePicker from 'react-native-image-picker';
 import {requestCameraPermission} from '../../utils/CameraPermissin';
 import RBSheet from 'react-native-raw-bottom-sheet';
+import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
 const {height} = Dimensions.get('window');
 
-function Prescription(props) {
+function Prescription({navigation}) {
   const [photo_uri, setphoto_uri] = useState(null);
   const [head, setHead] = useState(['الدواء', 'المدة', 'ملاحظات']);
   const [data, setData] = useState([
@@ -89,6 +90,13 @@ function Prescription(props) {
   };
   return (
     <GeneralPage>
+      <HeaderNavigation
+          title="الروشته"
+          onPress={() => {
+            navigation.goBack();
+          }}
+          padding={PADDINGS.mdPadding}
+        />
       <View style={styles.container}>
         <Text style={styles.title}>التشخيص</Text>
         <View style={styles.diagnosisView}>

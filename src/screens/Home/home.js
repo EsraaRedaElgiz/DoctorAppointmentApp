@@ -11,7 +11,7 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {COLORS, MARGIN, PADDINGS} from '../../constants/Constants';
 import {style} from '../../styles/Style';
 
-const Home = () => {
+const Home = ({navigation}) => {
   return (
     <>
       <View style={{backgroundColor: '#fff', flex: 1}}>
@@ -24,11 +24,17 @@ const Home = () => {
             styleProp={{
               paddingHorizontal: PADDINGS.mdPadding,
             }}
+            onPress={() => {
+              navigation.navigate('SpecialitySearch');
+            }}
           />
           <SpecialityList />
-          <ListTiltle Title="افضل الأطباء" styleProp={{
+          <ListTiltle
+            Title="افضل الأطباء"
+            styleProp={{
               paddingHorizontal: PADDINGS.mdPadding,
-            }} />
+            }}
+          />
           <TopDoctors />
         </ScrollView>
       </View>

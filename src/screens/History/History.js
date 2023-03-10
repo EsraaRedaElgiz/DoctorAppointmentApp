@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { View, FlatList, StatusBar } from 'react-native';
-import { COLORS } from '../../constants/Constants';
+import { COLORS, PADDINGS } from '../../constants/Constants';
 import styles from './styles';
 import HeaderArrowAndWord from '../../components/HeaderArrowAndWord/HeaderArrowAndWord';
 import AppointmentAndHistoryComponent from '../../components/AppointmentAndHistoryComponent/AppointmentAndHistoryComponent';
+import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
 //back end
 //import { getHistory } from '../../Redux/Reducers/HistorySlice'
 //
 
-function History() {
+function History({navigation}) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   /*useEffect(() => {
@@ -43,7 +44,10 @@ function History() {
         month={month}
         year={year}
         style={styles.afterEachCardMargin}
-      //onPress={()=>alert(index)}
+      // onPress={()=>alert(index)}
+      onPress={()=>{
+        navigation.navigate("Prescription")
+    }}
       />
 
     )
@@ -61,6 +65,13 @@ function History() {
           textStyle={styles.textHeaderStyle}
         />
       </View>*/}
+      <HeaderNavigation
+          title="التاريخ"
+          onPress={() => {
+            navigation.goBack();
+          }}
+          padding={PADDINGS.mdPadding}
+        />
       <FlatList
         keyExtractor={keyextractor}
         data={history}

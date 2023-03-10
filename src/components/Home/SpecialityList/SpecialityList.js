@@ -4,8 +4,9 @@ import {SpecialityData} from '../../../utils';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {COLORS, FONTS, MARGIN, RADIUS} from '../../../constants/Constants';
 import {style} from '../../../styles/Style';
-
+import {useNavigation} from '@react-navigation/native';
 const SpecialityList = () => {
+  const navigation = useNavigation();
   const [specialtyDataUpdated, setSpecialtyDataUpdated] =
     useState(SpecialityData);
   return (
@@ -17,7 +18,7 @@ const SpecialityList = () => {
         <Pressable
           style={styles.image_Text_Container}
           onPress={() => {
-            alert('GO to Chosen speciality'); //navigate to chosen specialty
+            navigation.navigate("DoctorsSearch")
           }}>
           {/* image */}
           <View style={styles.imageContainer}>

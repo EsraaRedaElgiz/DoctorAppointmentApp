@@ -11,7 +11,7 @@ import {
 } from '../../constants/Constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {style} from '../../styles/Style';
-const CompletedAppointment = () => {
+const CompletedAppointment = ({navigation}) => {
   return (
     <>
       <View style={[style.bigContainer, {flex: 1}]}>
@@ -28,7 +28,7 @@ const CompletedAppointment = () => {
         <GeneralButton
           title="تم"
           onPress={() => {
-            alert('Go to home');
+            navigation.navigate("Homescreen")
           }}
         />
       </View>

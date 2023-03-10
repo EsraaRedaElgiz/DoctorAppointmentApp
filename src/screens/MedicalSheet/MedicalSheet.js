@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   View,
   StatusBar,
@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
-import { COLORS, FONTS } from '../../constants/Constants';
+import {COLORS, FONTS} from '../../constants/Constants';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import HeaderArrowAndWord from '../../components/HeaderArrowAndWord/HeaderArrowAndWord';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import DropDown from '../../components/DropDown/DropDown';
-import { useSelector, useDispatch } from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   setPhotoUri,
   setBloodType,
@@ -22,13 +22,14 @@ import {
   setAge,
   setGender,
 } from '../../Redux/Reducers/MedicalSheetSlice';
-import { useForm, Controller } from 'react-hook-form';
+import {useForm, Controller} from 'react-hook-form';
 import * as ImagePicker from 'react-native-image-picker';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import { requestCameraPermission } from '../../utils/CameraPermissin';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {requestCameraPermission} from '../../utils/CameraPermissin';
+import {RFValue} from 'react-native-responsive-fontsize';
+import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
 
-function MedicalSheet() {
+function MedicalSheet({navigation}) {
   useEffect(() => {
     requestCameraPermission();
   }, []);
@@ -40,7 +41,7 @@ function MedicalSheet() {
         path: 'images',
       },
     };
-    ImagePicker.launchImageLibrary({ options, includeBase64: true }, res => {
+    ImagePicker.launchImageLibrary({options, includeBase64: true}, res => {
       if (res.didCancel) {
         console.log('User cancelled image picker');
       } else if (res.error) {
@@ -86,7 +87,7 @@ function MedicalSheet() {
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
     watch,
   } = useForm({
     defaultValues: {
@@ -106,17 +107,26 @@ function MedicalSheet() {
     dispatch(setAge(data.age));
     dispatch(setGender(data.gender));
     //console.log(photo_uri);
+    navigation.navigate('HomeNavi');
   };
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      style={styles.scrollViewStyle}
-      contentContainerStyle={styles.scrollViewContentContainerStyle}
-    >
-      <StatusBar backgroundColor={COLORS.blue} />
-      <View style={styles.container}>
-        <View style={styles.topViewStyle}>
-          {/*<HeaderArrowAndWord
+    <>
+      <HeaderNavigation
+        title= "بيانات طبيه"
+        backgroundColor={COLORS.blue}
+        color={COLORS.white}
+        onPress={() => {
+          navigation.goBack()
+        }}
+      />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.scrollViewStyle}
+        contentContainerStyle={styles.scrollViewContentContainerStyle}>
+        <StatusBar backgroundColor={COLORS.blue} />
+        <View style={styles.container}>
+          <View style={styles.topViewStyle}>
+            {/* <HeaderArrowAndWord
             text="بيانات طبيه"
             textColor={COLORS.white}
             textStyle={styles.wordHeaderMargin}
@@ -128,216 +138,218 @@ function MedicalSheet() {
               dispatch(setHeight(''));
               dispatch(setAge(''));
               dispatch(setGender(''));
+              navigation.goBack()
             }}
-          />*/}
-          <View style={styles.viewHeaderStyle}>
-            {photo_uri ? (
-              <ProfileImage
-                iconOnImage={true}
-                onPressPen={() => refRBSheet.current.open()}
-                imageUri={photo_uri}
-              />
-            ) : (
-              <ProfileImage
-                iconOnImage={true}
-                onPressPen={() => refRBSheet.current.open()}
-              />
-            )}
+          /> */}
+            <View style={styles.viewHeaderStyle}>
+              {photo_uri ? (
+                <ProfileImage
+                  iconOnImage={true}
+                  onPressPen={() => refRBSheet.current.open()}
+                  imageUri={photo_uri}
+                />
+              ) : (
+                <ProfileImage
+                  iconOnImage={true}
+                  onPressPen={() => refRBSheet.current.open()}
+                />
+              )}
+            </View>
           </View>
-        </View>
 
-        <View style={styles.viewAfterHeaderStyle}>
-          <View>
+          <View style={styles.viewAfterHeaderStyle}>
             <View>
-              <Controller
-                control={control}
-                rules={{
-                  required: true,
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <DropDown
-                    style={styles.dropDownMarginBottom}
-                    data={blood}
-                    placeholder="فصيلة الدم"
-                    borderColor={errors.bloodType ? '#f00' : COLORS.gray}
-                    /*onSelect={(selectedItem, index) => {
+              <View>
+                <Controller
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({field: {onChange, onBlur, value}}) => (
+                    <DropDown
+                      style={styles.dropDownMarginBottom}
+                      data={blood}
+                      placeholder="فصيلة الدم"
+                      borderColor={errors.bloodType ? '#f00' : COLORS.gray}
+                      /*onSelect={(selectedItem, index) => {
                       alert(selectedItem + "" + index);
                     }}*/
-                    onSelect={onChange}
-                  />
-                )}
-                name="bloodType"
-              />
-              <Text style={styles.errorTextColor}>
-                {errors.bloodType?.type === 'required'
-                  ? 'يجب تحديد فصيلة الدم'
-                  : ''}
-              </Text>
-            </View>
-            <View style={styles.firstTextInputMargun}>
-              <Controller
-                control={control}
-                rules={{
-                  required: true,
-                  validate: val => {
-                    if (val * 0 != 0) {
-                      return 'must number';
-                    }
-                  },
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <Reusabletextinput
-                    placeholder="الوزن"
-                    keyboardType="numeric"
-                    bordercolor={errors.weight ? '#f00' : COLORS.gray}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                  />
-                )}
-                name="weight"
-              />
-              <Text style={styles.errorTextColor}>
-                {errors.weight?.type === 'required'
-                  ? 'يجب ادخال الوزن'
-                  : errors.weight?.type === 'validate'
+                      onSelect={onChange}
+                    />
+                  )}
+                  name="bloodType"
+                />
+                <Text style={styles.errorTextColor}>
+                  {errors.bloodType?.type === 'required'
+                    ? 'يجب تحديد فصيلة الدم'
+                    : ''}
+                </Text>
+              </View>
+              <View style={styles.firstTextInputMargun}>
+                <Controller
+                  control={control}
+                  rules={{
+                    required: true,
+                    validate: val => {
+                      if (val * 0 != 0) {
+                        return 'must number';
+                      }
+                    },
+                  }}
+                  render={({field: {onChange, onBlur, value}}) => (
+                    <Reusabletextinput
+                      placeholder="الوزن"
+                      keyboardType="numeric"
+                      bordercolor={errors.weight ? '#f00' : COLORS.gray}
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                    />
+                  )}
+                  name="weight"
+                />
+                <Text style={styles.errorTextColor}>
+                  {errors.weight?.type === 'required'
+                    ? 'يجب ادخال الوزن'
+                    : errors.weight?.type === 'validate'
                     ? 'يجب ادخال رقم'
                     : ''}
-              </Text>
-            </View>
-            <View style={styles.eachTextInputMargin}>
-              <Controller
-                control={control}
-                rules={{
-                  required: true,
-                  validate: val => {
-                    if (val * 0 != 0) {
-                      return 'must number';
-                    }
-                  },
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <Reusabletextinput
-                    placeholder="الطول"
-                    keyboardType="numeric"
-                    bordercolor={errors.height ? '#f00' : COLORS.gray}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                  />
-                )}
-                name="height"
-              />
-              <Text style={styles.errorTextColor}>
-                {errors.height?.type === 'required'
-                  ? 'بجب ادخال الطول'
-                  : errors.height?.type === 'validate'
+                </Text>
+              </View>
+              <View style={styles.eachTextInputMargin}>
+                <Controller
+                  control={control}
+                  rules={{
+                    required: true,
+                    validate: val => {
+                      if (val * 0 != 0) {
+                        return 'must number';
+                      }
+                    },
+                  }}
+                  render={({field: {onChange, onBlur, value}}) => (
+                    <Reusabletextinput
+                      placeholder="الطول"
+                      keyboardType="numeric"
+                      bordercolor={errors.height ? '#f00' : COLORS.gray}
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                    />
+                  )}
+                  name="height"
+                />
+                <Text style={styles.errorTextColor}>
+                  {errors.height?.type === 'required'
+                    ? 'بجب ادخال الطول'
+                    : errors.height?.type === 'validate'
                     ? 'يجب ادخال رقم'
                     : ''}
-              </Text>
-            </View>
-            <View style={styles.eachTextInputMargin}>
-              <Controller
-                control={control}
-                rules={{
-                  required: true,
-                  validate: val => {
-                    if (val * 0 != 0) {
-                      return 'must number';
-                    }
-                  },
-                }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <Reusabletextinput
-                    placeholder="السن"
-                    keyboardType="numeric"
-                    bordercolor={errors.age ? '#f00' : COLORS.gray}
-                    onChangeText={onChange}
-                    onBlur={onBlur}
-                  />
-                )}
-                name="age"
-              />
-              <Text style={styles.errorTextColor}>
-                {errors.age?.type === 'required'
-                  ? 'يجب ادخال السن'
-                  : errors.age?.type === 'validate'
+                </Text>
+              </View>
+              <View style={styles.eachTextInputMargin}>
+                <Controller
+                  control={control}
+                  rules={{
+                    required: true,
+                    validate: val => {
+                      if (val * 0 != 0) {
+                        return 'must number';
+                      }
+                    },
+                  }}
+                  render={({field: {onChange, onBlur, value}}) => (
+                    <Reusabletextinput
+                      placeholder="السن"
+                      keyboardType="numeric"
+                      bordercolor={errors.age ? '#f00' : COLORS.gray}
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                    />
+                  )}
+                  name="age"
+                />
+                <Text style={styles.errorTextColor}>
+                  {errors.age?.type === 'required'
+                    ? 'يجب ادخال السن'
+                    : errors.age?.type === 'validate'
                     ? 'يجب ادخال رقم'
                     : ''}
-              </Text>
+                </Text>
+              </View>
+              <View style={styles.eachTextInputMargin}>
+                <Controller
+                  control={control}
+                  rules={{
+                    required: true,
+                  }}
+                  render={({field: {onChange, onBlur, value}}) => (
+                    <DropDown
+                      style={styles.dropDownMarginBottom}
+                      data={type}
+                      borderColor={errors.gender ? '#f00' : COLORS.gray}
+                      placeholder="تحديد النوع"
+                      onSelect={onChange}
+                    />
+                  )}
+                  name="gender"
+                />
+                <Text style={styles.errorTextColor}>
+                  {errors.gender?.type === 'required' ? 'يجب تحديد النوع' : ''}
+                </Text>
+              </View>
             </View>
-            <View style={styles.eachTextInputMargin}>
-              <Controller
-                control={control}
-                rules={{
-                  required: true,
+            <View style={styles.buttonMargin}>
+              <GeneralButton title="تأكيد" onPress={handleSubmit(onSubmit)} />
+            </View>
+            <RBSheet
+              ref={refRBSheet}
+              height={RFValue(200)}
+              openDuration={250}
+              customStyles={{
+                container: {
+                  alignItems: 'center',
+                  borderTopLeftRadius: RFValue(30),
+                  borderTopRightRadius: RFValue(30),
+                },
+              }}>
+              <TouchableOpacity
+                onPress={() => {
+                  launchCamera();
+                  refRBSheet.current.close();
                 }}
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <DropDown
-                    style={styles.dropDownMarginBottom}
-                    data={type}
-                    borderColor={errors.gender ? '#f00' : COLORS.gray}
-                    placeholder="تحديد النوع"
-                    onSelect={onChange}
-                  />
-                )}
-                name="gender"
-              />
-              <Text style={styles.errorTextColor}>
-                {errors.gender?.type === 'required' ? 'يجب تحديد النوع' : ''}
-              </Text>
-            </View>
+                style={styles.eachOptionInBottonTab}>
+                <Text style={styles.optionTextStyle}>التقاط صوره</Text>
+              </TouchableOpacity>
+              <View style={styles.line} />
+              <TouchableOpacity
+                onPress={() => {
+                  refRBSheet.current.close();
+                  selectFromGallery();
+                }}
+                style={styles.eachOptionInBottonTab}>
+                <Text style={styles.optionTextStyle}>اختيار صوره</Text>
+              </TouchableOpacity>
+              <View style={styles.line} />
+              <TouchableOpacity
+                onPress={() => {
+                  refRBSheet.current.close();
+                  setphoto_uri(photo_uri => '');
+                }}
+                style={styles.eachOptionInBottonTab}>
+                <Text style={[styles.optionTextStyle, {color: COLORS.red}]}>
+                  مسح الصوره
+                </Text>
+              </TouchableOpacity>
+              <View style={styles.line} />
+              <TouchableOpacity
+                onPress={() => refRBSheet.current.close()}
+                style={styles.eachOptionInBottonTab}>
+                <Text style={styles.optionTextStyle}>انهاء</Text>
+              </TouchableOpacity>
+            </RBSheet>
           </View>
-          <View style={styles.buttonMargin}>
-            <GeneralButton title="تأكيد" onPress={handleSubmit(onSubmit)} />
-          </View>
-          <RBSheet
-            ref={refRBSheet}
-            height={RFValue(200)}
-            openDuration={250}
-            customStyles={{
-              container: {
-                alignItems: 'center',
-                borderTopLeftRadius: RFValue(30),
-                borderTopRightRadius: RFValue(30),
-              },
-            }}>
-            <TouchableOpacity
-              onPress={() => {
-                launchCamera();
-                refRBSheet.current.close();
-              }}
-              style={styles.eachOptionInBottonTab}>
-              <Text style={styles.optionTextStyle}>التقاط صوره</Text>
-            </TouchableOpacity>
-            <View style={styles.line} />
-            <TouchableOpacity
-              onPress={() => {
-                refRBSheet.current.close();
-                selectFromGallery();
-              }}
-              style={styles.eachOptionInBottonTab}>
-              <Text style={styles.optionTextStyle}>اختيار صوره</Text>
-            </TouchableOpacity>
-            <View style={styles.line} />
-            <TouchableOpacity
-              onPress={() => {
-                refRBSheet.current.close();
-                setphoto_uri(photo_uri => '');
-              }}
-              style={styles.eachOptionInBottonTab}>
-              <Text style={[styles.optionTextStyle, { color: COLORS.red }]}>
-                مسح الصوره
-              </Text>
-            </TouchableOpacity>
-            <View style={styles.line} />
-            <TouchableOpacity
-              onPress={() => refRBSheet.current.close()}
-              style={styles.eachOptionInBottonTab}>
-              <Text style={styles.optionTextStyle}>انهاء</Text>
-            </TouchableOpacity>
-          </RBSheet>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </>
   );
 }
 export default MedicalSheet;

@@ -7,10 +7,11 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Stars from '../../Stars/Stars';
 import {style} from '../../../styles/Style';
 import SearchBar from '../SearchBar/SearchBar';
+import {useNavigation} from '@react-navigation/native';
 const ListDoctorsSearch = () => {
+  const navigation = useNavigation();
   return (
     <>
-      <SearchBar placeholder="البحث عن الأطباء"  />
       <FlatList
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{padding: RFValue(2)}}
@@ -18,7 +19,11 @@ const ListDoctorsSearch = () => {
         data={DoctorsData}
         renderItem={(itemData, index) => (
           <>
-            <Pressable style={style.CardContainer}>
+            <Pressable
+              style={style.CardContainer}
+              onPress={() => {
+                navigation.navigate("DoctorProfile")
+              }}>
               <View style={style.imageContainerStyle}>
                 <Image source={itemData.item.image} style={style.imageCard} />
               </View>

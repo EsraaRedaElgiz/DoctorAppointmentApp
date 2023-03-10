@@ -11,9 +11,11 @@ import {
 import {SpecialityData} from '../../../utils';
 import {style} from '../../../styles/Style';
 import SearchBar from '../SearchBar/SearchBar';
+import {useNavigation} from "@react-navigation/native"
 const ListSpecialitySearch = () => {
   const [SpecialityDataUpdated, setSpecialityDataUpdated] =
     useState(SpecialityData);
+    const navigation=useNavigation()
   return (
     <>
      
@@ -25,7 +27,11 @@ const ListSpecialitySearch = () => {
         data={SpecialityDataUpdated}
         renderItem={(itemData, index) => (
           <>
-            <Pressable style={styles.container}>
+            <Pressable style={styles.container}
+            onPress={()=>{
+              navigation.navigate("DoctorsSearch")
+            }}
+            >
               <View style={styles.imageConatiner}>
                 <Image source={itemData.item.img} style={styles.image} />
               </View>
@@ -53,6 +59,7 @@ const styles = StyleSheet.create({
     margin: MARGIN.mdMargin,
     alignItems: 'center',
     justifyContent: 'space-around',
+  
   },
   imageConatiner: {
     width: RFValue(60),

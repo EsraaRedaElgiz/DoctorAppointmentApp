@@ -16,14 +16,11 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   topViewStyle: {
-    paddingHorizontal: PADDINGS.mdPadding,
-    //paddingTop: "5%",//
-    paddingBottom: '10%'
-    //flex: 1
+    paddingBottom: "5%",//
   }, afterArrowButtonMargin: {
     //marginBottom: '5%'//
   }, viewHeaderTextStyle: {
-    marginTop: '5%',
+    // marginTop: '5%',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
@@ -81,6 +78,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom:MARGIN.mdMargin
   },
   bluetextstyle: {
     color: COLORS.blue,

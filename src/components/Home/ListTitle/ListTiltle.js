@@ -8,7 +8,7 @@ const ListTiltle = props => {
     <View style={[styles.container, styleProp]}>
       <Text style={style.textContentBold}>{Title}</Text>
       <Pressable
-       onPress={onPress}// navigate to Specailty Page
+       onPress={onPress}
       
       >
         <Text style={style.textSmallContentBold}>{seeAll}</Text>

@@ -9,7 +9,7 @@ import {
 import {COLORS, FONTS, PADDINGS, RADIUS,MARGIN} from '../../constants/Constants';
 
 function GeneralButton(props) {
-  const {title, backgroundColor, style, isLoading, ...rest} = props;
+  const {title, backgroundColor, style, isLoading,onPress, ...rest} = props;
   return (
     <TouchableOpacity
       {...rest}
@@ -18,7 +18,9 @@ function GeneralButton(props) {
         styles.buttonStyle,
         style,
         isLoading ? {backgroundColor: COLORS.gray} : null,
-      ]}>
+      ]}
+      onPress={onPress}
+      >
       <Text style={[styles.title]}>
         {isLoading ? (
           <ActivityIndicator size={FONTS.h2} color={COLORS.white} />

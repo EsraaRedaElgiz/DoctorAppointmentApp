@@ -5,13 +5,14 @@ import {
   Modal,
   TouchableOpacity,
   PermissionsAndroid,
+  Button,
 } from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import {TextInput} from 'react-native-paper';
 import GeneralPage from '../../components/GeneralPage/GeneralPage';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
-import {COLORS, ICONS, MARGIN} from '../../constants/Constants';
+import {COLORS, ICONS, MARGIN, PADDINGS} from '../../constants/Constants';
 import styles from './EditPersonDetailsStyle';
 import Icon from 'react-native-vector-icons/AntDesign';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
@@ -20,8 +21,10 @@ import SelectDropdown from 'react-native-select-dropdown';
 import DropDown from '../../components/DropDown/DropDown';
 import {requestCameraPermission} from '../../utils/CameraPermissin';
 import RBSheet from 'react-native-raw-bottom-sheet';
+import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
 
 function EditPersonDetails(props) {
+  const {navigation} = props;
   const [visible, setVisible] = useState(false);
   const [photo_uri, setphoto_uri] = useState();
   const [bloodType, setBloodType] = useState('نوع الدم');
@@ -84,7 +87,19 @@ function EditPersonDetails(props) {
 
   return (
     <GeneralPage>
+      <HeaderNavigation
+          title="المعلومات الشخصيه"
+          btn="تم"
+          padding={PADDINGS.mdPadding}
+          onPress={() => {
+            navigation.goBack()
+          }}
+          onPressBtn={() => {
+            navigation.navigate('UserProfile');
+          }}
+        />
       <View style={styles.conatiner}>
+        
         <ProfileImage
           iconName="pen"
           nameAfterImage

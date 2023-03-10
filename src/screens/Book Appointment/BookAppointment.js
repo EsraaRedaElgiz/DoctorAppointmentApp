@@ -12,8 +12,8 @@ import {
 import {RFValue} from 'react-native-responsive-fontsize';
 import {ListTiltle} from '../../components/Home';
 import {style} from '../../styles/Style';
-
-const BookAppointment = () => {
+import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
+const BookAppointment = ({navigation}) => {
   const data = [
     {id: 1, txt: 'نقدى', isChecked: false},
     {id: 2, txt: 'بطاقه', isChecked: false},
@@ -36,7 +36,15 @@ const BookAppointment = () => {
 
   return (
     <View style={[style.bigContainer, {flex: 1}]}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <HeaderNavigation
+        title="حجز الميعاد"
+        onPress={() => {
+          navigation.goBack();
+        }}
+      />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{paddingHorizontal: PADDINGS.smPadding}}>
         <ListTiltle Title="التاريخ" />
         {/* FlatList Days */}
         <View style={styles.flatListDaysContainer}>
@@ -89,7 +97,13 @@ const BookAppointment = () => {
           )}
         />
       </ScrollView>
-      <GeneralButton title="حجز" />
+      <GeneralButton
+        title="حجز"
+        onPress={() => {
+          // navigation.navigate("PaymentCash")
+          navigation.navigate('PaymentCreditCard');
+        }}
+      />
     </View>
   );
 };

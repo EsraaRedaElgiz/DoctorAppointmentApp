@@ -25,8 +25,7 @@ const styles = StyleSheet.create({
     }, flatListContentContainerStyle: {
         width: '100%',
         paddingHorizontal: PADDINGS.mdPadding,
-        paddingTop: '5%',
-        //backgroundColor:"#f00"
+        paddingTop: RFValue(2),
     }
 
 })

@@ -1,15 +1,35 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Button} from 'react-native';
 import GeneralPage from '../../components/GeneralPage/GeneralPage';
-import GeneralTextInput from '../../components/GeneralTextInput/GeneralTextInput';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
 import UserData from '../../components/UserData/UserData';
 import styles from './MedicalID1Style';
-
+import {useNavigation} from '@react-navigation/native';
+import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
+import {PADDINGS} from '../../constants/Constants';
 function MedicalID1(props) {
+  const navigation = useNavigation();
   return (
     <GeneralPage>
+      <HeaderNavigation
+        title="المعلومات الشخصيه"
+        btn="تعديل"
+        padding={PADDINGS.mdPadding}
+        onPress={() => {
+          navigation.navigate('UserProfile');
+        }}
+        onPressBtn={()=>{
+          navigation.navigate('EditPersonDetails');
+        }}
+      />
       <View style={styles.container}>
+        {/* <Button
+          title="edit"
+          onPress={() => {
+            navigation.navigate('EditPersonDetails');
+          }}
+        /> */}
+
         <ProfileImage />
         <UserData data="A+" label="نوع الدم" />
         <UserData data="70" label="الوزن" />
