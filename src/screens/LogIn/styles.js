@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
 import {
   COLORS,
   FONTS,
@@ -6,7 +6,7 @@ import {
   PADDINGS,
   MARGIN,
 } from '../../constants/Constants';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const styles = StyleSheet.create({
   container: {
@@ -20,30 +20,31 @@ const styles = StyleSheet.create({
     paddingHorizontal: PADDINGS.mdPadding,
     //paddingTop: '5%',///
     //flex: 1,
-    paddingBottom: '20%'
+
+    paddingBottom: PADDINGS.xlPadding,
   },
   custombuttonIconStyle: {
     //marginBottom: '10%',
   },
   viewHeaderStyle: {
-    marginTop: '10%',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-  }, scrollViewContentContainerStyle: {
-    minHeight: '100%'
+  },
+  scrollViewContentContainerStyle: {
+    // minHeight: '100%'
   },
   firstTextHeaderStyle: {
     color: COLORS.white,
     fontSize: FONTS.h3,
     fontFamily: 'Amaranth-Regular',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   secondTextHeaderStyle: {
     color: COLORS.white,
     fontSize: FONTS.h4,
     fontFamily: 'Amaranth-Regular',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   viewAfterHeaderStyle: {
     backgroundColor: COLORS.white,
@@ -76,6 +77,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: MARGIN.mdMargin,
   },
   bluetextstyle: {
     color: COLORS.blue,
@@ -121,12 +123,15 @@ const styles = StyleSheet.create({
   },
   orWordStyle: {
     color: COLORS.darkGray2,
-  }, buttonMargin: {
+  },
+  buttonMargin: {
     //marginBottom: '2%'
-  }, scrollViewStyle: {
-    backgroundColor: COLORS.white
-  }, textErrorColor: {
-    color: "#f00"
-  }
+  },
+  scrollViewStyle: {
+    backgroundColor: COLORS.white,
+  },
+  textErrorColor: {
+    color: '#f00',
+  },
 });
 export default styles;

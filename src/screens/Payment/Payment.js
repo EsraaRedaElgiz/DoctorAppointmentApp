@@ -6,11 +6,21 @@ import GeneralPage from '../../components/GeneralPage/GeneralPage';
 import Visa from '../../components/Visa/Visa';
 import {COLORS, PADDINGS} from '../../constants/Constants';
 import styles from './PaymentStyle';
-
+import {useNavigation} from '@react-navigation/native';
+import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 function Payment(props) {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.blue} />
+      <HeaderNavigation
+        title="الدفع"
+        padding={PADDINGS.smPadding}
+        onPress={() => {
+          navigation.navigate('UserProfile');
+        }}
+        
+      />
       <ScrollView
         style={{flex: 1}}
         contentContainerStyle={{
@@ -21,7 +31,12 @@ function Payment(props) {
         <Visa master />
       </ScrollView>
       <View style={styles.buttonView}>
-        <GeneralButton title="اضافة بطاقة" />
+        <GeneralButton
+          title="اضافة بطاقة"
+          onPress={() => {
+            navigation.navigate('AddCard');
+          }}
+        />
       </View>
     </View>
   );

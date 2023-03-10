@@ -29,7 +29,7 @@ import {DoctorsData} from '../../utils';
 import {ListTiltle} from '../../components/Home';
 import {Stars} from '../../components/Search';
 import ReviewModal from '../../components/ReviewModal/ReviewModal';
-const DoctorProfile = () => {
+const DoctorProfile = ({navigation}) => {
   const [visiableAddReview, setVisiableAddReview] = useState(false);
   
   const region = {
@@ -132,7 +132,7 @@ const DoctorProfile = () => {
           alignSelf: 'center',
         }}
         onPress={() => {
-          alert('GO to Book oppintemet');
+          navigation.navigate("BookAppointment")
         }}
       />
       <ReviewModal

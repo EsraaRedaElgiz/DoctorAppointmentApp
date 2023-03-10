@@ -6,8 +6,7 @@ const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
   conatiner: {
     flex: 1,
-    padding: PADDINGS.smPadding,
-    paddingVertical: PADDINGS.xlPadding,
+    paddingHorizontal: PADDINGS.mdPadding,
   },
   inputView: {
     marginBottom: MARGIN.mdMargin,

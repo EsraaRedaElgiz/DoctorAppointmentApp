@@ -12,7 +12,9 @@ import {
 import Images from '../../../constants/Images';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {style} from '../../../styles/Style';
+import {useNavigation} from "@react-navigation/native"
 const Header = () => {
+  const navigation=useNavigation()
   return (
     <View style={styles.headerContainer}>
       <View style={styles.image_userNameContainer}>
@@ -32,7 +34,7 @@ const Header = () => {
       <Pressable
         style={styles.searchIconStyle}
         onPress={() => {
-          alert('Go to search page'); //navigate to specialitySearch Page
+          navigation.navigate("SpecialitySearch")
         }}>
         <FontAwesome
           name="search"

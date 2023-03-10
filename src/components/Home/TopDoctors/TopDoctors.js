@@ -5,22 +5,24 @@ import {DoctorsData} from '../../../utils';
 import Stars from '../../Stars/Stars';
 import {style} from '../../../styles/Style';
 import {PADDINGS} from '../../../constants/Constants';
+import {useNavigation} from '@react-navigation/native';
+
 const TopDoctors = () => {
   const [DoctorsDataUpdated, setDoctorsDataUpdated] = useState(DoctorsData);
+
+  const navigation = useNavigation();
   return (
     <FlatList
-    contentContainerStyle={{
-      padding: RFValue(2),
-      paddingHorizontal: PADDINGS.mdPadding,
-    }}
+      contentContainerStyle={{
+        padding: RFValue(2),
+        paddingHorizontal: PADDINGS.mdPadding,
+      }}
       data={DoctorsDataUpdated}
       renderItem={(itemData, index) =>
         itemData.item.rating.length == 5 ? (
-          <Pressable
-            style={style.CardContainer}
-            onPress={() => {
-              alert(' Go to Doctor Profile');
-            }}>
+          <Pressable style={style.CardContainer} onPress={() => {
+            navigation.navigate("DoctorProfile")
+          }}>
             {/* ImageOnCards */}
             <View style={style.imageContainerStyle}>
               <Image source={itemData.item.image} style={style.imageCard} />

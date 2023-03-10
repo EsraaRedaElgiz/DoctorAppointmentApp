@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
         color: COLORS.blue,
         fontSize: FONTS.h4,
         fontFamily: "Amaranth-Regular",
+        fontWeight:'bold'
     }, marginAfterFirstButton: {
         marginBottom: '10%',
     }, scrollViewStyle: {

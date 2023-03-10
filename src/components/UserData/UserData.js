@@ -2,13 +2,24 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {COLORS, FONTS, MARGIN} from '../../constants/Constants';
+import {style} from '../../styles/Style';
 
 function UserData(props) {
   const {label, data} = props;
   return (
     <View>
-      <Text style={styles.label}>{label}</Text>
-      <Text style={styles.data}>{data}</Text>
+      <Text style={[style.textContent, {color: COLORS.blue}]}>{label}</Text>
+      <Text
+        style={[
+          style.textSmallContent,
+          {
+            marginVertical: RFValue(6),
+            textAlign: 'left',
+            color: COLORS.darkGray3,
+          },
+        ]}>
+        {data}
+      </Text>
       <View style={styles.line} />
     </View>
   );

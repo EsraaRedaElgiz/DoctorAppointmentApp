@@ -14,7 +14,7 @@ import { TextInput } from 'react-native-paper';
 import { useSelector, useDispatch } from "react-redux";
 import { setOldPassword, setNewPassword, setConfirmNewPassword } from '../../Redux/Reducers/NewPasswordSlice'
 import { useForm, Controller } from "react-hook-form";
-function NewPassword() {
+function NewPassword({navigation}) {
     const dispatch = useDispatch();
     const globalState = useSelector(state => state);
     const [secured_pass, set_secured_pass] = useState(true);
@@ -30,6 +30,7 @@ function NewPassword() {
         dispatch(setOldPassword(data.oldPassword))
         dispatch(setNewPassword(data.newPassword))
         dispatch(setConfirmNewPassword(data.confirmNewPassword))
+        navigation.goBack()
     }
     const pass_secured = () => {
         let securedPass = secured_pass;

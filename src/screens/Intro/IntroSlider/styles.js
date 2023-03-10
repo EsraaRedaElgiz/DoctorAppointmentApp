@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
         fontSize: FONTS.h4,
         fontFamily: 'Amaranth',
         color: COLORS.white,
+        fontWeight:"bold"
     }, imageStyle: {
         width: '100%',
         height: '60%',

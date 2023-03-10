@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { StyleSheet, Dimensions } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { COLORS,ICONS } from '../../constants/Constants';
+import { COLORS,ICONS, MARGIN } from '../../constants/Constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 const { height, width } = Dimensions.get('window');
 
@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
         borderRadius: RFValue(15),
         backgroundColor: COLORS.white,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop:MARGIN.mdMargin
     }
 })
 export default ReusableArrowButton;

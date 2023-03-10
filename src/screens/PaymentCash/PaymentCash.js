@@ -7,7 +7,8 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {DoctorsData} from '../../utils';
 import PaymentCard from '../../components/Appointment/PaymentCard';
 import {style} from '../../styles/Style';
-const PaymentCash = () => {
+import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
+const PaymentCash = ({navigation}) => {
   return (
     <>
       <View
@@ -16,6 +17,12 @@ const PaymentCash = () => {
           {flex: 1, justifyContent: 'space-between'},
         ]}>
         <View style={styles.card_textContainer}>
+          <HeaderNavigation
+            title="الدفع"
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
           <PaymentCard
             image={DoctorsData[0].image}
             name={DoctorsData[0].name}
@@ -27,11 +34,7 @@ const PaymentCash = () => {
           />
           <View style={styles.textContainer}>
             <FontAwesome name="exclamation-triangle" size={ICONS.lgIcon} />
-            <Text
-              style={[
-                style.textTitleBold,
-                styles.extraTextStyle
-              ]}>
+            <Text style={[style.textTitleBold, styles.extraTextStyle]}>
               لتأكيد الحجز الرجاء الذهاب للعياده قبل الموعد بيوم واحد
             </Text>
           </View>
@@ -39,6 +42,7 @@ const PaymentCash = () => {
         <GeneralButton
           title="تم"
           onPress={() => {
+            navigation.navigate('HomeNavi');
             alert('لتأكيد الحجز الرجاء الذهاب للعياده قبل الموعد بيوم واحد');
           }}
         />

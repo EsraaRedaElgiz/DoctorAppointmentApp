@@ -3,8 +3,7 @@ import {PADDINGS} from '../../constants/Constants';
 
 const styles = StyleSheet.create({
   container: {
-    padding: PADDINGS.smPadding,
-    paddingVertical: PADDINGS.xlPadding,
+    paddingHorizontal: PADDINGS.mdPadding,
   },
 });
 export default styles;

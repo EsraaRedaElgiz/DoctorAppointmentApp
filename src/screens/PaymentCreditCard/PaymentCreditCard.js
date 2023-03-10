@@ -13,10 +13,18 @@ import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {ListTiltle} from '../../components/Home';
 import {style} from '../../styles/Style';
-const PaymentCreditCard = () => {
+import Visa from '../../components/Visa/Visa';
+import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
+const PaymentCreditCard = ({navigation}) => {
   return (
     <View
       style={[style.bigContainer, {flex: 1, justifyContent: 'space-between'}]}>
+      <HeaderNavigation
+        title="الدفع"
+        onPress={() => {
+          navigation.goBack();
+        }}
+      />
       <PaymentCard
         image={DoctorsData[0].image}
         name={DoctorsData[0].name}
@@ -33,11 +41,16 @@ const PaymentCreditCard = () => {
           alert('اضافه كارت؟');
         }}
       />
-      <ScrollView>{/* VISA Flat List */}</ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Visa />
+        <Visa />
+        <Visa />
+        <Visa />
+      </ScrollView>
       <GeneralButton
         title="تاكيد"
         onPress={() => {
-          alert('الذهاب الى صفحه كومبليت');
+          navigation.navigate('CompletedAppointment');
         }}
       />
     </View>
