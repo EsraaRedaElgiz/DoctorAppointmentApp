@@ -116,7 +116,7 @@ function ProfileImage(props) {
       {nameAfterImage ? (
         <View
           style={
-            iconName ? styles.iconNameView : {marginBottom: MARGIN.xlMargin}
+            iconName ? styles.iconNameView : {marginBottom: MARGIN.mdMargin}
           }>
           <Text style={styles.name}>عبدالرحمن محمد عياد</Text>
           {iconName ? (

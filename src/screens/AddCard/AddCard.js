@@ -5,12 +5,15 @@ import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import GeneralPage from '../../components/GeneralPage/GeneralPage';
 import VisaTypeCard from '../../components/VisaTypeCard/VisaTypeCard';
-import {COLORS, FONTS} from '../../constants/Constants';
+import {COLORS, FONTS, PADDINGS} from '../../constants/Constants';
 import styles from './AddCardStyle';
 
 const {width, height} = Dimensions.get('window');
+import {useNavigation} from '@react-navigation/native';
+import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
 
 function AddCard(props) {
+  const navigation = useNavigation();
   const [payment, setPayment] = useState([
     {image: require('../../assets/Images/paypal.png')},
     {image: require('../../assets/Images/masterCard.png')},
@@ -19,6 +22,13 @@ function AddCard(props) {
   ]);
   return (
     <GeneralPage>
+      <HeaderNavigation
+          title="اضافه بطاقة"
+          padding={PADDINGS.mdPadding}
+          onPress={() => {
+            navigation.goBack()
+          }}
+        />
       <View style={styles.container}>
         <Text style={styles.title}>طرق الدفع</Text>
         <View style={styles.visaTypeView}>
@@ -59,7 +69,12 @@ function AddCard(props) {
           </View>
         </View>
         <View style={styles.button}>
-          <GeneralButton title="تأكيد" />
+          <GeneralButton
+            title="تأكيد"
+            onPress={() => {
+              navigation.goBack();
+            }}
+          />
         </View>
       </View>
     </GeneralPage>

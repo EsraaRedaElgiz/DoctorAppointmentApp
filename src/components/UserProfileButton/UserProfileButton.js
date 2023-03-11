@@ -11,9 +11,9 @@ import {
 } from '../../constants/Constants';
 
 function UserProfileButton(props) {
-  const {backgroundColor, style, title, iconName, ...rest} = props;
+  const {backgroundColor, style, title, iconName,onPress, ...rest} = props;
   return (
-    <TouchableOpacity {...rest} style={[styles.buttonStyle, style]}>
+    <TouchableOpacity {...rest} style={[styles.buttonStyle, style]} onPress={onPress}>
       <View style={styles.buttonContent}>
         <View style={styles.textIconWrapper}>
           <Text style={styles.title}>{title}</Text>

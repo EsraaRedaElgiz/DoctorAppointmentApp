@@ -16,45 +16,37 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   topViewStyle: {
-    //minHeight: height * .2,
     paddingHorizontal: PADDINGS.mdPadding,
-    //paddingTop: '5%',///
-    //flex: 1,
-    paddingBottom: '20%'
-  },
-  custombuttonIconStyle: {
-    //marginBottom: '10%',
-  },
-  viewHeaderStyle: {
-    marginTop: '10%',
+    paddingBottom: "5%"
+  }, viewHeaderStyle: {
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-  }, scrollViewContentContainerStyle: {
+  },
+  scrollViewContentContainerStyle: {
     minHeight: '100%'
   },
   firstTextHeaderStyle: {
     color: COLORS.white,
     fontSize: FONTS.h3,
     fontFamily: 'Amaranth-Regular',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   secondTextHeaderStyle: {
     color: COLORS.white,
     fontSize: FONTS.h4,
     fontFamily: 'Amaranth-Regular',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   viewAfterHeaderStyle: {
     backgroundColor: COLORS.white,
     borderTopRightRadius: RFValue(85),
     paddingHorizontal: PADDINGS.mdPadding,
-    //flex: 5,
     paddingTop: '15%',
-    //paddingBottom: '.01%',
     flex: 1,
     justifyContent: 'space-between',
     flexDirection: 'column',
+    paddingBottom: PADDINGS.mdPadding
   },
   eachTextinputAndErrorTextContainer: {
     marginBottom: '3%',
@@ -76,6 +68,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    //marginBottom: MARGIN.mdMargin,
   },
   bluetextstyle: {
     color: COLORS.blue,
@@ -95,7 +88,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: '14%',
+    marginVertical: '19%',
   },
   viewforheaderstyle: {
     marginBottom: '2%',
@@ -121,12 +114,13 @@ const styles = StyleSheet.create({
   },
   orWordStyle: {
     color: COLORS.darkGray2,
-  }, buttonMargin: {
-    //marginBottom: '2%'
   }, scrollViewStyle: {
-    backgroundColor: COLORS.white
-  }, textErrorColor: {
-    color: "#f00"
+    backgroundColor: COLORS.white,
+  },
+  textErrorColor: {
+    color: '#f00',
+  }, buttonMargin: {
+    marginBottom: '1%'
   }
 });
 export default styles;

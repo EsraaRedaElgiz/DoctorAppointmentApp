@@ -28,10 +28,14 @@ import Icon from 'react-native-vector-icons/Feather';
 import * as ImagePicker from 'react-native-image-picker';
 import {requestCameraPermission} from '../../utils/CameraPermissin';
 import RBSheet from 'react-native-raw-bottom-sheet';
+import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
 const {height} = Dimensions.get('window');
 
-function Prescription(props) {
+function Prescription({navigation}) {
   const [photo_uri, setphoto_uri] = useState(null);
+  const [analysis_uri, set_analysis_uri] = useState(null);
+  const [rumor_uri, set_rumor_uri] = useState(null);
+  const [imageIndex, setImageIndex] = useState(null);
   const [head, setHead] = useState(['الدواء', 'المدة', 'ملاحظات']);
   const [data, setData] = useState([
     ['lorim', 'يومان', 'مرة'],
@@ -61,7 +65,12 @@ function Prescription(props) {
         console.log('User tapped custom button: ', res.customButton);
         alert(res.customButton);
       } else {
-        setphoto_uri(photo_uri => res.assets[0].uri);
+        if (imageIndex === 0) {
+          set_analysis_uri(photo_uri => res.assets[0].uri);
+        } else {
+          set_rumor_uri(photo_uri => res.assets[0].uri);
+        }
+        // setphoto_uri(photo_uri => res.assets[0].uri);
       }
     });
   };
@@ -82,13 +91,25 @@ function Prescription(props) {
         console.log('User tapped custom button: ', res.customButton);
         alert(res.customButton);
       } else {
-        setphoto_uri(photo_uri => res.assets[0].uri);
+        if (imageIndex === 0) {
+          set_analysis_uri(photo_uri => res.assets[0].uri);
+        } else {
+          set_rumor_uri(photo_uri => res.assets[0].uri);
+        }
+        //setphoto_uri(photo_uri => res.assets[0].uri);
         //upload_img(res.assets[0].base64)
       }
     });
   };
   return (
     <GeneralPage>
+      <HeaderNavigation
+          title="الروشته"
+          onPress={() => {
+            navigation.goBack();
+          }}
+          padding={PADDINGS.mdPadding}
+        />
       <View style={styles.container}>
         <Text style={styles.title}>التشخيص</Text>
         <View style={styles.diagnosisView}>
@@ -127,9 +148,19 @@ function Prescription(props) {
           <View style={[styles.rowTableStyle, {backgroundColor: COLORS.white}]}>
             <Text style={styles.analysisText}>تحاليل</Text>
             <TouchableOpacity
-              onPress={() => setVisible(true)}
+              onPress={() => {
+                if (analysis_uri === null) {
+                  setImageIndex(0);
+                  refRBSheet.current.open();
+                } else {
+                  setImageIndex(0);
+                  setVisible(true);
+                }
+              }}
               style={styles.openButton}>
-              <Text style={styles.openText}>افتح</Text>
+              <Text style={styles.openText}>
+                {analysis_uri === null ? 'اضافة' : 'افتح'}
+              </Text>
             </TouchableOpacity>
           </View>
           <View style={styles.rowTableStyle}>
@@ -137,9 +168,17 @@ function Prescription(props) {
             <TouchableOpacity
               style={styles.openButton}
               onPress={() => {
-                refRBSheet.current.open();
+                if (rumor_uri === null) {
+                  setImageIndex(1);
+                  refRBSheet.current.open();
+                } else {
+                  setImageIndex(1);
+                  setVisible(true);
+                }
               }}>
-              <Text style={styles.openText}>اضافة</Text>
+              <Text style={styles.openText}>
+                {rumor_uri === null ? 'اضافة' : 'افتح'}
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -167,7 +206,7 @@ function Prescription(props) {
           <View style={styles.imageView}>
             <Image
               resizeMode="contain"
-              source={{uri: photo_uri}}
+              source={{uri: imageIndex === 0 ? analysis_uri : rumor_uri}}
               style={styles.imageStyle}
             />
           </View>
@@ -175,7 +214,7 @@ function Prescription(props) {
       </Modal>
       <RBSheet
         ref={refRBSheet}
-        height={RFValue(200)}
+        height={RFValue(150)}
         openDuration={250}
         customStyles={{
           container: {
@@ -201,8 +240,8 @@ function Prescription(props) {
           style={styles.eachOptionInBottonTab}>
           <Text style={styles.optionTextStyle}>اختيار صورة</Text>
         </TouchableOpacity>
-        <View style={styles.line} />
-        <TouchableOpacity
+        {/* <View style={styles.line} /> */}
+        {/* <TouchableOpacity
           onPress={() => {
             refRBSheet.current.close();
             setphoto_uri(photo_uri => '');
@@ -211,7 +250,7 @@ function Prescription(props) {
           <Text style={[styles.optionTextStyle, {color: COLORS.red}]}>
             مسح الصورة
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={styles.line} />
         <TouchableOpacity
           onPress={() => refRBSheet.current.close()}
