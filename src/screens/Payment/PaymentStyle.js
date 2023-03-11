@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   buttonView: {
-    marginHorizontal: MARGIN.mdMargin,
+    paddingHorizontal: PADDINGS.mdPadding,
   },
 });
 

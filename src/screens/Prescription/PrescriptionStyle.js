@@ -5,7 +5,7 @@ const {height} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
-    padding: PADDINGS.smPadding,
+    paddingHorizontal: PADDINGS.mdPadding,
   },
   title: {
     fontSize: FONTS.h4,
