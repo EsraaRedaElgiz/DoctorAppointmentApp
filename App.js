@@ -1,7 +1,7 @@
 import React from 'react';
 import AppContainer from './src/navigation/AppContainer';
 function App() {
-  return <AppContainer isAuth={false} />;
+  return <AppContainer isAuth={true} />;
 }
 
 export default App;

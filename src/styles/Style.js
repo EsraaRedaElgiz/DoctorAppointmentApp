@@ -80,13 +80,13 @@ const style = StyleSheet.create({
     backgroundColor: COLORS.white,
     alignItems: 'center',
     justifyContent: 'center',
-    elevation:RFValue(4)
+    elevation: RFValue(4),
   },
-  left_Btn_header:{
+  left_Btn_header: {
     width: RFValue(70),
-    height:"100%",
-    alignItems: "flex-end",
+    height: '100%',
+    alignItems: 'flex-end',
     justifyContent: 'center',
-  }
+  },
 });
 export {style};

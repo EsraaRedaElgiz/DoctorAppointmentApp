@@ -12,13 +12,13 @@ function MedicalID1(props) {
   return (
     <GeneralPage>
       <HeaderNavigation
-        title="المعلومات الشخصيه"
+        title="المعلومات الشخصية"
         btn="تعديل"
         padding={PADDINGS.mdPadding}
         onPress={() => {
           navigation.navigate('UserProfile');
         }}
-        onPressBtn={()=>{
+        onPressBtn={() => {
           navigation.navigate('EditPersonDetails');
         }}
       />
@@ -29,7 +29,6 @@ function MedicalID1(props) {
             navigation.navigate('EditPersonDetails');
           }}
         /> */}
-
         <ProfileImage />
         <UserData data="A+" label="نوع الدم" />
         <UserData data="70" label="الوزن" />

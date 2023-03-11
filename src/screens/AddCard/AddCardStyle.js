@@ -4,7 +4,6 @@ import {COLORS, FONTS, MARGIN, PADDINGS} from '../../constants/Constants';
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: PADDINGS.mdPadding,
     paddingHorizontal: PADDINGS.mdPadding,
   },
   visaTypeView: {
@@ -14,9 +13,6 @@ const styles = StyleSheet.create({
     marginBottom: MARGIN.xlMargin,
   },
   title: {
-    fontSize: FONTS.h4,
-    fontWeight: 'bold',
-    color: COLORS.darkGray,
     marginBottom: MARGIN.mdMargin,
   },
   inputView: {
@@ -26,7 +22,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    marginTop: '76%',
+    marginTop: '48%',
   },
 });
 export default styles;
