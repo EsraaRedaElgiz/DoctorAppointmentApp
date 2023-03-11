@@ -30,7 +30,7 @@ function UserProfile(props) {
                     : idx == 4
                     ? navigation.navigate('SupportTeam')
                     : idx == 5
-                    ? null// will change
+                    ? null // will change
                     : idx == 6
                     ? navigation.navigate('LogIn')
                     : null;

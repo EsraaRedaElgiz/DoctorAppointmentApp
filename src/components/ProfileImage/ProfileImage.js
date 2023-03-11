@@ -6,6 +6,7 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import {MARGIN, COLORS, FONTS, ICONS} from '../../constants/Constants';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {style} from '../../styles/Style';
 
 function ProfileImage(props) {
   const {
@@ -118,7 +119,7 @@ function ProfileImage(props) {
           style={
             iconName ? styles.iconNameView : {marginBottom: MARGIN.mdMargin}
           }>
-          <Text style={styles.name}>عبدالرحمن محمد عياد</Text>
+          <Text style={style.textContentBold}>عبدالرحمن محمد عياد</Text>
           {iconName ? (
             <TouchableOpacity>
               <FontAwesome5
