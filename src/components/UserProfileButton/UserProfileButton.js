@@ -9,17 +9,21 @@ import {
   PADDINGS,
   RADIUS,
 } from '../../constants/Constants';
+import {style} from '../../styles/Style';
 
 function UserProfileButton(props) {
-  const {backgroundColor, style, title, iconName,onPress, ...rest} = props;
+  const {backgroundColor, styleProp, title, iconName, onPress, ...rest} = props;
   return (
-    <TouchableOpacity {...rest} style={[styles.buttonStyle, style]} onPress={onPress}>
+    <TouchableOpacity
+      {...rest}
+      style={[styles.buttonStyle, styleProp]}
+      onPress={onPress}>
       <View style={styles.buttonContent}>
         <View style={styles.textIconWrapper}>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={style.textContentBold}>{title}</Text>
         </View>
         <View style={[styles.textIconWrapper, {alignItems: 'flex-end'}]}>
-          <Icon size={ICONS.smIcon} color={COLORS.darkGray} name={iconName} />
+          <Icon size={ICONS.smIcon} color={COLORS.darkGray3} name={iconName} />
         </View>
       </View>
     </TouchableOpacity>

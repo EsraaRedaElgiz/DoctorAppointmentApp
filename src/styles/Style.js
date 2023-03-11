@@ -89,6 +89,6 @@ const style = StyleSheet.create({
     height: "100%",
     alignItems: "flex-end",
     justifyContent: 'center',
-  }
+  },
 });
 export { style };

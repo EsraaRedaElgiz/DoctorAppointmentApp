@@ -15,17 +15,15 @@ function Payment(props) {
       <StatusBar backgroundColor={COLORS.blue} />
       <HeaderNavigation
         title="الدفع"
-        padding={PADDINGS.smPadding}
+        padding={PADDINGS.mdPadding}
         onPress={() => {
           navigation.navigate('UserProfile');
         }}
-        
       />
       <ScrollView
         style={{flex: 1}}
         contentContainerStyle={{
-          padding: RFValue(10),
-          marginBottom: RFValue(10),
+          paddingHorizontal: PADDINGS.mdPadding,
         }}>
         <Visa visa />
         <Visa master />
