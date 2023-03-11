@@ -14,6 +14,7 @@ export const COLORS = {
   darkGray2: '#707070',
   darkGray3: '#303135',
   red: '#f00',
+  green:'#aed260'
 };
 export const ICONS = {
   xsIcon: RFValue(10) >= 10 ? RFValue(10) : 5,

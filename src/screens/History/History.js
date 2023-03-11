@@ -19,15 +19,15 @@ function History() {
     {
       doctorName: "سامي علي",
       doctorSpeciality: "الطب العام والداخلي",
-      day: "٤",
+      day: "4",
       month: "سبتمبر",
-      year: "٢٠٢٢",
+      year: "2022",
     }, {
       doctorName: "سامي علي",
       doctorSpeciality: "الطب العام والداخلي",
-      day: "٤",
+      day: "4",
       month: "سبتمبر",
-      year: "٢٠٢٢",
+      year: "2022",
     }
 
   ]
