@@ -77,7 +77,8 @@ const styles = StyleSheet.create({
         height: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        //backgroundColor:"#f00"
+        //backgroundColor:"#f00",
+        alignItems:'center'
 
     }, imageContainer: {
         width: '25%',
@@ -93,10 +94,10 @@ const styles = StyleSheet.create({
         marginBottom: '2%'
     }, doctorNameStyle: {
         fontSize: FONTS.h5,
-        color: COLORS.black
+        color: COLORS.darkGray3
     }, specialityTextStyle: {
         fontSize: FONTS.h6,
-        color: COLORS.gray
+        color: COLORS.darkGray2
     }, timaAndDateContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between'
@@ -109,7 +110,7 @@ const styles = StyleSheet.create({
         marginHorizontal: RFValue(3)
     }, eachTextStyleInDateAndTimeContainers: {
         fontSize: FONTS.h5,
-        color: COLORS.black
+        color: COLORS.darkGray3
     }, viewTimeStyle: {
         flexDirection: 'row',
         backgroundColor: COLORS.lightGray,

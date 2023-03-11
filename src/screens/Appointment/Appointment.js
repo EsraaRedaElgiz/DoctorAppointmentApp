@@ -20,18 +20,18 @@ function Appointment() {
         {
             doctorName: "سامي علي",
             doctorSpeciality: "الطب العام والداخلي",
-            day: "٤",
+            day: "4",
             month: "سبتمبر",
-            year: "٢٠٢٢",
-            time: "٣٠:٥",
+            year: "2022",
+            time: "5:30",
             status: "م"
         }, {
             doctorName: "سامي علي",
             doctorSpeciality: "الطب العام والداخلي",
-            day: "٤",
+            day: "4",
             month: "سبتمبر",
-            year: "٢٠٢٢",
-            time: "٣٠:٥",
+            year: "2022",
+            time: "5:30",
             status: "م"
         }
 

@@ -28,7 +28,9 @@ import InrtoSlider from './src/screens/Intro/IntroSlider/IntroSlider';
 import SupportTeam from './src/screens/SupportTeam/SupportTeam';
 import SignUp from './src/screens/SignUp/SignUp'
 import LogIn from './src/screens/LogIn/LogIn'
+import AppointmentDetails from './src/screens/AppointmentDetails/AppointmentDetails'
+import AddAppointmentBySecretary from './src/screens/AddAppointmentBySecretary/AddAppointmentBySecretary';
 function App() {
-  return <ForgetPassword/>;
+  return <AddAppointmentBySecretary/>;
 }
 export default App;
