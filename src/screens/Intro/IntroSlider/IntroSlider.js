@@ -6,7 +6,7 @@ import { COLORS } from '../../../constants/Constants'
 import { useSelector, useDispatch } from "react-redux";
 import { setIntroSlider } from '../../../Redux/Reducers/IntroSliderSlice'
 
-function IntroSlider() {
+function IntroSlider({navigation}) {
     const dispatch = useDispatch();
     const globalState = useSelector(state => state);
     const [introDone, setIntroDone] = useState(globalState.IntroSliderReducer.IntroSliderDone)
@@ -48,7 +48,11 @@ function IntroSlider() {
     };
     const renderDoneButton = () => {
         return (
-            <TouchableOpacity style={styles.doneButtonStyle}>
+            <TouchableOpacity style={styles.doneButtonStyle}
+            onPress={()=>{
+                navigation.navigate("DoctorOrPatient")
+            }}
+            >
                 <Text style={styles.textNextAndDoneStyle}>التالي</Text>
             </TouchableOpacity>
         );

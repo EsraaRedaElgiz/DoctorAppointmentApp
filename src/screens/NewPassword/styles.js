@@ -12,18 +12,10 @@ const styles = StyleSheet.create({
     }, textHeaderStyle: {
         marginLeft: RFValue(-20)
     }, viewForTextStyle: {
-        marginTop: '5%',
         marginBottom: '15%'
     }, viewForScrollviewContainer: {
         paddingHorizontal: PADDINGS.mdPadding,
-        //paddingTop: '5%',
-        paddingBottom: '5%',
-        //backgroundColor: "#ff0",
         flex: 1,
-        justifyContent: 'space-between',
-        flexDirection: 'column',
-    }, scrollViewContentContainerStyle: {
-        minHeight: '100%'
     }, textStyle: {
         color: COLORS.darkGray,
         fontSize: FONTS.h5,
@@ -34,7 +26,8 @@ const styles = StyleSheet.create({
     }, scrollViewStyle: {
         backgroundColor: COLORS.white,
     }, viewButtonContainerStyle: {
-        //paddingHorizontal: PADDINGS.mdPadding
+        paddingHorizontal: PADDINGS.mdPadding,
+        paddingBottom: PADDINGS.mdPadding
     }, textErrorColor: {
         color: "#f00"
     }

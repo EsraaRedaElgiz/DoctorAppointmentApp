@@ -1,10 +1,15 @@
-import React from 'react';
+import React ,{useEffect}from 'react';
 import { View, StyleSheet, StatusBar } from 'react-native'
 import Lottie from 'lottie-react-native';
 import { COLORS } from '../../../constants/Constants'
 import { RFValue } from 'react-native-responsive-fontsize'
 
-function Splash() {
+function Splash({navigation}) {
+    useEffect(() => {
+        setTimeout(() => {
+          navigation.navigate("intro")
+        }, 2000); 
+      }, [])
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor={COLORS.blue} />

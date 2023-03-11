@@ -5,10 +5,10 @@ import { RADIUS, FONTS, COLORS, PADDINGS, ICONS } from '../../constants/Constant
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Feather from 'react-native-vector-icons/Feather'
 function AppointmentAndHistoryComponent(props) {
-    const { style, doctorName, doctorSpeciality, dateShow, day, month, year, timeShow, time, status,onPress } = props
+    const { style, doctorName, doctorSpeciality, dateShow, day, month, year, timeShow, time, status,onPress,disabled } = props
 
     return (
-        <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
+        <TouchableOpacity style={[styles.container, style]} onPress={onPress} disabled={disabled}>
             <View style={styles.innerContainer}>
                 <View style={styles.imageContainer}>
                     <Image source={require('../../assets/Images/download.png')} style={styles.imageStyle} />
@@ -24,7 +24,7 @@ function AppointmentAndHistoryComponent(props) {
                         {dateShow ? (
                             <View style={styles.viewDateStyle}>
                                 <View style={styles.eachItemMarginInDateAndTimeContainers}>
-                                    <FontAwesome5 name='calendar-alt' size={ICONS.smIcon} color={COLORS.black} />
+                                    <FontAwesome5 name='calendar-alt' size={ICONS.smIcon} color={COLORS.darkGray3} />
                                 </View>
                                 <View style={styles.eachItemMarginInDateAndTimeContainers}>
                                     <Text style={styles.eachTextStyleInDateAndTimeContainers}>{day}</Text>
@@ -39,7 +39,7 @@ function AppointmentAndHistoryComponent(props) {
                         {timeShow ? (
                             <View style={styles.viewTimeStyle}>
                                 <View style={styles.eachItemMarginInDateAndTimeContainers}>
-                                    <Feather name='clock' size={ICONS.smIcon} color={COLORS.black} />
+                                    <Feather name='clock' size={ICONS.smIcon} color={COLORS.darkGray3} />
                                 </View>
                                 <View style={styles.eachItemMarginInDateAndTimeContainers}>
                                     <Text style={styles.eachTextStyleInDateAndTimeContainers}>{time}</Text>
@@ -76,12 +76,12 @@ const styles = StyleSheet.create({
         width: '90%',
         height: '100%',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        //justifyContent: 'space-between',
         //backgroundColor:"#f00",
         alignItems:'center'
 
     }, imageContainer: {
-        width: '25%',
+        width: RFValue(70),
         borderRadius: RADIUS.smRadius,
         height:'100%'
     }, imageStyle: {
@@ -89,7 +89,8 @@ const styles = StyleSheet.create({
         height: '100%',
         borderRadius: RADIUS.smRadius
     }, viewTextStyle: {
-        width: '70%'
+        width: '70%',
+        marginLeft:RFValue(3)
     }, eachLineMargin: {
         marginBottom: '2%'
     }, doctorNameStyle: {

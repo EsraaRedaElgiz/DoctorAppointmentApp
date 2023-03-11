@@ -12,8 +12,10 @@ import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import GeneralPage from '../../components/GeneralPage/GeneralPage';
 import {COLORS, ICONS} from '../../constants/Constants';
 import styles from './SupportTeamStyle';
-
+import {useNavigation} from '@react-navigation/native';
+import { Alert } from 'react-native/Libraries/Alert/Alert';
 function SupportTeam(props) {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <ScrollView style={styles.ScrollViewStyle}>
@@ -31,7 +33,13 @@ function SupportTeam(props) {
           <Ionicons name="call" size={ICONS.xxlIcon} color={COLORS.blue} />
         </TouchableOpacity>
       </ScrollView>
-      <GeneralButton title="ارسال" style={styles.button} />
+      <GeneralButton
+        title="ارسال"
+        style={styles.button}
+        onPress={() => {
+          navigation.navigate("Home")
+        }}
+      />
     </View>
   );
 }

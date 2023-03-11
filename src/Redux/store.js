@@ -8,6 +8,7 @@ import MedicalSheetReducer from './Reducers/MedicalSheetSlice'
 import IntroSliderReducer from './Reducers/IntroSliderSlice'
 import AppointmentReducer from './Reducers/AppointmentSlice'
 import HistoryReducer from './Reducers/HistorySlice'
+import AuthReducer from './Reducers/AuthSlice'
 import { createStore, configureStore } from '@reduxjs/toolkit'
 const store = configureStore({
     reducer: {
@@ -20,7 +21,8 @@ const store = configureStore({
         MedicalSheetReducer: MedicalSheetReducer,
         IntroSliderReducer: IntroSliderReducer,
         AppointmentReducer: AppointmentReducer,
-        HistoryReducer: HistoryReducer
+        HistoryReducer: HistoryReducer,
+        AuthReducer:AuthReducer
     }
 })
 export default store;
