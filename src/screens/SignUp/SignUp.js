@@ -10,46 +10,52 @@ import styles from './style';
 import { COLORS, PADDINGS } from '../../constants/Constants';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import { TextInput } from 'react-native-paper';
-import ReusableArrowButton from '../../components/AppRightIcon/AppRightIcon';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import { useSelector, useDispatch } from 'react-redux';
-import {
+/*import {
   setName,
   setPhoneNum,
   setEmail,
   setPassword,
   setConfirmPassword,
-} from '../../Redux/Reducers/SignUpSlice';
+} from '../../Redux/Reducers/SignUpSlice';*/
 import { useForm, Controller } from 'react-hook-form';
 import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
 //import { insertData } from "../../Redux/Reducers/SignUpSlice";
 function SignUp({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
+  const [name, setName] = useState("")
+  const [phoneNum, setPhoneNum] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
   const [secured_pass_first, set_secured_pass_first] = useState(true);
   const [secured_pass_second, set_secured_pass_second] = useState(true);
 
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
     watch,
   } = useForm({
+
     defaultValues: {
-      name: globalState.SignUpReducer.name,
-      phoneNum: globalState.SignUpReducer.phoneNum,
-      email: globalState.SignUpReducer.email,
-      password: globalState.SignUpReducer.password,
-      confirmPassword: globalState.SignUpReducer.confirmPassword,
+      name: name,
+      phoneNum: phoneNum,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
     },
   });
   const onSubmit = data => {
-    // console.log(data);
-    dispatch(setName(data.name));
-    dispatch(setPhoneNum(data.phoneNum));
-    dispatch(setEmail(data.email));
-    dispatch(setPassword(data.password));
-    dispatch(setConfirmPassword(data.confirmPassword));
+    console.log(data);
+    setName("");
+    setPhoneNum("");
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("")
     navigation.navigate('MedicalSheet');
     //backend
     /* const data = {
@@ -65,11 +71,7 @@ function SignUp({ navigation }) {
        dispatch(setEmail(""))
        dispatch(setPassword(""))
        dispatch(setConfirmPassword(""))*/
-    dispatch(setName(""));
-    dispatch(setPhoneNum(""));
-    dispatch(setEmail(""));
-    dispatch(setPassword(""));
-    dispatch(setConfirmPassword(""));
+
   };
 
 
@@ -85,12 +87,13 @@ function SignUp({ navigation }) {
           backgroundColor={COLORS.blue}
           padding={PADDINGS.mdPadding}
           onPress={() => {
+            setName("");
+            setPhoneNum("");
+            setEmail("");
+            setPassword("");
+            setConfirmPassword("");
             navigation.navigate('DoctorOrPatient');
-            dispatch(setName(""));
-            dispatch(setPhoneNum(""));
-            dispatch(setEmail(""));
-            dispatch(setPassword(""));
-            dispatch(setConfirmPassword(""));
+
           }}
         />
         <View style={styles.container}>
@@ -300,7 +303,12 @@ function SignUp({ navigation }) {
                 </View>
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate('LogIn');
+                    setName("");
+                    setPhoneNum("");
+                    setEmail("");
+                    setPassword("");
+                    setConfirmPassword("");
+                    navigation.navigate('LogIn')
                   }}>
                   <Text style={styles.bluetextstyle}> تسجيل الدخول </Text>
                 </TouchableOpacity>
