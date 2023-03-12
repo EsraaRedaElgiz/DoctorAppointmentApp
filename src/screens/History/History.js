@@ -24,9 +24,9 @@ function History({ navigation }) {
       month: "سبتمبر",
       year: "2022",
     }, {
-      doctorName: "سامي علي",
-      doctorSpeciality: "الطب العام والداخلي",
-      day: "4",
+      doctorName: "احمد محمد",
+      doctorSpeciality: "طب الاسنان",
+      day: "6",
       month: "سبتمبر",
       year: "2022",
     }
@@ -59,6 +59,7 @@ function History({ navigation }) {
       <StatusBar backgroundColor={COLORS.blue} />
       <HeaderNavigation
         title="التاريخ"
+        color={COLORS.darkGray3}
         onPress={() => {
           navigation.goBack();
         }}

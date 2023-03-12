@@ -1,11 +1,11 @@
-import {StyleSheet, Text, View, Image, Pressable, FlatList} from 'react-native';
-import React, {useState} from 'react';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {DoctorsData} from '../../../utils';
+import { StyleSheet, Text, View, Image, Pressable, FlatList } from 'react-native';
+import React, { useState } from 'react';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { DoctorsData } from '../../../utils';
 import Stars from '../../Stars/Stars';
-import {style} from '../../../styles/Style';
-import {PADDINGS} from '../../../constants/Constants';
-import {useNavigation} from '@react-navigation/native';
+import { style } from '../../../styles/Style';
+import { PADDINGS,FONTS,COLORS } from '../../../constants/Constants';
+import { useNavigation } from '@react-navigation/native';
 
 const TopDoctors = () => {
   const [DoctorsDataUpdated, setDoctorsDataUpdated] = useState(DoctorsData);
@@ -30,13 +30,16 @@ const TopDoctors = () => {
 
             {/* TextOnCards */}
             <View style={style.textsCardConatiner}>
-              <Text style={style.textContentBold}>
-                الدكتور {itemData.item.name.trim()}{' '}
+              <Text style={[style.textContentBold,{fontWeight:'normal'}]}>
+                د.{itemData.item.name.trim()}{' '}
               </Text>
-              <Text style={style.textContent}>
+              <Text style={[style.textContent, {
+                fontSize: FONTS.h6,
+                color: COLORS.darkGray2
+              }]}>
                 طبيب {itemData.item.specialtiy.trim()}{' '}
               </Text>
-              <View style={{flexDirection: 'row'}}>
+              <View style={{ flexDirection: 'row' }}>
                 {itemData.item.rating.map(() => {
                   return (
                     <>

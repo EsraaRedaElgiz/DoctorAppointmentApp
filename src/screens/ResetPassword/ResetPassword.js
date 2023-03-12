@@ -42,7 +42,8 @@ function ResetPassword({ navigation }) {
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.blue} />
       <HeaderNavigation
-        title="إعادة تعيين كلمة المرور"
+        title="تعيين كلمة المرور"
+        color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
         onPress={() => {
           navigation.navigate('VertificationCode');

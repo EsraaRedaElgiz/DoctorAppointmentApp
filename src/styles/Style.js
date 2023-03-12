@@ -44,24 +44,29 @@ const style = StyleSheet.create({
     fontSize: FONTS.h4,
     fontFamily: FONTS.Amaranth,
     fontWeight: 'bold',
+    color:COLORS.darkGray3
   },
   textTitle: {
     fontSize: FONTS.h4,
     fontFamily: FONTS.Amaranth,
+    
   },
   textContentBold: {
     fontSize: FONTS.h5,
     fontFamily: FONTS.Amaranth,
     fontWeight: 'bold',
+    color:COLORS.darkGray3
   },
   textContent: {
     fontSize: FONTS.h5,
     fontFamily: FONTS.Amaranth,
+    color:COLORS.darkGray3
   },
   textSmallContentBold: {
     fontSize: FONTS.h6,
     fontFamily: FONTS.Amaranth,
     fontWeight: 'bold',
+    color:COLORS.darkGray
   },
   textSmallContent: {
     fontSize: FONTS.h6,

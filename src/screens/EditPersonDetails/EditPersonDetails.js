@@ -91,6 +91,7 @@ function EditPersonDetails(props) {
         title="المعلومات الشخصية"
         btn="تم"
         padding={PADDINGS.mdPadding}
+        color={COLORS.darkGray3}
         onPress={() => {
           navigation.goBack();
         }}
