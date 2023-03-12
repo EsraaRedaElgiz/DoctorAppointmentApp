@@ -14,14 +14,14 @@ import ProfileImage from '../../components/ProfileImage/ProfileImage';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import DropDown from '../../components/DropDown/DropDown';
 import { useSelector, useDispatch } from 'react-redux';
-import {
+/*import {
   setPhotoUri,
   setBloodType,
   setWeight,
   setHeight,
   setAge,
   setGender,
-} from '../../Redux/Reducers/MedicalSheetSlice';
+} from '../../Redux/Reducers/MedicalSheetSlice';*/
 import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'react-native-image-picker';
 import RBSheet from 'react-native-raw-bottom-sheet';
@@ -81,9 +81,13 @@ function MedicalSheet({ navigation }) {
   };
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const [photo_uri, setphoto_uri] = useState(
-    globalState.MedicalSheetReducer.photoUri,
-  );
+  const [photo_uri, setphoto_uri] = useState("");
+  const [bloodType, setBloodType] = useState("")
+  const [weight, setWeight] = useState("")
+  const [height, setHeight] = useState("")
+  const [age, setAge] = useState("")
+  const [gender, setGender] = useState("")
+
   const blood = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
   const type = ['ذكر', 'أنثي'];
   const {
@@ -93,29 +97,26 @@ function MedicalSheet({ navigation }) {
     watch,
   } = useForm({
     defaultValues: {
-      bloodType: globalState.MedicalSheetReducer.bloodType,
-      weight: globalState.MedicalSheetReducer.weight,
-      height: globalState.MedicalSheetReducer.height,
-      age: globalState.MedicalSheetReducer.age,
-      gender: globalState.MedicalSheetReducer.gender,
+      bloodType: bloodType,
+      weight: weight,
+      height: height,
+      age: age,
+      gender: gender,
     },
   });
   const onSubmit = data => {
-    //console.log(data);
-    dispatch(setPhotoUri(photo_uri));
-    dispatch(setBloodType(data.bloodType));
-    dispatch(setWeight(data.weight));
-    dispatch(setHeight(data.height));
-    dispatch(setAge(data.age));
-    dispatch(setGender(data.gender));
+    console.log(data);
+    //setPhotoUri(photo_uri);
     //console.log(photo_uri)
+    //console.log(photo_uri)
+    
+    setphoto_uri("");
+    setBloodType("");
+    setWeight("");
+    setHeight("");
+    setAge("");
+    setGender("");
     dispatch(setLoggedIn())
-    dispatch(setPhotoUri(""));
-    dispatch(setBloodType(""));
-    dispatch(setWeight(""));
-    dispatch(setHeight(""));
-    dispatch(setAge(""));
-    dispatch(setGender(""));
   };
   return (
     <>
@@ -126,12 +127,12 @@ function MedicalSheet({ navigation }) {
         color={COLORS.white}
         onPress={() => {
           navigation.goBack();
-          dispatch(setPhotoUri(""));
-          dispatch(setBloodType(""));
-          dispatch(setWeight(""));
-          dispatch(setHeight(""));
-          dispatch(setAge(""));
-          dispatch(setGender(""));
+          setphoto_uri("");
+          setBloodType("");
+          setWeight("");
+          setHeight("");
+          setAge("");
+          setGender("");
         }}
       />
       <ScrollView
