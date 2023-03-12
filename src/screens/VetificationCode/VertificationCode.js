@@ -56,6 +56,7 @@ function VertificationCode({ navigation }) {
       <StatusBar backgroundColor={COLORS.blue} />
       <HeaderNavigation
         title="رمز التحقق"
+        color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
         onPress={() => {
           navigation.navigate('ForgetPassword');
@@ -95,7 +96,7 @@ function VertificationCode({ navigation }) {
                     onChangeText={onChange}
                     onBlur={onBlur}
                     cellCount={4}
-                    keyboardType="number-pad"
+                    keyboardType="numeric"
                     textContentType="oneTimeCode"
                     // onFulfill={handlerOnFulfill(value)}
                     renderCell={({ index, symbol, isFocused }) => (

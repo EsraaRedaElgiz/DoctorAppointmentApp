@@ -25,6 +25,7 @@ function AddCard(props) {
     <GeneralPage>
       <HeaderNavigation
         title="اضافه بطاقة"
+        color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
         onPress={() => {
           navigation.goBack();

@@ -6,7 +6,7 @@ import UserData from '../../components/UserData/UserData';
 import styles from './MedicalID1Style';
 import {useNavigation} from '@react-navigation/native';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
-import {PADDINGS} from '../../constants/Constants';
+import {PADDINGS,COLORS} from '../../constants/Constants';
 function MedicalID1(props) {
   const navigation = useNavigation();
   return (
@@ -14,6 +14,7 @@ function MedicalID1(props) {
       <HeaderNavigation
         title="المعلومات الشخصية"
         btn="تعديل"
+        color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
         onPress={() => {
           navigation.navigate('UserProfile');

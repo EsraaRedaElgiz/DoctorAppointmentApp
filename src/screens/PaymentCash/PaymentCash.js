@@ -2,7 +2,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {RFValue} from 'react-native-responsive-fontsize';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
-import {MARGIN, PADDINGS, ICONS, FONTS} from '../../constants/Constants';
+import {MARGIN, PADDINGS, ICONS, FONTS,COLORS} from '../../constants/Constants';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {DoctorsData} from '../../utils';
 import PaymentCard from '../../components/Appointment/PaymentCard';
@@ -19,6 +19,7 @@ const PaymentCash = ({navigation}) => {
         <View style={styles.card_textContainer}>
           <HeaderNavigation
             title="الدفع"
+            color={COLORS.darkGray3}
             onPress={() => {
               navigation.goBack();
             }}

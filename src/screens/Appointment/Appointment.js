@@ -22,15 +22,15 @@ function Appointment({ navigation }) {
       doctorSpeciality: "الطب العام والداخلي",
       day: "4",
       month: "سبتمبر",
-      year: "2022",
+      year: "2023",
       time: "5:30",
       status: "م"
     }, {
-      doctorName: "سامي علي",
-      doctorSpeciality: "الطب العام والداخلي",
-      day: "4",
+      doctorName: "احمد محمد",
+      doctorSpeciality:"طب الاسنان",
+      day: "5",
       month: "سبتمبر",
-      year: "2022",
+      year: "2023",
       time: "5:30",
       status: "م"
     }
@@ -64,6 +64,7 @@ function Appointment({ navigation }) {
       <StatusBar backgroundColor={COLORS.blue} />
       <HeaderNavigation
         title="المواعيد"
+        color={COLORS.darkGray3}
         onPress={() => {
           navigation.goBack();
         }}

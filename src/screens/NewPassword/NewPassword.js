@@ -44,6 +44,7 @@ function NewPassword({ navigation }) {
             <StatusBar backgroundColor={COLORS.blue} />
             <HeaderNavigation
                 title="تغيير كلمه المرور"
+                color={COLORS.darkGray3}
                 padding={PADDINGS.mdPadding}
                 onPress={() => {
                     navigation.navigate('UserProfile');

@@ -13,6 +13,7 @@ const SpecialityList = () => {
     <FlatList
       style={{marginBottom: MARGIN.smMargin, marginLeft: MARGIN.smMargin}}
       horizontal
+      showsHorizontalScrollIndicator={false}
       data={specialtyDataUpdated}
       renderItem={(itemData, index) => (
         <Pressable

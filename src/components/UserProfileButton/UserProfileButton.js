@@ -20,10 +20,10 @@ function UserProfileButton(props) {
       onPress={onPress}>
       <View style={styles.buttonContent}>
         <View style={styles.textIconWrapper}>
-          <Text style={style.textContentBold}>{title}</Text>
+          <Text style={styles.title}>{title}</Text>
         </View>
         <View style={[styles.textIconWrapper, {alignItems: 'flex-end'}]}>
-          <Icon size={ICONS.smIcon} color={COLORS.darkGray3} name={iconName} />
+          <Icon size={ICONS.smIcon} color={COLORS.darkGray} name={iconName} />
         </View>
       </View>
     </TouchableOpacity>

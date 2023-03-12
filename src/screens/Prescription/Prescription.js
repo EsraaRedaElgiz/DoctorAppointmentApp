@@ -106,6 +106,7 @@ function Prescription({navigation}) {
     <GeneralPage>
       <HeaderNavigation
         title="الروشتة"
+        color={COLORS.darkGray3}
         onPress={() => {
           navigation.goBack();
         }}

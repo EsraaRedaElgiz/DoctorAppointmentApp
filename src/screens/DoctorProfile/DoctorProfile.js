@@ -9,8 +9,8 @@ import {
   Modal,
   Button,
 } from 'react-native';
-import React, {useState} from 'react';
-import {RFValue} from 'react-native-responsive-fontsize';
+import React, { useState } from 'react';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   COLORS,
   FONTS,
@@ -24,14 +24,14 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import MapView from 'react-native-maps';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import GeneralPage from '../../components/GeneralPage/GeneralPage';
-import {style} from '../../styles/Style';
-import {DoctorsData} from '../../utils';
-import {ListTiltle} from '../../components/Home';
-import {Stars} from '../../components/Search';
+import { style } from '../../styles/Style';
+import { DoctorsData } from '../../utils';
+import { ListTiltle } from '../../components/Home';
+import { Stars } from '../../components/Search';
 import ReviewModal from '../../components/ReviewModal/ReviewModal';
-const DoctorProfile = ({navigation}) => {
+const DoctorProfile = ({ navigation }) => {
   const [visiableAddReview, setVisiableAddReview] = useState(false);
-  
+
   const region = {
     latitude: 30.033333,
     longitude: 31.233334,
@@ -41,17 +41,19 @@ const DoctorProfile = ({navigation}) => {
 
   return (
     <>
-      <ScrollView style={{backgroundColor: COLORS.white}}>
+      <ScrollView style={{ backgroundColor: COLORS.white }}>
         {/* image */}
         <Image
           source={DoctorsData[0].image}
-          style={{width: '100%', height: RFValue(300)}}
+          style={{ width: '100%', height: RFValue(300) }}
         />
 
         {/* NameAndSpecialty */}
         <View style={styles.textsContainer}>
           <Text style={style.textTitleBold}>الدكتور سامى محمد</Text>
-          <Text style={style.textContent}>أمراض النساء والتوليد</Text>
+          <Text style={[style.textContent, {
+            color: COLORS.darkGray2
+          }]}>أمراض النساء والتوليد</Text>
         </View>
 
         {/* Card */}
@@ -66,12 +68,12 @@ const DoctorProfile = ({navigation}) => {
             </Text>
           </View>
           {/* Location */}
-          <Text style={[style.textTitleBold, {marginTop: MARGIN.mdMargin}]}>
+          <Text style={[style.textTitleBold, { marginTop: MARGIN.mdMargin }]}>
             الموقع
           </Text>
           {/* navigate to map page */}
           <Pressable style={styles.PreviewMap}>
-            <MapView initialRegion={region} style={{flex: 1}}></MapView>
+            <MapView initialRegion={region} style={{ flex: 1 }}></MapView>
           </Pressable>
 
           {/* Review */}
@@ -81,7 +83,7 @@ const DoctorProfile = ({navigation}) => {
             onPress={() => {
               setVisiableAddReview(true);
             }}
-            styleProp={{height:RFValue(40)}}
+            styleProp={{ height: RFValue(40) }}
           />
           <ScrollView horizontal>
             <View
@@ -95,11 +97,11 @@ const DoctorProfile = ({navigation}) => {
                   <>
                     <View style={styles.reviewCard}>
                       <View style={styles.img_name_ratingContainer}>
-                        <View style={{flex: 1, marginRight: MARGIN.smMargin}}>
+                        <View style={{ flex: 1, marginRight: MARGIN.smMargin }}>
                           <Text style={style.textSmallContentBold}>
                             {item.name}
                           </Text>
-                          <View style={{flexDirection: 'row-reverse'}}>
+                          <View style={{ flexDirection: 'row-reverse' }}>
                             {item.rating.map((itemRating, index) => {
                               return (
                                 <>
@@ -139,7 +141,7 @@ const DoctorProfile = ({navigation}) => {
         visiableAddReview={visiableAddReview}
         setVisiableAddReview={setVisiableAddReview}
       />
-      
+
     </>
   );
 };
@@ -190,7 +192,7 @@ const Cards = () => {
     </>
   );
 };
-export {Cards};
+export { Cards };
 
 
 export default DoctorProfile;

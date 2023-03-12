@@ -33,6 +33,7 @@ function ForgetPassword({ navigation }) {
       <StatusBar backgroundColor={COLORS.blue} />
       <HeaderNavigation
         title="نسيت كلمه المرور"
+        color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
         onPress={() => {
           navigation.navigate('LogIn');
