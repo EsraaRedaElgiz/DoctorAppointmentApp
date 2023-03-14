@@ -32,7 +32,8 @@ const PaymentCard = props => {
       <View style={style.textsCardConatiner}>
         <View style={styles.threeSubContainer}>
           <View style={styles.nameContainer}>
-            <Text style={style.textSmallContentBold}>
+            <Text
+              style={[style.textSmallContentBold, {color: COLORS.darkGray3}]}>
               {' '}
               الدكتور {''}
               {name}
@@ -50,30 +51,40 @@ const PaymentCard = props => {
             <Stars />
           </View>
           <View style={styles.rating_Price_date_time_Container}>
-            <Text style={style.textSmallContentBold}>{price} جنيه</Text>
+            <Text
+              style={[style.textSmallContentBold, {color: COLORS.darkGray2}]}>
+              {price} جنيه
+            </Text>
           </View>
         </View>
         <View style={[styles.threeSubContainer, {alignItems: 'center'}]}>
-          <Text style={style.textSmallContent}>{speciality}</Text>
+          <Text style={[style.textSmallContent, , {color: COLORS.darkGray2}]}>
+            {speciality}
+          </Text>
         </View>
         <View
           style={[
             styles.threeSubContainer,
-            {marginHorizontal: MARGIN.xsMargin},
+            {paddingHorizontal: PADDINGS.xsPadding},
           ]}>
           <View
-            style={[
-              styles.rating_Price_date_time_Container,
-              styles.extraStyleCelender,
-            ]}>
+            style={{
+              width: RFValue(110),
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+              marginRight: MARGIN.smMargin,
+            }}>
             <FontAwesome name="calendar" size={ICONS.smIcon} />
             <Text style={style.textSmallContentBold}>{date}</Text>
           </View>
           <View
-            style={[
-              styles.rating_Price_date_time_Container,
-              styles.extraStyleTime,
-            ]}>
+            style={{
+              width: RFValue(80),
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+            }}>
             <Ionicons name="time-outline" size={ICONS.smIcon} />
             <Text style={style.textSmallContentBold}>
               {time} {''} مساء
@@ -88,7 +99,6 @@ const PaymentCard = props => {
 export default PaymentCard;
 
 const styles = StyleSheet.create({
-
   threeSubContainer: {
     height: RFValue(30),
     flexDirection: 'row',

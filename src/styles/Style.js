@@ -83,7 +83,7 @@ const style = StyleSheet.create({
     elevation:RFValue(4)
   },
   left_Btn_header:{
-    width: RFValue(70),
+    minWidth:RFValue(33),
     height:"100%",
     alignItems: "flex-end",
     justifyContent: 'center',
