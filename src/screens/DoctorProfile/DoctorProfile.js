@@ -5,9 +5,6 @@ import {
   View,
   Image,
   Pressable,
-  FlatList,
-  Modal,
-  Button,
 } from 'react-native';
 import React, { useState } from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -20,16 +17,14 @@ import {
   RADIUS,
 } from '../../constants/Constants';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import MapView from 'react-native-maps';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
-import GeneralPage from '../../components/GeneralPage/GeneralPage';
-import { style } from '../../styles/Style';
-import { DoctorsData } from '../../utils';
-import { ListTiltle } from '../../components/Home';
-import { Stars } from '../../components/Search';
+import {style} from '../../styles/Style';
+import {DoctorsData} from '../../utils';
+import {ListTiltle} from '../../components/Home';
 import ReviewModal from '../../components/ReviewModal/ReviewModal';
-const DoctorProfile = ({ navigation }) => {
+import {Rating} from 'react-native-stock-star-rating';
+const DoctorProfile = ({navigation}) => {
   const [visiableAddReview, setVisiableAddReview] = useState(false);
 
   const region = {
@@ -41,7 +36,9 @@ const DoctorProfile = ({ navigation }) => {
 
   return (
     <>
-      <ScrollView style={{ backgroundColor: COLORS.white }}>
+      <ScrollView
+        style={{backgroundColor: COLORS.white}}
+        showsVerticalScrollIndicator={false}>
         {/* image */}
         <Image
           source={DoctorsData[0].image}
@@ -83,9 +80,9 @@ const DoctorProfile = ({ navigation }) => {
             onPress={() => {
               setVisiableAddReview(true);
             }}
-            styleProp={{ height: RFValue(40) }}
+            styleProp={{height: RFValue(40)}}
           />
-          <ScrollView horizontal>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View
               style={{
                 flexDirection: 'row',
@@ -101,14 +98,12 @@ const DoctorProfile = ({ navigation }) => {
                           <Text style={style.textSmallContentBold}>
                             {item.name}
                           </Text>
-                          <View style={{ flexDirection: 'row-reverse' }}>
-                            {item.rating.map((itemRating, index) => {
-                              return (
-                                <>
-                                  <Stars />
-                                </>
-                              );
-                            })}
+                          <View style={{flexDirection: 'row-reverse'}}>
+                            <Rating
+                              stars={item.rating}
+                              maxStars={5}
+                              size={ICONS.xsIcon}
+                            />
                           </View>
                         </View>
                         <Image source={item.img} style={styles.imgReview} />
@@ -134,14 +129,13 @@ const DoctorProfile = ({ navigation }) => {
           alignSelf: 'center',
         }}
         onPress={() => {
-          navigation.navigate("BookAppointment")
+          navigation.navigate('BookAppointment');
         }}
       />
       <ReviewModal
         visiableAddReview={visiableAddReview}
         setVisiableAddReview={setVisiableAddReview}
       />
-
     </>
   );
 };
@@ -193,7 +187,6 @@ const Cards = () => {
   );
 };
 export { Cards };
-
 
 export default DoctorProfile;
 

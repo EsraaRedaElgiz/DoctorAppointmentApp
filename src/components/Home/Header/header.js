@@ -20,7 +20,7 @@ const Header = () => {
       <View style={styles.image_userNameContainer}>
         <Pressable
           onPress={() => {
-            alert('Go to User Profile');// navigate to user Profile page
+          navigation.navigate('MedicalID1');// navigate to user Profile page
           }}>
           <Image source={Images.userImage} style={styles.userImage} />
         </Pressable>

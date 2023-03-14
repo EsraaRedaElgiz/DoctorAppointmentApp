@@ -30,10 +30,10 @@ const PaymentCreditCard = ({navigation}) => {
       <PaymentCard
         image={DoctorsData[0].image}
         name={DoctorsData[0].name}
-        rating={4.5}
+        rating={DoctorsData[1].rating}
         price={DoctorsData[0].price}
         speciality={DoctorsData[0].specialtiy}
-        date="22 2022 سبتمبر"
+        date={"30\t"+"ديسمبر"+"\t2020"}
         time="4:30"
       />
       <ListTiltle

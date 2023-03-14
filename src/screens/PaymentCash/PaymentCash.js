@@ -27,7 +27,7 @@ const PaymentCash = ({navigation}) => {
           <PaymentCard
             image={DoctorsData[0].image}
             name={DoctorsData[0].name}
-            rating={4.5}
+            rating={DoctorsData[0].rating}
             price={DoctorsData[0].price}
             speciality={DoctorsData[0].specialtiy}
             date="22 2022 سبتمبر"

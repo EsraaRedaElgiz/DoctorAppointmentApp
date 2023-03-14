@@ -7,9 +7,7 @@ import {
   SpecialityList,
   TopDoctors,
 } from '../../components/Home';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {COLORS, MARGIN, PADDINGS} from '../../constants/Constants';
-import {style} from '../../styles/Style';
+import {PADDINGS} from '../../constants/Constants';
 
 const Home = ({navigation}) => {
   return (

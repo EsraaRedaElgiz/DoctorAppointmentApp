@@ -1,6 +1,5 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React from 'react';
-import {HomeNavi} from './Navigation';
 import {
   BookAppointment,
   CompletedAppointment,
@@ -12,13 +11,7 @@ import {
   SpecialitySearch,
 } from '../screens';
 import MedicalID1 from '../screens/MedicalID1/MedicalID1';
-import History from '../screens/History/History';
-import NewPassword from '../screens/NewPassword/NewPassword';
-import SupportTeam from '../screens/SupportTeam/SupportTeam';
 import EditPersonDetails from '../screens/EditPersonDetails/EditPersonDetails';
-import Prescription from '../screens/Prescription/Prescription';
-import Payment from '../screens/Payment/Payment';
-import AddCard from '../screens/AddCard/AddCard';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 const HomeStack = () => {

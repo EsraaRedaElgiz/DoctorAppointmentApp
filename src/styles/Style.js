@@ -89,9 +89,9 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     elevation: RFValue(4)
   },
-  left_Btn_header: {
-    width: RFValue(70),
-    height: "100%",
+  left_Btn_header:{
+    minWidth:RFValue(33),
+    height:"100%",
     alignItems: "flex-end",
     justifyContent: 'center',
   },

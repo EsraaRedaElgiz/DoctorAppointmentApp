@@ -3,12 +3,14 @@ import React from 'react';
 import {SearchBar, ListSpecialitySearch} from '../../components/Search';
 import {style} from '../../styles/Style';
 import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
-import { COLORS } from '../../constants/Constants';
+import { SpecialityData } from '../../utils';
+import { RFValue } from 'react-native-responsive-fontsize';
+
 
 const SpecialitySearch = ({navigation}) => {
   return (
     <>
-      <View style={style.bigContainer}>
+      <View style={[style.bigContainer,{paddingBottom:RFValue(100)}]}>
       <HeaderNavigation
         title= " البحث"
         color={COLORS.darkGray3}
@@ -16,7 +18,7 @@ const SpecialitySearch = ({navigation}) => {
           navigation.goBack()
         }}
       />
-      <SearchBar placeholder="البحث عن التخصصات" />
+      <SearchBar placeholder="البحث عن التخصصات"  />
         <ListSpecialitySearch />
       </View>
     </>

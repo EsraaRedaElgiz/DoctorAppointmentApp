@@ -1,27 +1,23 @@
 import React, {useState} from 'react';
-import {
-  Modal,
-  View,
-  StyleSheet,
-  TextInput,
-  Pressable,
-} from 'react-native';
+import {Modal, View, StyleSheet, TextInput, Pressable} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {
   COLORS,
   PADDINGS,
   RADIUS,
-  MARGIN,
   FONTS,
   ICONS,
 } from '../../constants/Constants';
 import GeneralButton from '../GeneralButton/GeneralButton';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {RatingInput} from 'react-native-stock-star-rating';
 const ReviewModal = props => {
   const {visiableAddReview, setVisiableAddReview} = props;
-  const [defultRating, setDefultRating] = useState();
-  const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
+  const [Rating, setRating] = useState(0);
+  const [ReviewText, setReviewText] = useState('');
+  const changeText = enteredText => {
+    setReviewText(enteredText);
+  };
   return (
     <>
       <Modal visible={visiableAddReview} transparent>
@@ -32,39 +28,26 @@ const ReviewModal = props => {
               onPress={() => {
                 setVisiableAddReview(false);
               }}>
-              <AntDesign name="close" size={ICONS.mdIcon}  />
+              <AntDesign name="close" size={ICONS.mdIcon} />
             </Pressable>
-            <View
-              style={styles.textInputContainer}>
+            <View style={styles.textInputContainer}>
               <TextInput
                 style={styles.textInput}
                 placeholder="أخبرنا برأيك عن زيارتك لهذا الطبيب"
                 multiline={true}
+                value={ReviewText}
+                onChangeText={changeText}
               />
-              <View
-                style={styles.starsContainer}>
-                {maxRating.map((item, index) => {
-                  return (
-                    <>
-                      <Pressable
-                        key={item}
-                        onPress={() => {
-                          setDefultRating(item);
-                        }}>
-                        <FontAwesome
-                          name={defultRating ? 'star-o' : 'star'}
-                          size={ICONS.lgIcon}
-                          color={COLORS.star}
-                        />
-                      </Pressable>
-                    </>
-                  );
-                })}
-              </View>
+
+              <RatingInput
+                maxStars={5}
+                rating={Rating}
+                setRating={setRating}
+                size={ICONS.lgIcon}
+              />
             </View>
             <GeneralButton
               title="تم"
-              style={{marginHorizontal: MARGIN.smMargin}}
               onPress={() => {
                 setVisiableAddReview(false);
               }}
@@ -88,37 +71,29 @@ const styles = StyleSheet.create({
     height: RFValue(280),
     backgroundColor: COLORS.white,
     borderRadius: RADIUS.mdRadius,
-    // padding: PADDINGS.smPadding,
     elevation: RFValue(2),
+    paddingHorizontal: PADDINGS.mdPadding,
   },
   textInput: {
     width: '100%',
-    maxHeight: RFValue(100),
-    minHeight: RFValue(20),
-    borderColor: '#DDD',
+    height: RFValue(60),
+    borderColor: '#ddd',
     borderWidth: RFValue(2),
-    borderRadius: RADIUS.mdRadius,
-    padding: PADDINGS.mdPadding,
+    paddingHorizontal: PADDINGS.smPadding,
+    borderRadius: RADIUS.smRadius,
     fontSize: FONTS.h5,
     fontFamily: FONTS.Amaranth,
   },
-  closeIconStyle:{
+  closeIconStyle: {
     width: RFValue(40),
-    height:RFValue(40) ,
-    alignItems: 'center',
+    height: RFValue(40),
+    alignItems: 'flex-start',
     justifyContent: 'center',
-  }
-  ,
-  textInputContainer:{
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingBottom: PADDINGS.xlPadding,
-    alignItems: 'center',
-    paddingHorizontal: PADDINGS.smPadding,
   },
-  starsContainer:{
-    flexDirection: 'row',
-    width: '55%',
-    justifyContent: 'space-between',
-  }
+  textInputContainer: {
+    width: '100%',
+    height: RFValue(150),
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
 });

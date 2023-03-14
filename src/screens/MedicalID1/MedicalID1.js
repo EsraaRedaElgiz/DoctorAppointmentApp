@@ -17,19 +17,13 @@ function MedicalID1(props) {
         color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
         onPress={() => {
-          navigation.navigate('UserProfile');
+          navigation.goBack();
         }}
         onPressBtn={() => {
           navigation.navigate('EditPersonDetails');
         }}
       />
       <View style={styles.container}>
-        {/* <Button
-          title="edit"
-          onPress={() => {
-            navigation.navigate('EditPersonDetails');
-          }}
-        /> */}
         <ProfileImage />
         <UserData data="A+" label="نوع الدم" />
         <UserData data="70" label="الوزن" />

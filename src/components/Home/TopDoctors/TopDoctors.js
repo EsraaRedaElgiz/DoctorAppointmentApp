@@ -1,57 +1,54 @@
-import { StyleSheet, Text, View, Image, Pressable, FlatList } from 'react-native';
-import React, { useState } from 'react';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { DoctorsData } from '../../../utils';
-import Stars from '../../Stars/Stars';
-import { style } from '../../../styles/Style';
-import { PADDINGS,FONTS,COLORS } from '../../../constants/Constants';
-import { useNavigation } from '@react-navigation/native';
+import {StyleSheet, Text, View, Image, Pressable, FlatList} from 'react-native';
+import React, {useState} from 'react';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {DoctorsData} from '../../../utils';
+import {style} from '../../../styles/Style';
+import {COLORS, ICONS, PADDINGS} from '../../../constants/Constants';
+import {useNavigation} from '@react-navigation/native';
+import {Rating} from 'react-native-stock-star-rating';
 
 const TopDoctors = () => {
-  const [DoctorsDataUpdated, setDoctorsDataUpdated] = useState(DoctorsData);
-
   const navigation = useNavigation();
+  
+  // TO SHOW JUST 5 RATING
+  const filterArray = DoctorsData.filter(el => el.rating == 5);
   return (
     <FlatList
       contentContainerStyle={{
         padding: RFValue(2),
         paddingHorizontal: PADDINGS.mdPadding,
       }}
-      data={DoctorsDataUpdated}
-      renderItem={(itemData, index) =>
-        itemData.item.rating.length == 5 ? (
-          <Pressable style={style.CardContainer} onPress={() => {
-            navigation.navigate("DoctorProfile")
+      keyExtractor={(item, index) => index}
+      data={filterArray}
+      renderItem={(itemData, index) => (
+        <Pressable
+          style={style.CardContainer}
+          onPress={() => {
+            navigation.navigate('DoctorProfile');
           }}>
-            {/* ImageOnCards */}
-            <View style={style.imageContainerStyle}>
-              <Image source={itemData.item.image} style={style.imageCard} />
-            </View>
+          {/* ImageOnCards */}
+          <View style={style.imageContainerStyle}>
+            <Image source={itemData.item.image} style={style.imageCard} />
+          </View>
 
-            {/* TextOnCards */}
-            <View style={style.textsCardConatiner}>
-              <Text style={[style.textContentBold,{fontWeight:'normal'}]}>
-                د.{itemData.item.name.trim()}{' '}
-              </Text>
-              <Text style={[style.textContent, {
-                fontSize: FONTS.h6,
-                color: COLORS.darkGray2
-              }]}>
-                طبيب {itemData.item.specialtiy.trim()}{' '}
-              </Text>
-              <View style={{ flexDirection: 'row' }}>
-                {itemData.item.rating.map(() => {
-                  return (
-                    <>
-                      <Stars />
-                    </>
-                  );
-                })}
-              </View>
-            </View>
-          </Pressable>
-        ) : null
-      }
+          {/* TextOnCards */}
+          <View style={style.textsCardConatiner}>
+            <Text style={[style.textContentBold, {color: COLORS.darkGray3}]}>
+              الدكتور {itemData.item.name.trim()}{' '}
+            </Text>
+            <Text style={[style.textSmallContent, {color: COLORS.darkGray2}]}>
+              طبيب {itemData.item.specialtiy.trim()}{' '}
+            </Text>
+
+            {/* Rating */}
+            <Rating
+              stars={itemData.item.rating}
+              maxStars={5}
+              size={ICONS.smIcon}
+            />
+          </View>
+        </Pressable>
+      )}
     />
   );
 };

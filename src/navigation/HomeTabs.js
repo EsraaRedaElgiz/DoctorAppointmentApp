@@ -4,74 +4,63 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeStack from './HomeStack';
 import AppointmentStack from './AppointmentStack';
 import HistoryStack from './HistoryStack';
-import UserProfileStack from './UserProfileStack';
-import Splash from '../screens/Intro/Splash/Splash';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { COLORS ,ICONS} from '../constants/Constants';
+import UserProfileStack from './UserProfileStack';
+import {COLORS, FONTS, ICONS} from '../constants/Constants';
+import {style} from '../styles/Style';
 const Tab = createBottomTabNavigator();
+
 const HomeTabs = () => {
   return (
     <>
       <Tab.Navigator
-      
-        screenOptions={{
-          headerShown: false,
-          /*tabBarActiveTintColor:"red",
-          tabBarBackground:"red",
-          tabBarInactiveTintColor:"red"*/
-          tabBarActiveTintColor:COLORS.white,
-          tabBarInactiveTintColor:COLORS.gray,
-          tabBarStyle: {
-            backgroundColor:COLORS.blue,
-        }
-        
-        }}
-              
-        >
-        <Tab.Screen name="الصفحه الرئيسيه"component={HomeStack}
-          options={{
-            
-            tabBarIcon: ({ color }) => {
-              return (
-                <View>
-                  <FontAwesome name="home" color={color} size={ICONS.mdIcon} />
-                </View>
-              );
-            },
-           
-          }} />
-        <Tab.Screen name="المواعيد" component={AppointmentStack}
-        options={{
-          tabBarIcon: ({ color }) => {
-            return (
-              <View>
-                <FontAwesome5 name="calendar-alt" color={color} size={ICONS.mdIcon} />
-              </View>
-            );
-          },
-        }}  />
-        <Tab.Screen name="التاريخ" component={HistoryStack} 
-        options={{
-            tabBarIcon: ({ color }) => {
-              return (
-                <View>
-                  <Ionicons name="md-file-tray-full-outline" size={ICONS.mdIcon} color={color}/>
-                </View>
-              );
-            },
-          }} />
-        <Tab.Screen name="الملف الشخصي" component={UserProfileStack}
-         options={{
-            tabBarIcon: ({ color }) => {
-              return (
-                <View>
-                  <Ionicons name="person-sharp" size={ICONS.mdIcon} color={color}/>
-                </View>
-              );
-            },
-          }}  />
+        screenOptions={({route}) => {
+          const iconNameUnselect = {
+            Home: 'home-outline',
+            Appointment: 'calendar-outline',
+            History: 'copy-outline',
+            Profile: 'person-outline',
+          };
+          const iconNameSelect = {
+            Home: 'home',
+            Appointment: 'calendar',
+            History: 'copy',
+            Profile: 'person',
+          };
+          const label = {
+            Home: 'الرئيسيه',
+            Appointment: 'المواعيد',
+            History: 'التاريخ',
+            Profile: 'الحساب',
+          };
+          return {
+            headerShown: false,
+            tabBarIcon: ({focused}) => (
+              <Ionicons
+                name={
+                  focused
+                    ? iconNameSelect[route.name]
+                    : iconNameUnselect[route.name]
+                }
+                size={ICONS.lgIcon}
+                color={focused ? COLORS.blue : null}
+              />
+            ),
+            tabBarLabel: ({focused}) => (
+              <Text
+                style={[
+                  style.textSmallContentBold,
+                  {color: focused ? COLORS.blue : null},
+                ]}>
+                {label[route.name]}
+              </Text>
+            ),
+          };
+        }}>
+        <Tab.Screen name="Home" component={HomeStack} />
+        <Tab.Screen name="Appointment" component={AppointmentStack} />
+        <Tab.Screen name="History" component={HistoryStack} />
+        <Tab.Screen name="Profile" component={UserProfileStack} />
       </Tab.Navigator>
     </>
   );

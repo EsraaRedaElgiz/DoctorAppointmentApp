@@ -101,8 +101,8 @@ const BookAppointment = ({navigation}) => {
       <GeneralButton
         title="حجز"
         onPress={() => {
-          // navigation.navigate("PaymentCash")
-          navigation.navigate('PaymentCreditCard');
+          navigation.navigate("PaymentCash")
+          // navigation.navigate('PaymentCreditCard');
         }}
       />
     </View>
