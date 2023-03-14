@@ -13,8 +13,8 @@ import {style} from '../../../styles/Style';
 import SearchBar from '../SearchBar/SearchBar';
 import {useNavigation} from "@react-navigation/native"
 const ListSpecialitySearch = () => {
-  const [SpecialityDataUpdated, setSpecialityDataUpdated] =
-    useState(SpecialityData);
+  // const [SpecialityDataUpdated, setSpecialityDataUpdated] =
+  //   useState(SpecialityData);
     const navigation=useNavigation()
   return (
     <>
@@ -22,9 +22,8 @@ const ListSpecialitySearch = () => {
       <FlatList
         horizontal={false}
         numColumns={2}
-        style={{marginBottom: RFValue(40)}}
         showsVerticalScrollIndicator={false}
-        data={SpecialityDataUpdated}
+        data={SpecialityData}
         renderItem={(itemData, index) => (
           <>
             <Pressable style={styles.container}

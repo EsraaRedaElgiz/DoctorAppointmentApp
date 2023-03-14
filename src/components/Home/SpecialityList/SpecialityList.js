@@ -7,13 +7,12 @@ import {style} from '../../../styles/Style';
 import {useNavigation} from '@react-navigation/native';
 const SpecialityList = () => {
   const navigation = useNavigation();
-  const [specialtyDataUpdated, setSpecialtyDataUpdated] =
-    useState(SpecialityData);
   return (
     <FlatList
       style={{marginBottom: MARGIN.smMargin, marginLeft: MARGIN.smMargin}}
       horizontal
-      data={specialtyDataUpdated}
+      showsHorizontalScrollIndicator={false}
+      data={SpecialityData}
       renderItem={(itemData, index) => (
         <Pressable
           style={styles.image_Text_Container}
