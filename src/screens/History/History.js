@@ -10,7 +10,7 @@ import { HeaderNavigation } from '../../components/headerNavigation/HeaderNaviga
 //import { getHistory } from '../../Redux/Reducers/HistorySlice'
 //
 
-function History({navigation}) {
+function History({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   /*useEffect(() => {
@@ -20,15 +20,15 @@ function History({navigation}) {
     {
       doctorName: "سامي علي",
       doctorSpeciality: "الطب العام والداخلي",
-      day: "٤",
+      day: "4",
       month: "سبتمبر",
-      year: "٢٠٢٢",
+      year: "2022",
     }, {
-      doctorName: "سامي علي",
-      doctorSpeciality: "الطب العام والداخلي",
-      day: "٤",
+      doctorName: "احمد محمد",
+      doctorSpeciality: "طب الاسنان",
+      day: "6",
       month: "سبتمبر",
-      year: "٢٠٢٢",
+      year: "2022",
     }
 
   ]
@@ -44,10 +44,10 @@ function History({navigation}) {
         month={month}
         year={year}
         style={styles.afterEachCardMargin}
-      // onPress={()=>alert(index)}
-      onPress={()=>{
-        navigation.navigate("Prescription")
-    }}
+        // onPress={()=>alert(index)}
+        onPress={() => {
+          navigation.navigate("Prescription")
+        }}
       />
 
     )
@@ -57,21 +57,14 @@ function History({navigation}) {
 
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.blue} />
-      {/*<View style={styles.headerViewStyleAndFlatListContainerStyle}>
-        <HeaderArrowAndWord
-          text="التاريخ"
-          arrowButtonStyle={styles.arrowButtonStyle}
-          textColor={COLORS.black}
-          textStyle={styles.textHeaderStyle}
-        />
-      </View>*/}
       <HeaderNavigation
-          title="التاريخ"
-          onPress={() => {
-            navigation.goBack();
-          }}
-          padding={PADDINGS.mdPadding}
-        />
+        title="التاريخ"
+        color={COLORS.darkGray3}
+        onPress={() => {
+          navigation.goBack();
+        }}
+        padding={PADDINGS.mdPadding}
+      />
       <FlatList
         keyExtractor={keyextractor}
         data={history}

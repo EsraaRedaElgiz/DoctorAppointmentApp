@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     flex: 1,
     fontSize: FONTS.h5,
+    fontFamily: FONTS.Amaranth,
     borderColor: COLORS.gray,
     color: COLORS.black,
     textAlign: 'right',

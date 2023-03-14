@@ -12,39 +12,25 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.blue,
     flex: 1,
-    justifyContent: 'space-between',
-    flexDirection: 'column',
-  },
-  wordHeaderMargin: {
-    marginLeft: RFValue(-25),
   },
   topViewStyle: {
     paddingHorizontal: PADDINGS.mdPadding,
-    //paddingTop: '5%',
-    //flex: 1,
-  },
-  customButtonIconAndWordMargin: {
-    marginBottom: '5%',
+
   },
   viewHeaderStyle: {
-    marginTop: '5%',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: '5%',
-  }, scrollViewContentContainerStyle: {
-    minHeight: '100%'
+    paddingBottom: '5%',
+    //backgroundColor:"#f00"
   },
   viewAfterHeaderStyle: {
     backgroundColor: COLORS.white,
     borderTopRightRadius: RFValue(85),
     paddingHorizontal: PADDINGS.mdPadding,
-    //flex: 5,
     paddingTop: '15%',
-    paddingBottom: '5%',
     flex: 1,
-    justifyContent: 'space-between',
-    flexDirection: 'column',
+
   },
   firstTextInputMargun: {
     //marginTop: '1%',
@@ -56,8 +42,10 @@ const styles = StyleSheet.create({
   scrollViewStyle: {
     backgroundColor: COLORS.white,
   },
-  buttonMargin: {
-    // marginTop: '17%',
+  buttonViewStyle: {
+    paddingHorizontal: PADDINGS.mdPadding,
+    backgroundColor: COLORS.white,
+    paddingBottom: PADDINGS.mdPadding
   },
   dropDownMarginBottom: {
     marginBottom: '0%',
@@ -67,8 +55,6 @@ const styles = StyleSheet.create({
   },
   eachOptionInBottonTab: {
     width: '100%',
-    //borderBottomWidth: RFValue(1),
-    //borderColor: COLORS.gray,
     height: RFValue(50),
     alignItems: 'center',
     justifyContent: 'center',

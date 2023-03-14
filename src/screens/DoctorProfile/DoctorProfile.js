@@ -6,8 +6,8 @@ import {
   Image,
   Pressable,
 } from 'react-native';
-import React, {useState} from 'react';
-import {RFValue} from 'react-native-responsive-fontsize';
+import React, { useState } from 'react';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   COLORS,
   FONTS,
@@ -42,13 +42,15 @@ const DoctorProfile = ({navigation}) => {
         {/* image */}
         <Image
           source={DoctorsData[0].image}
-          style={{width: '100%', height: RFValue(300)}}
+          style={{ width: '100%', height: RFValue(300) }}
         />
 
         {/* NameAndSpecialty */}
         <View style={styles.textsContainer}>
           <Text style={style.textTitleBold}>الدكتور سامى محمد</Text>
-          <Text style={style.textContent}>أمراض النساء والتوليد</Text>
+          <Text style={[style.textContent, {
+            color: COLORS.darkGray2
+          }]}>أمراض النساء والتوليد</Text>
         </View>
 
         {/* Card */}
@@ -63,12 +65,12 @@ const DoctorProfile = ({navigation}) => {
             </Text>
           </View>
           {/* Location */}
-          <Text style={[style.textTitleBold, {marginTop: MARGIN.mdMargin}]}>
+          <Text style={[style.textTitleBold, { marginTop: MARGIN.mdMargin }]}>
             الموقع
           </Text>
           {/* navigate to map page */}
           <Pressable style={styles.PreviewMap}>
-            <MapView initialRegion={region} style={{flex: 1}}></MapView>
+            <MapView initialRegion={region} style={{ flex: 1 }}></MapView>
           </Pressable>
 
           {/* Review */}
@@ -92,7 +94,7 @@ const DoctorProfile = ({navigation}) => {
                   <>
                     <View style={styles.reviewCard}>
                       <View style={styles.img_name_ratingContainer}>
-                        <View style={{flex: 1, marginRight: MARGIN.smMargin}}>
+                        <View style={{ flex: 1, marginRight: MARGIN.smMargin }}>
                           <Text style={style.textSmallContentBold}>
                             {item.name}
                           </Text>
@@ -184,7 +186,7 @@ const Cards = () => {
     </>
   );
 };
-export {Cards};
+export { Cards };
 
 export default DoctorProfile;
 

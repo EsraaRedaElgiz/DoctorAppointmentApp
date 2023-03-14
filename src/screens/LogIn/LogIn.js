@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,22 +8,23 @@ import {
   Image,
 } from 'react-native';
 import styles from './styles';
-import {Checkbox} from 'react-native-paper';
-import {COLORS, ICONS, PADDINGS} from '../../constants/Constants';
+import { Checkbox } from 'react-native-paper';
+import { COLORS, ICONS, PADDINGS } from '../../constants/Constants';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
-import {TextInput} from 'react-native-paper';
+import { TextInput } from 'react-native-paper';
 import ReusableArrowButton from '../../components/AppRightIcon/AppRightIcon';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   setEmail,
   setPassword,
   setRememberMe,
 } from '../../Redux/Reducers/LoginSlice';
-import {useForm, Controller} from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import LoginWithG from '../../utils/LoginWithG';
 import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
-function LogIn({navigation}) {
+import { setLoggedIn } from "../../Redux/Reducers/AuthSlice"
+function LogIn({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   const [toggleCheckBox, setToggleCheckBox] = useState(
@@ -33,7 +34,7 @@ function LogIn({navigation}) {
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
     watch,
   } = useForm({
     defaultValues: {
@@ -47,40 +48,33 @@ function LogIn({navigation}) {
     dispatch(setPassword(data.password));
     dispatch(setRememberMe(toggleCheckBox));
     //console.log(globalState.LoginReducer.rememberMe+""+globalState.LoginReducer.email)
-    navigation.navigate('Home'); //home
+    dispatch(setLoggedIn())
+    dispatch(setEmail(""));
+    dispatch(setPassword(""));
+    dispatch(setRememberMe(false));
+
   };
-  const pass_secured = () => {
-    let securedPass = secured_pass;
-    securedPass = !securedPass;
-    set_secured_pass(secured_pass => securedPass);
-  };
+
   return (
     <>
-     
-
       <ScrollView
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="always"
         style={styles.scrollViewStyle}
         contentContainerStyle={styles.scrollViewContentContainerStyle}>
         <StatusBar backgroundColor={COLORS.blue} />
         <HeaderNavigation
-        backgroundColor={COLORS.blue}
-        padding={PADDINGS.smPadding}
-        onPress={() => {
-          navigation.goBack();
-        }}
-      />
-        <View style={[styles.container]}>
+          backgroundColor={COLORS.blue}
+          padding={PADDINGS.mdPadding}
+          onPress={() => {
+            navigation.goBack();
+            dispatch(setEmail(""));
+            dispatch(setPassword(""));
+            dispatch(setRememberMe(false));
+          }}
+        />
+        <View style={styles.container}>
           <View style={styles.topViewStyle}>
-            {/* <ReusableArrowButton
-              style={styles.custombuttonIconStyle}
-              onPress={() => {
-                dispatch(setEmail(''));
-                dispatch(setPassword(''));
-                dispatch(setRememberMe(''));
-                
-              }}
-            /> */}
             <View style={styles.viewHeaderStyle}>
               <View style={styles.viewforheaderstyle}>
                 <Text style={styles.firstTextHeaderStyle}>اهلا بعودتك !</Text>
@@ -102,7 +96,7 @@ function LogIn({navigation}) {
                     required: true,
                     pattern: /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/,
                   }}
-                  render={({field: {onChange, onBlur, value}}) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <Reusabletextinput
                       placeholder="عنوان البريد الالكتروني"
                       keyboardType="email-address"
@@ -117,8 +111,8 @@ function LogIn({navigation}) {
                   {errors.email?.type === 'required'
                     ? 'يجب ادخال عنوان البريد الالكتروني'
                     : errors.email?.type === 'pattern'
-                    ? 'يجب ادخال عنوان بريد الكتروني صحيح'
-                    : ''}
+                      ? 'يجب ادخال عنوان بريد الكتروني صحيح'
+                      : ''}
                 </Text>
               </View>
               <View style={styles.eachTextinputAndErrorTextContainer}>
@@ -130,16 +124,16 @@ function LogIn({navigation}) {
                       /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
                     maxLength: 20,
                   }}
-                  render={({field: {onChange, onBlur, value}}) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <Reusabletextinput
                       placeholder="كلمه المرور"
                       bordercolor={errors.password ? COLORS.red : COLORS.gray}
                       right={
                         <TextInput.Icon
-                          icon="eye"
+                          icon={secured_pass ? 'eye-off' : 'eye'}
                           style={styles.iconStyle}
                           iconColor={COLORS.darkGray}
-                          onPress={pass_secured}
+                          onPress={() => set_secured_pass(secured_pass => { return !secured_pass })}
                         />
                       }
                       secureTextEntry={secured_pass}
@@ -153,10 +147,10 @@ function LogIn({navigation}) {
                   {errors.password?.type === 'required'
                     ? 'يجب ادخال كلمة المرور'
                     : errors.password?.type === 'pattern'
-                    ? 'كلمه المرور يجب لا تقل عن 8 ارقام وحرف كبير وحرف صغير وعلامه مميزه'
-                    : errors.password?.type === 'maxLength'
-                    ? 'كلمة المرور يجب ان لا تزيد عن 20 حرف ورقم'
-                    : ''}
+                      ? 'كلمه المرور يجب لا تقل عن 8 ارقام وحرف كبير وحرف صغير وعلامه مميزه'
+                      : errors.password?.type === 'maxLength'
+                        ? 'كلمة المرور يجب ان لا تزيد عن 20 حرف ورقم'
+                        : ''}
                 </Text>
               </View>
               <View style={styles.viewForfirstTextAfterTextinputs}>
@@ -195,14 +189,14 @@ function LogIn({navigation}) {
             </View>
             <View>
               <GeneralButton
-                title="متابعه"
-                style={styles.buttonMargin}
+                title="متابعة"
                 // onPress={()=>alert(toggleCheckBox)}
                 onPress={handleSubmit(onSubmit)}
+                style={styles.buttonMargin}
               />
               <View style={styles.viewForLastTextStyle}>
                 <View>
-                  <Text style={{color: COLORS.darkGray3}}>ليس لديك حساب ؟</Text>
+                  <Text style={{ color: COLORS.darkGray3 }}>ليس لديك حساب ؟</Text>
                 </View>
                 <TouchableOpacity
                   onPress={() => {

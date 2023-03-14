@@ -5,7 +5,7 @@ import {COLORS, FONTS, MARGIN, PADDINGS} from '../../constants/Constants';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: PADDINGS.smPadding,
+    padding: PADDINGS.mdPadding,
     paddingVertical: PADDINGS.xlPadding,
   },
   scrollStyle: {

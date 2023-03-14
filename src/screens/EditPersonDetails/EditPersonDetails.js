@@ -21,7 +21,7 @@ import SelectDropdown from 'react-native-select-dropdown';
 import DropDown from '../../components/DropDown/DropDown';
 import {requestCameraPermission} from '../../utils/CameraPermissin';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 
 function EditPersonDetails(props) {
   const {navigation} = props;
@@ -88,18 +88,18 @@ function EditPersonDetails(props) {
   return (
     <GeneralPage>
       <HeaderNavigation
-          title="المعلومات الشخصيه"
-          btn="تم"
-          padding={PADDINGS.mdPadding}
-          onPress={() => {
-            navigation.goBack()
-          }}
-          onPressBtn={() => {
-            navigation.navigate('UserProfile');
-          }}
-        />
+        title="المعلومات الشخصية"
+        btn="تم"
+        padding={PADDINGS.mdPadding}
+        color={COLORS.darkGray3}
+        onPress={() => {
+          navigation.goBack();
+        }}
+        onPressBtn={() => {
+          navigation.navigate('UserProfile');
+        }}
+      />
       <View style={styles.conatiner}>
-        
         <ProfileImage
           iconName="pen"
           nameAfterImage

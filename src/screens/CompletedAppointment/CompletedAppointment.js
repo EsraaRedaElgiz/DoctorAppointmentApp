@@ -22,7 +22,7 @@ const CompletedAppointment = ({navigation}) => {
               size={RFValue(120)}
               color={COLORS.blue}
             />
-            <Text style={[style.textTitleBold,{fontSize:FONTS.h2}]}>تم الحجز بنجاح !</Text>
+            <Text style={[style.textTitleBold,{fontSize:FONTS.h3}]}>تم الحجز بنجاح !</Text>
           </View>
         </View>
         <GeneralButton
