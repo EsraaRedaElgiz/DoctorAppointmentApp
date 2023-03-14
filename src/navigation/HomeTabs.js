@@ -6,15 +6,15 @@ import AppointmentStack from './AppointmentStack';
 import HistoryStack from './HistoryStack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import UserProfileStack from './UserProfileStack';
-import {COLORS, FONTS, ICONS} from '../constants/Constants';
-import {style} from '../styles/Style';
+import { COLORS, FONTS, ICONS } from '../constants/Constants';
+import { style } from '../styles/Style';
 const Tab = createBottomTabNavigator();
 
 const HomeTabs = () => {
   return (
     <>
       <Tab.Navigator
-        screenOptions={({route}) => {
+        screenOptions={({ route }) => {
           const iconNameUnselect = {
             Home: 'home-outline',
             Appointment: 'calendar-outline',
@@ -35,22 +35,25 @@ const HomeTabs = () => {
           };
           return {
             headerShown: false,
-            tabBarIcon: ({focused}) => (
+            tabBarStyle: {
+              backgroundColor: COLORS.blue,
+            },
+            tabBarIcon: ({ focused }) => (
               <Ionicons
                 name={
                   focused
                     ? iconNameSelect[route.name]
                     : iconNameUnselect[route.name]
                 }
-                size={ICONS.lgIcon}
-                color={focused ? COLORS.blue : null}
+                size={ICONS.mdIcon}
+                color={focused ? COLORS.white : COLORS.gray}
               />
             ),
-            tabBarLabel: ({focused}) => (
+            tabBarLabel: ({ focused }) => (
               <Text
                 style={[
                   style.textSmallContentBold,
-                  {color: focused ? COLORS.blue : null},
+                  { color: focused ? COLORS.white : COLORS.gray },
                 ]}>
                 {label[route.name]}
               </Text>

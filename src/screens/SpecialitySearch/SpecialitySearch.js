@@ -5,6 +5,7 @@ import {style} from '../../styles/Style';
 import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
 import { SpecialityData } from '../../utils';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { COLORS } from '../../constants/Constants';
 
 
 const SpecialitySearch = ({navigation}) => {

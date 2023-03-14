@@ -14,6 +14,7 @@ function MedicalID1(props) {
       <HeaderNavigation
         title="المعلومات الشخصية"
         btn="تعديل"
+        text
         color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
         onPress={() => {

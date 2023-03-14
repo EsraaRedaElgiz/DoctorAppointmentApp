@@ -89,6 +89,7 @@ function EditPersonDetails(props) {
     <GeneralPage>
       <HeaderNavigation
         title="المعلومات الشخصية"
+        text
         btn="تم"
         padding={PADDINGS.mdPadding}
         color={COLORS.darkGray3}

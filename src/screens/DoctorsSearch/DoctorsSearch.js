@@ -4,6 +4,7 @@ import {ListDoctorsSearch, SearchBar} from '../../components/Search';
 import {style} from '../../styles/Style';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 import {RFValue} from 'react-native-responsive-fontsize';
+import { COLORS } from '../../constants/Constants';
 const DoctorsSearch = ({navigation}) => {
   return (
     <>
@@ -13,6 +14,7 @@ const DoctorsSearch = ({navigation}) => {
           onPress={() => {
             navigation.goBack();
           }}
+          color={COLORS.darkGray3}
         />
         <SearchBar placeholder="البحث عن الأطباء" />
         <ListDoctorsSearch />

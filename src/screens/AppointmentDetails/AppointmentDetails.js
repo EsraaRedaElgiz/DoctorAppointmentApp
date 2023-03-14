@@ -8,6 +8,7 @@ import GeneralButton from "../../components/GeneralButton/GeneralButton";
 import Fontisto from 'react-native-vector-icons/Fontisto'
 import { RFValue } from 'react-native-responsive-fontsize';
 import Dialog from "react-native-dialog";
+import { HeaderNavigation } from "../../components/headerNavigation/HeaderNavigation";
 
 function AppointmentDetails() {
     const [dialogVisible, setDialogVisible] = useState(false)
@@ -19,7 +20,7 @@ function AppointmentDetails() {
     const [appointmentDetailsObject, setAppointmentDetailsObject] = useState(
         {
             name: "عاطف محمد",
-            day: "10",
+            day: "14",
             month: "مارس",
             year: "2023",
             time: "12:00",
@@ -124,6 +125,14 @@ function AppointmentDetails() {
 
         <View style={styles.container}>
             <StatusBar backgroundColor={COLORS.blue} />
+            <HeaderNavigation
+                title="تفاصيل الميعاد"
+                color={COLORS.darkGray3}
+                padding={PADDINGS.mdPadding}
+                onPress={() => {
+                    console.log("hi")
+                }}
+            />
             <View style={styles.appointmentDetailsContainer}>
                 <View style={styles.imageAndTextViewStyle}>
                     <View style={styles.viewImageStyle}>
