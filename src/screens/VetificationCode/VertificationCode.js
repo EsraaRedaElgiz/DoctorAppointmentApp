@@ -31,25 +31,30 @@ function VertificationCode({ navigation }) {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
     watch,
   } = useForm({
     defaultValues: {
-      code: globalState.VertificationCodeReducer.code,
+      code: "",
     },
   });
 
   const onSubmit = data => {
     //console.log(data);
     let codeInserted = data.code;
-    let splitString = codeInserted.split(''); 
-    let reverseArray = splitString.reverse(); 
-    let joinArray = reverseArray.join(''); 
-   
+    let splitString = codeInserted.split('');
+    let reverseArray = splitString.reverse();
+    let joinArray = reverseArray.join('');
+
     //console.log(joinArray);
-    dispatch(setVertificationCode(joinArray));
+    /*const data = {
+      code:joinArray ,
+       
+      }
+      dispatch(insertData(data))*/
+    reset()
     navigation.navigate('ResetPassword');
-    dispatch(setVertificationCode(""))
   };
   return (
     <View style={styles.container}>
@@ -59,8 +64,8 @@ function VertificationCode({ navigation }) {
         color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
         onPress={() => {
+          reset()
           navigation.navigate('ForgetPassword');
-          dispatch(setVertificationCode(""))
         }}
       />
       <ScrollView

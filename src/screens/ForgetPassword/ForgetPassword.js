@@ -14,17 +14,22 @@ function ForgetPassword({ navigation }) {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: globalState.ForgetPasswordReducer.emailToSendVerificationCode,
+      email: "",
     },
   });
   const onSubmit = data => {
-    //console.log(data);
-    dispatch(setEmailToSendVerificationCode(data.email));
+    //console.log(JSON.stringify(data));
+    /*const data = {
+      email: data.email,
+       
+      }
+      dispatch(insertData(data))*/
+    reset()
     navigation.navigate('VertificationCode');
-    dispatch(setEmailToSendVerificationCode(""))
 
   };
 
@@ -36,8 +41,8 @@ function ForgetPassword({ navigation }) {
         color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
         onPress={() => {
+          reset()
           navigation.navigate('LogIn');
-          dispatch(setEmailToSendVerificationCode(""))
 
         }}
       />
@@ -72,6 +77,7 @@ function ForgetPassword({ navigation }) {
                     bordercolor={errors.email ? '#f00' : COLORS.gray}
                     onChangeText={onChange}
                     onBlur={onBlur}
+                    value={value}
                   />
                 )}
                 name="email"

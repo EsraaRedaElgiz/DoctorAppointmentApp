@@ -93,29 +93,31 @@ function MedicalSheet({ navigation }) {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
     watch,
   } = useForm({
     defaultValues: {
-      bloodType: bloodType,
-      weight: weight,
-      height: height,
-      age: age,
-      gender: gender,
+      bloodType: "",
+      weight: "",
+      height: "",
+      age: "",
+      gender: "",
     },
   });
   const onSubmit = data => {
-    console.log(data);
-    //setPhotoUri(photo_uri);
-    //console.log(photo_uri)
-    //console.log(photo_uri)
-    
-    setphoto_uri("");
-    setBloodType("");
-    setWeight("");
-    setHeight("");
-    setAge("");
-    setGender("");
+    //console.log(JSON.stringify(data) + "img" + photo_uri);
+    /*const data = {
+      photoUri: photo_uri,
+      bloodType:data.bloodType,
+      weight:data.weight,
+      height:data.height,
+      age: data.age,
+      gender: data.gender,
+      }
+      dispatch(insertData(data))*/
+    setphoto_uri(photo_uri => { return "" })
+    reset()
     dispatch(setLoggedIn())
   };
   return (
@@ -126,13 +128,9 @@ function MedicalSheet({ navigation }) {
         backgroundColor={COLORS.blue}
         color={COLORS.white}
         onPress={() => {
+          setphoto_uri(photo_uri => { return "" })
+          reset()
           navigation.goBack();
-          setphoto_uri("");
-          setBloodType("");
-          setWeight("");
-          setHeight("");
-          setAge("");
-          setGender("");
         }}
       />
       <ScrollView
@@ -175,6 +173,7 @@ function MedicalSheet({ navigation }) {
                       alert(selectedItem + "" + index);
                     }}*/
                       onSelect={onChange}
+                      value={value}
                     />
                   )}
                   name="bloodType"
@@ -203,6 +202,7 @@ function MedicalSheet({ navigation }) {
                       bordercolor={errors.weight ? '#f00' : COLORS.gray}
                       onChangeText={onChange}
                       onBlur={onBlur}
+                      value={value}
                     />
                   )}
                   name="weight"
@@ -233,6 +233,7 @@ function MedicalSheet({ navigation }) {
                       bordercolor={errors.height ? '#f00' : COLORS.gray}
                       onChangeText={onChange}
                       onBlur={onBlur}
+                      value={value}
                     />
                   )}
                   name="height"
@@ -263,6 +264,7 @@ function MedicalSheet({ navigation }) {
                       bordercolor={errors.age ? '#f00' : COLORS.gray}
                       onChangeText={onChange}
                       onBlur={onBlur}
+                      value={value}
                     />
                   )}
                   name="age"
@@ -288,6 +290,7 @@ function MedicalSheet({ navigation }) {
                       borderColor={errors.gender ? '#f00' : COLORS.gray}
                       placeholder="تحديد النوع"
                       onSelect={onChange}
+                      value={value}
                     />
                   )}
                   name="gender"
@@ -330,7 +333,7 @@ function MedicalSheet({ navigation }) {
               <TouchableOpacity
                 onPress={() => {
                   refRBSheet.current.close();
-                  setphoto_uri(photo_uri => '');
+                  setphoto_uri(photo_uri => {return "" });
                 }}
                 style={styles.eachOptionInBottonTab}>
                 <Text style={[styles.optionTextStyle, { color: COLORS.red }]}>
