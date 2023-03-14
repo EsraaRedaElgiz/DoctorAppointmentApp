@@ -1,6 +1,6 @@
-import {FONTS, MARGIN, PADDINGS, COLORS} from '../../constants/Constants';
-import {StyleSheet} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { FONTS, MARGIN, PADDINGS, COLORS } from '../../constants/Constants';
+import { StyleSheet } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,22 +13,12 @@ const styles = StyleSheet.create({
   },
   viewForScrollviewContainer: {
     paddingHorizontal: PADDINGS.mdPadding,
-    // paddingTop: '5%',//
-    // alignItems: 'center',
-    paddingBottom: '5%',
     flex: 1,
-    justifyContent: 'space-between',
-    flexDirection: 'column',
-    //backgroundColor:"#f00"
-  },
-  scrollViewContentContainerStyle: {
-    minHeight: '100%',
   },
   textHeaderStyle: {
     marginLeft: RFValue(-15),
   },
   viewImage: {
-    marginTop: '5%',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -59,7 +49,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   buttonContainerStyle: {
-    //paddingHorizontal: PADDINGS.mdPadding
+    paddingHorizontal: PADDINGS.mdPadding,
+    paddingBottom: PADDINGS.mdPadding
   },
   errorTextStyle: {
     color: '#f00',

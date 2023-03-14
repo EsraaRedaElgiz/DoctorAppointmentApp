@@ -1,7 +1,7 @@
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {COLORS, PADDINGS, RADIUS, MARGIN, FONTS} from '../constants/Constants';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { COLORS, PADDINGS, RADIUS, MARGIN, FONTS } from '../constants/Constants';
 const style = StyleSheet.create({
   bigContainer: {
     paddingHorizontal: PADDINGS.mdPadding,
@@ -16,9 +16,11 @@ const style = StyleSheet.create({
     backgroundColor: COLORS.white,
     borderRadius: RADIUS.smRadius,
     elevation: RFValue(3),
+    paddingVertical: PADDINGS.lgPadding,
+    paddingHorizontal: PADDINGS.mdPadding
   },
   imageContainerStyle: {
-    width: RFValue(100),
+    width: RFValue(70),
     height: '100%',
     borderRadius: RADIUS.smRadius,
     alignSelf: 'center',
@@ -26,8 +28,8 @@ const style = StyleSheet.create({
     justifyContent: 'center',
   },
   imageCard: {
-    width: RFValue(90),
-    height: RFValue(95),
+    width: '100%',
+    height: '100%',
     borderRadius: RADIUS.smRadius,
   },
   textsCardConatiner: {
@@ -35,31 +37,36 @@ const style = StyleSheet.create({
     height: '100%',
     alignSelf: 'center',
     justifyContent: 'space-around',
-    marginLeft: MARGIN.xsMargin,
-    paddingVertical: PADDINGS.lgPadding,
+    marginLeft: RFValue(3),
+    //paddingVertical: PADDINGS.lgPadding,
   },
   textTitleBold: {
     fontSize: FONTS.h4,
     fontFamily: FONTS.Amaranth,
     fontWeight: 'bold',
+    color:COLORS.darkGray3
   },
   textTitle: {
     fontSize: FONTS.h4,
     fontFamily: FONTS.Amaranth,
+    
   },
   textContentBold: {
     fontSize: FONTS.h5,
     fontFamily: FONTS.Amaranth,
     fontWeight: 'bold',
+    color:COLORS.darkGray3
   },
   textContent: {
     fontSize: FONTS.h5,
     fontFamily: FONTS.Amaranth,
+    color:COLORS.darkGray3
   },
   textSmallContentBold: {
     fontSize: FONTS.h6,
     fontFamily: FONTS.Amaranth,
     fontWeight: 'bold',
+    color:COLORS.darkGray
   },
   textSmallContent: {
     fontSize: FONTS.h6,
@@ -80,13 +87,13 @@ const style = StyleSheet.create({
     backgroundColor: COLORS.white,
     alignItems: 'center',
     justifyContent: 'center',
-    elevation:RFValue(4)
+    elevation: RFValue(4)
   },
   left_Btn_header:{
     minWidth:RFValue(33),
     height:"100%",
     alignItems: "flex-end",
     justifyContent: 'center',
-  }
+  },
 });
-export {style};
+export { style };

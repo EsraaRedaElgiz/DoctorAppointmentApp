@@ -38,6 +38,7 @@ const BookAppointment = ({navigation}) => {
     <View style={[style.bigContainer, {flex: 1}]}>
       <HeaderNavigation
         title="حجز الميعاد"
+        color={COLORS.darkGray3}
         onPress={() => {
           navigation.goBack();
         }}

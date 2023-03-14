@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: RADIUS.xsRadius,
     backgroundColor: COLORS.blue,
-    marginBottom:MARGIN.mdMargin
+    //marginBottom:MARGIN.mdMargin
   },
   title: {
     fontSize: FONTS.h4,

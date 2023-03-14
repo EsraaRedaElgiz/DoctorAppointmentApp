@@ -24,7 +24,7 @@ function AppointmentAndHistoryComponent(props) {
                         {dateShow ? (
                             <View style={styles.viewDateStyle}>
                                 <View style={styles.eachItemMarginInDateAndTimeContainers}>
-                                    <FontAwesome5 name='calendar-alt' size={ICONS.smIcon} color={COLORS.black} />
+                                    <FontAwesome5 name='calendar-alt' size={ICONS.smIcon} color={COLORS.darkGray3} />
                                 </View>
                                 <View style={styles.eachItemMarginInDateAndTimeContainers}>
                                     <Text style={styles.eachTextStyleInDateAndTimeContainers}>{day}</Text>
@@ -39,7 +39,7 @@ function AppointmentAndHistoryComponent(props) {
                         {timeShow ? (
                             <View style={styles.viewTimeStyle}>
                                 <View style={styles.eachItemMarginInDateAndTimeContainers}>
-                                    <Feather name='clock' size={ICONS.smIcon} color={COLORS.black} />
+                                    <Feather name='clock' size={ICONS.smIcon} color={COLORS.darkGray3} />
                                 </View>
                                 <View style={styles.eachItemMarginInDateAndTimeContainers}>
                                     <Text style={styles.eachTextStyleInDateAndTimeContainers}>{time}</Text>
@@ -76,11 +76,12 @@ const styles = StyleSheet.create({
         width: '90%',
         height: '100%',
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        //backgroundColor:"#f00"
+        //justifyContent: 'space-between',
+        //backgroundColor:"#f00",
+        alignItems:'center'
 
     }, imageContainer: {
-        width: '25%',
+        width: RFValue(70),
         borderRadius: RADIUS.smRadius,
         height:'100%'
     }, imageStyle: {
@@ -88,15 +89,16 @@ const styles = StyleSheet.create({
         height: '100%',
         borderRadius: RADIUS.smRadius
     }, viewTextStyle: {
-        width: '70%'
+        width: '70%',
+        marginLeft:RFValue(3)
     }, eachLineMargin: {
         marginBottom: '2%'
     }, doctorNameStyle: {
         fontSize: FONTS.h5,
-        color: COLORS.black
+        color: COLORS.darkGray3
     }, specialityTextStyle: {
         fontSize: FONTS.h6,
-        color: COLORS.gray
+        color: COLORS.darkGray2
     }, timaAndDateContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between'
@@ -109,7 +111,7 @@ const styles = StyleSheet.create({
         marginHorizontal: RFValue(3)
     }, eachTextStyleInDateAndTimeContainers: {
         fontSize: FONTS.h5,
-        color: COLORS.black
+        color: COLORS.darkGray3
     }, viewTimeStyle: {
         flexDirection: 'row',
         backgroundColor: COLORS.lightGray,

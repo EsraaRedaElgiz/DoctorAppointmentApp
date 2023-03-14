@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import {
   COLORS,
   FONTS,
@@ -6,7 +6,7 @@ import {
   PADDINGS,
   MARGIN,
 } from '../../constants/Constants';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,23 +16,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   topViewStyle: {
-    //minHeight: height * .2,
     paddingHorizontal: PADDINGS.mdPadding,
-    //paddingTop: '5%',///
-    //flex: 1,
-
-    paddingBottom: PADDINGS.xlPadding,
-  },
-  custombuttonIconStyle: {
-    //marginBottom: '10%',
-  },
-  viewHeaderStyle: {
+    paddingBottom: "5%"
+  }, viewHeaderStyle: {
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   scrollViewContentContainerStyle: {
-    // minHeight: '100%'
+    minHeight: '100%'
   },
   firstTextHeaderStyle: {
     color: COLORS.white,
@@ -50,12 +42,11 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     borderTopRightRadius: RFValue(85),
     paddingHorizontal: PADDINGS.mdPadding,
-    //flex: 5,
     paddingTop: '15%',
-    //paddingBottom: '.01%',
     flex: 1,
     justifyContent: 'space-between',
     flexDirection: 'column',
+    paddingBottom: PADDINGS.mdPadding
   },
   eachTextinputAndErrorTextContainer: {
     marginBottom: '3%',
@@ -77,7 +68,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: MARGIN.mdMargin,
+    //marginBottom: MARGIN.mdMargin,
   },
   bluetextstyle: {
     color: COLORS.blue,
@@ -97,7 +88,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: '14%',
+    marginVertical: '19%',
   },
   viewforheaderstyle: {
     marginBottom: '2%',
@@ -123,15 +114,13 @@ const styles = StyleSheet.create({
   },
   orWordStyle: {
     color: COLORS.darkGray2,
-  },
-  buttonMargin: {
-    //marginBottom: '2%'
-  },
-  scrollViewStyle: {
+  }, scrollViewStyle: {
     backgroundColor: COLORS.white,
   },
   textErrorColor: {
     color: '#f00',
-  },
+  }, buttonMargin: {
+    marginBottom: '1%'
+  }
 });
 export default styles;

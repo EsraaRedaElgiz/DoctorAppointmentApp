@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   StatusBar,
@@ -7,29 +7,31 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
-import {COLORS, FONTS} from '../../constants/Constants';
+import { COLORS, FONTS, PADDINGS } from '../../constants/Constants';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import HeaderArrowAndWord from '../../components/HeaderArrowAndWord/HeaderArrowAndWord';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import DropDown from '../../components/DropDown/DropDown';
-import {useSelector, useDispatch} from 'react-redux';
-import {
+import { useSelector, useDispatch } from 'react-redux';
+/*import {
   setPhotoUri,
   setBloodType,
   setWeight,
   setHeight,
   setAge,
   setGender,
-} from '../../Redux/Reducers/MedicalSheetSlice';
-import {useForm, Controller} from 'react-hook-form';
+} from '../../Redux/Reducers/MedicalSheetSlice';*/
+import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'react-native-image-picker';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import {requestCameraPermission} from '../../utils/CameraPermissin';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { requestCameraPermission } from '../../utils/CameraPermissin';
+import { RFValue } from 'react-native-responsive-fontsize';
 import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+import { setLoggedIn } from "../../Redux/Reducers/AuthSlice"
 
-function MedicalSheet({navigation}) {
+
+function MedicalSheet({ navigation }) {
   useEffect(() => {
     requestCameraPermission();
   }, []);
@@ -41,7 +43,7 @@ function MedicalSheet({navigation}) {
         path: 'images',
       },
     };
-    ImagePicker.launchImageLibrary({options, includeBase64: true}, res => {
+    ImagePicker.launchImageLibrary({ options, includeBase64: true }, res => {
       if (res.didCancel) {
         console.log('User cancelled image picker');
       } else if (res.error) {
@@ -79,68 +81,67 @@ function MedicalSheet({navigation}) {
   };
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const [photo_uri, setphoto_uri] = useState(
-    globalState.MedicalSheetReducer.photoUri,
-  );
+  const [photo_uri, setphoto_uri] = useState("");
+  const [bloodType, setBloodType] = useState("")
+  const [weight, setWeight] = useState("")
+  const [height, setHeight] = useState("")
+  const [age, setAge] = useState("")
+  const [gender, setGender] = useState("")
+
   const blood = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
   const type = ['ذكر', 'أنثي'];
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
     watch,
   } = useForm({
     defaultValues: {
-      bloodType: globalState.MedicalSheetReducer.bloodType,
-      weight: globalState.MedicalSheetReducer.weight,
-      height: globalState.MedicalSheetReducer.height,
-      age: globalState.MedicalSheetReducer.age,
-      gender: globalState.MedicalSheetReducer.gender,
+      bloodType: bloodType,
+      weight: weight,
+      height: height,
+      age: age,
+      gender: gender,
     },
   });
   const onSubmit = data => {
-    //console.log(data);
-    dispatch(setPhotoUri(photo_uri));
-    dispatch(setBloodType(data.bloodType));
-    dispatch(setWeight(data.weight));
-    dispatch(setHeight(data.height));
-    dispatch(setAge(data.age));
-    dispatch(setGender(data.gender));
-    //console.log(photo_uri);
-    navigation.navigate('HomeNavi');
+    console.log(data);
+    //setPhotoUri(photo_uri);
+    //console.log(photo_uri)
+    //console.log(photo_uri)
+    
+    setphoto_uri("");
+    setBloodType("");
+    setWeight("");
+    setHeight("");
+    setAge("");
+    setGender("");
+    dispatch(setLoggedIn())
   };
   return (
     <>
       <HeaderNavigation
-        title= "بيانات طبيه"
+        padding={PADDINGS.mdPadding}
+        title="بيانات طبية"
         backgroundColor={COLORS.blue}
         color={COLORS.white}
         onPress={() => {
-          navigation.goBack()
+          navigation.goBack();
+          setphoto_uri("");
+          setBloodType("");
+          setWeight("");
+          setHeight("");
+          setAge("");
+          setGender("");
         }}
       />
       <ScrollView
+        keyboardShouldPersistTaps="always"
         showsVerticalScrollIndicator={false}
-        style={styles.scrollViewStyle}
-        contentContainerStyle={styles.scrollViewContentContainerStyle}>
+        style={styles.scrollViewStyle}>
         <StatusBar backgroundColor={COLORS.blue} />
         <View style={styles.container}>
           <View style={styles.topViewStyle}>
-            {/* <HeaderArrowAndWord
-            text="بيانات طبيه"
-            textColor={COLORS.white}
-            textStyle={styles.wordHeaderMargin}
-            style={styles.customButtonIconAndWordMargin}
-            onPress={() => {
-              dispatch(setPhotoUri(''));
-              dispatch(setBloodType(''));
-              dispatch(setWeight(''));
-              dispatch(setHeight(''));
-              dispatch(setAge(''));
-              dispatch(setGender(''));
-              navigation.goBack()
-            }}
-          /> */}
             <View style={styles.viewHeaderStyle}>
               {photo_uri ? (
                 <ProfileImage
@@ -156,7 +157,6 @@ function MedicalSheet({navigation}) {
               )}
             </View>
           </View>
-
           <View style={styles.viewAfterHeaderStyle}>
             <View>
               <View>
@@ -165,7 +165,7 @@ function MedicalSheet({navigation}) {
                   rules={{
                     required: true,
                   }}
-                  render={({field: {onChange, onBlur, value}}) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <DropDown
                       style={styles.dropDownMarginBottom}
                       data={blood}
@@ -196,7 +196,7 @@ function MedicalSheet({navigation}) {
                       }
                     },
                   }}
-                  render={({field: {onChange, onBlur, value}}) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <Reusabletextinput
                       placeholder="الوزن"
                       keyboardType="numeric"
@@ -211,8 +211,8 @@ function MedicalSheet({navigation}) {
                   {errors.weight?.type === 'required'
                     ? 'يجب ادخال الوزن'
                     : errors.weight?.type === 'validate'
-                    ? 'يجب ادخال رقم'
-                    : ''}
+                      ? 'يجب ادخال رقم'
+                      : ''}
                 </Text>
               </View>
               <View style={styles.eachTextInputMargin}>
@@ -226,7 +226,7 @@ function MedicalSheet({navigation}) {
                       }
                     },
                   }}
-                  render={({field: {onChange, onBlur, value}}) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <Reusabletextinput
                       placeholder="الطول"
                       keyboardType="numeric"
@@ -241,8 +241,8 @@ function MedicalSheet({navigation}) {
                   {errors.height?.type === 'required'
                     ? 'بجب ادخال الطول'
                     : errors.height?.type === 'validate'
-                    ? 'يجب ادخال رقم'
-                    : ''}
+                      ? 'يجب ادخال رقم'
+                      : ''}
                 </Text>
               </View>
               <View style={styles.eachTextInputMargin}>
@@ -256,7 +256,7 @@ function MedicalSheet({navigation}) {
                       }
                     },
                   }}
-                  render={({field: {onChange, onBlur, value}}) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <Reusabletextinput
                       placeholder="السن"
                       keyboardType="numeric"
@@ -271,8 +271,8 @@ function MedicalSheet({navigation}) {
                   {errors.age?.type === 'required'
                     ? 'يجب ادخال السن'
                     : errors.age?.type === 'validate'
-                    ? 'يجب ادخال رقم'
-                    : ''}
+                      ? 'يجب ادخال رقم'
+                      : ''}
                 </Text>
               </View>
               <View style={styles.eachTextInputMargin}>
@@ -281,7 +281,7 @@ function MedicalSheet({navigation}) {
                   rules={{
                     required: true,
                   }}
-                  render={({field: {onChange, onBlur, value}}) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <DropDown
                       style={styles.dropDownMarginBottom}
                       data={type}
@@ -297,9 +297,7 @@ function MedicalSheet({navigation}) {
                 </Text>
               </View>
             </View>
-            <View style={styles.buttonMargin}>
-              <GeneralButton title="تأكيد" onPress={handleSubmit(onSubmit)} />
-            </View>
+
             <RBSheet
               ref={refRBSheet}
               height={RFValue(200)}
@@ -335,7 +333,7 @@ function MedicalSheet({navigation}) {
                   setphoto_uri(photo_uri => '');
                 }}
                 style={styles.eachOptionInBottonTab}>
-                <Text style={[styles.optionTextStyle, {color: COLORS.red}]}>
+                <Text style={[styles.optionTextStyle, { color: COLORS.red }]}>
                   مسح الصوره
                 </Text>
               </TouchableOpacity>
@@ -349,6 +347,9 @@ function MedicalSheet({navigation}) {
           </View>
         </View>
       </ScrollView>
+      <View style={styles.buttonViewStyle}>
+        <GeneralButton title="تأكيد" onPress={handleSubmit(onSubmit)} />
+      </View>
     </>
   );
 }

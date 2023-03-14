@@ -13,6 +13,7 @@ const SpecialitySearch = ({navigation}) => {
       <View style={[style.bigContainer,{paddingBottom:RFValue(100)}]}>
       <HeaderNavigation
         title= " البحث"
+        color={COLORS.darkGray3}
         onPress={() => {
           navigation.goBack()
         }}

@@ -28,8 +28,9 @@ import Icon from 'react-native-vector-icons/Feather';
 import * as ImagePicker from 'react-native-image-picker';
 import {requestCameraPermission} from '../../utils/CameraPermissin';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 const {height} = Dimensions.get('window');
+import {style} from '../../styles/Style';
 
 function Prescription({navigation}) {
   const [photo_uri, setphoto_uri] = useState(null);
@@ -104,16 +105,17 @@ function Prescription({navigation}) {
   return (
     <GeneralPage>
       <HeaderNavigation
-          title="الروشته"
-          onPress={() => {
-            navigation.goBack();
-          }}
-          padding={PADDINGS.mdPadding}
-        />
+        title="الروشتة"
+        color={COLORS.darkGray3}
+        onPress={() => {
+          navigation.goBack();
+        }}
+        padding={PADDINGS.mdPadding}
+      />
       <View style={styles.container}>
-        <Text style={styles.title}>التشخيص</Text>
+        <Text style={style.textContentBold}>التشخيص</Text>
         <View style={styles.diagnosisView}>
-          <Text style={styles.diagnosisText}>
+          <Text style={[style.textContent, styles.diagnosisText]}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non
             velit vel nunc blandit venenatis. Quisque vulputate lacinia elit,
             nec varius enim mollis eu. Sed eget eleifend eros. Etiam vel eros id
@@ -121,17 +123,14 @@ function Prescription({navigation}) {
             Nullam est est, imperdiet vel mi maximus, pulvinar sodales orci.
           </Text>
         </View>
-        <Text style={styles.title}>العلاج</Text>
+        <Text style={style.textContentBold}>العلاج</Text>
         <View style={{marginVertical: MARGIN.mdMargin}}>
           <Table borderStyle={{borderWidth: 1}}>
             <Row
               data={head}
               flexArr={[1, 1, 1]}
               style={styles.head}
-              textStyle={[
-                styles.text,
-                {fontSize: FONTS.h5, fontWeight: 'bold'},
-              ]}
+              textStyle={[styles.text, style.textSmallContentBold]}
             />
             <TableWrapper style={styles.wrapper}>
               <Rows
@@ -143,7 +142,7 @@ function Prescription({navigation}) {
             </TableWrapper>
           </Table>
         </View>
-        <Text style={styles.title}>التحاليل</Text>
+        <Text style={style.textContentBold}>التحاليل</Text>
         <View style={styles.analysis}>
           <View style={[styles.rowTableStyle, {backgroundColor: COLORS.white}]}>
             <Text style={styles.analysisText}>تحاليل</Text>

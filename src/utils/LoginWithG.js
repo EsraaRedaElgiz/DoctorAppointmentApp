@@ -6,11 +6,14 @@ import {
 } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import styles from '../screens/LogIn/styles'
+import {useNavigation} from '@react-navigation/native';
+
 
 function LoginWithG() {
     //video
     const [userData, setUserData] = useState({});
-    const [loggedIn, setloggedIn] = useState(false);
+    const navigation = useNavigation();
+
 
     useEffect(() => {
         GoogleSignin.configure({
@@ -24,8 +27,9 @@ function LoginWithG() {
 
         console.log(res.user) //المفروض الداتا دي تتبعت لللباك وتحطي هنا النفجيشن
         //alert(JSON.stringify(res.user))
-        setloggedIn(true)
         setUserData(res.user)
+        navigation.navigate("MedicalSheet");
+
     }
 
 
@@ -62,10 +66,8 @@ function LoginWithG() {
                 onPress={
                     () =>
                         onGoogleButtonPress().then(res => {
-                            loggedIn == true ?
-                                console.log("you have logged in already")
-                                :
                                 firstLoginSucceed(res)
+
                         }).catch(error => console.log(error))
                 }
             >

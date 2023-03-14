@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         //paddingHorizontal: PADDINGS.mdPadding,
         //paddingTop: '5%',
         alignItems: 'center',
-        paddingBottom: '5%',
+        paddingBottom: PADDINGS.mdPadding,
     }, arrowButtonStyle: {
         elevation: RFValue(3)
     }, flatListStyle: {

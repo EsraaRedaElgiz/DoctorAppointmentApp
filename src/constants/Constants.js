@@ -14,6 +14,7 @@ export const COLORS = {
   darkGray2: '#707070',
   darkGray3: '#303135',
   red: '#f00',
+  green:'#aed260',
   star:"#FFE900",
   searchCostumeColor:"#CFCECE"
 };

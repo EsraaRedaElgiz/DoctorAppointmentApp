@@ -8,6 +8,7 @@ import {
   MARGIN,
   FONTS,
   ICONS,
+  COLORS
 } from '../../constants/Constants';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -21,6 +22,7 @@ const PaymentCreditCard = ({navigation}) => {
       style={[style.bigContainer, {flex: 1, justifyContent: 'space-between'}]}>
       <HeaderNavigation
         title="الدفع"
+        color={COLORS.darkGray3}
         onPress={() => {
           navigation.goBack();
         }}
