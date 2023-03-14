@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   button: {
-    marginTop: '48%',
+    marginTop: '55%',
   },
 });
 export default styles;

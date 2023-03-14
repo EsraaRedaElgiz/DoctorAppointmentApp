@@ -1,17 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit"
+import {createSlice} from '@reduxjs/toolkit';
 const initState = {
-    introSliderDone:false
-}
+  introSliderDone: false,
+};
 const IntroSlider = createSlice({
-    name: "IntroSlider",
-    initialState: initState,
-    reducers: {
-        setIntroSlider: (state, action) => {
-            state.introSliderDone = action.payload;
-        }
+  name: 'IntroSlider',
+  initialState: initState,
+  reducers: {
+    setIntroSlider: (state, action) => {
+      state.introSliderDone = action.payload;
     },
+  },
 });
 export default IntroSlider.reducer;
-export const {
-    setIntroSlider
-} = IntroSlider.actions;
+export const {setIntroSlider} = IntroSlider.actions;
