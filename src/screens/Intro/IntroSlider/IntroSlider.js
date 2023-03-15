@@ -59,7 +59,6 @@ function IntroSlider({navigation}) {
     };
     return (
         <View style={{ flex: 1 }}>
-            <StatusBar backgroundColor={COLORS.blue} />
             <AppIntroSlider
                 renderItem={renderItem}
                 data={slides}

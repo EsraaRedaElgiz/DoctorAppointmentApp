@@ -97,7 +97,8 @@ function EditPersonDetails(props) {
           navigation.goBack();
         }}
         onPressBtn={() => {
-          navigation.navigate('UserProfile');
+          navigation.navigate('MedicalID1');
+          //must all textInputs be vaild (validation react-hook-form)
         }}
       />
       <View style={styles.conatiner}>
@@ -155,7 +156,8 @@ function EditPersonDetails(props) {
         customStyles={{
           container: {
             alignItems: 'center',
-            borderRadius: RFValue(30),
+            borderTopLeftRadius:RFValue(30),
+            borderTopRightRadius:RFValue(30)
           },
         }}>
         <TouchableOpacity

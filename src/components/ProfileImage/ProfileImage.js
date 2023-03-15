@@ -68,7 +68,7 @@ function ProfileImage(props) {
                   ]
                 : [styles.imageProfileStyle, styles.viewFalseSelectedImage]
             }>
-            {imageUri ? (
+            {imageUri ? ( 
               <Image
                 source={{uri: imageUri}}
                 style={styles.imageProfileStyle}

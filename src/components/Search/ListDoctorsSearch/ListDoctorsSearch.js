@@ -34,9 +34,9 @@ const ListDoctorsSearch = () => {
             <Pressable
               style={style.CardContainer}
               onPress={() => {
-                navigation.navigate('DoctorProfile',{
-                  DoctorID:itemData.item.id,
-                  DoctorArray:itemData.item,
+                navigation.navigate('DoctorProfile', {
+                  DoctorID: itemData.item.id,
+                  DoctorArray: itemData.item,
                 });
               }}>
               <View style={style.imageContainerStyle}>
@@ -44,11 +44,14 @@ const ListDoctorsSearch = () => {
               </View>
               <View style={style.textsCardConatiner}>
                 <Text
-                  style={[style.textContentBold, {color: COLORS.darkGray3,fontWeight:'normal'}]}>
-                  د.{itemData.item.name.trim()}{' '}
+                  style={[
+                    style.textContentBold,
+                    {color: COLORS.darkGray3, fontWeight: 'normal'},
+                  ]}>
+                  {'د' + ' ' + itemData.item.name.trim()}{' '}
                 </Text>
                 <Text style={[style.textContent, {color: COLORS.darkGray2}]}>
-                  {itemData.item.price} جنيه
+                  {itemData.item.price+"\tجنيه"} 
                 </Text>
                 <Rating
                   stars={itemData.item.rating}

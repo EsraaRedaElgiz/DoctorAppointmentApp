@@ -27,9 +27,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: PADDINGS.smPadding,
     paddingBottom: RFValue(150),
     borderRadius: RADIUS.smRadius,
-    borderWidth: 1,
+    borderWidth: RFValue(1),
     borderColor: COLORS.gray,
-    fontSize: FONTS.h6,
+    fontSize: FONTS.h5,
     color: COLORS.darkGray,
     marginBottom: height * 0.1,
   },
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   button: {
     marginHorizontal: MARGIN.mdMargin,
-    marginBottom: MARGIN.smMargin,
+    marginBottom: MARGIN.mdMargin,
   },
 });
 

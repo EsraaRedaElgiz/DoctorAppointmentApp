@@ -34,9 +34,7 @@ const PaymentCard = props => {
           <View style={styles.nameContainer}>
             <Text
               style={[style.textSmallContentBold, {color: COLORS.darkGray3}]}>
-              {' '}
-              الدكتور {''}
-              {name}
+              {'د ' + name}
             </Text>
           </View>
           <View

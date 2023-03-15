@@ -74,16 +74,16 @@ function AddCard(props) {
               />
             </View>
           </View>
-          <View style={styles.button}>
-            <GeneralButton
-              title="تأكيد"
-              onPress={() => {
-                navigation.goBack();
-              }}
-            />
-          </View>
         </View>
       </GeneralPage>
+      <View style={styles.button}>
+        <GeneralButton
+          title="تأكيد"
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
+      </View>
     </Fragment>
   );
 }

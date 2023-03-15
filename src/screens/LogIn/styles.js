@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     color: COLORS.darkGray2,
     fontSize: FONTS.h6,
     fontFamily: 'Amaranth-Regular',
+    fontWeight:'bold'
   },
   viewForLastTextStyle: {
     width: '100%',
@@ -73,6 +74,7 @@ const styles = StyleSheet.create({
   bluetextstyle: {
     color: COLORS.blue,
     fontFamily: 'Amaranth-Regular',
+    fontWeight:'bold'
   },
   viewforcheckboxandwordstyle: {
     flexDirection: 'row',
@@ -120,7 +122,7 @@ const styles = StyleSheet.create({
   textErrorColor: {
     color: '#f00',
   }, buttonMargin: {
-    marginBottom: '1%'
+    marginBottom: '2%'
   }
 });
 export default styles;

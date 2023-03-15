@@ -37,7 +37,7 @@ function SupportTeam(props) {
         title="ارسال"
         style={styles.button}
         onPress={() => {
-          navigation.navigate("Home")
+          navigation.goBack()
         }}
       />
     </View>

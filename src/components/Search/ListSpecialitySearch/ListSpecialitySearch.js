@@ -23,6 +23,12 @@ const ListSpecialitySearch = () => {
         numColumns={2}
         showsVerticalScrollIndicator={false}
         data={SpecialityData}
+        contentContainerStyle={{
+          marginTop: MARGIN.mdMargin,
+          padding: RFValue(2),
+          paddingLeft: MARGIN.xsMargin,
+          paddingRight:RFValue(4)
+        }}
         renderItem={(itemData, index) => (
           <>
             <Pressable
@@ -60,13 +66,13 @@ export default ListSpecialitySearch;
 
 const styles = StyleSheet.create({
   container: {
-    width: '42%',
+    width: "48%",
     height: RFValue(150),
     backgroundColor: COLORS.white,
     elevation: RFValue(3),
-    paddingVertical: PADDINGS.mdPadding,
     borderRadius: RADIUS.smRadius,
-    margin: MARGIN.mdMargin,
+    marginRight: "4.5%",
+    marginBottom: MARGIN.mdMargin,
     alignItems: 'center',
     justifyContent: 'space-around',
   },

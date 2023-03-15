@@ -6,11 +6,13 @@ import UserProfileButton from '../../components/UserProfileButton/UserProfileBut
 import {userProfileData} from '../../utils/DummyData';
 import styles from './UserProfileStyle';
 import {useNavigation} from '@react-navigation/native';
+import Images from '../../constants/Images';
 function UserProfile(props) {
   const navigation = useNavigation();
   return (
     <GeneralPage>
       <View style={styles.container}>
+       
         <ProfileImage nameAfterImage />
         {userProfileData.map((el, idx) => {
           return (

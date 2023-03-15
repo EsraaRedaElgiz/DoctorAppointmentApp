@@ -44,7 +44,6 @@ function NewPassword({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <StatusBar backgroundColor={COLORS.blue} />
             <HeaderNavigation
                 title="تغيير كلمه المرور"
                 color={COLORS.darkGray3}

@@ -7,12 +7,12 @@ import {
   SpecialityList,
   TopDoctors,
 } from '../../components/Home';
-import {PADDINGS} from '../../constants/Constants';
+import {COLORS, PADDINGS} from '../../constants/Constants';
 
 const Home = ({navigation}) => {
   return (
     <>
-      <View style={{backgroundColor: '#fff', flex: 1}}>
+      <View style={{backgroundColor: COLORS.white, flex: 1}}>
         <Header />
         <ScrollView showsVerticalScrollIndicator={false}>
           <CovidCard />

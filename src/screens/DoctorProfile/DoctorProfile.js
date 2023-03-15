@@ -36,12 +36,10 @@ const DoctorProfile = ({navigation}) => {
     longitudeDelta: 0.0421,
   };
   const route = useRoute();
-  // const DoctorID = route.params.DoctorID;
   const DoctorArray = route.params.DoctorArray;
-  // console.log(DoctorArray.id);
   return (
     <>
-      <View style={{flex:1,backgroundColor:COLORS.white}}>
+      <View style={{flex: 1, backgroundColor: COLORS.white}}>
         <ScrollView
           style={{backgroundColor: COLORS.white}}
           showsVerticalScrollIndicator={false}>
@@ -53,7 +51,7 @@ const DoctorProfile = ({navigation}) => {
 
           {/* NameAndSpecialty */}
           <View style={styles.textsContainer}>
-            <Text style={style.textTitleBold}>الدكتور{DoctorArray.name}</Text>
+            <Text style={style.textTitleBold}>{'د\t' + DoctorArray.name}</Text>
             <Text
               style={[
                 style.textContent,
@@ -72,9 +70,7 @@ const DoctorProfile = ({navigation}) => {
             {/* About */}
             <Text style={style.textTitleBold}>حول</Text>
             <View style={styles.aboutStyleContainer}>
-              <Text style={style.textSmallContentBold}>
-                {DoctorArray.about}
-              </Text>
+              <Text style={style.textSmallContent}>{DoctorArray.about}</Text>
             </View>
             {/* Location */}
             <Text style={[style.textTitleBold, {marginTop: MARGIN.mdMargin}]}>
@@ -82,10 +78,7 @@ const DoctorProfile = ({navigation}) => {
             </Text>
             {/* navigate to map page */}
             <Text
-              style={[
-                style.textSmallContentBold,
-                {marginVertical: MARGIN.smMargin},
-              ]}>
+              style={[style.textContent, {marginVertical: MARGIN.smMargin}]}>
               {DoctorArray.address}
             </Text>
             <Pressable style={styles.PreviewMap}>
@@ -136,11 +129,14 @@ const DoctorProfile = ({navigation}) => {
                             style={styles.imgReview}
                           />
                         </View>
-                        <View style={styles.CommentStyle}>
+
+                        <ScrollView
+                          nestedScrollEnabled={true}
+                          showsVerticalScrollIndicator={false}>
                           <Text style={style.textSmallContent}>
                             {itemData.item.comment}
                           </Text>
-                        </View>
+                        </ScrollView>
                       </View>
                     </>
                   );
@@ -155,7 +151,7 @@ const DoctorProfile = ({navigation}) => {
           style={{
             width: '90%',
             alignSelf: 'center',
-            marginBottom:MARGIN.mdMargin
+            marginBottom: MARGIN.mdMargin,
           }}
           onPress={() => {
             navigation.navigate('BookAppointment', {
@@ -184,7 +180,7 @@ const Cards = props => {
       id: 2,
       name: 'medal',
       number: data.numOfexperience,
-      text: 'خبره',
+      text: 'خبرة',
     },
     {
       id: 3,
@@ -240,7 +236,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    
   },
   card: {
     width: RFValue(90),
@@ -269,6 +264,7 @@ const styles = StyleSheet.create({
     fontSize: FONTS.h5,
     fontFamily: FONTS.AmaranthRegular,
     lineHeight: RFValue(20),
+    fontWeight: 'bold',
   },
   About_Location_Reviews: {
     width: '90%',
@@ -311,6 +307,6 @@ const styles = StyleSheet.create({
   },
   CommentStyle: {
     width: '100%',
-    maxHeight: RFValue(100),
+    // maxHeight: RFValue(100),
   },
 });
