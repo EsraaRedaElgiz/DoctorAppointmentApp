@@ -42,21 +42,15 @@ function SignUp({ navigation }) {
   } = useForm({
 
     defaultValues: {
-      name: name,
-      phoneNum: phoneNum,
-      email: email,
-      password: password,
-      confirmPassword: confirmPassword,
+      name:"",
+      phoneNum: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     },
   });
   const onSubmit = data => {
-    console.log(data);
-    setName("");
-    setPhoneNum("");
-    setEmail("");
-    setPassword("");
-    setConfirmPassword("")
-    navigation.navigate('MedicalSheet');
+    //console.log(data);
     //backend
     /* const data = {
        name: data.name,
@@ -66,11 +60,10 @@ function SignUp({ navigation }) {
          confirmPassword: data.confirmPassword
        }
        dispatch(insertData(data))
-       dispatch(setName(""))
-       dispatch(setPhoneNum(""))
-       dispatch(setEmail(""))
-       dispatch(setPassword(""))
-       dispatch(setConfirmPassword(""))*/
+       */
+    reset()
+    navigation.navigate('MedicalSheet');
+    
 
   };
 
@@ -87,11 +80,7 @@ function SignUp({ navigation }) {
           backgroundColor={COLORS.blue}
           padding={PADDINGS.mdPadding}
           onPress={() => {
-            setName("");
-            setPhoneNum("");
-            setEmail("");
-            setPassword("");
-            setConfirmPassword("");
+            reset()
             navigation.navigate('DoctorOrPatient');
 
           }}
@@ -126,6 +115,7 @@ function SignUp({ navigation }) {
                       bordercolor={errors.name ? COLORS.red : COLORS.gray}
                       onChangeText={onChange}
                       onBlur={onBlur}
+                      value={value}
                     />
                   )}
                   name="name"
@@ -155,6 +145,8 @@ function SignUp({ navigation }) {
                       bordercolor={errors.phoneNum ? COLORS.red : COLORS.gray}
                       onChangeText={onChange}
                       onBlur={onBlur}
+                      value={value}
+
                     />
                   )}
                   name="phoneNum"
@@ -181,6 +173,8 @@ function SignUp({ navigation }) {
                       bordercolor={errors.email ? COLORS.red : COLORS.gray}
                       onChangeText={onChange}
                       onBlur={onBlur}
+                      value={value}
+
                     />
                   )}
                   name="email"
@@ -216,6 +210,8 @@ function SignUp({ navigation }) {
                       secureTextEntry={secured_pass_first}
                       onChangeText={onChange}
                       onBlur={onBlur}
+                      value={value}
+
                     />
                   )}
                   name="password"
@@ -257,6 +253,8 @@ function SignUp({ navigation }) {
                       secureTextEntry={secured_pass_second}
                       onChangeText={onChange}
                       onBlur={onBlur}
+                      value={value}
+
                     />
                   )}
                   name="confirmPassword"
@@ -303,11 +301,7 @@ function SignUp({ navigation }) {
                 </View>
                 <TouchableOpacity
                   onPress={() => {
-                    setName("");
-                    setPhoneNum("");
-                    setEmail("");
-                    setPassword("");
-                    setConfirmPassword("");
+                    reset()
                     navigation.navigate('LogIn')
                   }}>
                   <Text style={styles.bluetextstyle}> تسجيل الدخول </Text>

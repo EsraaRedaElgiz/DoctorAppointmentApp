@@ -27,31 +27,31 @@ import { setLoggedIn } from "../../Redux/Reducers/AuthSlice"
 function LogIn({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const [toggleCheckBox, setToggleCheckBox] = useState(
-    globalState.LoginReducer.rememberMe,
-  );
+  const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [secured_pass, set_secured_pass] = useState(true);
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
     watch,
   } = useForm({
     defaultValues: {
-      email: globalState.LoginReducer.email,
-      password: globalState.LoginReducer.password,
+      email: "",
+      password: "",
     },
   });
   const onSubmit = data => {
-    //console.log(data);
-    dispatch(setEmail(data.email));
-    dispatch(setPassword(data.password));
-    dispatch(setRememberMe(toggleCheckBox));
-    //console.log(globalState.LoginReducer.rememberMe+""+globalState.LoginReducer.email)
+    //console.log(JSON.stringify(data) + "before" + toggleCheckBox);
+    /*const data = {
+      email: data.email,
+        password: data.phoneNum,
+       rememberMe: toggleCheckbox
+      }
+      dispatch(insertData(data))*/
+    reset()
+    setToggleCheckBox(toggleCheckBox => { return false })
     dispatch(setLoggedIn())
-    dispatch(setEmail(""));
-    dispatch(setPassword(""));
-    dispatch(setRememberMe(false));
 
   };
 
@@ -67,10 +67,9 @@ function LogIn({ navigation }) {
           backgroundColor={COLORS.blue}
           padding={PADDINGS.mdPadding}
           onPress={() => {
+            reset()
+            setToggleCheckBox(toggleCheckBox => { return false })
             navigation.goBack();
-            dispatch(setEmail(""));
-            dispatch(setPassword(""));
-            dispatch(setRememberMe(false));
           }}
         />
         <View style={styles.container}>
@@ -103,6 +102,7 @@ function LogIn({ navigation }) {
                       bordercolor={errors.email ? COLORS.red : COLORS.gray}
                       onChangeText={onChange}
                       onBlur={onBlur}
+                      value={value}
                     />
                   )}
                   name="email"
@@ -139,6 +139,8 @@ function LogIn({ navigation }) {
                       secureTextEntry={secured_pass}
                       onChangeText={onChange}
                       onBlur={onBlur}
+                      value={value}
+
                     />
                   )}
                   name="password"
@@ -159,7 +161,8 @@ function LogIn({ navigation }) {
                     <Checkbox
                       status={toggleCheckBox ? 'checked' : 'unchecked'}
                       onPress={() =>
-                        setToggleCheckBox(toggleCheckBox => !toggleCheckBox)
+                        setToggleCheckBox(toggleCheckBox => { return !toggleCheckBox })
+                        
                       }
                       color={COLORS.blue}
                       uncheckedColor={COLORS.gray}
@@ -171,6 +174,8 @@ function LogIn({ navigation }) {
                 </View>
                 <TouchableOpacity
                   onPress={() => {
+                    reset()
+                    setToggleCheckBox(toggleCheckBox => { return false })
                     navigation.navigate('ForgetPassword');
                   }}>
                   <Text style={styles.bluetextstyle}>نسيت كلمه المرور؟</Text>
@@ -200,6 +205,8 @@ function LogIn({ navigation }) {
                 </View>
                 <TouchableOpacity
                   onPress={() => {
+                    reset()
+                    setToggleCheckBox(toggleCheckBox => { return false })
                     navigation.navigate('SignUp');
                   }}>
                   <Text style={styles.bluetextstyle}> انشاء حساب </Text>

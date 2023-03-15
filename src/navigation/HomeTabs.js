@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeStack from './HomeStack';
 import AppointmentStack from './AppointmentStack';
 import HistoryStack from './HistoryStack';
@@ -36,6 +36,9 @@ const HomeTabs = () => {
           return {
             headerShown: false,
             tabBarHideOnKeyboard:true,
+            tabBarStyle: {
+              backgroundColor: COLORS.blue,
+            },
             tabBarIcon: ({focused}) => (
               <Ionicons
                 name={
@@ -43,15 +46,15 @@ const HomeTabs = () => {
                     ? iconNameSelect[route.name]
                     : iconNameUnselect[route.name]
                 }
-                size={ICONS.lgIcon}
-                color={focused ? COLORS.blue : null}
+                size={ICONS.mdIcon}
+                color={focused ? COLORS.white : COLORS.gray}
               />
             ),
             tabBarLabel: ({focused}) => (
               <Text
                 style={[
                   style.textSmallContentBold,
-                  {color: focused ? COLORS.blue : null},
+                  {color: focused ? COLORS.white : COLORS.gray},
                 ]}>
                 {label[route.name]}
               </Text>

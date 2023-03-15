@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         //paddingTop: '5%',
         paddingBottom: '5%',
     }, appointmentDetailsContainer: {
-        marginVertical: '5%',
+        marginBottom: '5%',
         flexDirection: 'row',
         //backgroundColor: '#ff0',
         paddingHorizontal: PADDINGS.mdPadding,

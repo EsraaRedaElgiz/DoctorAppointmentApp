@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { View, FlatList, StatusBar } from 'react-native';
+import { View, FlatList, StatusBar,ToastAndroid } from 'react-native';
 import { COLORS, PADDINGS } from '../../constants/Constants';
 import styles from './styles';
 import HeaderArrowAndWord from '../../components/HeaderArrowAndWord/HeaderArrowAndWord';
@@ -11,6 +11,7 @@ import { HeaderNavigation } from '../../components/headerNavigation/HeaderNaviga
 //
 
 function History({ navigation }) {
+  const[visible,setVisible]=useState(false)
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   /*useEffect(() => {
@@ -53,16 +54,23 @@ function History({ navigation }) {
     )
 
   }
+  const showToast = () => {
+    ToastAndroid.show(visible==true?'تاريخك المرضي غير مرئي للأطباء !':"تاريخك المرضي مرئي للأطباء !", ToastAndroid.SHORT);
+  };
+  
   return (
 
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.blue} />
       <HeaderNavigation
         title="التاريخ"
-        color={COLORS.darkGray3}
+        icon
+        iconName={visible==false?"lock":"unlock"}
+       color={COLORS.darkGray3}
         onPress={() => {
           navigation.goBack();
         }}
+        onPressBtn={()=>{setVisible(visible=>{return !visible});showToast()}}
         padding={PADDINGS.mdPadding}
       />
       <FlatList

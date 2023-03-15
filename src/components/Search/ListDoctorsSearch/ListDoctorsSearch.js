@@ -44,8 +44,8 @@ const ListDoctorsSearch = () => {
               </View>
               <View style={style.textsCardConatiner}>
                 <Text
-                  style={[style.textContentBold, {color: COLORS.darkGray3}]}>
-                  الدكتور {itemData.item.name.trim()}{' '}
+                  style={[style.textContentBold, {color: COLORS.darkGray3,fontWeight:'normal'}]}>
+                  د.{itemData.item.name.trim()}{' '}
                 </Text>
                 <Text style={[style.textContent, {color: COLORS.darkGray2}]}>
                   {itemData.item.price} جنيه

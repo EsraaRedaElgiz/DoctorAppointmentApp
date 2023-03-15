@@ -23,32 +23,37 @@ function ResetPassword({ navigation }) {
     handleSubmit,
     formState: { errors },
     watch,
+    reset
   } = useForm({
     defaultValues: {
-      password: globalState.ResetPasswordReducer.password,
-      confirmPassword: globalState.ResetPasswordReducer.confirmPassword,
+      password:"",
+      confirmPassword:"",
     },
   });
   const onSubmit = data => {
-    // console.log(data);
-    dispatch(setPassword(data.password));
-    dispatch(setConfirmPassword(data.confirmPassword));
+     //console.log(data);
+    /*const data = {
+    password: data.password,
+    confirmPassword:data.confirmPassword ,
+     
+    }
+    dispatch(insertData(data))*/
+    reset()
     navigation.navigate('LogIn');
-    dispatch(setPassword(""))
-    dispatch(setConfirmPassword(""))
+    
   };
  
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.blue} />
       <HeaderNavigation
-        title="تعيين كلمة المرور"
+        title="اعادة تعيين كلمة المرور"
         color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
         onPress={() => {
+          reset()
           navigation.navigate('VertificationCode');
-          dispatch(setPassword(""))
-          dispatch(setConfirmPassword(""))
+          
         }}
       />
       <ScrollView
@@ -86,6 +91,7 @@ function ResetPassword({ navigation }) {
                     secureTextEntry={secured_pass_first}
                     onChangeText={onChange}
                     onBlur={onBlur}
+                    value={value}
                   />
                 )}
                 name="password"
@@ -125,6 +131,7 @@ function ResetPassword({ navigation }) {
                     secureTextEntry={secured_pass_second}
                     onChangeText={onChange}
                     onBlur={onBlur}
+                    value={value}
                   />
                 )}
                 name="confirmPassword"

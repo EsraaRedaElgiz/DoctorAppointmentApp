@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import {View, Text, Dimensions} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
@@ -22,8 +22,9 @@ function AddCard(props) {
     {image: require('../../assets/Images/applePay.png')},
   ]);
   return (
-    <GeneralPage>
+    <Fragment>
       <HeaderNavigation
+        backgroundColor={COLORS.white}
         title="اضافه بطاقة"
         color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
@@ -31,57 +32,59 @@ function AddCard(props) {
           navigation.goBack();
         }}
       />
-      <View style={styles.container}>
-        <Text style={[style.textContentBold, styles.title]}>طرق الدفع</Text>
-        <View style={styles.visaTypeView}>
-          {payment.map((el, idx) => {
-            return <VisaTypeCard key={idx} image={el.image} />;
-          })}
-        </View>
-        <Text style={[style.textContentBold, styles.title]}>
-          املأ معلومات بطاقتك
-        </Text>
-        <View style={styles.inputView}>
-          <Reusabletextinput
-            placeholder="حامل البطاقة"
-            bordercolor={COLORS.gray}
-          />
-        </View>
-        <View style={styles.inputView}>
-          <Reusabletextinput
-            placeholder="رقم البطاقة"
-            bordercolor={COLORS.gray}
-          />
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <View
-            style={[
-              styles.inputView,
-              styles.smallTextInput,
-              {marginRight: RFValue(20)},
-            ]}>
+      <GeneralPage>
+        <View style={styles.container}>
+          <Text style={[style.textContentBold, styles.title]}>طرق الدفع</Text>
+          <View style={styles.visaTypeView}>
+            {payment.map((el, idx) => {
+              return <VisaTypeCard key={idx} image={el.image} />;
+            })}
+          </View>
+          <Text style={[style.textContentBold, styles.title]}>
+            املأ معلومات بطاقتك
+          </Text>
+          <View style={styles.inputView}>
             <Reusabletextinput
-              placeholder="التاريخ"
+              placeholder="حامل البطاقة"
               bordercolor={COLORS.gray}
             />
           </View>
-          <View style={[styles.inputView, styles.smallTextInput]}>
+          <View style={styles.inputView}>
             <Reusabletextinput
-              placeholder="رقم تأكيد البطاقة"
+              placeholder="رقم البطاقة"
               bordercolor={COLORS.gray}
             />
           </View>
+          <View style={{flexDirection: 'row'}}>
+            <View
+              style={[
+                styles.inputView,
+                styles.smallTextInput,
+                {marginRight: RFValue(20)},
+              ]}>
+              <Reusabletextinput
+                placeholder="التاريخ"
+                bordercolor={COLORS.gray}
+              />
+            </View>
+            <View style={[styles.inputView, styles.smallTextInput]}>
+              <Reusabletextinput
+                placeholder="رقم تأكيد البطاقة"
+                bordercolor={COLORS.gray}
+              />
+            </View>
+          </View>
+          <View style={styles.button}>
+            <GeneralButton
+              title="تأكيد"
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          </View>
         </View>
-        <View style={styles.button}>
-          <GeneralButton
-            title="تأكيد"
-            onPress={() => {
-              navigation.goBack();
-            }}
-          />
-        </View>
-      </View>
-    </GeneralPage>
+      </GeneralPage>
+    </Fragment>
   );
 }
 

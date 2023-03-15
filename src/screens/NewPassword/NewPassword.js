@@ -20,24 +20,27 @@ function NewPassword({ navigation }) {
     const [secured_pass_first, set_secured_pass_first] = useState(true);
     const [secured_pass_second, set_secured_pass_second] = useState(true);
     const [secured_pass_third, set_secured_pass_third] = useState(true);
-    const { control, handleSubmit, formState: { errors }, watch } = useForm({
+    const { control, handleSubmit, formState: { errors }, watch, reset } = useForm({
         defaultValues: {
-            oldPassword: globalState.NewPasswordReducer.oldPassword,
-            newPassword: globalState.NewPasswordReducer.newPassword,
-            confirmNewPassword: globalState.NewPasswordReducer.confirmNewPassword
+            oldPassword: "",
+            newPassword: "",
+            confirmNewPassword: ""
         }
     });
     const onSubmit = (data) => {
-        //  console.log(data);
-        dispatch(setOldPassword(data.oldPassword))
-        dispatch(setNewPassword(data.newPassword))
-        dispatch(setConfirmNewPassword(data.confirmNewPassword))
-        navigation.navigate('UserProfile');
-        dispatch(setOldPassword(""))
-        dispatch(setNewPassword(""))
-        dispatch(setConfirmNewPassword(""))
+        //console.log(data);
+        /*const data = {
+    oldPassword: data.oldPassword,
+            newPassword: data.newPassword,
+            confirmNewPassword:data.confirmNewPassword ,
+     
     }
-  
+    dispatch(insertData(data))*/
+        reset()
+        navigation.navigate('UserProfile');
+
+    }
+
 
     return (
         <View style={styles.container}>
@@ -47,10 +50,8 @@ function NewPassword({ navigation }) {
                 color={COLORS.darkGray3}
                 padding={PADDINGS.mdPadding}
                 onPress={() => {
+                    reset()
                     navigation.navigate('UserProfile');
-                    dispatch(setOldPassword(""))
-                    dispatch(setNewPassword(""))
-                    dispatch(setConfirmNewPassword(""))
                 }}
             />
             <ScrollView
@@ -80,7 +81,7 @@ function NewPassword({ navigation }) {
                                             <TextInput.Icon
                                                 icon={secured_pass_first ? 'eye-off' : 'eye'}
                                                 iconColor={COLORS.darkGray}
-                                                onPress={()=>set_secured_pass_first(secured_pass_first=>{return !secured_pass_first})}
+                                                onPress={() => set_secured_pass_first(secured_pass_first => { return !secured_pass_first })}
 
                                             />
                                         }
@@ -88,6 +89,7 @@ function NewPassword({ navigation }) {
                                         secureTextEntry={secured_pass_first}
                                         onChangeText={onChange}
                                         onBlur={onBlur}
+                                        value={value}
                                     />
                                 )}
                                 name="oldPassword"
@@ -119,7 +121,7 @@ function NewPassword({ navigation }) {
                                             <TextInput.Icon
                                                 icon={secured_pass_second ? 'eye-off' : 'eye'}
                                                 iconColor={COLORS.darkGray}
-                                                onPress={()=>set_secured_pass_second(secured_pass_second=>{return !secured_pass_second})}
+                                                onPress={() => set_secured_pass_second(secured_pass_second => { return !secured_pass_second })}
 
                                             />
                                         }
@@ -127,6 +129,7 @@ function NewPassword({ navigation }) {
                                         secureTextEntry={secured_pass_second}
                                         onChangeText={onChange}
                                         onBlur={onBlur}
+                                        value={value}
                                     />)}
                                 name="newPassword"
                             />
@@ -156,7 +159,7 @@ function NewPassword({ navigation }) {
                                             <TextInput.Icon
                                                 icon={secured_pass_third ? 'eye-off' : 'eye'}
                                                 iconColor={COLORS.darkGray}
-                                                onPress={()=>set_secured_pass_third(secured_pass_third=>{return !secured_pass_third})}
+                                                onPress={() => set_secured_pass_third(secured_pass_third => { return !secured_pass_third })}
 
                                             />
                                         }
@@ -164,6 +167,7 @@ function NewPassword({ navigation }) {
                                         secureTextEntry={secured_pass_third}
                                         onChangeText={onChange}
                                         onBlur={onBlur}
+                                        value={value}
                                     />)}
                                 name="confirmNewPassword"
                             />

@@ -36,8 +36,8 @@ const TopDoctors = () => {
 
           {/* TextOnCards */}
           <View style={style.textsCardConatiner}>
-            <Text style={[style.textContentBold, {color: COLORS.darkGray3}]}>
-              الدكتور {itemData.item.name.trim()}{' '}
+            <Text style={[style.textContentBold, {color: COLORS.darkGray3,fontWeight:'normal'}]}>
+              د.{itemData.item.name.trim()}{' '}
             </Text>
             <Text style={[style.textSmallContent, {color: COLORS.darkGray2}]}>
               طبيب {itemData.item.specialtiy.trim()}{' '}
