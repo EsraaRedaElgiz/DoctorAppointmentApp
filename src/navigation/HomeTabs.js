@@ -35,6 +35,7 @@ const HomeTabs = () => {
           };
           return {
             headerShown: false,
+            tabBarHideOnKeyboard:true,
             tabBarIcon: ({focused}) => (
               <Ionicons
                 name={

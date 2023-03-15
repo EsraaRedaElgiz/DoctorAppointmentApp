@@ -11,14 +11,13 @@ import {
 import {SpecialityData} from '../../../utils';
 import {style} from '../../../styles/Style';
 import SearchBar from '../SearchBar/SearchBar';
-import {useNavigation} from "@react-navigation/native"
+import {useNavigation} from '@react-navigation/native';
 const ListSpecialitySearch = () => {
   // const [SpecialityDataUpdated, setSpecialityDataUpdated] =
   //   useState(SpecialityData);
-    const navigation=useNavigation()
+  const navigation = useNavigation();
   return (
     <>
-     
       <FlatList
         horizontal={false}
         numColumns={2}
@@ -26,13 +25,25 @@ const ListSpecialitySearch = () => {
         data={SpecialityData}
         renderItem={(itemData, index) => (
           <>
-            <Pressable style={styles.container}
-            onPress={()=>{
-              navigation.navigate("DoctorsSearch")
-            }}
-            >
+            <Pressable
+              style={styles.container}
+              onPress={() => {
+                navigation.navigate('DoctorsSearch', {
+                  SpecialityArray: itemData.item,
+                });
+              }}>
               <View style={styles.imageConatiner}>
-                <Image source={itemData.item.img} style={styles.image} />
+                <Image
+                  source={itemData.item.img}
+                  style={
+                    itemData.item.id == 1 ||
+                    itemData.item.id == 3 ||
+                    itemData.item.id == 8 ||
+                    itemData.item.id == 9
+                      ? styles.alternativeImage
+                      : styles.image
+                  }
+                />
               </View>
               <View style={{maxHeight: RFValue(20)}}>
                 <Text style={style.textContentBold}>{itemData.item.title}</Text>
@@ -58,7 +69,6 @@ const styles = StyleSheet.create({
     margin: MARGIN.mdMargin,
     alignItems: 'center',
     justifyContent: 'space-around',
-  
   },
   imageConatiner: {
     width: RFValue(60),
@@ -70,6 +80,12 @@ const styles = StyleSheet.create({
     elevation: RFValue(3),
   },
   image: {
+    width: RFValue(50),
+    height: RFValue(50),
+
+    borderRadius: RADIUS.mdRadius,
+  },
+  alternativeImage: {
     width: RFValue(30),
     height: RFValue(30),
     borderRadius: RADIUS.mdRadius,

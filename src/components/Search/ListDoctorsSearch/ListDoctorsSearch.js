@@ -34,7 +34,10 @@ const ListDoctorsSearch = () => {
             <Pressable
               style={style.CardContainer}
               onPress={() => {
-                navigation.navigate('DoctorProfile');
+                navigation.navigate('DoctorProfile',{
+                  DoctorID:itemData.item.id,
+                  DoctorArray:itemData.item,
+                });
               }}>
               <View style={style.imageContainerStyle}>
                 <Image source={itemData.item.image} style={style.imageCard} />

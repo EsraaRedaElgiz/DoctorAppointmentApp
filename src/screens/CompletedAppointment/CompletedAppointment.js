@@ -27,6 +27,7 @@ const CompletedAppointment = ({navigation}) => {
         </View>
         <GeneralButton
           title="تم"
+          style={{marginBottom:MARGIN.mdMargin}}
           onPress={() => {
             navigation.navigate("Homescreen")
           }}

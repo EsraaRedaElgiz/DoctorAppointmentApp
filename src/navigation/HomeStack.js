@@ -13,6 +13,7 @@ import {
 import MedicalID1 from '../screens/MedicalID1/MedicalID1';
 import EditPersonDetails from '../screens/EditPersonDetails/EditPersonDetails';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import AddCard from '../screens/AddCard/AddCard';
 const Stack = createNativeStackNavigator();
 const HomeStack = () => {
   return (
@@ -29,6 +30,7 @@ const HomeStack = () => {
       <Stack.Screen name="BookAppointment" component={BookAppointment} />
       <Stack.Screen name="PaymentCash" component={PaymentCash} />
       <Stack.Screen name="PaymentCreditCard" component={PaymentCreditCard} />
+      <Stack.Screen name="AddCard" component={AddCard} />
       <Stack.Screen
         name="CompletedAppointment"
         component={CompletedAppointment}

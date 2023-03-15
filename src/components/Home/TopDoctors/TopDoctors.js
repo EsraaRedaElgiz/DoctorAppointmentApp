@@ -12,6 +12,7 @@ const TopDoctors = () => {
   
   // TO SHOW JUST 5 RATING
   const filterArray = DoctorsData.filter(el => el.rating == 5);
+  console.log(filterArray)
   return (
     <FlatList
       contentContainerStyle={{
@@ -24,7 +25,9 @@ const TopDoctors = () => {
         <Pressable
           style={style.CardContainer}
           onPress={() => {
-            navigation.navigate('DoctorProfile');
+            navigation.navigate('DoctorProfile',{
+              DoctorArray:itemData.item
+            });
           }}>
           {/* ImageOnCards */}
           <View style={style.imageContainerStyle}>

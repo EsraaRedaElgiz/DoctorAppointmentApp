@@ -119,7 +119,7 @@ function ProfileImage(props) {
           style={
             iconName ? styles.iconNameView : {marginBottom: MARGIN.mdMargin}
           }>
-          <Text style={style.textContentBold}>عبدالرحمن محمد عياد</Text>
+          <Text style={style.textContentBold}> محمد عبد الحميد</Text>
           {iconName ? (
             <TouchableOpacity>
               <FontAwesome5

@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, FlatList, Image, Pressable} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {SpecialityData} from '../../../utils';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {COLORS, FONTS, MARGIN, RADIUS} from '../../../constants/Constants';
@@ -17,13 +17,19 @@ const SpecialityList = () => {
         <Pressable
           style={styles.image_Text_Container}
           onPress={() => {
-            navigation.navigate("DoctorsSearch")
+            navigation.navigate('DoctorsSearch', {
+              SpecialityArray: itemData.item,
+            });
           }}>
           {/* image */}
           <View style={styles.imageContainer}>
             <Image
               source={itemData.item.img}
-              style={styles.imageStyle}
+              style={
+                itemData.item.id == 10
+                  ? styles.alternateImageStyle
+                  : styles.imageStyle
+              }
               resizeMode="center"
             />
           </View>
@@ -58,6 +64,10 @@ const styles = StyleSheet.create({
   imageStyle: {
     width: RFValue(40),
     height: RFValue(40),
+  },
+  alternateImageStyle: {
+    width: RFValue(60),
+    height: RFValue(60),
   },
   textStyle: {
     fontSize: FONTS.h6,
