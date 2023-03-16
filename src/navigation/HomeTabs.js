@@ -1,20 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {StyleSheet, Text} from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeStack from './HomeStack';
 import AppointmentStack from './AppointmentStack';
 import HistoryStack from './HistoryStack';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import UserProfileStack from './UserProfileStack';
-import { COLORS, FONTS, ICONS } from '../constants/Constants';
-import { style } from '../styles/Style';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {COLORS, FONTS, ICONS} from '../constants/Constants';
+import {style} from '../styles/Style';
 const Tab = createBottomTabNavigator();
 
 const HomeTabs = () => {
   return (
     <>
       <Tab.Navigator
-        screenOptions={({ route }) => {
+        screenOptions={({route}) => {
           const iconNameUnselect = {
             Home: 'home-outline',
             Appointment: 'calendar-outline',
@@ -35,10 +35,11 @@ const HomeTabs = () => {
           };
           return {
             headerShown: false,
+            tabBarHideOnKeyboard: true,
             tabBarStyle: {
               backgroundColor: COLORS.blue,
             },
-            tabBarIcon: ({ focused }) => (
+            tabBarIcon: ({focused}) => (
               <Ionicons
                 name={
                   focused
@@ -49,11 +50,11 @@ const HomeTabs = () => {
                 color={focused ? COLORS.white : COLORS.gray}
               />
             ),
-            tabBarLabel: ({ focused }) => (
+            tabBarLabel: ({focused}) => (
               <Text
                 style={[
                   style.textSmallContentBold,
-                  { color: focused ? COLORS.white : COLORS.gray },
+                  {color: focused ? COLORS.white : COLORS.gray},
                 ]}>
                 {label[route.name]}
               </Text>

@@ -8,7 +8,7 @@ function UserData(props) {
   const {label, data} = props;
   return (
     <View>
-      <Text style={[style.textContent, {color: COLORS.blue}]}>{label}</Text>
+      <Text style={[style.textContentBold, {color: COLORS.blue}]}>{label}</Text>
       <Text
         style={[
           style.textSmallContent,

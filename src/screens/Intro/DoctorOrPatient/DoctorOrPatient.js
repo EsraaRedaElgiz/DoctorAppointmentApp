@@ -3,6 +3,7 @@ import {Text, View, Image, StatusBar, ScrollView} from 'react-native';
 import styles from './styles';
 import {COLORS} from '../../../constants/Constants';
 import GeneralButton from '../../../components/GeneralButton/GeneralButton';
+import Images from '../../../constants/Images';
 function DoctorOrPatient({navigation}) {
   return (
     <ScrollView
@@ -13,7 +14,7 @@ function DoctorOrPatient({navigation}) {
         <StatusBar backgroundColor={COLORS.blue} />
         <View style={styles.viewForImageStyle}>
           <Image
-            source={require('../../../assets/Images/choose.png')}
+            source={Images.doctorOrPatient}
             style={styles.imageStyle}
           />
         </View>

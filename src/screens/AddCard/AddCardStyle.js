@@ -15,14 +15,16 @@ const styles = StyleSheet.create({
   title: {
     marginBottom: MARGIN.mdMargin,
   },
-  inputView: {
+  errorTextStyle: {
     marginBottom: MARGIN.xlMargin,
+    color: COLORS.red,
   },
   smallTextInput: {
     flex: 1,
   },
   button: {
-    marginTop: '48%',
+    padding: PADDINGS.mdPadding,
+    backgroundColor: COLORS.white,
   },
 });
 export default styles;

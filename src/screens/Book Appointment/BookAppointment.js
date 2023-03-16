@@ -1,5 +1,4 @@
-import {ScrollView, StyleSheet, Text, View, FlatList} from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
+import {ScrollView, StyleSheet, Text, View, Alert} from 'react-native';
 import React, {useState} from 'react';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import {
@@ -13,27 +12,32 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {ListTiltle} from '../../components/Home';
 import {style} from '../../styles/Style';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
+import {Checkbox} from 'react-native-paper';
+import {useRoute} from '@react-navigation/native';
 const BookAppointment = ({navigation}) => {
-  const data = [
-    {id: 1, txt: 'نقدى', isChecked: false},
-    {id: 2, txt: 'بطاقه', isChecked: false},
-  ];
-  const [dataUpdatad, setdataUpdatad] = useState(data);
+  const route = useRoute();
+  const DoctorArray = route.params.DoctorArray;
+  //  let now = new Date();
 
-  const handleChange = id => {
-    for (let i = 0; i < dataUpdatad.length; i++) {
-      dataUpdatad[i].isChecked = false;
-    }
+  // // Tota number of days in current month
+  // const totalDays = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
 
-    let temp = dataUpdatad.map(product => {
-      if (id === product.id) {
-        return {...product, isChecked: !product.isChecked};
-      }
-      return product;
-    });
-    setdataUpdatad(temp);
+  // // Today's day
+  // const today = now.getDate();
+  // console.log(today)
+  // // Remaining days of the month
+  // const remainingDays = totalDays - today;
+  // console.log(remainingDays)
+  const [checkedCash, setCheckCash] = useState(false);
+  const [checkedCerdit, setcheckedCerdit] = useState(false);
+  const cashFun = () => {
+    setCheckCash(true);
+    setcheckedCerdit(false);
   };
-
+  const creditFun = () => {
+    setcheckedCerdit(true);
+    setCheckCash(false);
+  };
   return (
     <View style={[style.bigContainer, {flex: 1}]}>
       <HeaderNavigation
@@ -78,31 +82,50 @@ const BookAppointment = ({navigation}) => {
           </View>
         </ScrollView>
         <ListTiltle Title="طريقة الدفع" />
-        <FlatList
-          horizontal
-          contentContainerStyle={styles.flatListCheckBoxsContainer}
-          data={dataUpdatad}
-          renderItem={({item}) => (
-            <View style={styles.checkBox_titleConatiner}>
-              <CheckBox
-                value={item.isChecked}
-                onChange={() => {
-                  handleChange(item.id);
-                }}
-                tintColors={{true: COLORS.blue, false: COLORS.black}}
-              />
-              <Text style={[style.textContentBold, {fontSize: RFValue(14)}]}>
-                {item.txt}
-              </Text>
-            </View>
-          )}
-        />
+        <View style={styles.bigContainerChecks}>
+          <View style={styles.checkBox_titleConatiner}>
+            <Checkbox
+              status={checkedCash ? 'checked' : 'unchecked'}
+              value={checkedCash}
+              onPress={cashFun}
+              color={COLORS.blue}
+            />
+            <Text style={[style.textContentBold, {fontSize: RFValue(14)}]}>
+              نقدى
+            </Text>
+          </View>
+
+          <View style={styles.checkBox_titleConatiner}>
+            <Checkbox
+              status={checkedCerdit ? 'checked' : 'unchecked'}
+              value={checkedCerdit}
+              onPress={creditFun}
+              color={COLORS.blue}
+            />
+            <Text style={[style.textContentBold, {fontSize: RFValue(14)}]}>
+              بطاقة
+            </Text>
+          </View>
+        </View>
       </ScrollView>
       <GeneralButton
         title="حجز"
+        style={{marginBottom:MARGIN.mdMargin}}
         onPress={() => {
-          navigation.navigate("PaymentCash")
-          // navigation.navigate('PaymentCreditCard');
+          checkedCash || checkedCerdit
+            ? navigation.navigate(
+                checkedCash ? 'PaymentCash' : 'PaymentCreditCard',
+                {BookArray: DoctorArray},
+              )
+            : Alert.alert(
+                'تحذير',
+                "من فضلك ادخل جميع البيانات ",
+                [
+                  {
+                    text: 'OK',
+                  },
+                ],
+              );
         }}
       />
     </View>
@@ -171,5 +194,10 @@ const styles = StyleSheet.create({
   checkBox_titleConatiner: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  bigContainerChecks: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-between',
   },
 });

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Modal, View, StyleSheet, TextInput, Pressable} from 'react-native';
+import {Modal, View, StyleSheet, TextInput, Pressable,Text} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {
   COLORS,
@@ -15,6 +15,7 @@ const ReviewModal = props => {
   const {visiableAddReview, setVisiableAddReview} = props;
   const [Rating, setRating] = useState(0);
   const [ReviewText, setReviewText] = useState('');
+  console.log(Rating)
   const changeText = enteredText => {
     setReviewText(enteredText);
   };
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   ReviewContainer: {
-    width: RFValue(250),
+    width: RFValue(230),
     height: RFValue(280),
     backgroundColor: COLORS.white,
     borderRadius: RADIUS.mdRadius,

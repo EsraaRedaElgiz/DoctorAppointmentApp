@@ -37,8 +37,7 @@ const style = StyleSheet.create({
     height: '100%',
     alignSelf: 'center',
     justifyContent: 'space-around',
-    marginLeft: RFValue(3),
-    //paddingVertical: PADDINGS.lgPadding,
+    marginLeft: RFValue(7),
   },
   textTitleBold: {
     fontSize: FONTS.h4,

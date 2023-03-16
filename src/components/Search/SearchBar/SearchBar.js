@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {StyleSheet, View, TextInput} from 'react-native';
-// import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {
   COLORS,

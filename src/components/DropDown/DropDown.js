@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     backgroundColor: COLORS.white,
-    marginBottom: MARGIN.mdMargin,
+    // marginBottom: MARGIN.mdMargin,
   },
   buttonTextStyle: {
     textAlign: 'left',

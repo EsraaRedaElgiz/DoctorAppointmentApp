@@ -40,8 +40,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: FONTS.h5,
-    fontWeight: '600',
-    color: COLORS.darkGray,
+    fontWeight: "bold",
+    fontFamily:FONTS.Amaranth,
+    color: COLORS.darkGray2,
   },
   buttonContent: {
     flexDirection: 'row',

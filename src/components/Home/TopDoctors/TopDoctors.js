@@ -9,7 +9,7 @@ import {Rating} from 'react-native-stock-star-rating';
 
 const TopDoctors = () => {
   const navigation = useNavigation();
-  
+
   // TO SHOW JUST 5 RATING
   const filterArray = DoctorsData.filter(el => el.rating == 5);
   return (
@@ -24,7 +24,9 @@ const TopDoctors = () => {
         <Pressable
           style={style.CardContainer}
           onPress={() => {
-            navigation.navigate('DoctorProfile');
+            navigation.navigate('DoctorProfile', {
+              DoctorArray: itemData.item,
+            });
           }}>
           {/* ImageOnCards */}
           <View style={style.imageContainerStyle}>
@@ -33,11 +35,15 @@ const TopDoctors = () => {
 
           {/* TextOnCards */}
           <View style={style.textsCardConatiner}>
-            <Text style={[style.textContentBold, {color: COLORS.darkGray3,fontWeight:'normal'}]}>
-              د.{itemData.item.name.trim()}{' '}
+            <Text
+              style={[
+                style.textContentBold,
+                {color: COLORS.darkGray3, fontWeight: 'normal'},
+              ]}>
+              {'د' + ' ' + itemData.item.name.trim()}{' '}
             </Text>
             <Text style={[style.textSmallContent, {color: COLORS.darkGray2}]}>
-              طبيب {itemData.item.specialtiy.trim()}{' '}
+              {'طبيب ' + itemData.item.specialtiy.trim()}{' '}
             </Text>
 
             {/* Rating */}
