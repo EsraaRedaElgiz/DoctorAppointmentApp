@@ -12,7 +12,6 @@ const TopDoctors = () => {
 
   // TO SHOW JUST 5 RATING
   const filterArray = DoctorsData.filter(el => el.rating == 5);
-  console.log(filterArray);
   return (
     <FlatList
       contentContainerStyle={{

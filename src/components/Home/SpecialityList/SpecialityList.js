@@ -25,11 +25,7 @@ const SpecialityList = () => {
           <View style={styles.imageContainer}>
             <Image
               source={itemData.item.img}
-              style={
-                itemData.item.id == 10
-                  ? styles.alternateImageStyle
-                  : styles.imageStyle
-              }
+              style={styles.imageStyle}
               resizeMode="center"
             />
           </View>

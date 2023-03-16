@@ -4,15 +4,15 @@ const userImage = require('../assets/Images/user.jpg');
 // Specialtiy
 const heartImage = require('../assets/Images/heart.png');
 const earImage = require('../assets/Images/ear.png');
-const bounsImage = require('../assets/Images/bouns.png');
-const bearthImage = require('../assets/Images/bearth.png');
-const childernsImage = require('../assets/Images/childerns.png');
-const skinsImage = require('../assets/Images/skins.png');
-const teethImage = require('../assets/Images/teeth.png');
-const WomenImage = require('../assets/Images/Women.png');
-const esotericImage = require('../assets/Images/esoteric.png');
+const bounsImage = require('../assets/Images/bounsicon.png');
+const bearthImage = require('../assets/Images/bearthicon.png');
+const childernsImage = require('../assets/Images/baby.png');
+const skinsImage = require('../assets/Images/skinimage.png');
+const teethImage = require('../assets/Images/teethicon.png');
+const WomenImage = require('../assets/Images/womenImage.png');
+const esotericImage = require('../assets/Images/stomach.png');
 const eyeImage = require('../assets/Images/eye.png');
-const nuroImage = require('../assets/Images/nuro.png');
+const nuroImage = require('../assets/Images/nuroimage.png');
 // Doctors
 const doctor1 = require('../assets/Images/doctor1.png');
 const doctor2 = require('../assets/Images/doctor2.png');

@@ -27,7 +27,7 @@ const ListSpecialitySearch = () => {
           marginTop: MARGIN.mdMargin,
           padding: RFValue(2),
           paddingLeft: MARGIN.xsMargin,
-          paddingRight:RFValue(4)
+          paddingRight: RFValue(4),
         }}
         renderItem={(itemData, index) => (
           <>
@@ -42,10 +42,7 @@ const ListSpecialitySearch = () => {
                 <Image
                   source={itemData.item.img}
                   style={
-                    itemData.item.id == 1 ||
-                    itemData.item.id == 3 ||
-                    itemData.item.id == 8 ||
-                    itemData.item.id == 9
+                    itemData.item.id == 8
                       ? styles.alternativeImage
                       : styles.image
                   }
@@ -66,12 +63,12 @@ export default ListSpecialitySearch;
 
 const styles = StyleSheet.create({
   container: {
-    width: "48%",
+    width: '48%',
     height: RFValue(150),
     backgroundColor: COLORS.white,
     elevation: RFValue(3),
     borderRadius: RADIUS.smRadius,
-    marginRight: "4.5%",
+    marginRight: '4.5%',
     marginBottom: MARGIN.mdMargin,
     alignItems: 'center',
     justifyContent: 'space-around',
@@ -92,8 +89,8 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.mdRadius,
   },
   alternativeImage: {
-    width: RFValue(30),
-    height: RFValue(30),
+    width: RFValue(40),
+    height: RFValue(40),
     borderRadius: RADIUS.mdRadius,
   },
 });
