@@ -20,10 +20,10 @@ function UserProfileButton(props) {
       onPress={onPress}>
       <View style={styles.buttonContent}>
         <View style={styles.textIconWrapper}>
-          <Text style={style.textContentBold}>{title}</Text>
+          <Text style={styles.title}>{title}</Text>
         </View>
         <View style={[styles.textIconWrapper, {alignItems: 'flex-end'}]}>
-          <Icon size={ICONS.smIcon} color={COLORS.darkGray3} name={iconName} />
+          <Icon size={ICONS.smIcon} color={COLORS.darkGray} name={iconName} />
         </View>
       </View>
     </TouchableOpacity>
@@ -40,8 +40,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: FONTS.h5,
-    fontWeight: '600',
-    color: COLORS.darkGray,
+    fontWeight: "bold",
+    fontFamily:FONTS.Amaranth,
+    color: COLORS.darkGray2,
   },
   buttonContent: {
     flexDirection: 'row',

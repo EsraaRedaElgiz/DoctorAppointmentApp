@@ -11,29 +11,42 @@ import {
 import {SpecialityData} from '../../../utils';
 import {style} from '../../../styles/Style';
 import SearchBar from '../SearchBar/SearchBar';
-import {useNavigation} from "@react-navigation/native"
+import {useNavigation} from '@react-navigation/native';
 const ListSpecialitySearch = () => {
-  const [SpecialityDataUpdated, setSpecialityDataUpdated] =
-    useState(SpecialityData);
-    const navigation=useNavigation()
+  // const [SpecialityDataUpdated, setSpecialityDataUpdated] =
+  //   useState(SpecialityData);
+  const navigation = useNavigation();
   return (
     <>
-     
       <FlatList
         horizontal={false}
         numColumns={2}
-        style={{marginBottom: RFValue(40)}}
         showsVerticalScrollIndicator={false}
-        data={SpecialityDataUpdated}
+        data={SpecialityData}
+        contentContainerStyle={{
+          marginTop: MARGIN.mdMargin,
+          padding: RFValue(2),
+          paddingLeft: MARGIN.xsMargin,
+          paddingRight: RFValue(4),
+        }}
         renderItem={(itemData, index) => (
           <>
-            <Pressable style={styles.container}
-            onPress={()=>{
-              navigation.navigate("DoctorsSearch")
-            }}
-            >
+            <Pressable
+              style={styles.container}
+              onPress={() => {
+                navigation.navigate('DoctorsSearch', {
+                  SpecialityArray: itemData.item,
+                });
+              }}>
               <View style={styles.imageConatiner}>
-                <Image source={itemData.item.img} style={styles.image} />
+                <Image
+                  source={itemData.item.img}
+                  style={
+                    itemData.item.id == 8
+                      ? styles.alternativeImage
+                      : styles.image
+                  }
+                />
               </View>
               <View style={{maxHeight: RFValue(20)}}>
                 <Text style={style.textContentBold}>{itemData.item.title}</Text>
@@ -50,16 +63,15 @@ export default ListSpecialitySearch;
 
 const styles = StyleSheet.create({
   container: {
-    width: '42%',
+    width: '48%',
     height: RFValue(150),
     backgroundColor: COLORS.white,
     elevation: RFValue(3),
-    paddingVertical: PADDINGS.mdPadding,
     borderRadius: RADIUS.smRadius,
-    margin: MARGIN.mdMargin,
+    marginRight: '4.5%',
+    marginBottom: MARGIN.mdMargin,
     alignItems: 'center',
     justifyContent: 'space-around',
-  
   },
   imageConatiner: {
     width: RFValue(60),
@@ -71,8 +83,14 @@ const styles = StyleSheet.create({
     elevation: RFValue(3),
   },
   image: {
-    width: RFValue(30),
-    height: RFValue(30),
+    width: RFValue(50),
+    height: RFValue(50),
+
+    borderRadius: RADIUS.mdRadius,
+  },
+  alternativeImage: {
+    width: RFValue(40),
+    height: RFValue(40),
     borderRadius: RADIUS.mdRadius,
   },
 });

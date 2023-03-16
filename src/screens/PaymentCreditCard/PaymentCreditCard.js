@@ -8,6 +8,7 @@ import {
   MARGIN,
   FONTS,
   ICONS,
+  COLORS,
 } from '../../constants/Constants';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -15,30 +16,34 @@ import {ListTiltle} from '../../components/Home';
 import {style} from '../../styles/Style';
 import Visa from '../../components/Visa/Visa';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
+import {useRoute} from '@react-navigation/native';
 const PaymentCreditCard = ({navigation}) => {
+  const route = useRoute();
+  const BookArray = route.params.BookArray;
   return (
     <View
       style={[style.bigContainer, {flex: 1, justifyContent: 'space-between'}]}>
       <HeaderNavigation
         title="الدفع"
+        color={COLORS.darkGray3}
         onPress={() => {
           navigation.goBack();
         }}
       />
       <PaymentCard
-        image={DoctorsData[0].image}
-        name={DoctorsData[0].name}
-        rating={4.5}
-        price={DoctorsData[0].price}
-        speciality={DoctorsData[0].specialtiy}
-        date="22 2022 سبتمبر"
+        image={BookArray.image}
+        name={BookArray.name}
+        rating={BookArray.rating}
+        price={BookArray.price}
+        speciality={BookArray.specialtiy}
+        date={'30\t' + 'ديسمبر' + '\t2020'}
         time="4:30"
       />
       <ListTiltle
         Title="اختر البطاقه"
         seeAll=" اضافه بطاقه"
         onPress={() => {
-          alert('اضافه كارت؟');
+          navigation.navigate('AddCard');
         }}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -49,6 +54,7 @@ const PaymentCreditCard = ({navigation}) => {
       </ScrollView>
       <GeneralButton
         title="تاكيد"
+        style={{marginBottom:MARGIN.mdMargin}}
         onPress={() => {
           navigation.navigate('CompletedAppointment');
         }}

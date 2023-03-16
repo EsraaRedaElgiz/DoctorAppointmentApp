@@ -2,7 +2,6 @@ import React from 'react';
 import {Text, View, Image, StatusBar, ScrollView} from 'react-native';
 import styles from './styles';
 import {COLORS, PADDINGS} from '../../constants/Constants';
-
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import {useSelector, useDispatch} from 'react-redux';
@@ -15,15 +14,21 @@ function ForgetPassword({navigation}) {
   const {
     control,
     handleSubmit,
+    reset,
     formState: {errors},
   } = useForm({
     defaultValues: {
-      email: globalState.ForgetPasswordReducer.emailToSendVerificationCode,
+      email: '',
     },
   });
   const onSubmit = data => {
-    //console.log(data);
-    dispatch(setEmailToSendVerificationCode(data.email));
+    //console.log(JSON.stringify(data));
+    /*const data = {
+      email: data.email,
+       
+      }
+      dispatch(insertData(data))*/
+    reset();
     navigation.navigate('VertificationCode');
   };
 
@@ -32,26 +37,19 @@ function ForgetPassword({navigation}) {
       <StatusBar backgroundColor={COLORS.blue} />
       <HeaderNavigation
         title="نسيت كلمه المرور"
+        color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
         onPress={() => {
+          reset();
           navigation.navigate('LogIn');
         }}
       />
       <ScrollView
+        keyboardShouldPersistTaps="always"
         showsVerticalScrollIndicator={false}
-        style={styles.scrollViewStyle}
-        contentContainerStyle={styles.scrollViewContentContainerStyle}>
+        style={styles.scrollViewStyle}>
         <View style={styles.viewForScrollviewContainer}>
           <View>
-            {/*<HeaderArrowAndWord
-                text="نسيت كلمه المرور"
-                arrowButtonStyle={styles.arrowButtonStyle}
-                textColor={COLORS.black}
-                textStyle={styles.textHeaderStyle}
-                onPress={() => {
-                dispatch(setEmailToSendVerificationCode(""))
-              }}
-            />*/}
             <View style={styles.viewImage}>
               <Image
                 source={require('../../assets/Images/ForgetPassword.png')}
@@ -76,12 +74,11 @@ function ForgetPassword({navigation}) {
                     bordercolor={errors.email ? '#f00' : COLORS.gray}
                     onChangeText={onChange}
                     onBlur={onBlur}
+                    value={value}
                   />
                 )}
                 name="email"
               />
-              {/*{errors.email?.type === "required" && <Text style={styles.errorTextStyle}>يجب ادخال عنوان البريد الالكتروني لارسال رمز التأكيد</Text>}
-                        {errors.email?.type === "pattern" && <Text style={styles.errorTextStyle}>يجب ادخال عنوان بريد الكتروني صحيح</Text>}*/}
               <Text style={styles.errorTextStyle}>
                 {errors.email?.type === 'required'
                   ? 'يجب ادخال عنوان البريد الالكتروني لارسال رمز التأكيد'
@@ -91,15 +88,15 @@ function ForgetPassword({navigation}) {
               </Text>
             </View>
           </View>
-          <View style={styles.buttonContainerStyle}>
-            <GeneralButton
-              title="ارسال"
-              style={styles.buttonStyle}
-              onPress={handleSubmit(onSubmit)}
-            />
-          </View>
         </View>
       </ScrollView>
+      <View style={styles.buttonContainerStyle}>
+        <GeneralButton
+          title="ارسال"
+          style={styles.buttonStyle}
+          onPress={handleSubmit(onSubmit)}
+        />
+      </View>
     </View>
   );
 }

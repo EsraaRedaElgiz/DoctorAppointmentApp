@@ -13,11 +13,12 @@ const {height} = Dimensions.get('window');
 const styles = StyleSheet.create({
   ScrollViewStyle: {
     flex: 1,
-    padding: PADDINGS.smPadding,
+    padding: PADDINGS.mdPadding,
     paddingVertical: PADDINGS.xlPadding,
   },
   container: {
     flex: 1,
+    backgroundColor: COLORS.white,
   },
   content: {
     justifyContent: 'space-around',
@@ -26,11 +27,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: PADDINGS.smPadding,
     paddingBottom: RFValue(150),
     borderRadius: RADIUS.smRadius,
-    borderWidth: 1,
+    borderWidth: RFValue(1),
     borderColor: COLORS.gray,
-    fontSize: FONTS.h6,
+    fontSize: FONTS.h5,
     color: COLORS.darkGray,
-    marginBottom: height * 0.1,
   },
   linesView: {
     flex: 1,
@@ -60,13 +60,15 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.lightGray2,
     elevation: RFValue(5),
     marginBottom: RFValue(10),
+    marginBottom: height * 0.255,
   },
   imageIcon: {
     width: RFValue(60),
     height: RFValue(60),
   },
-  button: {
-    margin: MARGIN.mdMargin,
+  errorTextStyle: {
+    marginBottom: height * 0.14,
+    color: COLORS.red,
   },
 });
 

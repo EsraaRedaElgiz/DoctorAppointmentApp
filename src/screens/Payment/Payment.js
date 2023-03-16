@@ -15,6 +15,7 @@ function Payment(props) {
       <StatusBar backgroundColor={COLORS.blue} />
       <HeaderNavigation
         title="الدفع"
+        color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
         onPress={() => {
           navigation.navigate('UserProfile');

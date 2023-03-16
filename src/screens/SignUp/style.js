@@ -16,9 +16,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   topViewStyle: {
-    paddingBottom: "5%",//
-  }, afterArrowButtonMargin: {
-    //marginBottom: '5%'//
+    paddingBottom: "5%",
+    paddingHorizontal:PADDINGS.mdPadding,
   }, viewHeaderTextStyle: {
     // marginTop: '5%',
     width: '100%',
@@ -31,7 +30,7 @@ const styles = StyleSheet.create({
     color: COLORS.white,
     fontSize: FONTS.h3,
     fontFamily: 'Amaranth-Regular',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   secondTextHeaderStyle: {
     color: COLORS.white,
@@ -45,7 +44,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: PADDINGS.mdPadding,
     //flex: 5,
     paddingTop: '15%',
-    //paddingBottom: '1%'
+    paddingBottom: PADDINGS.mdPadding,
     flex: 1,
     justifyContent: 'space-between',
     flexDirection: 'column',
@@ -78,21 +77,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom:MARGIN.mdMargin
+    //marginBottom:MARGIN.mdMargin
   },
   bluetextstyle: {
     color: COLORS.blue,
     fontSize: FONTS.h6,
     fontFamily: 'Amaranth-Regular',
+    fontWeight:'bold'
   },
   viewforheaderstyle: {
     marginBottom: '2%',
-  }, buttonMargin: {
-    // marginBottom: '2%'
   }, scrollViewStyle: {
     backgroundColor: COLORS.white
   }, errorTextColor: {
     color: "#f00"
+  }, buttonMargin: {
+    marginBottom: '2%'
   }
 });
 export default styles;

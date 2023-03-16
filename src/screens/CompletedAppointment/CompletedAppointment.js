@@ -19,16 +19,19 @@ const CompletedAppointment = ({navigation}) => {
           <View style={styles.icon_textContainer}>
             <AntDesign
               name="checkcircle"
-              size={RFValue(120)}
+              size={RFValue(100)}
               color={COLORS.blue}
             />
-            <Text style={[style.textTitleBold,{fontSize:FONTS.h2}]}>تم الحجز بنجاح !</Text>
+            <Text style={[style.textTitleBold, {fontSize: FONTS.h4}]}>
+              تم الحجز بنجاح !
+            </Text>
           </View>
         </View>
         <GeneralButton
           title="تم"
+          style={{marginBottom: MARGIN.mdMargin}}
           onPress={() => {
-            navigation.navigate("Homescreen")
+            navigation.navigate('Homescreen');
           }}
         />
       </View>
@@ -39,7 +42,6 @@ const CompletedAppointment = ({navigation}) => {
 export default CompletedAppointment;
 
 const styles = StyleSheet.create({
-
   Container: {
     flex: 1,
     alignItems: 'center',
@@ -47,10 +49,10 @@ const styles = StyleSheet.create({
   },
   icon_textContainer: {
     width: '100%',
-    height: RFValue(250),
+    height: RFValue(200),
     paddingVertical: PADDINGS.xlPadding,
     alignItems: 'center',
     justifyContent: 'space-between',
     alignSelf: 'center',
-  }
+  },
 });

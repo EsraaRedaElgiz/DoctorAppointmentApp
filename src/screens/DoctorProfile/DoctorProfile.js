@@ -6,8 +6,6 @@ import {
   Image,
   Pressable,
   FlatList,
-  Modal,
-  Button,
 } from 'react-native';
 import React, {useState} from 'react';
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -20,147 +18,174 @@ import {
   RADIUS,
 } from '../../constants/Constants';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import MapView from 'react-native-maps';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
-import GeneralPage from '../../components/GeneralPage/GeneralPage';
 import {style} from '../../styles/Style';
 import {DoctorsData} from '../../utils';
 import {ListTiltle} from '../../components/Home';
-import {Stars} from '../../components/Search';
 import ReviewModal from '../../components/ReviewModal/ReviewModal';
+import {Rating} from 'react-native-stock-star-rating';
+import {useRoute} from '@react-navigation/native';
 const DoctorProfile = ({navigation}) => {
   const [visiableAddReview, setVisiableAddReview] = useState(false);
-  
+
   const region = {
     latitude: 30.033333,
     longitude: 31.233334,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
-
+  const route = useRoute();
+  const DoctorArray = route.params.DoctorArray;
   return (
     <>
-      <ScrollView style={{backgroundColor: COLORS.white}}>
-        {/* image */}
-        <Image
-          source={DoctorsData[0].image}
-          style={{width: '100%', height: RFValue(300)}}
-        />
+      <View style={{flex: 1, backgroundColor: COLORS.white}}>
+        <ScrollView
+          style={{backgroundColor: COLORS.white}}
+          showsVerticalScrollIndicator={false}>
+          {/* image */}
+          <Image
+            source={DoctorArray.image}
+            style={{width: '100%', height: RFValue(300)}}
+          />
 
-        {/* NameAndSpecialty */}
-        <View style={styles.textsContainer}>
-          <Text style={style.textTitleBold}>الدكتور سامى محمد</Text>
-          <Text style={style.textContent}>أمراض النساء والتوليد</Text>
-        </View>
-
-        {/* Card */}
-        <Cards />
-
-        <View style={styles.About_Location_Reviews}>
-          {/* About */}
-          <Text style={style.textTitleBold}>حول</Text>
-          <View style={styles.aboutStyleContainer}>
-            <Text style={style.textSmallContentBold}>
-              {DoctorsData[0].about}
+          {/* NameAndSpecialty */}
+          <View style={styles.textsContainer}>
+            <Text style={style.textTitleBold}>{'د\t' + DoctorArray.name}</Text>
+            <Text
+              style={[
+                style.textContent,
+                {
+                  color: COLORS.darkGray2,
+                },
+              ]}>
+              {DoctorArray.specialtiy}
             </Text>
           </View>
-          {/* Location */}
-          <Text style={[style.textTitleBold, {marginTop: MARGIN.mdMargin}]}>
-            الموقع
-          </Text>
-          {/* navigate to map page */}
-          <Pressable style={styles.PreviewMap}>
-            <MapView initialRegion={region} style={{flex: 1}}></MapView>
-          </Pressable>
 
-          {/* Review */}
-          <ListTiltle
-            Title="التقييمات"
-            seeAll="اضافه تقييم"
-            onPress={() => {
-              setVisiableAddReview(true);
-            }}
-            styleProp={{height:RFValue(40)}}
-          />
-          <ScrollView horizontal>
+          {/* Card */}
+          <Cards data={DoctorArray} />
+
+          <View style={styles.About_Location_Reviews}>
+            {/* About */}
+            <Text style={style.textTitleBold}>حول</Text>
+            <View style={styles.aboutStyleContainer}>
+              <Text style={style.textSmallContent}>{DoctorArray.about}</Text>
+            </View>
+            {/* Location */}
+            <Text style={[style.textTitleBold, {marginTop: MARGIN.mdMargin}]}>
+              الموقع
+            </Text>
+            {/* navigate to map page */}
+            <Text
+              style={[style.textContent, {marginVertical: MARGIN.smMargin}]}>
+              {DoctorArray.address}
+            </Text>
+            <Pressable style={styles.PreviewMap}>
+              <MapView initialRegion={region} style={{flex: 1}}></MapView>
+            </Pressable>
+
+            {/* Review */}
+            <ListTiltle
+              Title="التقييمات"
+              seeAll="اضافه تقييم"
+              onPress={() => {
+                setVisiableAddReview(true);
+              }}
+              styleProp={{height: RFValue(40)}}
+            />
             <View
               style={{
-                flexDirection: 'row',
-                padding: PADDINGS.xsPadding,
-                marginBottom: MARGIN.smMargin,
+                width: '100%',
+                alignItems: 'flex-start',
               }}>
-              {DoctorsData[0].Review.map((item, index) => {
-                return (
-                  <>
-                    <View style={styles.reviewCard}>
-                      <View style={styles.img_name_ratingContainer}>
-                        <View style={{flex: 1, marginRight: MARGIN.smMargin}}>
-                          <Text style={style.textSmallContentBold}>
-                            {item.name}
-                          </Text>
-                          <View style={{flexDirection: 'row-reverse'}}>
-                            {item.rating.map((itemRating, index) => {
-                              return (
-                                <>
-                                  <Stars />
-                                </>
-                              );
-                            })}
+              <FlatList
+                contentContainerStyle={{
+                  paddingLeft: RFValue(2),
+                  paddingVertical: RFValue(2),
+                }}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={DoctorArray.Review}
+                renderItem={(itemData, index) => {
+                  return (
+                    <>
+                      <View style={styles.reviewCard}>
+                        <View style={styles.img_name_ratingContainer}>
+                          <View style={{flex: 1, marginRight: MARGIN.smMargin}}>
+                            <Text style={style.textSmallContentBold}>
+                              {itemData.item.name}
+                            </Text>
+                            <View style={{flexDirection: 'row-reverse'}}>
+                              <Rating
+                                stars={itemData.item.rating}
+                                maxStars={5}
+                                size={ICONS.xsIcon}
+                              />
+                            </View>
                           </View>
+                          <Image
+                            source={itemData.item.img}
+                            style={styles.imgReview}
+                          />
                         </View>
-                        <Image source={item.img} style={styles.imgReview} />
-                      </View>
-                      <View style={styles.CommentStyle}>
-                        <Text style={style.textSmallContent}>
-                          {item.comment}
-                        </Text>
-                      </View>
-                    </View>
-                  </>
-                );
-              })}
-            </View>
-          </ScrollView>
-        </View>
-      </ScrollView>
 
-      <GeneralButton
-        title="حجز "
-        style={{
-          width: '90%',
-          alignSelf: 'center',
-        }}
-        onPress={() => {
-          navigation.navigate("BookAppointment")
-        }}
-      />
+                        <ScrollView
+                          nestedScrollEnabled={true}
+                          showsVerticalScrollIndicator={false}>
+                          <Text style={style.textSmallContent}>
+                            {itemData.item.comment}
+                          </Text>
+                        </ScrollView>
+                      </View>
+                    </>
+                  );
+                }}
+              />
+            </View>
+          </View>
+        </ScrollView>
+
+        <GeneralButton
+          title="حجز "
+          style={{
+            width: '90%',
+            alignSelf: 'center',
+            marginBottom: MARGIN.mdMargin,
+          }}
+          onPress={() => {
+            navigation.navigate('BookAppointment', {
+              DoctorArray: DoctorArray,
+            });
+          }}
+        />
+      </View>
       <ReviewModal
         visiableAddReview={visiableAddReview}
         setVisiableAddReview={setVisiableAddReview}
       />
-      
     </>
   );
 };
-const Cards = () => {
+const Cards = props => {
+  const {data} = props;
   const icons = [
     {
       id: 1,
       name: 'user-friends',
-      number: 1000,
+      number: data.numberOfPatients,
       text: 'المرضي',
     },
     {
       id: 2,
       name: 'medal',
-      number: 10,
-      text: 'خبره',
+      number: data.numOfexperience,
+      text: 'خبرة',
     },
     {
       id: 3,
       name: 'star',
-      number: 4.5,
+      number: data.rating,
       text: 'التقييم',
     },
   ];
@@ -179,7 +204,9 @@ const Cards = () => {
                   />
                 </View>
                 <View style={styles.cardTextContainer}>
-                  <Text style={styles.textCard}>{item.number}</Text>
+                  <Text style={styles.textCard}>
+                    {item.id == 2 ? item.number + '\tسنوات' : item.number}
+                  </Text>
                   <Text style={styles.textCard}>{item.text}</Text>
                 </View>
               </View>
@@ -191,7 +218,6 @@ const Cards = () => {
   );
 };
 export {Cards};
-
 
 export default DoctorProfile;
 
@@ -238,6 +264,7 @@ const styles = StyleSheet.create({
     fontSize: FONTS.h5,
     fontFamily: FONTS.AmaranthRegular,
     lineHeight: RFValue(20),
+    fontWeight: 'bold',
   },
   About_Location_Reviews: {
     width: '90%',
@@ -280,6 +307,6 @@ const styles = StyleSheet.create({
   },
   CommentStyle: {
     width: '100%',
-    maxHeight: RFValue(100),
+    // maxHeight: RFValue(100),
   },
 });

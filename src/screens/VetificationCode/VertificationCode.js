@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import {Text, View, StatusBar, ScrollView} from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, StatusBar, ScrollView } from 'react-native';
 import styles from './styles';
-import {COLORS, PADDINGS} from '../../constants/Constants';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { COLORS, PADDINGS } from '../../constants/Constants';
+import { RFValue } from 'react-native-responsive-fontsize';
 import HeaderArrowAndWord from '../../components/HeaderArrowAndWord/HeaderArrowAndWord';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -12,15 +12,15 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
-import {useSelector, useDispatch} from 'react-redux';
-import {setVertificationCode} from '../../Redux/Reducers/VertificationCodeSlice';
-import {useForm, Controller} from 'react-hook-form';
-import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
-function VertificationCode({navigation}) {
+import { useSelector, useDispatch } from 'react-redux';
+import { setVertificationCode } from '../../Redux/Reducers/VertificationCodeSlice';
+import { useForm, Controller } from 'react-hook-form';
+import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+function VertificationCode({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   const [value, setValue] = useState(globalState.VertificationCodeReducer.code);
-  const ref = useBlurOnFulfill({value, cellCount: 4});
+  const ref = useBlurOnFulfill({ value, cellCount: 4 });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
@@ -31,32 +31,29 @@ function VertificationCode({navigation}) {
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    reset,
+    formState: { errors },
     watch,
   } = useForm({
     defaultValues: {
-      code: globalState.VertificationCodeReducer.code,
+      code: "",
     },
   });
 
   const onSubmit = data => {
     //console.log(data);
     let codeInserted = data.code;
-    let splitString = codeInserted.split(''); // var splitString = "hello".split("");
-    // ["h", "e", "l", "l", "o"]
+    let splitString = codeInserted.split('');
+    let reverseArray = splitString.reverse();
+    let joinArray = reverseArray.join('');
 
-    // Step 2. Use the reverse() method to reverse the new created array
-    let reverseArray = splitString.reverse(); // var reverseArray = ["h", "e", "l", "l", "o"].reverse();
-    // ["o", "l", "l", "e", "h"]
-
-    // Step 3. Use the join() method to join all elements of the array into a string
-    let joinArray = reverseArray.join(''); // var joinArray = ["o", "l", "l", "e", "h"].join("");
-    // "olleh"
-
-    //Step 4. Return the reversed string
-    // "olleh"
-    console.log(joinArray);
-    dispatch(setVertificationCode(joinArray));
+    //console.log(joinArray);
+    /*const data = {
+      code:joinArray ,
+       
+      }
+      dispatch(insertData(data))*/
+    reset()
     navigation.navigate('ResetPassword');
   };
   return (
@@ -64,26 +61,20 @@ function VertificationCode({navigation}) {
       <StatusBar backgroundColor={COLORS.blue} />
       <HeaderNavigation
         title="رمز التحقق"
+        color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
         onPress={() => {
+          reset()
           navigation.navigate('ForgetPassword');
         }}
       />
       <ScrollView
+        keyboardShouldPersistTaps="always"
         showsVerticalScrollIndicator={false}
         style={styles.scrollViewStyle}
-        contentContainerStyle={styles.scrollViewContentContainerStyle}>
+      >
         <View style={styles.viewForScrollviewContainer}>
           <View>
-            {/*<HeaderArrowAndWord
-                            text="رمز التأكيد"
-                            arrowButtonStyle={styles.arrowButtonStyle}
-                            textColor={COLORS.black}
-                            textStyle={styles.textHeaderStyle}
-                            onPress={() => {
-                                dispatch(setVertificationCode(""))
-                            }}
-                        />*/}
             <View style={styles.viewImage}>
               <View style={styles.viewBlueStyle}>
                 <Entypo name="check" size={RFValue(120)} color={COLORS.white} />
@@ -101,7 +92,7 @@ function VertificationCode({navigation}) {
                   required: true,
                   minLength: 4,
                 }}
-                render={({field: {onChange, onBlur, value}}) => (
+                render={({ field: { onChange, onBlur, value } }) => (
                   <CodeField
                     ref={ref}
                     {...props}
@@ -110,15 +101,15 @@ function VertificationCode({navigation}) {
                     onChangeText={onChange}
                     onBlur={onBlur}
                     cellCount={4}
-                    keyboardType="number-pad"
+                    keyboardType="numeric"
                     textContentType="oneTimeCode"
                     // onFulfill={handlerOnFulfill(value)}
-                    renderCell={({index, symbol, isFocused}) => (
+                    renderCell={({ index, symbol, isFocused }) => (
                       <Text
                         key={index}
                         style={[
                           styles.cell,
-                          {borderColor: errors.code ? COLORS.red : COLORS.gray},
+                          { borderColor: errors.code ? COLORS.red : COLORS.gray },
                           isFocused && styles.focusCell,
                         ]}
                         onLayout={getCellOnLayoutHandler(index)}>
@@ -133,20 +124,20 @@ function VertificationCode({navigation}) {
                 {errors.code?.type === 'required'
                   ? 'يجب ادخال رمز التأكيد'
                   : errors.code?.type === 'minLength'
-                  ? 'يجب ادخال الارقام المرسله بالكامل'
-                  : ''}
+                    ? 'يجب ادخال الارقام المرسله بالكامل'
+                    : ''}
               </Text>
             </View>
           </View>
-          <View style={styles.buttonContainerStyle}>
-            <GeneralButton
-              title="تأكيد"
-              style={styles.buttonStyle}
-              onPress={handleSubmit(onSubmit)}
-            />
-          </View>
         </View>
       </ScrollView>
+      <View style={styles.buttonContainerStyle}>
+        <GeneralButton
+          title="تأكيد"
+          style={styles.buttonStyle}
+          onPress={handleSubmit(onSubmit)}
+        />
+      </View>
     </View>
   );
 }

@@ -13,15 +13,8 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.white,
     }, viewForScrollviewContainer: {
         paddingHorizontal: PADDINGS.mdPadding,
-        //paddingTop: '5%',
-        //alignItems: 'center',
-        paddingBottom: '5%',
         flex: 1,
-        justifyContent: 'space-between',
-        flexDirection: 'column',
-        //backgroundColor:"#f00"
-    }, scrollViewContentContainerStyle: {
-        minHeight: '100%'
+        
     }, arrowButtonStyle: {
         elevation: RFValue(3)
     }, viewBlueStyle: {
@@ -34,9 +27,6 @@ const styles = StyleSheet.create({
     }, textHeaderStyle: {
         marginLeft: RFValue(-20)
     }, viewImage: {
-        marginTop: '5%',
-        //  width: RFValue(250),
-        //   height: RFValue(250),
         alignItems: 'center',
         justifyContent: 'center',
     }, imageStyle: {
@@ -76,7 +66,8 @@ const styles = StyleSheet.create({
     }, scrollViewStyle: {
         backgroundColor: COLORS.white
     }, buttonContainerStyle: {
-        //paddingHorizontal: PADDINGS.mdPadding
+        paddingHorizontal: PADDINGS.mdPadding,
+        paddingBottom: PADDINGS.mdPadding
     }, errorTestStyle: {
         color: "#f00",
     }

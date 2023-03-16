@@ -6,7 +6,7 @@ import UserData from '../../components/UserData/UserData';
 import styles from './MedicalID1Style';
 import {useNavigation} from '@react-navigation/native';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
-import {PADDINGS} from '../../constants/Constants';
+import {PADDINGS,COLORS} from '../../constants/Constants';
 function MedicalID1(props) {
   const navigation = useNavigation();
   return (
@@ -14,22 +14,19 @@ function MedicalID1(props) {
       <HeaderNavigation
         title="المعلومات الشخصية"
         btn="تعديل"
+        text
+        color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
         onPress={() => {
-          navigation.navigate('UserProfile');
+          navigation.goBack();
         }}
         onPressBtn={() => {
           navigation.navigate('EditPersonDetails');
         }}
       />
       <View style={styles.container}>
-        {/* <Button
-          title="edit"
-          onPress={() => {
-            navigation.navigate('EditPersonDetails');
-          }}
-        /> */}
-        <ProfileImage />
+        <ProfileImage nameAfterImage/>
+
         <UserData data="A+" label="نوع الدم" />
         <UserData data="70" label="الوزن" />
         <UserData data="189" label="الطول" />

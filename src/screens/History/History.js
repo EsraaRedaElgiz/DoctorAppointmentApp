@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { useSelector, useDispatch } from "react-redux";
-import { View, FlatList, StatusBar } from 'react-native';
+import { View, FlatList, StatusBar,ToastAndroid } from 'react-native';
 import { COLORS, PADDINGS } from '../../constants/Constants';
 import styles from './styles';
 import HeaderArrowAndWord from '../../components/HeaderArrowAndWord/HeaderArrowAndWord';
@@ -10,7 +10,8 @@ import { HeaderNavigation } from '../../components/headerNavigation/HeaderNaviga
 //import { getHistory } from '../../Redux/Reducers/HistorySlice'
 //
 
-function History({navigation}) {
+function History({ navigation }) {
+  const[visible,setVisible]=useState(false)
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   /*useEffect(() => {
@@ -20,15 +21,15 @@ function History({navigation}) {
     {
       doctorName: "سامي علي",
       doctorSpeciality: "الطب العام والداخلي",
-      day: "٤",
+      day: "4",
       month: "سبتمبر",
-      year: "٢٠٢٢",
+      year: "2022",
     }, {
-      doctorName: "سامي علي",
-      doctorSpeciality: "الطب العام والداخلي",
-      day: "٤",
+      doctorName: "احمد محمد",
+      doctorSpeciality: "طب الاسنان",
+      day: "6",
       month: "سبتمبر",
-      year: "٢٠٢٢",
+      year: "2022",
     }
 
   ]
@@ -44,34 +45,34 @@ function History({navigation}) {
         month={month}
         year={year}
         style={styles.afterEachCardMargin}
-      // onPress={()=>alert(index)}
-      onPress={()=>{
-        navigation.navigate("Prescription")
-    }}
+        // onPress={()=>alert(index)}
+        onPress={() => {
+          navigation.navigate("Prescription")
+        }}
       />
 
     )
 
   }
+  const showToast = () => {
+    ToastAndroid.show(visible==true?'تاريخك المرضي غير مرئي للأطباء !':"تاريخك المرضي مرئي للأطباء !", ToastAndroid.SHORT);
+  };
+  
   return (
 
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.blue} />
-      {/*<View style={styles.headerViewStyleAndFlatListContainerStyle}>
-        <HeaderArrowAndWord
-          text="التاريخ"
-          arrowButtonStyle={styles.arrowButtonStyle}
-          textColor={COLORS.black}
-          textStyle={styles.textHeaderStyle}
-        />
-      </View>*/}
       <HeaderNavigation
-          title="التاريخ"
-          onPress={() => {
-            navigation.goBack();
-          }}
-          padding={PADDINGS.mdPadding}
-        />
+        title="التاريخ"
+        icon
+        iconName={visible==false?"lock":"unlock"}
+       color={COLORS.darkGray3}
+        onPress={() => {
+          navigation.goBack();
+        }}
+        onPressBtn={()=>{setVisible(visible=>{return !visible});showToast()}}
+        padding={PADDINGS.mdPadding}
+      />
       <FlatList
         keyExtractor={keyextractor}
         data={history}

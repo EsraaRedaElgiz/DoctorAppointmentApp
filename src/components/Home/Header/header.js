@@ -12,21 +12,26 @@ import {
 import Images from '../../../constants/Images';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {style} from '../../../styles/Style';
-import {useNavigation} from "@react-navigation/native"
+import {useNavigation} from '@react-navigation/native';
 const Header = () => {
-  const navigation=useNavigation()
+  const navigation = useNavigation();
   return (
     <View style={styles.headerContainer}>
       <View style={styles.image_userNameContainer}>
         <Pressable
           onPress={() => {
-            alert('Go to User Profile');// navigate to user Profile page
+            navigation.navigate('MedicalID1');
           }}>
-          <Image source={Images.userImage} style={styles.userImage} />
+          <Image
+            source={{
+              uri: 'https://img.freepik.com/free-photo/smiling-doctor-with-strethoscope-isolated-grey_651396-974.jpg?w=740&t=st=1678903589~exp=1678904189~hmac=4c4da7bf447127fcedc6c412bfd9c4ef385ae0c8aceeb9d11550b6b8d99eb7ae',
+            }}
+            style={styles.userImage}
+          />
         </Pressable>
         <View style={styles.textConatiner}>
           <Text style={style.textContent}> مرحبا</Text>
-          <Text style={style.textContentBold}>ايمن عبد القادر جاب الله</Text>
+          <Text style={style.textContentBold}>محمد عبد الحميد</Text>
         </View>
       </View>
 
@@ -34,7 +39,7 @@ const Header = () => {
       <Pressable
         style={styles.searchIconStyle}
         onPress={() => {
-          navigation.navigate("SpecialitySearch")
+          navigation.navigate('SpecialitySearch');
         }}>
         <FontAwesome
           name="search"
@@ -56,7 +61,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingVertical: PADDINGS.xsPadding,
-    paddingHorizontal: PADDINGS.mdPadding
+    paddingHorizontal: PADDINGS.mdPadding,
   },
   image_userNameContainer: {
     minWidth: RFValue(120),

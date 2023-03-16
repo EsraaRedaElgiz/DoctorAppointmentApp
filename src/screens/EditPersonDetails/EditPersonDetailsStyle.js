@@ -4,12 +4,12 @@ import {COLORS, MARGIN, PADDINGS, FONTS} from '../../constants/Constants';
 const {width, height} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-  conatiner: {
+  container: {
     flex: 1,
     paddingHorizontal: PADDINGS.mdPadding,
   },
   inputView: {
-    marginBottom: MARGIN.mdMargin,
+    // marginBottom: MARGIN.mdMargin,
   },
   modalContainer: {
     width: width * 0.8,
@@ -66,6 +66,10 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#bbb',
     width: '90%',
+  },
+  errorTextStyle: {
+    color: '#f00',
+    marginBottom: RFValue(1),
   },
 });
 

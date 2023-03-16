@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,77 +8,72 @@ import {
   Image,
 } from 'react-native';
 import styles from './styles';
-import {Checkbox} from 'react-native-paper';
-import {COLORS, ICONS, PADDINGS} from '../../constants/Constants';
+import { Checkbox } from 'react-native-paper';
+import { COLORS, ICONS, PADDINGS } from '../../constants/Constants';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
-import {TextInput} from 'react-native-paper';
+import { TextInput } from 'react-native-paper';
 import ReusableArrowButton from '../../components/AppRightIcon/AppRightIcon';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   setEmail,
   setPassword,
   setRememberMe,
 } from '../../Redux/Reducers/LoginSlice';
-import {useForm, Controller} from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import LoginWithG from '../../utils/LoginWithG';
-import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
-function LogIn({navigation}) {
+import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+import { setLoggedIn } from "../../Redux/Reducers/AuthSlice"
+function LogIn({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const [toggleCheckBox, setToggleCheckBox] = useState(
-    globalState.LoginReducer.rememberMe,
-  );
+  const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [secured_pass, set_secured_pass] = useState(true);
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    reset,
+    formState: { errors },
     watch,
   } = useForm({
     defaultValues: {
-      email: globalState.LoginReducer.email,
-      password: globalState.LoginReducer.password,
+      email: "",
+      password: "",
     },
   });
   const onSubmit = data => {
-    //console.log(data);
-    dispatch(setEmail(data.email));
-    dispatch(setPassword(data.password));
-    dispatch(setRememberMe(toggleCheckBox));
-    //console.log(globalState.LoginReducer.rememberMe+""+globalState.LoginReducer.email)
-    navigation.navigate('Home'); //home
+    //console.log(JSON.stringify(data) + "before" + toggleCheckBox);
+    /*const data = {
+      email: data.email,
+        password: data.phoneNum,
+       rememberMe: toggleCheckbox
+      }
+      dispatch(insertData(data))*/
+    reset()
+    setToggleCheckBox(toggleCheckBox => { return false })
+    dispatch(setLoggedIn())
+
   };
-  const pass_secured = () => {
-    let securedPass = secured_pass;
-    securedPass = !securedPass;
-    set_secured_pass(secured_pass => securedPass);
-  };
+
   return (
     <>
       <ScrollView
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="always"
         style={styles.scrollViewStyle}
         contentContainerStyle={styles.scrollViewContentContainerStyle}>
         <StatusBar backgroundColor={COLORS.blue} />
         <HeaderNavigation
           backgroundColor={COLORS.blue}
-          padding={PADDINGS.smPadding}
+          padding={PADDINGS.mdPadding}
           onPress={() => {
+            reset()
+            setToggleCheckBox(toggleCheckBox => { return false })
             navigation.goBack();
           }}
         />
-        <View style={[styles.container]}>
+        <View style={styles.container}>
           <View style={styles.topViewStyle}>
-            {/* <ReusableArrowButton
-              style={styles.custombuttonIconStyle}
-              onPress={() => {
-                dispatch(setEmail(''));
-                dispatch(setPassword(''));
-                dispatch(setRememberMe(''));
-                
-              }}
-            /> */}
             <View style={styles.viewHeaderStyle}>
               <View style={styles.viewforheaderstyle}>
                 <Text style={styles.firstTextHeaderStyle}>اهلا بعودتك !</Text>
@@ -100,13 +95,14 @@ function LogIn({navigation}) {
                     required: true,
                     pattern: /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/,
                   }}
-                  render={({field: {onChange, onBlur, value}}) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <Reusabletextinput
                       placeholder="عنوان البريد الالكتروني"
                       keyboardType="email-address"
                       bordercolor={errors.email ? COLORS.red : COLORS.gray}
                       onChangeText={onChange}
                       onBlur={onBlur}
+                      value={value}
                     />
                   )}
                   name="email"
@@ -115,8 +111,8 @@ function LogIn({navigation}) {
                   {errors.email?.type === 'required'
                     ? 'يجب ادخال عنوان البريد الالكتروني'
                     : errors.email?.type === 'pattern'
-                    ? 'يجب ادخال عنوان بريد الكتروني صحيح'
-                    : ''}
+                      ? 'يجب ادخال عنوان بريد الكتروني صحيح'
+                      : ''}
                 </Text>
               </View>
               <View style={styles.eachTextinputAndErrorTextContainer}>
@@ -128,21 +124,23 @@ function LogIn({navigation}) {
                       /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
                     maxLength: 20,
                   }}
-                  render={({field: {onChange, onBlur, value}}) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <Reusabletextinput
                       placeholder="كلمه المرور"
                       bordercolor={errors.password ? COLORS.red : COLORS.gray}
                       right={
                         <TextInput.Icon
-                          icon="eye"
+                          icon={secured_pass ? 'eye-off' : 'eye'}
                           style={styles.iconStyle}
                           iconColor={COLORS.darkGray}
-                          onPress={pass_secured}
+                          onPress={() => set_secured_pass(secured_pass => { return !secured_pass })}
                         />
                       }
                       secureTextEntry={secured_pass}
                       onChangeText={onChange}
                       onBlur={onBlur}
+                      value={value}
+
                     />
                   )}
                   name="password"
@@ -151,10 +149,10 @@ function LogIn({navigation}) {
                   {errors.password?.type === 'required'
                     ? 'يجب ادخال كلمة المرور'
                     : errors.password?.type === 'pattern'
-                    ? 'كلمه المرور يجب لا تقل عن 8 ارقام وحرف كبير وحرف صغير وعلامه مميزه'
-                    : errors.password?.type === 'maxLength'
-                    ? 'كلمة المرور يجب ان لا تزيد عن 20 حرف ورقم'
-                    : ''}
+                      ? 'كلمه المرور يجب لا تقل عن 8 ارقام وحرف كبير وحرف صغير وعلامه مميزه'
+                      : errors.password?.type === 'maxLength'
+                        ? 'كلمة المرور يجب ان لا تزيد عن 20 حرف ورقم'
+                        : ''}
                 </Text>
               </View>
               <View style={styles.viewForfirstTextAfterTextinputs}>
@@ -163,7 +161,8 @@ function LogIn({navigation}) {
                     <Checkbox
                       status={toggleCheckBox ? 'checked' : 'unchecked'}
                       onPress={() =>
-                        setToggleCheckBox(toggleCheckBox => !toggleCheckBox)
+                        setToggleCheckBox(toggleCheckBox => { return !toggleCheckBox })
+                        
                       }
                       color={COLORS.blue}
                       uncheckedColor={COLORS.gray}
@@ -175,6 +174,8 @@ function LogIn({navigation}) {
                 </View>
                 <TouchableOpacity
                   onPress={() => {
+                    reset()
+                    setToggleCheckBox(toggleCheckBox => { return false })
                     navigation.navigate('ForgetPassword');
                   }}>
                   <Text style={styles.bluetextstyle}>نسيت كلمه المرور؟</Text>
@@ -194,16 +195,18 @@ function LogIn({navigation}) {
             <View>
               <GeneralButton
                 title="متابعة"
-                style={styles.buttonMargin}
                 // onPress={()=>alert(toggleCheckBox)}
                 onPress={handleSubmit(onSubmit)}
+                style={styles.buttonMargin}
               />
               <View style={styles.viewForLastTextStyle}>
                 <View>
-                  <Text style={{color: COLORS.darkGray3}}>ليس لديك حساب ؟</Text>
+                  <Text style={{ color: COLORS.darkGray3 }}>ليس لديك حساب ؟</Text>
                 </View>
                 <TouchableOpacity
                   onPress={() => {
+                    reset()
+                    setToggleCheckBox(toggleCheckBox => { return false })
                     navigation.navigate('SignUp');
                   }}>
                   <Text style={styles.bluetextstyle}> انشاء حساب </Text>

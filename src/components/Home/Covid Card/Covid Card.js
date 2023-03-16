@@ -1,23 +1,19 @@
-import {StyleSheet, Text, View, Pressable} from 'react-native';
+import {StyleSheet, Text, View, Pressable, Linking} from 'react-native';
 import React from 'react';
 import {RFValue} from 'react-native-responsive-fontsize';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {
   COLORS,
-  FONTS,
-  ICONS,
   MARGIN,
   RADIUS,
-  PADDINGS
+  PADDINGS,
 } from '../../../constants/Constants';
 import {style} from '../../../styles/Style';
 const CovidCard = () => {
   return (
-    <Pressable style={styles.CovidContainer}
-    onPress={()=>{
-      alert("Go to website of Covid 19")//given link and integrate with code
-    }}
-    >
+    <Pressable
+      style={styles.CovidContainer}
+      onPress={() => Linking.openURL('https://sehhty.com/')}>
       <View style={styles.iconContainer}>
         <MaterialIcons
           name="security"
@@ -37,13 +33,15 @@ const CovidCard = () => {
           يؤثر مرض كوفيد 19 على أشخاص مختلفين بطرق مختلفة. فمعظم المصابين يصابون
           بمرض خفيف إلى متوسط ​​ويتعافون دون دخول المستشفى
         </Text>
-        <Text
-          style={[
-            style.textSmallContent,
-            {textDecorationLine: 'underline', color: COLORS.white},
-          ]}>
-          شاهد المزيد
-        </Text>
+        <Pressable onPress={() => Linking.openURL('https://sehhty.com/')}>
+          <Text
+            style={[
+              style.textSmallContent,
+              {textDecorationLine: 'underline', color: COLORS.white},
+            ]}>
+            شاهد المزيد
+          </Text>
+        </Pressable>
       </View>
     </Pressable>
   );
@@ -67,5 +65,5 @@ const styles = StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-  }
+  },
 });
