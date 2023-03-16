@@ -1,11 +1,11 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {StyleSheet, Text} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeStack from './HomeStack';
 import AppointmentStack from './AppointmentStack';
 import HistoryStack from './HistoryStack';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import UserProfileStack from './UserProfileStack';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import {COLORS, FONTS, ICONS} from '../constants/Constants';
 import {style} from '../styles/Style';
 const Tab = createBottomTabNavigator();
@@ -35,7 +35,7 @@ const HomeTabs = () => {
           };
           return {
             headerShown: false,
-            tabBarHideOnKeyboard:true,
+            tabBarHideOnKeyboard: true,
             tabBarStyle: {
               backgroundColor: COLORS.blue,
             },
