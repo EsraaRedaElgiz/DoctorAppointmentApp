@@ -117,7 +117,7 @@ function EditPersonDetails(props) {
       />
       <View style={styles.container}>
         <ProfileImage
-          nameAfterImage
+          nameAfterImage={"محمد عبدالحميد"}
           iconOnImage
           iconBgColor
           onPressPen={() => refRBSheet.current.open()}
