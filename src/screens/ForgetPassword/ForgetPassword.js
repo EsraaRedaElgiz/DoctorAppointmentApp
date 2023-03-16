@@ -1,24 +1,24 @@
 import React from 'react';
-import { Text, View, Image, StatusBar, ScrollView } from 'react-native';
+import {Text, View, Image, StatusBar, ScrollView} from 'react-native';
 import styles from './styles';
-import { COLORS, PADDINGS } from '../../constants/Constants';
+import {COLORS, PADDINGS} from '../../constants/Constants';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
-import { useSelector, useDispatch } from 'react-redux';
-import { setEmailToSendVerificationCode } from '../../Redux/Reducers/SendEmailSlice';
-import { useForm, Controller } from 'react-hook-form';
-import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
-function ForgetPassword({ navigation }) {
+import {useSelector, useDispatch} from 'react-redux';
+import {setEmailToSendVerificationCode} from '../../Redux/Reducers/SendEmailSlice';
+import {useForm, Controller} from 'react-hook-form';
+import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
+function ForgetPassword({navigation}) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   const {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: {errors},
   } = useForm({
     defaultValues: {
-      email: "",
+      email: '',
     },
   });
   const onSubmit = data => {
@@ -28,9 +28,8 @@ function ForgetPassword({ navigation }) {
        
       }
       dispatch(insertData(data))*/
-    reset()
+    reset();
     navigation.navigate('VertificationCode');
-
   };
 
   return (
@@ -41,16 +40,14 @@ function ForgetPassword({ navigation }) {
         color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
         onPress={() => {
-          reset()
+          reset();
           navigation.navigate('LogIn');
-
         }}
       />
       <ScrollView
         keyboardShouldPersistTaps="always"
         showsVerticalScrollIndicator={false}
-        style={styles.scrollViewStyle}
-      >
+        style={styles.scrollViewStyle}>
         <View style={styles.viewForScrollviewContainer}>
           <View>
             <View style={styles.viewImage}>
@@ -71,7 +68,7 @@ function ForgetPassword({ navigation }) {
                   required: true,
                   pattern: /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/,
                 }}
-                render={({ field: { onChange, onBlur, value } }) => (
+                render={({field: {onChange, onBlur, value}}) => (
                   <Reusabletextinput
                     placeholder="عنوان البريد الالكتروني/رقم الهاتف"
                     bordercolor={errors.email ? '#f00' : COLORS.gray}
@@ -86,8 +83,8 @@ function ForgetPassword({ navigation }) {
                 {errors.email?.type === 'required'
                   ? 'يجب ادخال عنوان البريد الالكتروني لارسال رمز التأكيد'
                   : errors.email?.type === 'pattern'
-                    ? 'يجب ادخال عنوان بريد الكتروني صحيح'
-                    : ''}
+                  ? 'يجب ادخال عنوان بريد الكتروني صحيح'
+                  : ''}
               </Text>
             </View>
           </View>

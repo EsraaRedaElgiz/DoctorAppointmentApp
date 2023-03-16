@@ -7,10 +7,7 @@ const ListTiltle = props => {
   return (
     <View style={[styles.container, styleProp]}>
       <Text style={style.textContentBold}>{Title}</Text>
-      <Pressable
-       onPress={onPress}
-      
-      >
+      <Pressable onPress={onPress}>
         <Text style={style.textSmallContentBold}>{seeAll}</Text>
       </Pressable>
     </View>

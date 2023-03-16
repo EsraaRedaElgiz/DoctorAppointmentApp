@@ -12,7 +12,6 @@ function UserProfile(props) {
   return (
     <GeneralPage>
       <View style={styles.container}>
-       
         <ProfileImage nameAfterImage />
         {userProfileData.map((el, idx) => {
           return (

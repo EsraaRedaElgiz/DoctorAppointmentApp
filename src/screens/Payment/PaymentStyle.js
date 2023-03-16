@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     paddingHorizontal: PADDINGS.mdPadding,
-    marginBottom: MARGIN.smMargin,
+    marginBottom: MARGIN.mdMargin,
   },
 });
 

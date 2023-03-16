@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     borderColor: COLORS.gray,
     fontSize: FONTS.h5,
     color: COLORS.darkGray,
-    marginBottom: height * 0.1,
   },
   linesView: {
     flex: 1,
@@ -61,14 +60,15 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.lightGray2,
     elevation: RFValue(5),
     marginBottom: RFValue(10),
+    marginBottom: height * 0.255,
   },
   imageIcon: {
     width: RFValue(60),
     height: RFValue(60),
   },
-  button: {
-    marginHorizontal: MARGIN.mdMargin,
-    marginBottom: MARGIN.mdMargin,
+  errorTextStyle: {
+    marginBottom: height * 0.14,
+    color: COLORS.red,
   },
 });
 

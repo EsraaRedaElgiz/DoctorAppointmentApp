@@ -8,6 +8,7 @@ import {
   Button,
 } from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
+import {useForm, Controller} from 'react-hook-form';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import {TextInput} from 'react-native-paper';
 import GeneralPage from '../../components/GeneralPage/GeneralPage';
@@ -28,6 +29,17 @@ function EditPersonDetails(props) {
   const [visible, setVisible] = useState(false);
   const [photo_uri, setphoto_uri] = useState();
   const [bloodType, setBloodType] = useState('نوع الدم');
+  const {
+    control,
+    handleSubmit,
+    reset,
+    watch,
+    formState: {errors},
+  } = useForm();
+  const onSubmit = data => {
+    reset();
+    navigation.navigate('MedicalID1');
+  };
   useEffect(() => {
     requestCameraPermission();
   }, []);
@@ -82,8 +94,8 @@ function EditPersonDetails(props) {
     setBloodType(type);
   };
 
-  const countries = ['A+', 'B+', 'C+'];
-  const geneder = ['ذكر', 'انثي'];
+  const bloodTypeList = ['A+', 'B+', 'C+'];
+  const gender = ['ذكر', 'انثي'];
 
   return (
     <GeneralPage>
@@ -96,58 +108,210 @@ function EditPersonDetails(props) {
         onPress={() => {
           navigation.goBack();
         }}
-        onPressBtn={() => {
-          navigation.navigate('MedicalID1');
-          //must all textInputs be vaild (validation react-hook-form)
-        }}
+        onPressBtn={handleSubmit(onSubmit)}
+        // onPressBtn={() => {
+        //   handleSubmit(onSubmit);
+        //   // navigation.navigate('MedicalID1');
+        //   //must all textInputs be vaild (validation react-hook-form)
+        // }}
       />
-      <View style={styles.conatiner}>
+      <View style={styles.container}>
         <ProfileImage
-          iconName="pen"
           nameAfterImage
           iconOnImage
           iconBgColor
           onPressPen={() => refRBSheet.current.open()}
           imageUri={photo_uri}
         />
-        <DropDown
-          data={countries}
-          placeholder="نوع الدم"
-          borderColor={COLORS.gray}
+        <Controller
+          name="name"
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({field: {onChange, onBlur, value}}) => {
+            return (
+              <Reusabletextinput
+                placeholder="الاسم"
+                bordercolor={errors.name ? '#f00' : COLORS.gray}
+                onChangeText={onChange}
+                value={value}
+                onBlur={onBlur}
+              />
+            );
+          }}
         />
-        <View style={styles.inputView}>
-          <Reusabletextinput
-            keyboardType="number-pad"
-            placeholder="الوزن"
-            bordercolor={COLORS.gray}
-          />
-        </View>
-        <View style={styles.inputView}>
-          <Reusabletextinput
-            keyboardType="number-pad"
-            placeholder="الطول"
-            bordercolor={COLORS.gray}
-          />
-        </View>
-        <View style={styles.inputView}>
-          <Reusabletextinput
-            keyboardType="number-pad"
-            placeholder="العمر"
-            bordercolor={COLORS.gray}
-          />
-        </View>
-        <DropDown
-          data={geneder}
-          placeholder="النوع"
-          borderColor={COLORS.gray}
+        <Text style={styles.errorTextStyle}>
+          {errors.name?.type === 'required' ? 'يجب ادخال اسم' : ''}
+        </Text>
+        <Controller
+          name="bloodType"
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({field: {onChange, onBlur, value}}) => {
+            return (
+              <DropDown
+                data={bloodTypeList}
+                placeholder="فصيلة الدم"
+                borderColor={errors.bloodType ? '#f00' : COLORS.gray}
+                onSelect={onChange}
+                value={value}
+                onBlur={onBlur}
+              />
+            );
+          }}
         />
-        <View style={styles.inputView}>
-          <Reusabletextinput
-            keyboardType="number-pad"
-            placeholder="رقم الهاتف"
-            bordercolor={COLORS.gray}
-          />
-        </View>
+        <Text style={[styles.errorTextStyle]}>
+          {errors.bloodType?.type === 'required' ? 'يجب ادخال فصيلة الدم' : ''}
+        </Text>
+        <Controller
+          name="weight"
+          control={control}
+          rules={{
+            required: true,
+            validate: val => {
+              if (val * 0 != 0) {
+                return 'must number';
+              }
+            },
+          }}
+          render={({field: {onChange, onBlur, value}}) => {
+            return (
+              <Reusabletextinput
+                keyboardType="number-pad"
+                placeholder="الوزن"
+                bordercolor={errors.weight ? '#f00' : COLORS.gray}
+                onChangeText={onChange}
+                value={value}
+                onBlur={onBlur}
+              />
+            );
+          }}
+        />
+        <Text style={styles.errorTextStyle}>
+          {errors.weight?.type === 'required'
+            ? 'يجب ادخال الوزن'
+            : errors.weight?.type === 'validate'
+            ? 'يجب ادخال رقم'
+            : ''}
+        </Text>
+        <Controller
+          name="height"
+          control={control}
+          rules={{
+            required: true,
+            validate: val => {
+              if (val * 0 != 0) {
+                return 'must number';
+              }
+            },
+          }}
+          render={({field: {onChange, onBlur, value}}) => {
+            return (
+              <Reusabletextinput
+                keyboardType="number-pad"
+                placeholder="الطول"
+                bordercolor={errors.height ? '#f00' : COLORS.gray}
+                onChangeText={onChange}
+                value={value}
+                onBlur={onBlur}
+              />
+            );
+          }}
+        />
+        <Text style={styles.errorTextStyle}>
+          {errors.height?.type === 'required'
+            ? 'يجب ادخال الطول'
+            : errors.height?.type === 'validate'
+            ? 'يجب ادخال رقم'
+            : ''}
+        </Text>
+        <Controller
+          name="age"
+          control={control}
+          rules={{
+            required: true,
+            validate: val => {
+              if (val * 0 != 0) {
+                return 'must number';
+              }
+            },
+          }}
+          render={({field: {onChange, onBlur, value}}) => {
+            return (
+              <Reusabletextinput
+                keyboardType="number-pad"
+                placeholder="العمر"
+                bordercolor={errors.age ? '#f00' : COLORS.gray}
+                onChangeText={onChange}
+                value={value}
+                onBlur={onBlur}
+              />
+            );
+          }}
+        />
+        <Text style={styles.errorTextStyle}>
+          {errors.age?.type === 'required'
+            ? 'يجب ادخال الطول'
+            : errors.age?.type === 'validate'
+            ? 'يجب ادخال رقم'
+            : ''}
+        </Text>
+        <Controller
+          name="gender"
+          control={control}
+          rules={{
+            required: true,
+          }}
+          render={({field: {onChange, onBlur, value}}) => {
+            return (
+              <DropDown
+                data={gender}
+                placeholder="النوع"
+                borderColor={errors.gender ? '#f00' : COLORS.gray}
+                onSelect={onChange}
+                value={value}
+                onBlur={onBlur}
+              />
+            );
+          }}
+        />
+        <Text style={[styles.errorTextStyle]}>
+          {errors.gender?.type === 'required' ? 'يجب ادخال فصيلة الدم' : ''}
+        </Text>
+        <Controller
+          name="phone"
+          control={control}
+          rules={{
+            required: true,
+            // validate: val => {
+            //   if (val * 0 != 0) {
+            //     return 'must number';
+            //   }
+            // },
+            validate: /^(\+201|01|00201)[0-2,5]{1}[0-9]{8}/,
+          }}
+          render={({field: {onChange, onBlur, value}}) => {
+            return (
+              <Reusabletextinput
+                keyboardType="number-pad"
+                placeholder="رقم الهاتف"
+                bordercolor={errors.phone ? '#f00' : COLORS.gray}
+                onChangeText={onChange}
+                value={value}
+              />
+            );
+          }}
+        />
+        <Text style={styles.errorTextStyle}>
+          {errors.phone?.type === 'required'
+            ? 'يجب ادخال رقم الهاتف'
+            : errors.phone?.type === 'validate'
+            ? 'يجب ادخال رقم هاتف صحيح'
+            : ''}
+        </Text>
       </View>
       <RBSheet
         ref={refRBSheet}
@@ -156,8 +320,8 @@ function EditPersonDetails(props) {
         customStyles={{
           container: {
             alignItems: 'center',
-            borderTopLeftRadius:RFValue(30),
-            borderTopRightRadius:RFValue(30)
+            borderTopLeftRadius: RFValue(30),
+            borderTopRightRadius: RFValue(30),
           },
         }}>
         <TouchableOpacity
@@ -195,32 +359,6 @@ function EditPersonDetails(props) {
           <Text style={styles.optionTextStyle}>انهاء</Text>
         </TouchableOpacity>
       </RBSheet>
-      <Modal
-        transparent
-        visible={visible}
-        onRequestClose={() => {
-          setVisible(false);
-        }}>
-        <View style={styles.modalContainer}>
-          <Icon
-            onPress={() => {
-              setVisible(false);
-            }}
-            name="closecircleo"
-            size={ICONS.mdIcon}
-            style={{textAlign: 'left', marginBottom: RFValue(10)}}
-          />
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.bloodType}>A+</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.bloodType}>B+</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.bloodType}>C+</Text>
-          </TouchableOpacity>
-        </View>
-      </Modal>
     </GeneralPage>
   );
 }
