@@ -20,6 +20,7 @@
     "@react-navigation/native-stack": "^6.9.12",
     "@reduxjs/toolkit": "^1.9.3",
     "axios": "^1.3.4",
+    "formik": "^2.2.9",
     "lottie-react-native": "^5.1.5",
     "react": "18.2.0",
     "react-hook-form": "^7.43.2",
@@ -27,6 +28,7 @@
     "react-native-app-intro-slider": "^4.0.4",
     "react-native-confirmation-code-field": "^7.3.1",
     "react-native-dropdown-select-list": "^2.0.4",
+    "react-native-elements": "^3.4.3",
     "react-native-image-picker": "^5.1.0",
     "react-native-linear-gradient": "^2.6.2",
     "react-native-maps": "^1.4.0",
@@ -38,7 +40,8 @@
     "react-native-select-dropdown": "^3.3.0",
     "react-native-table-component": "^1.2.2",
     "react-native-vector-icons": "^9.2.0",
-    "react-redux": "^8.0.5"
+    "react-redux": "^8.0.5",
+    "yup": "^1.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
