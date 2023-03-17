@@ -35,8 +35,21 @@ function EditPersonDetails(props) {
     reset,
     watch,
     formState: {errors},
-  } = useForm();
+  } = useForm(
+    {
+      defaultValues: {
+        name:"",
+        bloodType: "",
+        weight: "",
+        height: "",
+        age: "",
+        gender: "",
+        phone:""
+      },
+    }
+  );
   const onSubmit = data => {
+    //console.log(data);
     reset();
     navigation.navigate('MedicalID1');
   };
@@ -159,6 +172,8 @@ function EditPersonDetails(props) {
                 onSelect={onChange}
                 value={value}
                 onBlur={onBlur}
+                color={value==""?COLORS.darkGray:COLORS.darkGray3}
+
               />
             );
           }}
@@ -274,6 +289,7 @@ function EditPersonDetails(props) {
                 onSelect={onChange}
                 value={value}
                 onBlur={onBlur}
+                color={value==""?COLORS.darkGray:COLORS.darkGray3}
               />
             );
           }}
