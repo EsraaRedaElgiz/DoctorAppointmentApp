@@ -11,9 +11,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
+    paddingHorizontal: PADDINGS.mdPadding,
   },
   scrollViewContentStyle: {
-    paddingHorizontal: PADDINGS.mdPadding,
+    marginTop: MARGIN.mdMargin,
+    paddingHorizontal: RFValue(1),
   },
   headerView: {
     flexDirection: 'row',
@@ -38,7 +40,7 @@ const styles = StyleSheet.create({
   line: {
     height: RFValue(1),
     backgroundColor: COLORS.gray,
-    marginBottom: MARGIN.mdMargin,
+    // marginBottom: MARGIN.mdMargin,
   },
 });
 

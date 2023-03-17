@@ -20,7 +20,7 @@ function PersonAppointmentCard(props) {
           />
           <View style={styles.timeView}>
             <Text style={styles.name}>{name ? name : 'عبدالرحمن عياد'}</Text>
-            <Text style={styles.time}>10:30 PM</Text>
+            <Text style={styles.name}>10:30 PM</Text>
           </View>
         </View>
       </View>
@@ -79,13 +79,13 @@ const styles = StyleSheet.create({
     marginRight: RFValue(10),
   },
   name: {
+    textAlign: 'left',
     fontSize: FONTS.h6,
     fontWeight: '600',
     color: COLORS.darkGray2,
   },
   timeView: {
     justifyContent: 'center',
-    alignItems: 'center',
   },
   verticalLine: {
     height: '90%',

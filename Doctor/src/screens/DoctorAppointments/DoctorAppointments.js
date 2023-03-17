@@ -14,15 +14,17 @@ function DoctorAppointments() {
         color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
       />
-      <ScrollView contentContainerStyle={styles.scrollViewContentStyle}>
-        <View style={styles.headerView}>
-          <Text style={styles.dateText}> 4 Feb 2023</Text>
-          <Text style={styles.addButton}>اضافة</Text>
-        </View>
-        <View style={styles.calenderView}>
-          <Calender />
-        </View>
-        <View style={styles.line} />
+      <View style={styles.headerView}>
+        <Text style={styles.dateText}> 4 Feb 2023</Text>
+        <Text style={styles.addButton}>اضافة</Text>
+      </View>
+      <View style={styles.calenderView}>
+        <Calender />
+      </View>
+      <View style={styles.line} />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollViewContentStyle}>
         <PersonAppointmentCard pending />
         <PersonAppointmentCard confirmed name="ايمن جاب الله" />
         <PersonAppointmentCard confirmed name="اسراء السباكة" />
