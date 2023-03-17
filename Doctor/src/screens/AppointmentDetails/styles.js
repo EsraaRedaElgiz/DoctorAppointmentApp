@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     }, dialogDescribtionTextStyle: {
         color: COLORS.darkGray3
     }, dialogSeperationLineStyle: {
-        fontSize:FONTS.h3,
+        fontSize:FONTS.h5,
         fontWeight: 'bold'
     }
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { COLORS } from './src/constants/Constants';
 import AppContainer from './src/navigation/AppContainer';
 import AppointmentDetails from './Doctor/src/screens/AppointmentDetails/AppointmentDetails';
 import AddAppointmentBySecretary from './Doctor/src/screens/AddAppointmentBySecretary/AddAppointmentBySecretary';

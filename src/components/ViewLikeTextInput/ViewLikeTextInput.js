@@ -5,11 +5,14 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {RFValue} from 'react-native-responsive-fontsize';
 
 function viewLikeTextInput(props) {
-  const {onPress, placeholder, iconName, borderColor, ...rest} = props;
+  const {onPress, placeholder, iconName, borderColor, textColor, ...rest} =
+    props;
   return (
     <View style={[styles.container, {borderColor: borderColor}]}>
       <View>
-        <Text style={styles.textInViewLikeTextInputStyle}>{placeholder}</Text>
+        <Text style={[styles.textInViewLikeTextInputStyle, {color: textColor}]}>
+          {placeholder}
+        </Text>
       </View>
       <TouchableOpacity onPress={onPress}>
         <FontAwesome5 name={iconName} size={RFValue(24)} />
@@ -33,7 +36,6 @@ const styles = StyleSheet.create({
   },
   textInViewLikeTextInputStyle: {
     fontSize: FONTS.h5,
-    color: COLORS.darkGray,
     fontFamily: 'Amaranth-Regular',
   },
 });

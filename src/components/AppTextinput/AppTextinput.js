@@ -18,6 +18,7 @@ function Reusabletextinput(props) {
         mode={'outlined'}
         activeOutlineColor={COLORS.gray}
         outlineStyle={[styles.outlinestyle, {borderColor: bordercolor}]}
+        textColor={COLORS.darkGray3}
       />
     </View>
   );

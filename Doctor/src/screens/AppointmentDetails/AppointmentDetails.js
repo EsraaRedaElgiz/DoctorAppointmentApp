@@ -33,7 +33,7 @@ function AppointmentDetails() {
   const globalState = useSelector(state => state);
   const [appointmentDetailsObject, setAppointmentDetailsObject] = useState({
     name: 'عاطف محمد',
-    day: '17',
+    day: '18',
     month: 'مارس',
     year: '2023',
     time: '12:00',
@@ -203,6 +203,9 @@ function AppointmentDetails() {
             </Text>
           </View>
           <TouchableOpacity
+          style={{borderColor:appointmentDetailsObject.appointmentStatus === 'تم التأكيد'
+          ? COLORS.green
+          : COLORS.red,borderWidth:1,borderRadius:15,width:RFValue(75),alignItems:'center'}}
             onPress={() => {
               setDialogVisible(dialogVisible => true);
             }}>

@@ -15,9 +15,6 @@ import { useForm, Controller } from 'react-hook-form';
 import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ViewLikeTextInput from '../../../../src/components/ViewLikeTextInput/ViewLikeTextInput'
-
-
-
 function AddAppointmentBySecretary() {
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [timePickerVisible, setTimePickerVisible] = useState(false);
@@ -28,13 +25,13 @@ function AddAppointmentBySecretary() {
   const onDateSelected = (event, value) => {
     setDatePickerVisible(false)
     setDate(JSON.stringify(value).substring(1, 11));
-    console.log(JSON.stringify(value).substring(1, 11))
+    //console.log(JSON.stringify(value).substring(1, 11))
     setDateError(dateError => "")
   };
   const onTimeSelected = (event, value) => {
     setTimePickerVisible(false)
     setTime(JSON.stringify(value+"" ).substring(16,22));
-    console.log(JSON.stringify(value+"").substring(16,22))
+    //console.log(JSON.stringify(value+"").substring(16,22))
     setTimeError(timeError => "")
   };
   const {
@@ -60,7 +57,7 @@ function AddAppointmentBySecretary() {
 
     }
     if (date.length > 0&&time.length>0) {
-      console.log(JSON.stringify(data)+" "+date+" "+time);
+      //console.log(JSON.stringify(data)+" "+date+" "+time);
       //backend
     /* const data = {
         name: data.name,
@@ -173,6 +170,8 @@ function AddAppointmentBySecretary() {
                 iconName="calendar-alt"
                 onPress={() => setDatePickerVisible(datePickerVisible=>{return true })}
                 borderColor={dateError ? COLORS.red : COLORS.gray}
+                textColor={date==""?COLORS.darkGray:COLORS.darkGray3}
+
               />
               <Text style={{ color: COLORS.red }}
               >{date.length == "" ? dateError : ""}
@@ -184,6 +183,7 @@ function AddAppointmentBySecretary() {
                 iconName="clock"
                 onPress={() => setTimePickerVisible(timePickerVisible=>{return true } )}
                 borderColor={timeError ? COLORS.red : COLORS.gray}
+                textColor={time==""?COLORS.darkGray:COLORS.darkGray3}
               />
               <Text style={{ color: COLORS.red }}
               >{time.length == "" ? timeError : ""}
