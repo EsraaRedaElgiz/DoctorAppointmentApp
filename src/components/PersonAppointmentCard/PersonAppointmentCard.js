@@ -18,12 +18,14 @@ function PersonAppointmentCard(props) {
             style={styles.image}
             source={require('../../../src/assets/Images/user.jpg')}
           />
-          <Text style={styles.name}>{name ? name : 'عبدالرحمن عياد'}</Text>
+          <View style={styles.timeView}>
+            <Text style={styles.name}>{name ? name : 'عبدالرحمن عياد'}</Text>
+            <Text style={styles.time}>10:30 PM</Text>
+          </View>
         </View>
       </View>
       <View style={styles.section3}>
         <View style={styles.timeView}>
-          <Text style={styles.time}>10:30 PM</Text>
           <Text
             style={[
               styles.confirmPendingText,
