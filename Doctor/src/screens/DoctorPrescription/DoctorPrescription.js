@@ -7,7 +7,6 @@ import {
   Modal,
   Image,
 } from 'react-native';
-import GeneralPage from '../../components/GeneralPage/GeneralPage';
 import {
   Table,
   TableWrapper,
@@ -15,24 +14,25 @@ import {
   Rows,
   Col,
 } from 'react-native-table-component';
-import styles from './PrescriptionStyle';
+import styles from './DoctorPrescriptionStyles';
 import {
   COLORS,
   FONTS,
-  ICONS,
   MARGIN,
+  ICONS,
   PADDINGS,
-} from '../../constants/Constants';
+} from '../../../../src/constants/Constants';
+import GeneralPage from '../../../../src/components/GeneralPage/GeneralPage';
 import {RFValue} from 'react-native-responsive-fontsize';
 import Icon from 'react-native-vector-icons/Feather';
 import * as ImagePicker from 'react-native-image-picker';
-import {requestCameraPermission} from '../../utils/CameraPermissin';
+import {requestCameraPermission} from '../../../../src/utils/CameraPermissin';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
+import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
 const {height} = Dimensions.get('window');
-import {style} from '../../styles/Style';
+import {style} from '../../../../src/styles/Style';
 
-function Prescription({navigation}) {
+function DoctorPrescription({navigation}) {
   const [photo_uri, setphoto_uri] = useState(null);
   const [analysis_uri, set_analysis_uri] = useState(null);
   const [rumor_uri, set_rumor_uri] = useState(null);
@@ -263,4 +263,4 @@ function Prescription({navigation}) {
   );
 }
 
-export default Prescription;
+export default DoctorPrescription;
