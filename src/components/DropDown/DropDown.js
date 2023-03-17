@@ -17,7 +17,7 @@ function DropDown(props) {
         rowTextStyle={{textAlign: 'right'}}
         buttonStyle={{
           flex: 1,
-          borderWidth: 1,
+          borderWidth: RFValue(1),
           borderRadius: RFValue(5),
           borderColor: borderColor,
           backgroundColor: COLORS.white,

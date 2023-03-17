@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { COLORS, PADDINGS, MARGIN, FONTS,RADIUS } from '../../constants/Constants'
+import { COLORS, PADDINGS, MARGIN, FONTS,RADIUS } from '../../../.././src/constants/Constants'
 import { RFValue } from "react-native-responsive-fontsize";
 const styles = StyleSheet.create({
     container: {
@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.white,
         //paddingHorizontal: PADDINGS.mdPadding,
         //paddingTop: '5%',
-        paddingBottom: '5%',
+        paddingBottom: PADDINGS.mdPadding,
     }, appointmentDetailsContainer: {
         marginBottom: '5%',
         flexDirection: 'row',
