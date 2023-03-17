@@ -174,6 +174,7 @@ function MedicalSheet({ navigation }) {
                     }}*/
                       onSelect={onChange}
                       value={value}
+                      color={value==""?COLORS.darkGray:COLORS.darkGray3}
                     />
                   )}
                   name="bloodType"
@@ -291,6 +292,8 @@ function MedicalSheet({ navigation }) {
                       placeholder="تحديد النوع"
                       onSelect={onChange}
                       value={value}
+                      color={value==""?COLORS.darkGray:COLORS.darkGray3}
+
                     />
                   )}
                   name="gender"

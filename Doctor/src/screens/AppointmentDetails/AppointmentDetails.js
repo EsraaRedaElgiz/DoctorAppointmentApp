@@ -15,14 +15,14 @@ import {
   ICONS,
   PADDINGS,
   RADIUS,
-} from '../../constants/Constants';
+} from '../../../.././src/constants/Constants';
 import styles from './styles';
-import AppointmentAndHistoryComponent from '../../components/AppointmentAndHistoryComponent/AppointmentAndHistoryComponent';
-import GeneralButton from '../../components/GeneralButton/GeneralButton';
+import AppointmentAndHistoryComponent from '../../../.././src/components/AppointmentAndHistoryComponent/AppointmentAndHistoryComponent';
+import GeneralButton from '../../../.././src/components/GeneralButton/GeneralButton';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import {RFValue} from 'react-native-responsive-fontsize';
 import Dialog from 'react-native-dialog';
-import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
+import {HeaderNavigation} from '../../../.././src/components/headerNavigation/HeaderNavigation';
 
 function AppointmentDetails() {
   const [dialogVisible, setDialogVisible] = useState(false);
@@ -33,7 +33,7 @@ function AppointmentDetails() {
   const globalState = useSelector(state => state);
   const [appointmentDetailsObject, setAppointmentDetailsObject] = useState({
     name: 'عاطف محمد',
-    day: '14',
+    day: '18',
     month: 'مارس',
     year: '2023',
     time: '12:00',
@@ -203,6 +203,9 @@ function AppointmentDetails() {
             </Text>
           </View>
           <TouchableOpacity
+          style={{borderColor:appointmentDetailsObject.appointmentStatus === 'تم التأكيد'
+          ? COLORS.green
+          : COLORS.red,borderWidth:1,borderRadius:15,width:RFValue(75),alignItems:'center'}}
             onPress={() => {
               setDialogVisible(dialogVisible => true);
             }}>

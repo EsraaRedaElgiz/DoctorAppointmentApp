@@ -91,6 +91,11 @@ function VertificationCode({ navigation }) {
                 rules={{
                   required: true,
                   minLength: 4,
+                  validate: val => {
+                    if (val * 0 != 0) {
+                      return 'must number';
+                    }
+                  }
                 }}
                 render={({ field: { onChange, onBlur, value } }) => (
                   <CodeField
@@ -125,7 +130,7 @@ function VertificationCode({ navigation }) {
                   ? 'يجب ادخال رمز التأكيد'
                   : errors.code?.type === 'minLength'
                     ? 'يجب ادخال الارقام المرسله بالكامل'
-                    : ''}
+                    : errors.code?.type === 'validate'?'يجب ادخال رقم':''}
               </Text>
             </View>
           </View>
