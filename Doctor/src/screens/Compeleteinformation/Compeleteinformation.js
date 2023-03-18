@@ -256,7 +256,7 @@ const Compeleteinformation = () => {
                         setModalVisible(true)
                       }}
                     >
-                      <EvilIcons name='location' size={35} color={COLORS.darkGray2} style={{}} />
+                      <EvilIcons name='location' size={35} color={COLORS.darkGray} style={{}} />
                     </TouchableOpacity>
                   </View>
                   <Text style={{ color: "red", alignSelf: "flex-start" }}>
