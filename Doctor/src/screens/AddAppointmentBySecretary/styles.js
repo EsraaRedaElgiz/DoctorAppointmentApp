@@ -24,24 +24,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: PADDINGS.mdPadding,
         paddingBottom: PADDINGS.mdPadding
     }, textErrorColor: {
-        color: COLORS.red
+        color: COLORS.red,
+        fontFamily:FONTS.Amaranth
     }, viewSecondTextStyle: {
         marginBottom: '3%'
-    }, viewLikeTextInputStyle: {
-        backgroundColor: COLORS.white,
-        minHeight: RFValue(50),
-        width: '100%',
-        borderRadius: RADIUS.xsRadius,
-        flexDirection:'row',
-        justifyContent:'space-between',
-        paddingHorizontal:RFValue(13),
-        borderWidth:RFValue(1),
-        alignItems:'center',
-        paddingRight:RFValue(19)
-    },textInViewLikeTextInputStyle:{
-        fontSize: FONTS.h5,
-        color:COLORS.darkGray
-    }
-
+    },
 })
 export default styles;

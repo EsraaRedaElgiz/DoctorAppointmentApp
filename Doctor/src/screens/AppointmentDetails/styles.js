@@ -1,24 +1,20 @@
 import { StyleSheet } from "react-native";
-import { COLORS, PADDINGS, MARGIN, FONTS,RADIUS } from '../../../.././src/constants/Constants'
+import { COLORS, PADDINGS, MARGIN, FONTS, RADIUS } from '../../../.././src/constants/Constants'
 import { RFValue } from "react-native-responsive-fontsize";
 const styles = StyleSheet.create({
     container: {
         height: "100%",
         width: "100%",
         backgroundColor: COLORS.white,
-        //paddingHorizontal: PADDINGS.mdPadding,
-        //paddingTop: '5%',
         paddingBottom: PADDINGS.mdPadding,
     }, appointmentDetailsContainer: {
         marginBottom: '5%',
         flexDirection: 'row',
-        //backgroundColor: '#ff0',
         paddingHorizontal: PADDINGS.mdPadding,
         width: '100%',
-        //height: RFValue(90),
+        height: RFValue(65),
         justifyContent: 'space-between',
         alignItems: 'center',
-
     }, imageAndTextViewStyle: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -32,30 +28,30 @@ const styles = StyleSheet.create({
         width: RFValue(60),
         height: RFValue(60),
         borderRadius: RFValue(30),
-    }, appointmentDetailsContainerLeftViewTextStyle: {
-        alignItems: 'center'
-    }, appointmentDetailsContainerTextStyle: {
+    }, appointmentDetailsContainerLeftViewStyle: {
+       //justifyContent: 'space-evenly',
+        flexDirection: 'column',
+        height: '100%',
+        justifyContent:'space-around'
+    }, patientTextStyle: {
         fontSize: FONTS.h5,
-        color: COLORS.darkGray3
+        fontFamily: FONTS.Amaranth,
+        color: COLORS.darkGray3,
+    }, historyAndTimeTextStyle: {
+        fontSize: FONTS.h6,
+        color: COLORS.darkGray3,
+        fontFamily: FONTS.Amaranth,
     }, historyTextViewStyle: {
         paddingHorizontal: PADDINGS.mdPadding
-    },
-    historyTextStyle: {
-        fontSize: FONTS.h5,
-        fontWeight: 'bold',
-        color: COLORS.darkGray3
     }, flatListStyle: {
         width: '100%',
         backgroundColor: COLORS.white
-    }, textHeaderStyle: {
-        marginLeft: RFValue(-25)
     }, afterEachCardMargin: {
         marginBottom: '5%'
     }, flatListContentContainerStyle: {
         width: '100%',
         paddingHorizontal: PADDINGS.mdPadding,
         paddingTop: '5%',
-        //backgroundColor:"#f00"
     }, buttonViewContainer: {
         paddingHorizontal: PADDINGS.mdPadding
     }, viewForLockAndButtonStyle: {
@@ -71,17 +67,26 @@ const styles = StyleSheet.create({
         marginTop: '2%'
     }, privateTextStyle: {
         color: COLORS.darkGray3,
-        fontSize: FONTS.h5
+        fontSize: FONTS.h5,
+        fontFamily:FONTS.Amaranth
     }, dialogFootorStyle: {
         justifyContent: 'space-around'
     }, dialogContainerStyle: {
         borderRadius: RADIUS.smRadius,
         paddingVertical: 0
     }, dialogDescribtionTextStyle: {
-        color: COLORS.darkGray3
+        color: COLORS.darkGray3,
+        fontFamily:FONTS.Amaranth
     }, dialogSeperationLineStyle: {
-        fontSize:FONTS.h5,
+        fontSize: FONTS.h5,
         fontWeight: 'bold'
+    }, buttonStyle: {
+        borderColor: COLORS.blue,
+        borderWidth: RFValue(1),
+        borderRadius: RADIUS.mdRadius,
+        width: RFValue(75),
+        alignItems: 'center'
+
     }
 
 })
