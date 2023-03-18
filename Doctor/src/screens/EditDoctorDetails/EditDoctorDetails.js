@@ -582,6 +582,7 @@ const styles = StyleSheet.create({
  buttonViewStyle: {
    backgroundColor: COLORS.white,
    paddingBottom: PADDINGS.mdPadding
+
  },
  modelofcheckbox: {
   flex: 1,
