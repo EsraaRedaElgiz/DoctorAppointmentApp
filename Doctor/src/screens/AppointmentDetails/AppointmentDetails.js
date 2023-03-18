@@ -23,7 +23,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import { RFValue } from 'react-native-responsive-fontsize';
 import Dialog from 'react-native-dialog';
 import { HeaderNavigation } from '../../../.././src/components/headerNavigation/HeaderNavigation';
-import { style } from '../../../.././src/styles/Style';
+import {style} from '../../../.././src/styles/Style';
 
 
 function AppointmentDetails() {
@@ -209,7 +209,7 @@ function AppointmentDetails() {
 
 
           <TouchableOpacity
-            style={[styles.buttonStyle, { backgroundColor: 'rgba(47, 115, 252,0.1)' }]}
+            style={[styles.buttonStyle,{backgroundColor:'rgba(47, 115, 252,0.1)'}]}
           >
             <Text
               style={[styles.patientTextStyle, { color: COLORS.blue }]}>
@@ -217,12 +217,11 @@ function AppointmentDetails() {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.buttonStyle, {
-              borderColor: appointmentDetailsObject.appointmentStatus === 'تم التأكيد' ? COLORS.green : COLORS.red
-              , backgroundColor: appointmentDetailsObject.appointmentStatus === 'تم التأكيد' ? 'rgba(174, 210, 96,0.1)' : 'rgba(255, 0, 0,0.1)'
-            }
-
-            ]}
+            style={[styles.buttonStyle, { borderColor: appointmentDetailsObject.appointmentStatus === 'تم التأكيد' ? COLORS.green : COLORS.red 
+          ,backgroundColor:appointmentDetailsObject.appointmentStatus==='تم التأكيد'?'rgba(174, 210, 96,0.1)':'rgba(255, 0, 0,0.1)'
+          }
+          
+          ]}
             onPress={() => {
               setDialogVisible(dialogVisible => true);
             }}>
@@ -277,17 +276,19 @@ function AppointmentDetails() {
         appointmentDetailsObject.month === getMonth &&
         JSON.parse(appointmentDetailsObject.year) === getYear ? (
         <View style={styles.viewForLockAndButtonStyle}>
+
           <View style={styles.viewForLockAndTextStyle}>
-            <View>
-              <Fontisto
-                name="locked"
-                size={RFValue(100)}
-                color={COLORS.black}
-              />
-            </View>
-            <View style={styles.viewForPrivateTextStyle}>
-              <Text style={styles.privateTextStyle}>هذا التاريخ خاص</Text>
-            </View>
+
+              <View>
+                <Fontisto
+                  name="locked"
+                  size={RFValue(100)}
+                  color={COLORS.black}
+                />
+              </View>
+              <View style={styles.viewForPrivateTextStyle}>
+                <Text style={styles.privateTextStyle}>هذا التاريخ خاص</Text>
+              </View>
 
           </View>
 
@@ -299,16 +300,16 @@ function AppointmentDetails() {
         <View style={styles.viewForLockAndButtonStyle}>
           <View style={styles.viewForLockAndTextStyle}>
 
-            <View>
-              <Fontisto
-                name="locked"
-                size={RFValue(100)}
-                color={COLORS.darkGray3}
-              />
-            </View>
-            <View style={styles.viewForPrivateTextStyle}>
-              <Text style={styles.privateTextStyle}>هذا التاريخ خاص</Text>
-            </View>
+              <View>
+                <Fontisto
+                  name="locked"
+                  size={RFValue(100)}
+                  color={COLORS.darkGray3}
+                />
+              </View>
+              <View style={styles.viewForPrivateTextStyle}>
+                <Text style={styles.privateTextStyle}>هذا التاريخ خاص</Text>
+              </View>
 
           </View>
         </View>

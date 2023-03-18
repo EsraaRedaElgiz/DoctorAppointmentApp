@@ -7,16 +7,23 @@ import {useSelector} from 'react-redux';
 import DoctorAppointments from './Doctor/src/screens/DoctorAppointments/DoctorAppointments';
 import {DoctorViewProfile, HomeDoctor} from './Doctor/src/screens';
 import {BookAppointment} from './src/screens';
+import Compeleteinformation from './Doctor/src/screens/Compeleteinformation/Compeleteinformation';
+import DoctorFilterAppointment from './Doctor/src/screens/DoctorFilterAppointments/DoctorFilterAppointments';
 function App() {
-  {
-    const globalState = useSelector(state => state);
-    return <AppContainer isAuth={globalState.AuthReducer.isLoggedIn} />;
-  }
+  
+    {/*const globalState = useSelector(state => state);
+return <AppContainer isAuth={globalState.AuthReducer.isLoggedIn} />;*/}
+
   return (
     <>
-      {/* <HomeDoctor/> */}
+      {/*<HomeDoctor/> */}
       {/* <DoctorViewProfile/> */}
       {/* <BookAppointment/> */}
+      {/*<Compeleteinformation/>*/}
+      {/*<DoctorFilterAppointment/>*/}
+      {/*AddAppointmentBySecretary/>*/}
+      <AppointmentDetails/>
+      
     </>
   );
 }
