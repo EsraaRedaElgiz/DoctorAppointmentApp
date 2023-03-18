@@ -6,7 +6,7 @@ import {
   subDays,
 } from 'date-fns';
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity,ScrollView} from 'react-native';
 import PagerView from 'react-native-pager-view';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {FONTS, COLORS} from '../../constants/Constants';

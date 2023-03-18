@@ -14,6 +14,7 @@ import {style} from '../../styles/Style';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 import {Checkbox} from 'react-native-paper';
 import {useRoute} from '@react-navigation/native';
+import Calender from '../../components/Calender/Calender';
 const BookAppointment = ({navigation}) => {
   const route = useRoute();
   const DoctorArray = route.params.DoctorArray;
@@ -52,9 +53,9 @@ const BookAppointment = ({navigation}) => {
         contentContainerStyle={{paddingHorizontal: PADDINGS.smPadding}}>
         <ListTiltle Title="التاريخ" />
         {/* FlatList Days */}
-        <View style={styles.flatListDaysContainer}>
+        {/* <View style={styles.flatListDaysContainer}>
           {/* design item */}
-          <View style={styles.dayConatiner}>
+          {/* <View style={styles.dayConatiner}>
             <View style={styles.num_day_contanier}>
               <Text style={style.textContentBold}>4</Text>
             </View>
@@ -62,7 +63,8 @@ const BookAppointment = ({navigation}) => {
               <Text style={style.textContentBold}>الخميس</Text>
             </View>
           </View>
-        </View>
+        </View>  */}
+        <Calender/>
         {/* FlatList Times */}
         <ScrollView>
           <View style={styles.flatListTimesContainer}>
@@ -157,11 +159,12 @@ const styles = StyleSheet.create({
     marginVertical: MARGIN.mdMargin,
   },
   flatListTimesContainer: {
-    width: '98%',
+    width: '100%',
     flexWrap: 'wrap',
     flexDirection: 'row',
     padding: RFValue(2),
     alignSelf: 'center',
+    marginTop:MARGIN.mdMargin
   },
   flatListCheckBoxsContainer: {
     justifyContent: 'space-between',
@@ -174,7 +177,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   timeContainer: {
-    width: RFValue(96),
+    width: RFValue(92),
     height: RFValue(35),
     borderRadius: RADIUS.smRadius,
     flexDirection: 'row',
