@@ -14,6 +14,7 @@ import GeneralPage from '../../../../src/components/GeneralPage/GeneralPage';
 import {COLORS, ICONS} from '../../../../src/constants/Constants';
 import styles from './DoctorSupportTeamStyles.js';
 import {useNavigation} from '@react-navigation/native';
+import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
 function DoctorSupportTeam(props) {
   // const navigation = useNavigation();
   const {
@@ -28,6 +29,7 @@ function DoctorSupportTeam(props) {
   };
   return (
     <View style={styles.container}>
+      <HeaderNavigation title="فريق الدعم" />
       <ScrollView style={styles.ScrollViewStyle}>
         <Controller
           name="input"

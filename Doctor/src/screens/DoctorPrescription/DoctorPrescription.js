@@ -31,6 +31,8 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
 const {height} = Dimensions.get('window');
 import {style} from '../../../../src/styles/Style';
+import GeneralTextInput from '../../../../src/components/GeneralTextInput/GeneralTextInput';
+import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
 
 function DoctorPrescription({navigation}) {
   const [photo_uri, setphoto_uri] = useState(null);
@@ -115,13 +117,7 @@ function DoctorPrescription({navigation}) {
       <View style={styles.container}>
         <Text style={style.textContentBold}>التشخيص</Text>
         <View style={styles.diagnosisView}>
-          <Text style={[style.textContent, styles.diagnosisText]}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non
-            velit vel nunc blandit venenatis. Quisque vulputate lacinia elit,
-            nec varius enim mollis eu. Sed eget eleifend eros. Etiam vel eros id
-            elit mattis efficitur. Pellentesque hendrerit quis mi ut commodo.
-            Nullam est est, imperdiet vel mi maximus, pulvinar sodales orci.
-          </Text>
+          <GeneralTextInput placeholder="اكتب التشخيص" multiline />
         </View>
         <Text style={style.textContentBold}>العلاج</Text>
         <View style={{marginVertical: MARGIN.mdMargin}}>
@@ -142,7 +138,12 @@ function DoctorPrescription({navigation}) {
             </TableWrapper>
           </Table>
         </View>
-        <Text style={style.textContentBold}>التحاليل</Text>
+        <View style={styles.analysisAndDiagnosis}>
+          <Text style={style.textContentBold}>الاشاعة او التحليل</Text>
+          <TouchableOpacity style={styles.plusIconView}>
+            <Icon name="plus" style={styles.icon} />
+          </TouchableOpacity>
+        </View>
         <View style={styles.analysis}>
           <View style={[styles.rowTableStyle, {backgroundColor: COLORS.white}]}>
             <Text style={styles.analysisText}>تحاليل</Text>
@@ -259,6 +260,9 @@ function DoctorPrescription({navigation}) {
           <Text style={styles.optionTextStyle}>انهاء</Text>
         </TouchableOpacity>
       </RBSheet>
+      <View style={styles.buttonView}>
+        <GeneralButton title="تم" />
+      </View>
     </GeneralPage>
   );
 }

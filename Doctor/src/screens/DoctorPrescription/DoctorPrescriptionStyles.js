@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   imageStyle: {
-    height: RFValue(250),
+    height: RFValue(300),
     width: '100%',
   },
   iconView: {
@@ -129,6 +129,29 @@ const styles = StyleSheet.create({
     height: RFValue(1),
     backgroundColor: COLORS.gray,
     width: '90%',
+  },
+  analysisAndDiagnosis: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  plusIconView: {
+    width: RFValue(30),
+    height: RFValue(30),
+    borderRadius: RFValue(15),
+    backgroundColor: COLORS.white,
+    elevation: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  icon: {
+    fontSize: ICONS.mdIcon,
+    color: COLORS.gray,
+  },
+  buttonView: {
+    flex: 1,
+    marginTop: '45%',
+    paddingHorizontal: PADDINGS.mdPadding,
   },
 });
 

@@ -29,6 +29,7 @@ function SupportTeam(props) {
   };
   return (
     <View style={styles.container}>
+      <HeaderNavigation title="فريق الدعم" />
       <ScrollView style={styles.ScrollViewStyle}>
         <Controller
           name="input"
