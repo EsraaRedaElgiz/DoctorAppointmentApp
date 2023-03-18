@@ -73,9 +73,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccd8e8f8',
     marginBottom: MARGIN.mdMargin,
     flexDirection: 'row',
+    justifyContent:"space-between"
   },
   circle_Text_Container: {
-    width: '75%',
+    width: RFValue(230),
     height: '100%',
     flexDirection: 'row',
     alignItems: 'center',
