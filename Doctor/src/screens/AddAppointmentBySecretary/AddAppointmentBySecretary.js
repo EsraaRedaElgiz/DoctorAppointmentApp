@@ -76,7 +76,13 @@ function AddAppointmentBySecretary() {
       setDate(date => {
         return '';
       });
+      setDateError(dateError => {
+        return '';
+      });
       setTime(time => {
+        return '';
+      });
+      setTimeError(timeError => {
         return '';
       });
       reset();

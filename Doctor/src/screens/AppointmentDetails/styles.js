@@ -37,10 +37,12 @@ const styles = StyleSheet.create({
         fontSize: FONTS.h5,
         fontFamily: FONTS.Amaranth,
         color: COLORS.darkGray3,
+        textAlign:'left'
     }, historyAndTimeTextStyle: {
         fontSize: FONTS.h6,
         color: COLORS.darkGray3,
         fontFamily: FONTS.Amaranth,
+        textAlign:'left'
     }, historyTextViewStyle: {
         paddingHorizontal: PADDINGS.mdPadding
     }, flatListStyle: {

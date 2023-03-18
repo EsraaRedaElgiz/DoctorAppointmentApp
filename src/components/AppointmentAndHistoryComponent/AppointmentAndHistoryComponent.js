@@ -136,11 +136,13 @@ const styles = StyleSheet.create({
     fontSize: FONTS.h5,
     fontFamily: FONTS.Amaranth,
     color: COLORS.darkGray3,
+    textAlign:'left'
   },
   specialityTextStyle: {
     fontSize: FONTS.h6,
     color: COLORS.darkGray2,
     fontFamily: FONTS.Amaranth,
+    textAlign:'left'
   },
   timaAndDateContainer: {
     flexDirection: 'row',
