@@ -16,6 +16,7 @@ import { CheckBox } from 'react-native-elements';
 import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
 import { useForm, Controller } from 'react-hook-form';
 import { style } from '../../../../src/styles/Style';
+import ViewLikeTextInput from '../../../../src/components/ViewLikeTextInput/ViewLikeTextInput'
 const Compeleteinformation = () => {
   const [photo_uri, setphoto_uri] = useState("");
   const Specialization = ["اسنان", "باطنة", "صدر", "عيون"]
@@ -23,7 +24,13 @@ const Compeleteinformation = () => {
   const [modal_Visible_wokdays, setmodal_Visible_wokdays] = useState(false);
   const { width, height } = Dimensions.get('screen');
   const [checked, setchecked] = useState(select);
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const region={
+    latitude: 30.78650859999999,
+    longitude: 31.0003757,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  }
+  const { control, handleSubmit, formState: { errors }, setValue } = useForm({
     defaultValues:{
       spealization:'',
       exp:'',
@@ -53,6 +60,11 @@ const Compeleteinformation = () => {
     requestCameraPermission();
   }, []);
   const refRBSheet = useRef();
+  const mapRef = useRef();
+
+  const [long, setLong] = useState(0);
+  const [lat, setLat] = useState(0);
+
   const selectFromGallery = () => {
     let options = {
       storageOptions: {
@@ -109,19 +121,33 @@ const Compeleteinformation = () => {
   };
 
   const GetSelect = () => {
-    var keys = Days.map((t) => t.txt)
-    var check = Days.map((t) => t.isChecked)
-    let selected = []
-    for (let index = 0; index < check.length; index++) {
-      if (check[index] == true) {
-        selected.push(keys[index])
-      }
-    }
-    alert(selected)
+    let checkedDays = Days.filter((day) => day.isChecked == true);
+    // alert(JSON.stringify(checkedDays))
+    let daysText = checkedDays.map((item) => item.txt);
+    daysText = daysText.join(" , ");
+
+    // var check = Days.map((t) => t.isChecked)
+    // let selected = []
+    // for (let index = 0; index < check.length; index++) {
+    //   if (check[index] == true) {
+    //     selected.push(keys[index])
+    //   }
+    // }
+    setValue("Workdays", daysText, {shouldValidate: true});
   }
+   const get_location=() =>{
+    let browser_url =
+      "https://www.google.de/maps/@" +
+      region.latitude +
+      "," +
+      region.longitude +
+      "?q="
+      ;
+    setValue("Location",browser_url,{shouldValidate:true})
+   }
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1, backgroundColor: COLORS.blue }}>
+      
         <StatusBar backgroundColor={COLORS.blue} />
         <HeaderNavigation
           padding={PADDINGS.mdPadding}
@@ -129,6 +155,9 @@ const Compeleteinformation = () => {
           backgroundColor={COLORS.blue}
           color={COLORS.white}
         />
+        <ScrollView 
+        showsVerticalScrollIndicator={false}
+        >
         <View style={styles.viewImageStyle}>
           {photo_uri ? (
             <ProfileImage
@@ -142,12 +171,8 @@ const Compeleteinformation = () => {
               onPressPen={() => refRBSheet.current.open()}
             />
           )}
-        </View>
       </View>
       <View style={styles.viewofinformation}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-        >
           <View style={styles.viewofSpeclizationandExperence}>
             <View style={styles.viewofDropDown}>
               <Controller
@@ -204,6 +229,7 @@ const Compeleteinformation = () => {
                   </>
                 )}
               />
+              
             </View>
           </View>
           <View style={styles.firstTextInputMargun}>
@@ -441,11 +467,12 @@ const Compeleteinformation = () => {
               />
             </View>
           </View>
-        </ScrollView>
-        <View style={styles.buttonViewStyle}>
+       
+      </View>
+      </ScrollView>
+      <View style={styles.buttonViewStyle}>
           <GeneralButton title="تأكيد" onPress={handleSubmit(onSubmit)} />
         </View>
-      </View>
       <RBSheet
         ref={refRBSheet}
         height={RFValue(200)}
@@ -496,28 +523,52 @@ const Compeleteinformation = () => {
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
+          get_location()
         }}
       >
         <MapView
+          ref={mapRef}
           provider={PROVIDER_GOOGLE}
-          initialRegion={{
-            latitude: 30.78650859999999,
-            longitude: 31.0003757,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
+          initialRegion={region}
           showsUserLocation={true}
+          followsUserLocation={true}
+          loadingEnabled
+          loadingIndicatorColor={COLORS.blue}
           style={{ flex: 1 }}
+          onRegionChangeComplete={(region, details) => {
+            console.log("regoin change :>>> ", JSON.stringify(region))
+            console.log("regoin details :>>> ", JSON.stringify(details))
+            setLong(region.longitude)
+            setLat(region.latitude)
+          }}
+          onPress={(e, ) => {console.log(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)
+            console.log("position : ", e.nativeEvent.position)
+            setLong(e.nativeEvent.coordinate.longitude)
+            setLat( e.nativeEvent.coordinate.latitude)
+            mapRef.current.animateToRegion({
+              latitude: e.nativeEvent.coordinate.latitude,
+              longitude: e.nativeEvent.coordinate.longitude,
+              latitudeDelta: 0.05,
+              longitudeDelta: 0.05,
+            })
+            mapRef.current
+            .addressForCoordinate({
+              latitude: e.nativeEvent.coordinate.latitude,
+              longitude: e.nativeEvent.coordinate.longitude,
+            })
+            .then((res) => console.log(res));
+          }}
+          
         >
           <Marker
             coordinate={{
-              latitude: 30.78650859999999,
-              longitude: 31.0003757,
+              latitude: lat,
+              longitude: long,
             }}
             pinColor={"green"}
-            title={"title"}
-            description={"description"}
-            draggable={true}
+            draggable
+            // onDragEnd={(e) => console.log("test :>>>> ", e.nativeEvent.coordinate)}
+            
           >
           </Marker>
         </MapView>
@@ -532,7 +583,7 @@ const Compeleteinformation = () => {
         <View style={styles.modelofcheckbox}>
           <View style={{
             width: width * .8,
-            height: height * .5,
+            height: height * .41,
             backgroundColor: COLORS.white,
             borderRadius: RADIUS.mdRadius,
             alignItems: "center",
@@ -592,15 +643,16 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     borderTopRightRadius: RFValue(85),
     paddingHorizontal: PADDINGS.mdPadding,
-    flex: 2,
-    overflow: "hidden"
+    flex: 1,
+    overflow: "hidden",
+    marginTop:RFValue(20),
+    paddingTop:"15%"
   },
   viewofSpeclizationandExperence: {
     width: "100%",
     alignItems: "center",
     justifyContent: "space-between",
     flexDirection: "row",
-    marginTop: 30
   },
   viewofDropDown: {
     width: "47%",
@@ -608,11 +660,9 @@ const styles = StyleSheet.create({
   },
   viewoflocationandicon: {
     width: "100%",
-    // minHeight: RFValue(55),
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-
   },
   icon: {
     width: RFValue(40),
@@ -642,12 +692,13 @@ const styles = StyleSheet.create({
   },
   viewofcheckbox: {
     width: "50%",
+    height:50,
     alignItems: "center",
     justifyContent: "flex-start",
     flexDirection: "row"
   },
   firstTextInputMargun: {
-    marginBottom: 0,
+    marginBottom: "1%",
   },
   eachOptionInBottonTab: {
     width: '100%',
@@ -678,7 +729,8 @@ const styles = StyleSheet.create({
   },
   buttonViewStyle: {
     backgroundColor: COLORS.white,
-    paddingBottom: PADDINGS.mdPadding
+    paddingBottom: PADDINGS.mdPadding,
+    paddingHorizontal: PADDINGS.mdPadding,
   },
 
 })
