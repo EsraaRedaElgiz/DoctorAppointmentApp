@@ -9,14 +9,14 @@ import {
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import GeneralButton from '../../components/GeneralButton/GeneralButton';
-import GeneralPage from '../../components/GeneralPage/GeneralPage';
-import {COLORS, ICONS} from '../../constants/Constants';
-import styles from './SupportTeamStyle';
+import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
+import GeneralPage from '../../../../src/components/GeneralPage/GeneralPage';
+import {COLORS, ICONS} from '../../../../src/constants/Constants';
+import styles from './DoctorSupportTeamStyles.js';
 import {useNavigation} from '@react-navigation/native';
-import {Alert} from 'react-native/Libraries/Alert/Alert';
-function SupportTeam(props) {
-  const navigation = useNavigation();
+import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
+function DoctorSupportTeam(props) {
+  // const navigation = useNavigation();
   const {
     reset,
     handleSubmit,
@@ -25,7 +25,7 @@ function SupportTeam(props) {
   } = useForm();
   const onSubmit = data => {
     reset();
-    navigation.goBack();
+    // navigation.goBack();
   };
   return (
     <View style={styles.container}>
@@ -70,4 +70,4 @@ function SupportTeam(props) {
   );
 }
 
-export default SupportTeam;
+export default DoctorSupportTeam;

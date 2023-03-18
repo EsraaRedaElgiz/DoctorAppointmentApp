@@ -3,10 +3,11 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {
   COLORS,
   FONTS,
+  ICONS,
   MARGIN,
   PADDINGS,
   RADIUS,
-} from '../../constants/Constants';
+} from '../../../../src/constants/Constants';
 
 const {height} = Dimensions.get('window');
 
@@ -16,8 +17,8 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
     paddingHorizontal: PADDINGS.mdPadding,
+    backgroundColor: COLORS.white,
   },
   content: {
     justifyContent: 'space-around',
