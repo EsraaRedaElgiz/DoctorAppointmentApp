@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity ,ScrollView} from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity ,ScrollView,StatusBar,Modal,Dimensions} from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { COLORS, FONTS, PADDINGS, RADIUS } from '../../../../src/constants/Constants';
 import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
@@ -12,8 +12,10 @@ import RBSheet from 'react-native-raw-bottom-sheet'
 import * as ImagePicker from 'react-native-image-picker';
 import { requestCameraPermission } from '../../../../src/utils/CameraPermissin';
 import { Controller, useForm } from 'react-hook-form'
+import { style } from '../../../../src/styles/Style';
+import { CheckBox } from 'react-native-elements';
 export default function EditDoctorDetails() {
- const { control, handleSubmit, formState: { errors } } = useForm({
+ const { control, handleSubmit, formState: { errors },setValue } = useForm({
   defaultValues:{
     spealization:'',
     exp:'',
@@ -30,6 +32,18 @@ export default function EditDoctorDetails() {
  const onSubmit = data => console.log(data);
  const [photo_uri, setphoto_uri] = useState("");
  const Specialization = ["اسنان", "باطنة", "صدر", "عيون"]
+ const [modal_Visible_wokdays, setmodal_Visible_wokdays] = useState(false);
+ const { width, height } = Dimensions.get('screen');
+ const data = [
+  { id: 1, txt: 'السبت', isChecked: false },
+  { id: 2, txt: 'الأحد', isChecked: false },
+  { id: 3, txt: 'الاثنين', isChecked: false },
+  { id: 4, txt: 'الثلاثاء', isChecked: false },
+  { id: 5, txt: 'الأربعاء', isChecked: false },
+  { id: 6, txt: 'الخميس', isChecked: false },
+  { id: 7, txt: 'الجمعة', isChecked: false },
+];
+const [Days, setDays] = useState(data);
  const refRBSheet = useRef();
  useEffect(() => {
   requestCameraPermission();
@@ -76,14 +90,44 @@ export default function EditDoctorDetails() {
    }
   });
  };
+
+ const handleChange = (id) => {
+  let temp = Days.map((product) => {
+    if (id === product.id) {
+      return { ...product, isChecked: !product.isChecked };
+    }
+    return product;
+  });
+  setDays(temp);
+};
+
+const GetSelect = () => {
+  let checkedDays = Days.filter((day) => day.isChecked == true);
+  // alert(JSON.stringify(checkedDays))
+  let daysText = checkedDays.map((item) => item.txt);
+  daysText = daysText.join(" , ");
+
+  // var check = Days.map((t) => t.isChecked)
+  // let selected = []
+  // for (let index = 0; index < check.length; index++) {
+  //   if (check[index] == true) {
+  //     selected.push(keys[index])
+  //   }
+  // }
+  setValue("Workdays", daysText, {shouldValidate: true});
+}
  return (
-  <GeneralPage>
+  
    <View style={styles.Continer}>
+    <StatusBar backgroundColor={COLORS.blue} />
     <HeaderNavigation
      title="تعديل المعلومات"
      backgroundColor={COLORS.white}
      color={COLORS.black}
     />
+    <ScrollView
+    showsVerticalScrollIndicator={false}
+    >
     <ProfileImage
      iconOnImage={true}
      iconBgColor
@@ -232,6 +276,9 @@ export default function EditDoctorDetails() {
          onChangeText={onChange}
          onBlur={onBlur}
          bordercolor={errors.Workdays ? "#f00" : COLORS.gray}
+         onTouchStart={() => {
+          setmodal_Visible_wokdays(true)
+        }}
         />
         
          <Text style={{ color: "red", alignSelf: "flex-start" }}>
@@ -367,6 +414,7 @@ export default function EditDoctorDetails() {
       />
      </View>
     </View>
+    </ScrollView>
     <View style={styles.buttonViewStyle}>
         <GeneralButton title="تأكيد" onPress={handleSubmit(onSubmit)} />
       </View>
@@ -416,8 +464,58 @@ export default function EditDoctorDetails() {
       <Text style={styles.optionTextStyle}>انهاء</Text>
      </TouchableOpacity>
     </RBSheet>
+    
+    <Modal
+        visible={modal_Visible_wokdays}
+        onRequestClose={() => {
+          setmodal_Visible_wokdays(!modal_Visible_wokdays);
+        }}
+        transparent={true}
+      >
+        <View style={styles.modelofcheckbox}>
+          <View style={{
+            width: width * .8,
+            height: height * .41,
+            backgroundColor: COLORS.white,
+            borderRadius: RADIUS.mdRadius,
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexDirection: "row",
+            flexWrap: "wrap"
+          }}>
+            <View style={styles.viewImageStyle}>
+              <Text style={style.textTitleBold}>أيام العمل</Text>
+            </View>
+            {Days.map((Day, index) => {
+              return (
+                <View style={styles.viewofcheckbox}>
+                  <CheckBox
+                    checked={Day.isChecked}
+                    onPress={() => {
+                      handleChange(Day.id)
+
+                    }}
+                  />
+                  <Text style={style.textContent}>{Day.txt}</Text>
+                </View>
+              )
+            })}
+            <View>
+            </View>
+            <View style={{ width: "100%", alignItems: "center", justifyContent: "center" }}>
+              <GeneralButton
+                title="تأكيد"
+                style={{ width: "90%" }}
+                onPress={() => {
+                  setmodal_Visible_wokdays(!modal_Visible_wokdays);
+                  GetSelect()
+                }}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
    </View>
-  </GeneralPage>
  )
 }
 const styles = StyleSheet.create({
@@ -443,7 +541,6 @@ const styles = StyleSheet.create({
   height: RFValue(70),
   alignItems: "center",
   justifyContent: "space-around",
-
  },
  viewofinput: {
   width: "47%",
@@ -486,4 +583,21 @@ const styles = StyleSheet.create({
    backgroundColor: COLORS.white,
    paddingBottom: PADDINGS.mdPadding
  },
+ modelofcheckbox: {
+  flex: 1,
+  backgroundColor: "#fff",
+  alignItems: "center",
+  justifyContent: "center",
+  backgroundColor: "#0005"
+},
+viewofcheckbox: {
+  width: "50%",
+  alignItems: "center",
+  justifyContent: "flex-start",
+  flexDirection: "row"
+}, viewImageStyle: {
+  width: '100%',
+  alignItems: 'center',
+  justifyContent: 'center',
+}
 })

@@ -5,10 +5,12 @@ import AppointmentDetails from './Doctor/src/screens/AppointmentDetails/Appointm
 import AddAppointmentBySecretary from './Doctor/src/screens/AddAppointmentBySecretary/AddAppointmentBySecretary';
 import {useSelector} from 'react-redux';
 import MedicalSheet from './src/screens/MedicalSheet/MedicalSheet';
+import Compeleteinformation from './Doctor/src/screens/Compeleteinformation/Compeleteinformation';
+import EditDoctorDetails from './Doctor/src/screens/EditDoctorDetails/EditDoctorDetails';
 function App() {
- {/*} const globalState = useSelector(state => state);
-return <AppContainer isAuth={globalState.AuthReducer.isLoggedIn} />;*/}
-return <AddAppointmentBySecretary/>
+//   const globalState = useSelector(state => state);
+// return <AppContainer isAuth={globalState.AuthReducer.isLoggedIn} />;
+return <Compeleteinformation/>
 }
 
 export default App;
