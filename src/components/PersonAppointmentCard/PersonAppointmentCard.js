@@ -5,7 +5,7 @@ import {COLORS, FONTS, MARGIN} from '../../constants/Constants';
 import LinearGradient from 'react-native-linear-gradient';
 
 function PersonAppointmentCard(props) {
-  const {name, pending, confirmed, time} = props;
+  const {name, pending, confirmed, time, imageUri} = props;
   return (
     <View style={styles.container}>
       <View style={styles.wrap1}>
@@ -16,11 +16,15 @@ function PersonAppointmentCard(props) {
         <View style={styles.section2}>
           <Image
             style={styles.image}
-            source={require('../../../src/assets/Images/user.jpg')}
+            source={{
+              uri: imageUri
+                ? imageUri
+                : 'https://img.freepik.com/free-photo/smiling-doctor-with-strethoscope-isolated-grey_651396-974.jpg?w=740&t=st=1678903589~exp=1678904189~hmac=4c4da7bf447127fcedc6c412bfd9c4ef385ae0c8aceeb9d11550b6b8d99eb7ae',
+            }}
           />
           <View style={styles.timeView}>
             <Text style={styles.name}>{name ? name : 'عبدالرحمن عياد'}</Text>
-            <Text style={styles.time}>10:30 PM</Text>
+            <Text style={styles.time}>{time}</Text>
           </View>
         </View>
       </View>
@@ -50,7 +54,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: RFValue(65),
     backgroundColor: COLORS.white,
-    elevation: 2,
+    elevation: RFValue(2),
     borderRadius: RFValue(10),
     marginBottom: MARGIN.mdMargin,
     justifyContent: 'space-between',
@@ -86,6 +90,7 @@ const styles = StyleSheet.create({
   timeView: {
     justifyContent: 'center',
     alignItems: 'center',
+    
   },
   verticalLine: {
     height: '90%',
