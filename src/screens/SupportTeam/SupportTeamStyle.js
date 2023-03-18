@@ -13,12 +13,11 @@ const {height} = Dimensions.get('window');
 const styles = StyleSheet.create({
   ScrollViewStyle: {
     flex: 1,
-    padding: PADDINGS.mdPadding,
-    paddingVertical: PADDINGS.xlPadding,
   },
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
+    paddingHorizontal: PADDINGS.mdPadding,
   },
   content: {
     justifyContent: 'space-around',

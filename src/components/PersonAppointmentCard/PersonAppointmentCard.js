@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     marginRight: RFValue(10),
   },
   name: {
+    textAlign: 'left',
     fontSize: FONTS.h6,
     fontWeight: '600',
     color: COLORS.darkGray2,

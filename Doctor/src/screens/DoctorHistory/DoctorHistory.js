@@ -1,23 +1,22 @@
 import React from 'react';
 import {View, Text, ScrollView, Button} from 'react-native';
-import styles from './DoctorAppointmentsStyles';
+import styles from './DoctorHistoryStyles';
 import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
 import {COLORS, PADDINGS} from '../../../../src/constants/Constants';
 import Calender from '../../../../src/components/Calender/Calender';
 import PersonAppointmentCard from '../../../../src/components/PersonAppointmentCard/PersonAppointmentCard';
 
-function DoctorAppointments() {
+function DoctorHistory() {
   return (
     <View style={styles.container}>
       <HeaderNavigation
         icon
         iconName="sliders"
-        title="المواعيد"
+        title="التاريخ"
         color={COLORS.darkGray3}
       />
       <View style={styles.headerView}>
         <Text style={styles.dateText}> 4 Feb 2023</Text>
-        <Text style={styles.addButton}>اضافة</Text>
       </View>
       <View style={styles.calenderView}>
         <Calender />
@@ -38,4 +37,4 @@ function DoctorAppointments() {
   );
 }
 
-export default DoctorAppointments;
+export default DoctorHistory;
