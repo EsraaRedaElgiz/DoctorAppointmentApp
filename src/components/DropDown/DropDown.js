@@ -11,7 +11,7 @@ function DropDown(props) {
     <View style={[styles.dropDownView, style]}>
       <SelectDropdown
         renderDropdownIcon={() => (
-          <Icon name="caretdown" size={ICONS.xsIcon} color={COLORS.gray} />
+          <Icon name="caretdown" size={ICONS.xsIcon} color={COLORS.darkGray} />
         )}
         buttonTextStyle={[styles.buttonTextStyle,{color:color}]}
         rowTextStyle={{textAlign: 'right'}}

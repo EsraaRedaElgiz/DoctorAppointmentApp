@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native';
 import styles from './styles';
-import { Checkbox } from 'react-native-paper';
+import {CheckBox} from 'react-native-elements';
 import { COLORS, ICONS, PADDINGS } from '../../constants/Constants';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import { TextInput } from 'react-native-paper';
@@ -24,6 +24,7 @@ import { useForm, Controller } from 'react-hook-form';
 import LoginWithG from '../../utils/LoginWithG';
 import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
 import { setLoggedIn } from "../../Redux/Reducers/AuthSlice"
+import { RFValue } from 'react-native-responsive-fontsize';
 function LogIn({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
@@ -158,18 +159,19 @@ function LogIn({ navigation }) {
               <View style={styles.viewForfirstTextAfterTextinputs}>
                 <View style={styles.viewforcheckboxandwordstyle}>
                   <View>
-                    <Checkbox
-                      status={toggleCheckBox ? 'checked' : 'unchecked'}
+                    <CheckBox
                       onPress={() =>
                         setToggleCheckBox(toggleCheckBox => { return !toggleCheckBox })
                         
                       }
-                      color={COLORS.blue}
+                      checked={toggleCheckBox}
+                      checkedColor={COLORS.blue}
                       uncheckedColor={COLORS.gray}
+                      containerStyle={{marginLeft:RFValue(-10)}}
                     />
                   </View>
                   <View>
-                    <Text style={styles.textAfterTextinputsStyle}>تذكرني</Text>
+                    <Text style={[styles.textAfterTextinputsStyle,{marginLeft:RFValue(-10)}]}>تذكرني</Text>
                   </View>
                 </View>
                 <TouchableOpacity
