@@ -8,13 +8,13 @@ import DoctorAppointments from './Doctor/src/screens/DoctorAppointments/DoctorAp
 import {DoctorViewProfile, HomeDoctor} from './Doctor/src/screens';
 import {BookAppointment} from './src/screens';
 function App() {
-  {
-    const globalState = useSelector(state => state);
-    return <AppContainer isAuth={globalState.AuthReducer.isLoggedIn} />;
-  }
+  // {
+  //   const globalState = useSelector(state => state);
+  //   return <AppContainer isAuth={globalState.AuthReducer.isLoggedIn} />;
+  // }
   return (
     <>
-      {/* <HomeDoctor/> */}
+      <HomeDoctor />
       {/* <DoctorViewProfile/> */}
       {/* <BookAppointment/> */}
     </>
