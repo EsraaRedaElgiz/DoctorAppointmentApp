@@ -41,7 +41,7 @@ function DoctorForgetPassword({navigation}) {
         padding={PADDINGS.mdPadding}
         onPress={() => {
           reset();
-          navigation.navigate('LogIn');
+          navigation.goBack();
         }}
       />
       <ScrollView

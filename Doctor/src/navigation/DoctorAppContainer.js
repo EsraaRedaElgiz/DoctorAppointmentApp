@@ -1,4 +1,8 @@
 import React from 'react';
+import {StatusBar} from 'react-native';
+import {COLORS} from '../../../src/constants/Constants';
+import {NavigationContainer} from '@react-navigation/native';
+import DoctorAuthStack from './DoctorAuthStack';
 
 const DoctorAppContainer = props => {
   const {isAuth} = props;
@@ -6,7 +10,7 @@ const DoctorAppContainer = props => {
     <>
       <StatusBar backgroundColor={COLORS.blue} />
       <NavigationContainer>
-        {isAuth ? <HomeTabs /> : <AuthStack />}
+        {isAuth ? <DoctorHomeTabs /> : <DoctorAuthStack />}
       </NavigationContainer>
     </>
   );

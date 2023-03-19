@@ -66,7 +66,7 @@ function DoctorVerification({navigation}) {
         padding={PADDINGS.mdPadding}
         onPress={() => {
           reset();
-          navigation.navigate('ForgetPassword');
+          navigation.goBack();
         }}
       />
       <ScrollView

@@ -61,7 +61,7 @@ function DoctorSignup({navigation}) {
        dispatch(insertData(data))
        */
     reset();
-    navigation.navigate('MedicalSheet');
+    navigation.navigate('CompleteInformation');
   };
 
   return (

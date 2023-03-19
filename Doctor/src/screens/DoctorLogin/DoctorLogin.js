@@ -16,7 +16,7 @@ import GeneralButton from '../../../../src/components/GeneralButton/GeneralButto
 import {useSelector, useDispatch} from 'react-redux';
 
 import {useForm, Controller} from 'react-hook-form';
-import LoginWithG from '../../../../src/utils/LoginWithG';
+import LoginWithG from '../../utils/LoginWithG';
 import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
 import {setLoggedIn} from '../../../../src/Redux/Reducers/AuthSlice';
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -68,7 +68,7 @@ function DoctorLogin({navigation}) {
             setToggleCheckBox(toggleCheckBox => {
               return false;
             });
-            // navigation.goBack();
+            navigation.goBack();
           }}
         />
         <View style={styles.container}>
@@ -188,7 +188,7 @@ function DoctorLogin({navigation}) {
                     setToggleCheckBox(toggleCheckBox => {
                       return false;
                     });
-                    // navigation.navigate('ForgetPassword');
+                    navigation.navigate('DoctorForgetPassword');
                   }}>
                   <Text style={styles.bluetextstyle}>نسيت كلمه المرور؟</Text>
                 </TouchableOpacity>
@@ -221,7 +221,7 @@ function DoctorLogin({navigation}) {
                     setToggleCheckBox(toggleCheckBox => {
                       return false;
                     });
-                    // navigation.navigate('SignUp');
+                    navigation.navigate('DoctorSignup');
                   }}>
                   <Text style={styles.bluetextstyle}> انشاء حساب </Text>
                 </TouchableOpacity>

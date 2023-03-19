@@ -1,28 +1,36 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import SignUp from '../screens/SignUp/SignUp';
-import LogIn from '../screens/LogIn/LogIn';
-import ForgetPassword from '../screens/ForgetPassword/ForgetPassword';
-import VertificationCode from '../screens/VetificationCode/VertificationCode';
-import ResetPassword from '../screens/ResetPassword/ResetPassword';
-import MedicalSheet from '../screens/MedicalSheet/MedicalSheet';
-import LoginWithG from '../utils/LoginWithG';
+import DoctorLogin from '../screens/DoctorLogin/DoctorLogin';
+import DoctorSignup from '../screens/DoctorSignup/DoctorSignup';
+import DoctorForgetPassword from '../screens/DoctorForgetPassword/DoctorForgetPassword';
+import DoctorVerification from '../screens/DoctorVerification/DoctorVerification';
+import DoctorResetPassword from '../screens/DoctorResetPassword/DoctorResetPassword';
+import Compeleteinformation from '../screens/Compeleteinformation/Compeleteinformation';
+import LoginWithG from '../../../src/utils/LoginWithG';
+import DoctorOrPatient from '../../../src/screens/Intro/DoctorOrPatient/DoctorOrPatient';
 const Stack = createNativeStackNavigator();
-const AuthStack = () => {
+const DoctorAuthStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="SignUp" component={SignUp} />
-      <Stack.Screen name="LogIn" component={LogIn} />
+      <Stack.Screen name="DoctorSignup" component={DoctorSignup} />
+      <Stack.Screen name="DoctorOrPatient" component={DoctorOrPatient} />
+      <Stack.Screen name="LogIn" component={DoctorLogin} />
       <Stack.Screen name="LoginWithG" component={LoginWithG} />
-      <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
-      <Stack.Screen name="VertificationCode" component={VertificationCode} />
-      <Stack.Screen name="ResetPassword" component={ResetPassword} />
-      <Stack.Screen name="MedicalSheet" component={MedicalSheet} />
+      <Stack.Screen
+        name="DoctorForgetPassword"
+        component={DoctorForgetPassword}
+      />
+      <Stack.Screen name="DoctorVerification" component={DoctorVerification} />
+      <Stack.Screen name="ResetPassword" component={DoctorResetPassword} />
+      <Stack.Screen
+        name="CompleteInformation"
+        component={Compeleteinformation}
+      />
     </Stack.Navigator>
   );
 };
 
-export default AuthStack;
+export default DoctorAuthStack;
