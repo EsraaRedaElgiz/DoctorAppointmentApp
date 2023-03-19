@@ -8,6 +8,7 @@ const PatientsListHome = () => {
   return (
     <View>
       <FlatList
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingHorizontal: RFValue(1)}}
         data={PatientsData}
         renderItem={(itemData, index) => {

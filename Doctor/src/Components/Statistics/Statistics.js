@@ -70,17 +70,16 @@ const styles = StyleSheet.create({
     width: '100%',
     height: RFValue(150),
     borderRadius: RADIUS.lgRadius,
-    backgroundColor: '#ccd8e8f8',
+    backgroundColor: '#B4CCFF',
     marginBottom: MARGIN.mdMargin,
     flexDirection: 'row',
-    justifyContent:"space-between"
+    justifyContent: 'space-between',
   },
   circle_Text_Container: {
-    width: RFValue(230),
-    height: '100%',
+    flex:1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: "flex-start",
   },
   circleContainer: {
     width: RFValue(130),

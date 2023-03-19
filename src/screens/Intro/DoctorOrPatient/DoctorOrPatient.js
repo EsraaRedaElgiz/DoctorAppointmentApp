@@ -5,6 +5,15 @@ import {COLORS} from '../../../constants/Constants';
 import GeneralButton from '../../../components/GeneralButton/GeneralButton';
 import Images from '../../../constants/Images';
 function DoctorOrPatient({navigation}) {
+  const [isDoctor, setIsDoctor] = useState(false);
+
+  const handleDoctorButtonPress = () => {
+    setIsDoctor(true);
+  };
+  
+  const handlePatientButtonPress = () => {
+    setIsDoctor(false);
+  };
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
