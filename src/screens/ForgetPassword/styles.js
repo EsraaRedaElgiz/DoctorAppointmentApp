@@ -1,6 +1,6 @@
-import { FONTS, MARGIN, PADDINGS, COLORS } from '../../constants/Constants';
-import { StyleSheet } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {FONTS, MARGIN, PADDINGS, COLORS} from '../../constants/Constants';
+import {StyleSheet} from 'react-native';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const styles = StyleSheet.create({
   container: {
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   buttonContainerStyle: {
     paddingHorizontal: PADDINGS.mdPadding,
-    paddingBottom: PADDINGS.mdPadding
+    paddingBottom: PADDINGS.mdPadding,
   },
   errorTextStyle: {
     color: '#f00',

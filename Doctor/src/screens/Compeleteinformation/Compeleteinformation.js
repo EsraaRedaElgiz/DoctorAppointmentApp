@@ -32,7 +32,7 @@ import {HeaderNavigation} from '../../../../src/components/headerNavigation/Head
 import {useForm, Controller} from 'react-hook-form';
 import {style} from '../../../../src/styles/Style';
 import ViewLikeTextInput from '../../../../src/components/ViewLikeTextInput/ViewLikeTextInput';
-const Compeleteinformation = () => {
+const Compeleteinformation = ({navigation}) => {
   const [photo_uri, setphoto_uri] = useState('');
   const Specialization = ['اسنان', 'باطنة', 'صدر', 'عيون'];
   const [modalVisible, setModalVisible] = useState(false);
@@ -64,7 +64,10 @@ const Compeleteinformation = () => {
       section: '',
     },
   });
-  const onSubmit = data => console.log(data);
+  const onSubmit = data => {
+    navigation.navigate('LogIn');
+    console.log(data);
+  };
   const data = [
     {id: 1, txt: 'السبت', isChecked: false},
     {id: 2, txt: 'الأحد', isChecked: false},
@@ -169,6 +172,10 @@ const Compeleteinformation = () => {
         title="تكملة المعلومات"
         backgroundColor={COLORS.blue}
         color={COLORS.white}
+        onPress={() => {
+          reset();
+          navigation.goBack();
+        }}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.viewImageStyle}>
