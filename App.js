@@ -1,33 +1,27 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import AppContainer from './src/navigation/AppContainer';
-import AppointmentDetails from './Doctor/src/screens/AppointmentDetails/AppointmentDetails';
-import AddAppointmentBySecretary from './Doctor/src/screens/AddAppointmentBySecretary/AddAppointmentBySecretary';
 import {useSelector} from 'react-redux';
-import Compeleteinformation from './Doctor/src/screens/Compeleteinformation/Compeleteinformation';
-import DoctorPrescription from './Doctor/src/screens/DoctorPrescription/DoctorPrescription';
-import DoctorAppointments from './Doctor/src/screens/DoctorAppointments/DoctorAppointments';
-import DoctorFilterAppointment from './Doctor/src/screens/DoctorFilterAppointments/DoctorFilterAppointments';
-import DoctorFilterHistory from './Doctor/src/screens/DoctorFilterHistory/DoctorFilterHistory';
-import DoctorHistory from './Doctor/src/screens/DoctorHistory/DoctorHistory';
-import DoctorSupportTeam from './Doctor/src/screens/DoctorSupportTeam/DoctorSupportTeam';
-import {DoctorViewProfile} from './Doctor/src/screens';
+import {View, Text} from 'react-native';
+import Splash from './src/screens/Intro/Splash/Splash';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import DoctorSignup from './Doctor/src/screens/DoctorSignup/DoctorSignup';
+import DoctorResetPassword from './Doctor/src/screens/DoctorResetPassword/DoctorResetPassword';
+import DoctorLogin from './Doctor/src/screens/DoctorLogin/DoctorLogin';
+import DoctorForgetPassword from './Doctor/src/screens/DoctorForgetPassword/DoctorForgetPassword';
+import DoctorVerification from './Doctor/src/screens/DoctorVerification/DoctorVerification';
+import DoctorNewPassword from './Doctor/src/screens/DoctorNewPassword/DoctorNewPassword';
 function App() {
-  {
-    /*const globalState = useSelector(state => state);
-return <AppContainer isAuth={globalState.AuthReducer.isLoggedIn} />;*/
-  }
-
-  return (
-    <>
-      {/*<HomeDoctor/> */}
-      {/* <DoctorViewProfile/> */}
-      {/* <BookAppointment/> */}
-      {/* <DoctorAppointments /> */}
-      <DoctorAppointments />
-      {/*AddAppointmentBySecretary/>*/}
-      {/*<AppointmentDetails/>*/}
-    </>
-  );
+  const globalState = useSelector(state => state);
+  // AsyncStorage.clear();
+  // return globalState.AuthReducer.isDoctor ? (
+  //   <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+  //     <Text>Doctor</Text>
+  //   </View>
+  // ) : (
+  //   <AppContainer isAuth={globalState.AuthReducer.isLoggedIn} />
+  // );
+  return <DoctorLogin />;
+  // return <DoctorNewPassword />;
 }
 
 export default App;
