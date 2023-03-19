@@ -6,14 +6,19 @@ import {COLORS, PADDINGS} from '../../../../src/constants/Constants';
 import Calender from '../../../../src/components/Calender/Calender';
 import PersonAppointmentCard from '../../../../src/components/PersonAppointmentCard/PersonAppointmentCard';
 
-function DoctorHistory() {
+function DoctorHistory({navigation}) {
   return (
     <View style={styles.container}>
+      
       <HeaderNavigation
         icon
         iconName="sliders"
         title="التاريخ"
         color={COLORS.darkGray3}
+        // onPress={()}
+        onPressBtn={()=>{
+          navigation.navigate("DoctorFilterHistory")
+        }}
       />
       <View style={styles.headerView}>
         <Text style={styles.dateText}> 4 Feb 2023</Text>

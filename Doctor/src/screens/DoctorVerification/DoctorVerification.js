@@ -55,7 +55,7 @@ function DoctorVerification({navigation}) {
       }
       dispatch(insertData(data))*/
     reset();
-    navigation.navigate('ResetPassword');
+    navigation.navigate('DoctorResetPassword');
   };
   return (
     <View style={styles.container}>

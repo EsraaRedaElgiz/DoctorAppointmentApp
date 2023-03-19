@@ -1,13 +1,14 @@
 import React from 'react';
-import DoctorAppointments from '../screens/DoctorAppointments/DoctorAppointments';
-import AddAppointmentBySecretary from '../screens/AddAppointmentBySecretary/AddAppointmentBySecretary';
-import AppointmentDetails from '../screens/AppointmentDetails/AppointmentDetails';
-import DoctorFilterAppointment from '../screens/DoctorFilterAppointments/DoctorFilterAppointments';
-import {DoctorProfile} from '../../../src/screens';
-import {DoctorViewProfile} from '../screens';
+
+import { DoctorViewProfile } from '../screens';
+import DoctorProfileTabs from '../screens/DoctorProfileTabs/DoctorProfileTabs';
 import EditDoctorDetails from '../screens/EditDoctorDetails/EditDoctorDetails';
+
 import DoctorNewPassword from '../screens/DoctorNewPassword/DoctorNewPassword';
+
 import DoctorSupportTeam from '../screens/DoctorSupportTeam/DoctorSupportTeam';
+
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 const DoctorProfileStack = () => {
   return (
@@ -15,7 +16,7 @@ const DoctorProfileStack = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      <Stack.Screen name="DoctorProfile" component={DoctorProfile} />
+      <Stack.Screen name="DoctorProfile" component={DoctorProfileTabs} />
       <Stack.Screen name="DoctorViewProfile" component={DoctorViewProfile} />
       <Stack.Screen name="EditDoctorDetails" component={EditDoctorDetails} />
       <Stack.Screen name="DoctorNewPassword" component={DoctorNewPassword} />

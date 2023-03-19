@@ -11,7 +11,9 @@ import {
 } from '../../../../src/constants/Constants';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {useNavigation} from '@react-navigation/native';
 const Statistics = () => {
+  const navigation = useNavigation();
   const ActiveColor = '#2f73fc';
   const [StatisticsValue, setStatisticsValue] = useState(25);
   return (
@@ -21,7 +23,7 @@ const Statistics = () => {
       <Pressable
         style={styles.StatisticsContainerView}
         onPress={() => {
-          Alert.alert('GO TO appoinmets page');
+          navigation.navigate('DoctorAppointments');
         }}>
         <View style={styles.circle_Text_Container}>
           <View style={styles.circleContainer}>
@@ -50,7 +52,7 @@ const Statistics = () => {
         <Pressable
           style={styles.btnLeft}
           onPress={() => {
-            Alert.alert('GO TO appoinmets page');
+            navigation.navigate('DoctorAppointments');
           }}>
           <AntDesign
             name="arrowleft"
@@ -76,10 +78,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   circle_Text_Container: {
-    flex:1,
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: "flex-start",
+    justifyContent: 'flex-start',
   },
   circleContainer: {
     width: RFValue(130),

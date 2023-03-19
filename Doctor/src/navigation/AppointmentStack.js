@@ -3,6 +3,10 @@ import DoctorAppointments from '../screens/DoctorAppointments/DoctorAppointments
 import AddAppointmentBySecretary from '../screens/AddAppointmentBySecretary/AddAppointmentBySecretary';
 import AppointmentDetails from '../screens/AppointmentDetails/AppointmentDetails';
 import DoctorFilterAppointment from '../screens/DoctorFilterAppointments/DoctorFilterAppointments';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import UserDetails from '../screens/UserDetails/UserDetails';
+import DoctorPrescription from '../screens/DoctorPrescription/DoctorPrescription';
+import Prescription from '../../../src/screens/Prescription/Prescription';
 const Stack = createNativeStackNavigator();
 const DoctorAppointmentStack = () => {
   return (
@@ -20,6 +24,10 @@ const DoctorAppointmentStack = () => {
         name="DoctorFilterAppointment"
         component={DoctorFilterAppointment}
       />
+      <Stack.Screen name="UserDetails" component={UserDetails} />
+      <Stack.Screen name="Prescription" component={Prescription} />
+      <Stack.Screen name="DoctorPrescription" component={DoctorPrescription} />
+
     </Stack.Navigator>
   );
 };

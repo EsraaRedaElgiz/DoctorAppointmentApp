@@ -65,7 +65,7 @@ const Compeleteinformation = ({navigation}) => {
     },
   });
   const onSubmit = data => {
-    navigation.navigate('LogIn');
+    navigation.navigate('DoctorLogIn');
     console.log(data);
   };
   const data = [

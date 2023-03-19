@@ -3,7 +3,7 @@ import {View, Text, ScrollView, Image} from 'react-native';
 import GeneralPage from '../../../../src/components/GeneralPage/GeneralPage';
 import ProfileImage from '../../../../src/components/ProfileImage/ProfileImage';
 import UserProfileButton from '../../../../src/components/UserProfileButton/UserProfileButton';
-import {DoctorProfileTabs} from '../../../../src/utils/DummyData';
+import { DoctorProfileData } from '../../../../src/utils/DummyData';
 import styles from './DoctorProfileTabsStyles';
 import {useNavigation} from '@react-navigation/native';
 function DoctorProfileTabs(props) {
@@ -17,7 +17,7 @@ function DoctorProfileTabs(props) {
             'https://img.freepik.com/free-photo/smiling-doctor-with-strethoscope-isolated-grey_651396-974.jpg?w=740&t=st=1678903589~exp=1678904189~hmac=4c4da7bf447127fcedc6c412bfd9c4ef385ae0c8aceeb9d11550b6b8d99eb7ae'
           }
         />
-        {DoctorProfileTabs.map((el, idx) => {
+        {DoctorProfileData.map((el, idx) => {
           return (
             <View key={idx} style={styles.userProfileButtonView}>
               <UserProfileButton

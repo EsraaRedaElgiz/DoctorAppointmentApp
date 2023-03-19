@@ -28,25 +28,25 @@ const userProfileData = [
     icon: 'export2',
   },
 ];
-const DoctorProfileTabs = [
+const DoctorProfileData = [
   {
-    title: 'عرض الملف الشخصيني',
+    title: 'الملف الشخصى',
     icon: 'left',
   },
   {
-    title: 'التاريخ المرضي',
+    title: ' تعديل الملف الشخصى',
     icon: 'left',
   },
   {
-    title: 'الدفع',
+    title: 'تغير كلمة المرور',
     icon: 'left',
   },
   {
-    title: 'تغيير كلمة المرور',
+    title: ' فريق الدعم',
     icon: 'left',
   },
   {
-    title: 'فريق الدعم',
+    title: ' سياسة الخصوصية',
     icon: 'left',
   },
   {
@@ -70,4 +70,4 @@ const appointments = [
   },
 ];
 
-export {userProfileData, appointments, DoctorProfileTabs};
+export {userProfileData, appointments, DoctorProfileData};

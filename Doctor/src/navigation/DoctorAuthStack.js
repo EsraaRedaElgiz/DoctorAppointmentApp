@@ -8,6 +8,7 @@ import DoctorResetPassword from '../screens/DoctorResetPassword/DoctorResetPassw
 import Compeleteinformation from '../screens/Compeleteinformation/Compeleteinformation';
 import LoginWithG from '../../../src/utils/LoginWithG';
 import DoctorOrPatient from '../../../src/screens/Intro/DoctorOrPatient/DoctorOrPatient';
+
 const Stack = createNativeStackNavigator();
 const DoctorAuthStack = () => {
   return (
@@ -17,14 +18,14 @@ const DoctorAuthStack = () => {
       }}>
       <Stack.Screen name="DoctorSignup" component={DoctorSignup} />
       <Stack.Screen name="DoctorOrPatient" component={DoctorOrPatient} />
-      <Stack.Screen name="LogIn" component={DoctorLogin} />
+      <Stack.Screen name="DoctorLogIn" component={DoctorLogin} />
       <Stack.Screen name="LoginWithG" component={LoginWithG} />
       <Stack.Screen
         name="DoctorForgetPassword"
         component={DoctorForgetPassword}
       />
       <Stack.Screen name="DoctorVerification" component={DoctorVerification} />
-      <Stack.Screen name="ResetPassword" component={DoctorResetPassword} />
+      <Stack.Screen name="DoctorResetPassword" component={DoctorResetPassword} />
       <Stack.Screen
         name="CompleteInformation"
         component={Compeleteinformation}

@@ -29,7 +29,7 @@ function DoctorForgetPassword({navigation}) {
       }
       dispatch(insertData(data))*/
     reset();
-    navigation.navigate('VertificationCode');
+    navigation.navigate('DoctorVerification');
   };
 
   return (

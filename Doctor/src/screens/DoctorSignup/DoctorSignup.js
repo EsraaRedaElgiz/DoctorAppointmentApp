@@ -300,7 +300,7 @@ function DoctorSignup({navigation}) {
                 <TouchableOpacity
                   onPress={() => {
                     reset();
-                    navigation.navigate('LogIn');
+                    navigation.navigate('DoctorLogIn');
                   }}>
                   <Text style={styles.bluetextstyle}> تسجيل الدخول </Text>
                 </TouchableOpacity>

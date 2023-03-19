@@ -34,7 +34,7 @@ function DoctorResetPassword({navigation}) {
     }
     dispatch(insertData(data))*/
     reset();
-    navigation.navigate('LogIn');
+    navigation.navigate('DoctorLogIn');
   };
 
   return (

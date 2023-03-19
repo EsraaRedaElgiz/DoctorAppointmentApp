@@ -1,19 +1,18 @@
 import React from 'react';
 import {View, Text, Button} from 'react-native';
-import GeneralPage from '../../components/GeneralPage/GeneralPage';
-import ProfileImage from '../../components/ProfileImage/ProfileImage';
-import UserData from '../../components/UserData/UserData';
-import styles from './MedicalID1Style';
+import GeneralPage from '../../../../src/components/GeneralPage/GeneralPage';
+import ProfileImage from '../../../../src/components/ProfileImage/ProfileImage';
+import UserData from '../../../../src/components/UserData/UserData';
+import styles from './UserDetailsStyles';
 import {useNavigation} from '@react-navigation/native';
-import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
-import {PADDINGS, COLORS} from '../../constants/Constants';
+import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
+import {PADDINGS, COLORS} from '../../../../src/constants/Constants';
 function UserDetails(props) {
   const navigation = useNavigation();
   return (
     <GeneralPage>
       <HeaderNavigation
         title="المعلومات الشخصية"
-        btn="تعديل"
         text
         color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
