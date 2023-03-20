@@ -24,6 +24,7 @@ const PatientsListHome = () => {
                 onPress={() => {
                   navigation.navigate('AppointmentDetails', {
                     PatientsArray: itemData.item,
+                    appointmentStatus:itemData.item.confirmed?"تم التأكيد":"معلق"
                   });
                 }}
               />

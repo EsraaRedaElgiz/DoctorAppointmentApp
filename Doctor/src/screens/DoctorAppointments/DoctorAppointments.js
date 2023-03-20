@@ -15,6 +15,10 @@ import PersonAppointmentCard from '../../../../src/components/PersonAppointmentC
 import {PatientsData} from '../../../../src/utils';
 
 function DoctorAppointments({navigation}) {
+  let date = new Date();
+  let day = date.getDate();
+  let month = date.toLocaleString('default', {month: 'long'});
+  let year = date.getFullYear();
   return (
     <View style={styles.container}>
       <HeaderNavigation
@@ -31,7 +35,7 @@ function DoctorAppointments({navigation}) {
         }}
       />
       <View style={styles.headerView}>
-        <Text style={styles.dateText}> 4 Feb 2023</Text>
+        <Text style={styles.dateText}> {day+"\t" + month +"\t"+ year}</Text>
         <Pressable
           onPress={() => {
             navigation.navigate('AddAppointmentBySecretary');
@@ -51,12 +55,15 @@ function DoctorAppointments({navigation}) {
             <>
               <PersonAppointmentCard
                 confirmed={itemData.item.confirmed}
-                name={itemData.item.name}
+                name={itemData.item.name.trim()}
                 time={itemData.item.time}
                 imageUri={itemData.item.imageUri}
                 onPress={() => {
                   navigation.navigate('AppointmentDetails', {
                     PatientsArray: itemData.item,
+                    appointmentStatus: itemData.item.confirmed
+                      ? 'تم التأكيد'
+                      : 'معلق',
                   });
                 }}
               />

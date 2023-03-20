@@ -1,13 +1,17 @@
 import React from 'react';
 import {View, Text, ScrollView, Button, FlatList} from 'react-native';
 import styles from './DoctorHistoryStyles';
-import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
-import { COLORS, PADDINGS } from '../../../../src/constants/Constants';
+import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
+import {COLORS, PADDINGS} from '../../../../src/constants/Constants';
 import Calender from '../../../../src/components/Calender/Calender';
 import {PatientsData} from '../../../../src/utils';
 import PersonHistoryCard from '../../Components/PresonHistoryCard/PersonHistoryCard';
 
-function DoctorHistory({ navigation }) {
+function DoctorHistory({navigation}) {
+  let date = new Date();
+  let day = date.getDate();
+  let month = date.toLocaleString('default', {month: 'long'});
+  let year = date.getFullYear();
   return (
     <View style={styles.container}>
       <HeaderNavigation
@@ -18,18 +22,18 @@ function DoctorHistory({ navigation }) {
         color={COLORS.darkGray3}
         // onPress={()}
         onPressBtn={() => {
-          navigation.navigate("DoctorFilterHistory")
+          navigation.navigate('DoctorFilterHistory');
         }}
       />
       <View style={styles.headerView}>
-        <Text style={styles.dateText}> 4 Feb 2023</Text>
+        <Text style={styles.dateText}> {day + '\t' + month + '\t' + year}</Text>
       </View>
       <View style={styles.calenderView}>
         <Calender />
       </View>
       <View style={styles.line} />
       <FlatList
-      showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
         data={PatientsData}
         renderItem={(itemData, index) => {
           return (
@@ -39,10 +43,11 @@ function DoctorHistory({ navigation }) {
                 name={itemData.item.name.trim()}
                 time={itemData.item.time}
                 imageUri={itemData.item.imageUri}
-                onPress={()=>{
-                  navigation.navigate("AppointmentDetails",{
-                    PatientsArray:itemData.item
-                  })
+                onPress={() => {
+                  navigation.navigate('AppointmentDetails', {
+                    PatientsArray: itemData.item,
+                    appointmentStatus: itemData.item.done ? 'مكتمل' : 'ملغى',
+                  });
                 }}
               />
             </>

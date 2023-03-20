@@ -30,6 +30,7 @@ function AppointmentDetails({navigation}) {
   // const navigation=useNavigation()
   const route = useRoute();
   const PatientsArray = route.params.PatientsArray;
+  const appointmentStatus = route.params.appointmentStatus;
   const [dialogVisible, setDialogVisible] = useState(false);
   const [getDay, setGetDay] = useState('');
   const [getMonth, setGetMonth] = useState('');
@@ -43,7 +44,7 @@ function AppointmentDetails({navigation}) {
     year: '2023',
     time: PatientsArray.time,
     status: 'م',
-    appointmentStatus: 'معلق',
+    appointmentStatus: appointmentStatus,
     histortStatus: 'public',
   });
   useEffect(() => {
@@ -155,7 +156,7 @@ function AppointmentDetails({navigation}) {
         style={styles.afterEachCardMargin}
         onPress={() => {
           navigation.navigate('Prescription');
-        // console.log("ll")
+          // console.log("ll")
         }}
       />
     );
@@ -184,7 +185,7 @@ function AppointmentDetails({navigation}) {
           <View style={styles.viewImageStyle}>
             <Image
               style={styles.imageStyle}
-              source={{uri:PatientsArray.imageUri}}
+              source={{uri: PatientsArray.imageUri}}
             />
           </View>
           <View>
@@ -204,10 +205,11 @@ function AppointmentDetails({navigation}) {
             </View>
             <View>
               <Text style={styles.historyAndTimeTextStyle}>
-                {appointmentDetailsObject.time/*+
+                {
+                  appointmentDetailsObject.time /*+
                   ' ' +
                   appointmentDetailsObject.status*/
-                  }
+                }
               </Text>
             </View>
           </View>
@@ -219,7 +221,10 @@ function AppointmentDetails({navigation}) {
               {backgroundColor: 'rgba(47, 115, 252,0.1)'},
             ]}
             onPress={() => {
-              navigation.navigate('UserDetails',{photo:PatientsArray.imageUri,name:PatientsArray.name});
+              navigation.navigate('UserDetails', {
+                photo: PatientsArray.imageUri,
+                name: PatientsArray.name,
+              });
             }}>
             <Text style={[styles.patientTextStyle, {color: COLORS.blue}]}>
               التفاصيل
@@ -242,8 +247,9 @@ function AppointmentDetails({navigation}) {
               },
             ]}
             disabled={
-              appointmentDetailsObject.appointmentStatus === 'ملغي' ||
-              appointmentDetailsObject.appointmentStatus === 'مكتمل'
+              appointmentDetailsObject.appointmentStatus === 'ملغى' ||
+              appointmentDetailsObject.appointmentStatus === 'مكتمل' ||
+              appointmentDetailsObject.appointmentStatus==="تم التأكيد"
             }
             onPress={() => {
               setDialogVisible(dialogVisible => true);
