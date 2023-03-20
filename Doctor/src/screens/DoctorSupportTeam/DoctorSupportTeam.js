@@ -15,8 +15,8 @@ import {COLORS, ICONS} from '../../../../src/constants/Constants';
 import styles from './DoctorSupportTeamStyles.js';
 import {useNavigation} from '@react-navigation/native';
 import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
-function DoctorSupportTeam(props) {
-  // const navigation = useNavigation();
+function DoctorSupportTeam() {
+  const navigation = useNavigation();
   const {
     reset,
     handleSubmit,
@@ -25,12 +25,20 @@ function DoctorSupportTeam(props) {
   } = useForm();
   const onSubmit = data => {
     reset();
-    // navigation.goBack();
+    navigation.goBack();
   };
   return (
     <View style={styles.container}>
-      <HeaderNavigation title="فريق الدعم" color={COLORS.darkGray3}/>
-      <ScrollView style={styles.ScrollViewStyle} showsVerticalScrollIndicator={false}>
+      <HeaderNavigation
+        title="فريق الدعم"
+        color={COLORS.darkGray3}
+        onPress={() => {
+          navigation.goBack();
+        }}
+      />
+      <ScrollView
+        style={styles.ScrollViewStyle}
+        showsVerticalScrollIndicator={false}>
         <Controller
           name="input"
           control={control}
@@ -66,7 +74,7 @@ function DoctorSupportTeam(props) {
         </TouchableOpacity>
       </ScrollView>
       <View style={styles.viewButtonStyle}>
-      <GeneralButton title="ارسال" onPress={handleSubmit(onSubmit)} />
+        <GeneralButton title="ارسال" onPress={handleSubmit(onSubmit)} />
       </View>
     </View>
   );
