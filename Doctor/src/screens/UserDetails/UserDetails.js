@@ -1,14 +1,18 @@
 import React from 'react';
-import {View, Text, Button} from 'react-native';
+import { View, Text, Button } from 'react-native';
 import GeneralPage from '../../../../src/components/GeneralPage/GeneralPage';
 import ProfileImage from '../../../../src/components/ProfileImage/ProfileImage';
 import UserData from '../../../../src/components/UserData/UserData';
 import styles from './UserDetailsStyles';
-import {useNavigation} from '@react-navigation/native';
-import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
-import {PADDINGS, COLORS} from '../../../../src/constants/Constants';
+import { useNavigation } from '@react-navigation/native';
+import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
+import { PADDINGS, COLORS } from '../../../../src/constants/Constants';
+import { useRoute } from '@react-navigation/native';
 function UserDetails(props) {
   const navigation = useNavigation();
+  const route = useRoute();
+  const imageUri = route.params.photo
+  const name=route.params.name
   return (
     <GeneralPage>
       <HeaderNavigation
@@ -25,9 +29,9 @@ function UserDetails(props) {
       />
       <View style={styles.container}>
         <ProfileImage
-          nameAfterImage={'محمد عبدالحميد'}
+          nameAfterImage={name}
           imageUri={
-            'https://img.freepik.com/free-photo/smiling-doctor-with-strethoscope-isolated-grey_651396-974.jpg?w=740&t=st=1678903589~exp=1678904189~hmac=4c4da7bf447127fcedc6c412bfd9c4ef385ae0c8aceeb9d11550b6b8d99eb7ae'
+            imageUri
           }
         />
 

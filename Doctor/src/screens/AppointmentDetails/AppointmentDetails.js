@@ -38,12 +38,12 @@ function AppointmentDetails({navigation}) {
   const globalState = useSelector(state => state);
   const [appointmentDetailsObject, setAppointmentDetailsObject] = useState({
     name: PatientsArray.name,
-    day: '20',
+    day: '21',
     month: 'مارس',
     year: '2023',
     time: PatientsArray.time,
     status: 'م',
-    appointmentStatus: 'مكتمل',
+    appointmentStatus: 'معلق',
     histortStatus: 'public',
   });
   useEffect(() => {
@@ -130,14 +130,14 @@ function AppointmentDetails({navigation}) {
       doctorSpeciality: 'الطب العام والداخلي',
       day: '4',
       month: 'سبتمبر',
-      year: '2023',
+      year: '2022',
     },
     {
-      doctorName: 'سامي علي',
+      doctorName: 'محمد طارق',
       doctorSpeciality: 'الطب العام والداخلي',
-      day: '4',
+      day: '5',
       month: 'سبتمبر',
-      year: '2023',
+      year: '2022',
     },
   ];
 
@@ -184,7 +184,7 @@ function AppointmentDetails({navigation}) {
           <View style={styles.viewImageStyle}>
             <Image
               style={styles.imageStyle}
-              source={require('../../assets/Images/patientImage.jpg')}
+              source={{uri:PatientsArray.imageUri}}
             />
           </View>
           <View>
@@ -204,9 +204,10 @@ function AppointmentDetails({navigation}) {
             </View>
             <View>
               <Text style={styles.historyAndTimeTextStyle}>
-                {appointmentDetailsObject.time +
+                {appointmentDetailsObject.time/*+
                   ' ' +
-                  appointmentDetailsObject.status}
+                  appointmentDetailsObject.status*/
+                  }
               </Text>
             </View>
           </View>
@@ -218,7 +219,7 @@ function AppointmentDetails({navigation}) {
               {backgroundColor: 'rgba(47, 115, 252,0.1)'},
             ]}
             onPress={() => {
-              navigation.navigate('UserDetails');
+              navigation.navigate('UserDetails',{photo:PatientsArray.imageUri,name:PatientsArray.name});
             }}>
             <Text style={[styles.patientTextStyle, {color: COLORS.blue}]}>
               التفاصيل
