@@ -18,7 +18,7 @@ function DoctorAppointments({navigation}) {
   return (
     <View style={styles.container}>
       <HeaderNavigation
-      rightButtonHide
+        rightButtonHide
         icon
         iconName="sliders"
         title="المواعيد"
@@ -43,25 +43,27 @@ function DoctorAppointments({navigation}) {
         <Calender />
       </View>
       <View style={styles.line} />
-        <FlatList
+      <FlatList
         showsVerticalScrollIndicator={false}
-          data={PatientsData}
-          renderItem={(itemData, index) => {
-            return (
-              <>
-                <PersonAppointmentCard
-                  confirmed={itemData.item.confirmed}
-                  name={itemData.item.name}
-                  time={itemData.item.time}
-                  imageUri={itemData.item.imageUri}
-                  onPress={()=>{
-                    navigation.navigate("AppointmentDetails")
-                  }}
-                />
-              </>
-            );
-          }}
-        />
+        data={PatientsData}
+        renderItem={(itemData, index) => {
+          return (
+            <>
+              <PersonAppointmentCard
+                confirmed={itemData.item.confirmed}
+                name={itemData.item.name}
+                time={itemData.item.time}
+                imageUri={itemData.item.imageUri}
+                onPress={() => {
+                  navigation.navigate('AppointmentDetails', {
+                    PatientsArray: itemData.item,
+                  });
+                }}
+              />
+            </>
+          );
+        }}
+      />
       {/* </ScrollView> */}
     </View>
   );

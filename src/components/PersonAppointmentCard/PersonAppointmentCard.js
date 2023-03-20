@@ -35,7 +35,7 @@ function PersonAppointmentCard(props) {
               styles.confirmPendingText,
               {color: confirmed ? COLORS.green : COLORS.red},
             ]}>
-            {confirmed ? 'مؤكد' : 'معلق'}
+            {confirmed ? 'تم التأكيد' : 'معلق'}
           </Text>
         </View>
         <View

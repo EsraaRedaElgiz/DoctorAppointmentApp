@@ -34,7 +34,7 @@ const PersonHistoryCard = props => {
               styles.confirmPendingText,
               {color: done ? COLORS.green : COLORS.red},
             ]}>
-            {done ? 'تم الحضور' : 'ملغى'}
+            {done ? ' مكتمل' : 'ملغى'}
           </Text>
         </View>
         <View
