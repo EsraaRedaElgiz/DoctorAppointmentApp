@@ -1,13 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableOpacity, Modal, Dimensions, TextInput } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  StatusBar,
+  TouchableOpacity,
+  Modal,
+  Dimensions,
+  TextInput,
+} from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import GeneralPage from '../../../../src/components/GeneralPage/GeneralPage';
-import Reusabletextinput from '../../../../src/components/AppTextinput/AppTextinput'
-import { COLORS, FONTS, PADDINGS, RADIUS } from '../../../../src/constants/Constants';
+import Reusabletextinput from '../../../../src/components/AppTextinput/AppTextinput';
+import {
+  COLORS,
+  FONTS,
+  PADDINGS,
+  RADIUS,
+} from '../../../../src/constants/Constants';
 import { RFValue } from 'react-native-responsive-fontsize';
 import ProfileImage from '../../../../src/components/ProfileImage/ProfileImage';
 import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import * as ImagePicker from 'react-native-image-picker';
 import { requestCameraPermission } from '../../../../src/utils/CameraPermissin';
 import RBSheet from 'react-native-raw-bottom-sheet';
@@ -16,35 +31,52 @@ import { CheckBox } from 'react-native-elements';
 import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
 import { useForm, Controller } from 'react-hook-form';
 import { style } from '../../../../src/styles/Style';
-import ViewLikeTextInput from '../../../../src/components/ViewLikeTextInput/ViewLikeTextInput'
-const Compeleteinformation = () => {
-  const [photo_uri, setphoto_uri] = useState("");
-  const Specialization = ["اسنان", "باطنة", "صدر", "عيون"]
+import ViewLikeTextInput from '../../../../src/components/ViewLikeTextInput/ViewLikeTextInput';
+const Compeleteinformation = ({ navigation }) => {
+  const [photo_uri, setphoto_uri] = useState('');
+  const [specialty, setspecialty] = useState('');
+  const [exp, setexp] = useState('');
+  const [descripation, setdescripation] = useState('');
+  const [About, setAbout] = useState('');
+  const [workday, setworkday] = useState('')
+  const [price, setprice] = useState('')
+  const [start, setstart] = useState("")
+  const [End, setEnd] = useState("")
+  const [section, setsection] = useState("")
+  const Specialization = ['اسنان', 'باطنة', 'صدر', 'عيون'];
   const [modalVisible, setModalVisible] = useState(false);
   const [modal_Visible_wokdays, setmodal_Visible_wokdays] = useState(false);
   const { width, height } = Dimensions.get('screen');
   const [checked, setchecked] = useState(select);
-  const region={
+  const region = {
     latitude: 30.78650859999999,
     longitude: 31.0003757,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
-  }
-  const { control, handleSubmit, formState: { errors }, setValue } = useForm({
-    defaultValues:{
-      spealization:'',
-      exp:'',
-      Location:'',
-      Adressdescription:'',
-      About:'',
-      Workdays:'',
-      price:'',
-      start:'',
-      end:'',
-      section:''
-    }
+  };
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+  } = useForm({
+    defaultValues: {
+      spealization: '',
+      exp: '',
+      Location: '',
+      Adressdescription: '',
+      About: '',
+      Workdays: '',
+      price: '',
+      start: '',
+      end: '',
+      section: '',
+    },
   });
-  const onSubmit = data => console.log(data);
+  const onSubmit = data => {
+    navigation.navigate('DoctorLogIn');
+    console.log(data);
+  };
   const data = [
     { id: 1, txt: 'السبت', isChecked: false },
     { id: 2, txt: 'الأحد', isChecked: false },
@@ -55,7 +87,7 @@ const Compeleteinformation = () => {
     { id: 7, txt: 'الجمعة', isChecked: false },
   ];
   const [Days, setDays] = useState(data);
-  const select = []
+  const select = [];
   useEffect(() => {
     requestCameraPermission();
   }, []);
@@ -81,7 +113,6 @@ const Compeleteinformation = () => {
         console.log('User tapped custom button: ', res.customButton);
         alert(res.customButton);
       } else {
-
         setphoto_uri(photo_uri => res.assets[0].uri);
       }
     });
@@ -103,15 +134,13 @@ const Compeleteinformation = () => {
         console.log('User tapped custom button: ', res.customButton);
         alert(res.customButton);
       } else {
-
         setphoto_uri(photo_uri => res.assets[0].uri);
         //upload_img(res.assets[0].base64)
       }
     });
-
   };
-  const handleChange = (id) => {
-    let temp = Days.map((product) => {
+  const handleChange = id => {
+    let temp = Days.map(product => {
       if (id === product.id) {
         return { ...product, isChecked: !product.isChecked };
       }
@@ -121,10 +150,10 @@ const Compeleteinformation = () => {
   };
 
   const GetSelect = () => {
-    let checkedDays = Days.filter((day) => day.isChecked == true);
+    let checkedDays = Days.filter(day => day.isChecked == true);
     // alert(JSON.stringify(checkedDays))
-    let daysText = checkedDays.map((item) => item.txt);
-    daysText = daysText.join(" , ");
+    let daysText = checkedDays.map(item => item.txt);
+    daysText = daysText.join(' , ');
 
     // var check = Days.map((t) => t.isChecked)
     // let selected = []
@@ -133,31 +162,34 @@ const Compeleteinformation = () => {
     //     selected.push(keys[index])
     //   }
     // }
-    setValue("Workdays", daysText, {shouldValidate: true});
-  }
-   const get_location=() =>{
+    setValue('Workdays', daysText, { shouldValidate: true });
+  };
+  const get_location = () => {
+    // let browser_url =
+    //   'https://www.google.de/maps/@' +
+    //   region.latitude +
+    //   ',' +
+    //   region.longitude +
+    //   '?q=';
+
     let browser_url =
-      "https://www.google.de/maps/@" +
-      region.latitude +
-      "," +
-      region.longitude +
-      "?q="
-      ;
-    setValue("Location",browser_url,{shouldValidate:true})
-   }
+      'تم تحديد الموقع بنجاح'
+    setValue('Location', browser_url, { shouldValidate: true });
+  };
   return (
     <View style={styles.container}>
-      
-        <StatusBar backgroundColor={COLORS.blue} />
-        <HeaderNavigation
-          padding={PADDINGS.mdPadding}
-          title="تكملة المعلومات"
-          backgroundColor={COLORS.blue}
-          color={COLORS.white}
-        />
-        <ScrollView 
-        showsVerticalScrollIndicator={false}
-        >
+      <StatusBar backgroundColor={COLORS.blue} />
+      <HeaderNavigation
+        padding={PADDINGS.mdPadding}
+        title="تكملة المعلومات"
+        backgroundColor={COLORS.blue}
+        color={COLORS.white}
+        onPress={() => {
+          reset();
+          navigation.goBack();
+        }}
+      />
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.viewImageStyle}>
           {photo_uri ? (
             <ProfileImage
@@ -171,27 +203,29 @@ const Compeleteinformation = () => {
               onPressPen={() => refRBSheet.current.open()}
             />
           )}
-      </View>
-      <View style={styles.viewofinformation}>
+        </View>
+        <View style={styles.viewofinformation}>
           <View style={styles.viewofSpeclizationandExperence}>
             <View style={styles.viewofDropDown}>
               <Controller
                 control={control}
                 name="spealization"
                 rules={{
-                  required: true
+                  required: true,
                 }}
-                render={({ field: { value, onChange, onBlur },  }) => (
+                render={({ field: { value, onChange, onBlur } }) => (
                   <>
                     <DropDown
                       style={styles.dropDownMarginBottom}
                       placeholder="التخصص"
                       data={Specialization}
-                      borderColor={errors.spealization ? "red" : COLORS.gray}
+                      borderColor={errors.spealization ? 'red' : COLORS.gray}
                       onSelect={onChange}
                     />
-                    <Text style={{ color: "red", alignSelf: "flex-start" }}>
-                      {errors.spealization?.type === 'required' ? "التخصص يكون مطلوب" : ''}
+                    <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                      {errors.spealization?.type === 'required'
+                        ? 'التخصص يكون مطلوب'
+                        : ''}
                     </Text>
                   </>
                 )}
@@ -209,7 +243,7 @@ const Compeleteinformation = () => {
                     }
                   },
                 }}
-                render={({ field: { value, onChange, onBlur },  }) => (
+                render={({ field: { value, onChange, onBlur } }) => (
                   <>
                     <Reusabletextinput
                       value={value}
@@ -217,19 +251,18 @@ const Compeleteinformation = () => {
                       keyboardType="numeric"
                       onChangeText={onChange}
                       onBlur={onBlur}
-                      bordercolor={errors.exp ? "#f00" : COLORS.gray}
+                      bordercolor={errors.exp ? '#f00' : COLORS.gray}
                     />
-                    <Text style={{ color: "red", alignSelf: "flex-start" }}>
-                      {
-                        errors.exp?.type === 'required'
-                          ? 'يجب ادخال الخبرة'
-                          : errors.exp?.type === 'validate'
-                            ? 'يجب ادخال رقم'
-                            : ''}</Text>
+                    <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                      {errors.exp?.type === 'required'
+                        ? 'يجب ادخال الخبرة'
+                        : errors.exp?.type === 'validate'
+                          ? 'يجب ادخال رقم'
+                          : ''}
+                    </Text>
                   </>
                 )}
               />
-              
             </View>
           </View>
           <View style={styles.firstTextInputMargun}>
@@ -237,9 +270,9 @@ const Compeleteinformation = () => {
               control={control}
               name="Location"
               rules={{
-                required: true
+                required: true,
               }}
-              render={({ field: { value, onChange, onBlur },}) => (
+              render={({ field: { value, onChange, onBlur } }) => (
                 <>
                   <View style={styles.viewoflocationandicon}>
                     <Reusabletextinput
@@ -248,19 +281,25 @@ const Compeleteinformation = () => {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       onTouchStart={() => setModalVisible(true)}
-                      bordercolor={errors.Location ? "#f00" : COLORS.gray}
+                      bordercolor={errors.Location ? '#f00' : COLORS.gray}
                     />
                     <TouchableOpacity
                       style={styles.icon}
                       onPress={() => {
-                        setModalVisible(true)
-                      }}
-                    >
-                      <EvilIcons name='location' size={35} color={COLORS.darkGray} style={{}} />
+                        setModalVisible(true);
+                      }}>
+                      <EvilIcons
+                        name="location"
+                        size={35}
+                        color={COLORS.darkGray}
+                        style={{}}
+                      />
                     </TouchableOpacity>
                   </View>
-                  <Text style={{ color: "red", alignSelf: "flex-start" }}>
-                    {errors.Location?.type === 'required' ? "يجب توافر الموقع" : ""}
+                  <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                    {errors.Location?.type === 'required'
+                      ? 'يجب توافر الموقع'
+                      : ''}
                   </Text>
                 </>
               )}
@@ -271,19 +310,23 @@ const Compeleteinformation = () => {
               control={control}
               name="Adressdescription"
               rules={{
-                required: true
+                required: true,
               }}
-              render={({ field: { value, onChange, onBlur },  }) => (
+              render={({ field: { value, onChange, onBlur } }) => (
                 <>
                   <Reusabletextinput
                     placeholder="وصف عنوان العيادة"
                     value={value}
                     onChangeText={onChange}
                     onBlur={onBlur}
-                    bordercolor={errors.Adressdescription ? "#f00" : COLORS.gray}
+                    bordercolor={
+                      errors.Adressdescription ? '#f00' : COLORS.gray
+                    }
                   />
-                  <Text style={{ color: "red", alignSelf: "flex-start" }}>
-                    {errors.Adressdescription?.type === 'required' ? "يجب وصف العنوان" : ""}
+                  <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                    {errors.Adressdescription?.type === 'required'
+                      ? 'يجب وصف العنوان'
+                      : ''}
                   </Text>
                 </>
               )}
@@ -294,19 +337,21 @@ const Compeleteinformation = () => {
               control={control}
               name="About"
               rules={{
-                required: true
+                required: true,
               }}
-              render={({ field: { value, onChange, onBlur },  }) => (
+              render={({ field: { value, onChange, onBlur } }) => (
                 <>
                   <Reusabletextinput
                     placeholder="السيرة الذاتية"
                     value={value}
                     onChangeText={onChange}
                     onBlur={onBlur}
-                    bordercolor={errors.About ? "#f00" : COLORS.gray}
+                    bordercolor={errors.About ? '#f00' : COLORS.gray}
                   />
-                  <Text style={{ color: "red", alignSelf: "flex-start" }}>
-                    {errors.About?.type === 'required' ? "السيرة الذاتية مطلوبة" : ""}
+                  <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                    {errors.About?.type === 'required'
+                      ? 'السيرة الذاتية مطلوبة'
+                      : ''}
                   </Text>
                 </>
               )}
@@ -317,9 +362,9 @@ const Compeleteinformation = () => {
               control={control}
               name="Workdays"
               rules={{
-                required: true
+                required: true,
               }}
-              render={({ field: { value, onChange, onBlur }, }) => (
+              render={({ field: { value, onChange, onBlur } }) => (
                 <>
                   <Reusabletextinput
                     placeholder="ايام العمل"
@@ -327,15 +372,16 @@ const Compeleteinformation = () => {
                     onChangeText={onChange}
                     onBlur={onBlur}
                     onTouchStart={() => {
-                      setmodal_Visible_wokdays(true)
+                      setmodal_Visible_wokdays(true);
                     }}
-                    bordercolor={errors.Workdays ? "#f00" : COLORS.gray}
+                    bordercolor={errors.Workdays ? '#f00' : COLORS.gray}
                   />
 
-                  <Text style={{ color: "red", alignSelf: "flex-start" }}>
-                    {errors.Workdays?.type === 'required' ? "يجب وضع ايام العمل" : ''}
+                  <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                    {errors.Workdays?.type === 'required'
+                      ? 'يجب وضع ايام العمل'
+                      : ''}
                   </Text>
-
                 </>
               )}
             />
@@ -351,7 +397,7 @@ const Compeleteinformation = () => {
                 }
               },
             }}
-            render={({ field: { value, onChange, onBlur }, }) => (
+            render={({ field: { value, onChange, onBlur } }) => (
               <>
                 <Reusabletextinput
                   placeholder="سعر الكشف"
@@ -359,14 +405,15 @@ const Compeleteinformation = () => {
                   value={value}
                   onChangeText={onChange}
                   onBlur={onBlur}
-                  bordercolor={errors.price ? "#f00" : COLORS.gray}
+                  bordercolor={errors.price ? '#f00' : COLORS.gray}
                 />
-                <Text style={{ color: "red", alignSelf: "flex-start" }}>
+                <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
                   {errors.price?.type === 'required'
                     ? 'يجب ادخال سعر الكشف'
                     : errors.price?.type === 'validate'
                       ? 'يجب ادخال رقم'
-                      : ''}</Text>
+                      : ''}
+                </Text>
               </>
             )}
           />
@@ -382,9 +429,8 @@ const Compeleteinformation = () => {
                       return 'must number';
                     }
                   },
-
                 }}
-                render={({ field: { value, onChange, onBlur },  }) => (
+                render={({ field: { value, onChange, onBlur } }) => (
                   <>
                     <Reusabletextinput
                       placeholder="البداية"
@@ -392,13 +438,15 @@ const Compeleteinformation = () => {
                       value={value}
                       onChangeText={onChange}
                       onBlur={onBlur}
-                      bordercolor={errors.start ? "#f00" : COLORS.gray}
+                      bordercolor={errors.start ? '#f00' : COLORS.gray}
                     />
-                    <Text style={{ color: "red", alignSelf: "flex-start" }}>{errors.start?.type === 'required'
-                      ? 'يجب ادخال البداية'
-                      : errors.start?.type === 'validate'
-                        ? 'يجب ادخال رقم'
-                        : ''}</Text>
+                    <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                      {errors.start?.type === 'required'
+                        ? 'يجب ادخال البداية'
+                        : errors.start?.type === 'validate'
+                          ? 'يجب ادخال رقم'
+                          : ''}
+                    </Text>
                   </>
                 )}
               />
@@ -415,7 +463,10 @@ const Compeleteinformation = () => {
                     }
                   },
                 }}
-                render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
+                render={({
+                  field: { value, onChange, onBlur },
+                  fieldState: { error },
+                }) => (
                   <>
                     <Reusabletextinput
                       placeholder="النهاية"
@@ -423,14 +474,16 @@ const Compeleteinformation = () => {
                       value={value}
                       onChangeText={onChange}
                       onBlur={onBlur}
-                      bordercolor={errors.end ? "#f00" : COLORS.gray}
+                      bordercolor={errors.end ? '#f00' : COLORS.gray}
                     />
 
-                    <Text style={{ color: "red", alignSelf: "flex-start" }}>{errors.end?.type === 'required'
-                      ? 'يجب ادخال النهاية'
-                      : error?.type === 'validate'
-                        ? 'يجب ادخال رقم'
-                        : ''}</Text>
+                    <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                      {errors.end?.type === 'required'
+                        ? 'يجب ادخال النهاية'
+                        : error?.type === 'validate'
+                          ? 'يجب ادخال رقم'
+                          : ''}
+                    </Text>
                   </>
                 )}
               />
@@ -440,14 +493,14 @@ const Compeleteinformation = () => {
                 control={control}
                 name="section"
                 rules={{
-                  required: "يجب تحديد المدة",
+                  required: 'يجب تحديد المدة',
                   validate: val => {
                     if (val * 0 != 0) {
                       return 'must number';
                     }
                   },
                 }}
-                render={({ field: { value, onChange, onBlur },}) => (
+                render={({ field: { value, onChange, onBlur } }) => (
                   <>
                     <Reusabletextinput
                       placeholder="المدة"
@@ -455,24 +508,25 @@ const Compeleteinformation = () => {
                       value={value}
                       onChangeText={onChange}
                       onBlur={onBlur}
-                      bordercolor={errors.section ? "#f00" : COLORS.gray}
+                      bordercolor={errors.section ? '#f00' : COLORS.gray}
                     />
-                    <Text style={{ color: "red", alignSelf: "flex-start", }}>{errors.section?.type === 'required'
-                      ? 'يجب ادخال المدة'
-                      : errors.section?.type === 'validate'
-                        ? 'يجب ادخال رقم'
-                        : ''}</Text>
+                    <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                      {errors.section?.type === 'required'
+                        ? 'يجب ادخال المدة'
+                        : errors.section?.type === 'validate'
+                          ? 'يجب ادخال رقم'
+                          : ''}
+                    </Text>
                   </>
                 )}
               />
             </View>
           </View>
-       
-      </View>
+        </View>
       </ScrollView>
       <View style={styles.buttonViewStyle}>
-          <GeneralButton title="تأكيد" onPress={handleSubmit(onSubmit)} />
-        </View>
+        <GeneralButton title="تأكيد" onPress={handleSubmit(onSubmit)} />
+      </View>
       <RBSheet
         ref={refRBSheet}
         height={RFValue(200)}
@@ -523,9 +577,7 @@ const Compeleteinformation = () => {
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
-          get_location()
-        }}
-      >
+        }}>
         <MapView
           ref={mapRef}
           provider={PROVIDER_GOOGLE}
@@ -536,41 +588,42 @@ const Compeleteinformation = () => {
           loadingIndicatorColor={COLORS.blue}
           style={{ flex: 1 }}
           onRegionChangeComplete={(region, details) => {
-            console.log("regoin change :>>> ", JSON.stringify(region))
-            console.log("regoin details :>>> ", JSON.stringify(details))
-            setLong(region.longitude)
-            setLat(region.latitude)
+            console.log('regoin change :>>> ', JSON.stringify(region));
+            console.log('regoin details :>>> ', JSON.stringify(details));
+            setLong(region.longitude);
+            setLat(region.latitude);
           }}
-          onPress={(e, ) => {console.log(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)
-            console.log("position : ", e.nativeEvent.position)
-            setLong(e.nativeEvent.coordinate.longitude)
-            setLat( e.nativeEvent.coordinate.latitude)
+          onPress={e => {
+            console.log(
+              e.nativeEvent.coordinate.latitude,
+              e.nativeEvent.coordinate.longitude,
+            );
+            console.log('position : ', e.nativeEvent.position);
+            setLong(e.nativeEvent.coordinate.longitude);
+            setLat(e.nativeEvent.coordinate.latitude);
             mapRef.current.animateToRegion({
               latitude: e.nativeEvent.coordinate.latitude,
               longitude: e.nativeEvent.coordinate.longitude,
               latitudeDelta: 0.05,
               longitudeDelta: 0.05,
-            })
+            });
             mapRef.current
-            .addressForCoordinate({
-              latitude: e.nativeEvent.coordinate.latitude,
-              longitude: e.nativeEvent.coordinate.longitude,
-            })
-            .then((res) => console.log(res));
-          }}
-          
-        >
+              .addressForCoordinate({
+                latitude: e.nativeEvent.coordinate.latitude,
+                longitude: e.nativeEvent.coordinate.longitude,
+              })
+              .then(res => console.log(res));
+            get_location();
+          }}>
           <Marker
             coordinate={{
               latitude: lat,
               longitude: long,
             }}
-            pinColor={"green"}
+            pinColor={'green'}
             draggable
-            // onDragEnd={(e) => console.log("test :>>>> ", e.nativeEvent.coordinate)}
-            
-          >
-          </Marker>
+          // onDragEnd={(e) => console.log("test :>>>> ", e.nativeEvent.coordinate)}
+          ></Marker>
         </MapView>
       </Modal>
       <Modal
@@ -578,45 +631,50 @@ const Compeleteinformation = () => {
         onRequestClose={() => {
           setmodal_Visible_wokdays(!modal_Visible_wokdays);
         }}
-        transparent={true}
-      >
+        transparent={true}>
         <View style={styles.modelofcheckbox}>
-          <View style={{
-            width: width * .8,
-            height: height * .41,
-            backgroundColor: COLORS.white,
-            borderRadius: RADIUS.mdRadius,
-            alignItems: "center",
-            justifyContent: "flex-start",
-            flexDirection: "row",
-            flexWrap: "wrap"
-          }}>
+          <View
+            style={{
+              width: width * 0.8,
+              height: height * 0.4,
+              backgroundColor: COLORS.white,
+              borderRadius: RADIUS.mdRadius,
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+            }}>
             <View style={styles.viewImageStyle}>
               <Text style={style.textTitleBold}>أيام العمل</Text>
             </View>
             {Days.map((Day, index) => {
               return (
-                <View style={styles.viewofcheckbox}>
+                <View
+                key={index}
+                style={styles.viewofcheckbox}>
                   <CheckBox
                     checked={Day.isChecked}
                     onPress={() => {
-                      handleChange(Day.id)
-
+                      handleChange(Day.id);
                     }}
                   />
                   <Text style={style.textContent}>{Day.txt}</Text>
                 </View>
-              )
+              );
             })}
-            <View>
-            </View>
-            <View style={{ width: "100%", alignItems: "center", justifyContent: "center" }}>
+            <View></View>
+            <View
+              style={{
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
               <GeneralButton
                 title="تأكيد"
-                style={{ width: "90%" }}
+                style={{ width: '90%' }}
                 onPress={() => {
                   setmodal_Visible_wokdays(!modal_Visible_wokdays);
-                  GetSelect()
+                  GetSelect();
                 }}
               />
             </View>
@@ -624,11 +682,10 @@ const Compeleteinformation = () => {
         </View>
       </Modal>
     </View>
+  );
+};
 
-  )
-}
-
-export default Compeleteinformation
+export default Compeleteinformation;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -644,61 +701,61 @@ const styles = StyleSheet.create({
     borderTopRightRadius: RFValue(85),
     paddingHorizontal: PADDINGS.mdPadding,
     flex: 1,
-    overflow: "hidden",
-    marginTop:RFValue(20),
-    paddingTop:"15%"
+    overflow: 'hidden',
+    marginTop: RFValue(20),
+    paddingTop: '15%',
   },
   viewofSpeclizationandExperence: {
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row",
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
   viewofDropDown: {
-    width: "47%",
+    width: '47%',
     height: RFValue(70),
   },
   viewoflocationandicon: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   icon: {
     width: RFValue(40),
     height: RFValue(40),
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     marginLeft: RFValue(-50),
-    marginTop: RFValue(5)
+    marginTop: RFValue(5),
   },
   timeandsection: {
-    width: "100%",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flexDirection: "row",
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
   startandend: {
-    width: "31%",
+    width: '31%',
     height: RFValue(65),
     marginBottom: RFValue(8),
   },
   modelofcheckbox: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#0005"
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#0005',
   },
   viewofcheckbox: {
-    width: "50%",
-    height:50,
-    alignItems: "center",
-    justifyContent: "flex-start",
-    flexDirection: "row"
+    width: '50%',
+    height: 52,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
   },
   firstTextInputMargun: {
-    marginBottom: "1%",
+    marginBottom: '1%',
   },
   eachOptionInBottonTab: {
     width: '100%',
@@ -710,14 +767,16 @@ const styles = StyleSheet.create({
     fontSize: FONTS.h5,
     color: COLORS.blue,
     fontWeight: '600',
-  }, line: {
+  },
+  line: {
     height: RFValue(1),
     backgroundColor: COLORS.gray,
     width: '90%',
   },
   dropDownMarginBottom: {
     marginTop: RFValue(6),
-  }, checkboxContainer: {
+  },
+  checkboxContainer: {
     flexDirection: 'row',
     marginBottom: 20,
   },
@@ -732,5 +791,4 @@ const styles = StyleSheet.create({
     paddingBottom: PADDINGS.mdPadding,
     paddingHorizontal: PADDINGS.mdPadding,
   },
-
-})
+});

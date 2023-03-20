@@ -1,5 +1,7 @@
 import {RFValue} from 'react-native-responsive-fontsize';
 
+export const INTO_DONE = 'INTO_DONE';
+
 export const COLORS = {
   blue: '#2F73FC',
   lightBlue: '#E3ECFD',
@@ -14,9 +16,9 @@ export const COLORS = {
   darkGray2: '#707070',
   darkGray3: '#303135',
   red: '#f00',
-  green:'#aed260',
-  star:"#FFE900",
-  searchCostumeColor:"#CFCECE"
+  green: '#aed260',
+  star: '#FFE900',
+  searchCostumeColor: '#CFCECE',
 };
 export const ICONS = {
   xsIcon: RFValue(10) >= 10 ? RFValue(10) : 5,
@@ -34,8 +36,8 @@ export const FONTS = {
   h5: RFValue(15) >= 15 ? RFValue(15) : 14,
   h6: RFValue(13) >= 13 ? RFValue(12) : 13,
   h7: RFValue(11) >= 11 ? RFValue(10) : 11,
-  AmaranthRegular:"Amaranth-Regular",
-  Amaranth:"Amaranth"
+  AmaranthRegular: 'Amaranth-Regular',
+  Amaranth: 'Amaranth',
 };
 export const RADIUS = {
   // general radius

@@ -6,14 +6,19 @@ import {COLORS, PADDINGS} from '../../../../src/constants/Constants';
 import Calender from '../../../../src/components/Calender/Calender';
 import PersonAppointmentCard from '../../../../src/components/PersonAppointmentCard/PersonAppointmentCard';
 
-function DoctorHistory() {
+function DoctorHistory({navigation}) {
   return (
     <View style={styles.container}>
+      
       <HeaderNavigation
         icon
         iconName="sliders"
         title="التاريخ"
         color={COLORS.darkGray3}
+        // onPress={()}
+        onPressBtn={()=>{
+          navigation.navigate("DoctorFilterHistory")
+        }}
       />
       <View style={styles.headerView}>
         <Text style={styles.dateText}> 4 Feb 2023</Text>
@@ -25,13 +30,13 @@ function DoctorHistory() {
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollViewContentStyle}>
-        <PersonAppointmentCard pending />
-        <PersonAppointmentCard confirmed name="ايمن جاب الله" />
-        <PersonAppointmentCard confirmed name="اسراء السباكة" />
-        <PersonAppointmentCard confirmed name="مروة" />
-        <PersonAppointmentCard pending name="يوسف" />
-        <PersonAppointmentCard confirmed name="عدي حاتم" />
-        <PersonAppointmentCard pending name="الشاذلي" />
+        <PersonAppointmentCard pending time="10:30 AM" />
+        <PersonAppointmentCard confirmed name="ايمن جاب الله" time="10:30 AM" />
+        <PersonAppointmentCard confirmed name="اسراء السباكة" time="10:30 AM" />
+        <PersonAppointmentCard confirmed name="مروة" time="10:30 AM" />
+        <PersonAppointmentCard pending name="يوسف" time="10:30 AM" />
+        <PersonAppointmentCard confirmed name="عدي حاتم" time="10:30 AM" />
+        <PersonAppointmentCard pending name="الشاذلي" time="10:30 AM" />
       </ScrollView>
     </View>
   );

@@ -6,6 +6,7 @@ import {
   Image,
   Pressable,
   FlatList,
+  ImageBackground,
 } from 'react-native';
 import React, {useState} from 'react';
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -26,6 +27,8 @@ import {ListTiltle} from '../../components/Home';
 import ReviewModal from '../../components/ReviewModal/ReviewModal';
 import {Rating} from 'react-native-stock-star-rating';
 import {useRoute} from '@react-navigation/native';
+import HeaderArrowAndWord from '../../components/HeaderArrowAndWord/HeaderArrowAndWord';
+import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 const DoctorProfile = ({navigation}) => {
   const [visiableAddReview, setVisiableAddReview] = useState(false);
 
@@ -44,10 +47,17 @@ const DoctorProfile = ({navigation}) => {
           style={{backgroundColor: COLORS.white}}
           showsVerticalScrollIndicator={false}>
           {/* image */}
-          <Image
+
+          <ImageBackground
             source={DoctorArray.image}
-            style={{width: '100%', height: RFValue(300)}}
-          />
+            style={{width: '100%', height: RFValue(300)}}>
+            <HeaderNavigation
+              padding={PADDINGS.mdPadding}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          </ImageBackground>
 
           {/* NameAndSpecialty */}
           <View style={styles.textsContainer}>
