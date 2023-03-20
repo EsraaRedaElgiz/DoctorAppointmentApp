@@ -7,8 +7,6 @@ import {
   RADIUS,
 } from '../../constants/Constants';
 import {StyleSheet} from 'react-native';
-import {Dimensions} from 'react-native';
-const {height, width} = Dimensions.get('window');
 import {RFValue} from 'react-native-responsive-fontsize';
 
 const styles = StyleSheet.create({
