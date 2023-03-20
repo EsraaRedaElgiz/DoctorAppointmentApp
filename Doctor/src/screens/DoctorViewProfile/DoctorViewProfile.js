@@ -31,8 +31,8 @@ import {HeaderNavigation} from '../../../../src/components/headerNavigation/Head
 import {useNavigation} from '@react-navigation/native';
 
 // import {useRoute} from '@react-navigation/native';
-const DoctorViewProfile = () => {
-  const navigation = useNavigation();
+const DoctorViewProfile = ({navigation}) => {
+  //const navigation = useNavigation();
   const region = {
     latitude: 30.033333,
     longitude: 31.233334,

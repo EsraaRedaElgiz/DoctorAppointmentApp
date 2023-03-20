@@ -14,7 +14,7 @@ import { requestCameraPermission } from '../../../../src/utils/CameraPermissin';
 import { Controller, useForm } from 'react-hook-form'
 import { style } from '../../../../src/styles/Style';
 import { CheckBox } from 'react-native-elements';
-export default function EditDoctorDetails() {
+export default function EditDoctorDetails({navigation}) {
  const { control, handleSubmit, formState: { errors },setValue } = useForm({
   defaultValues:{
     spealization:'',
@@ -29,7 +29,11 @@ export default function EditDoctorDetails() {
     section:''
   }
 });
- const onSubmit = data => console.log(data);
+ const onSubmit = data => {
+  console.log(data)
+  navigation.goBack()
+
+};
  const [photo_uri, setphoto_uri] = useState("");
  const Specialization = ["اسنان", "باطنة", "صدر", "عيون"]
  const [modal_Visible_wokdays, setmodal_Visible_wokdays] = useState(false);
@@ -124,6 +128,9 @@ const GetSelect = () => {
      title="تعديل المعلومات"
      backgroundColor={COLORS.white}
      color={COLORS.black}
+     onPress={()=>{
+      navigation.goBack()
+     }}
     />
     <ScrollView
     showsVerticalScrollIndicator={false}
@@ -522,7 +529,7 @@ const styles = StyleSheet.create({
  Continer: {
   flex: 1,
   backgroundColor: COLORS.white,
-  padding: PADDINGS.mdPadding
+  paddingHorizontal: PADDINGS.mdPadding
  },
  image: {
   flex: 1,
@@ -532,13 +539,13 @@ const styles = StyleSheet.create({
  Specalizationandexperience: {
   width: "100%",
   alignItems: "center",
-  justifyContent: "space-around",
+  justifyContent: 'space-between',
   flexDirection: "row",
   marginTop: RFValue(10)
  },
  viewofDropDown: {
   width: "48%",
-  height: RFValue(70),
+  //height: RFValue(70),
   alignItems: "center",
   justifyContent: "space-around",
  },
@@ -553,7 +560,7 @@ const styles = StyleSheet.create({
  }, timeandsection: {
   width: "100%",
   alignItems: "center",
-  justifyContent: "space-around",
+  justifyContent: 'space-between',
   flexDirection: "row",
  },
  dropDownMarginBottom: {
@@ -561,8 +568,8 @@ const styles = StyleSheet.create({
  },
  startandend: {
   width: "31%",
-  height: 65,
-  marginBottom: RFValue(10)
+  //height: RFValue(65),
+  marginBottom: RFValue(10),
  },
  eachOptionInBottonTab: {
   width: '100%',

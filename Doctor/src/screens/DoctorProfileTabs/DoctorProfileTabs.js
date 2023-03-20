@@ -35,7 +35,7 @@ function DoctorProfileTabs({navigation}) {
                     : idx == 4
                     ? null
                     : idx == 5
-                    ? navigation.navigate('LogIn')
+                    ? null
                     : null;
                 }}
               />
