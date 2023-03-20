@@ -1,15 +1,15 @@
 import React from 'react';
-import { View, Text, ScrollView, Button } from 'react-native';
+import {View, Text, ScrollView, Button, FlatList} from 'react-native';
 import styles from './DoctorHistoryStyles';
 import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
 import { COLORS, PADDINGS } from '../../../../src/constants/Constants';
 import Calender from '../../../../src/components/Calender/Calender';
-import PersonAppointmentCard from '../../../../src/components/PersonAppointmentCard/PersonAppointmentCard';
+import {PatientsData} from '../../../../src/utils';
+import PersonHistoryCard from '../../Components/PresonHistoryCard/PersonHistoryCard';
 
 function DoctorHistory({ navigation }) {
   return (
     <View style={styles.container}>
-
       <HeaderNavigation
         rightButtonHide
         icon
@@ -28,17 +28,22 @@ function DoctorHistory({ navigation }) {
         <Calender />
       </View>
       <View style={styles.line} />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollViewContentStyle}>
-        <PersonAppointmentCard pending time="10:30 AM" />
-        <PersonAppointmentCard confirmed name="ايمن جاب الله" time="10:30 AM" />
-        <PersonAppointmentCard confirmed name="اسراء السباكة" time="10:30 AM" />
-        <PersonAppointmentCard confirmed name="مروة" time="10:30 AM" />
-        <PersonAppointmentCard pending name="يوسف" time="10:30 AM" />
-        <PersonAppointmentCard confirmed name="عدي حاتم" time="10:30 AM" />
-        <PersonAppointmentCard pending name="الشاذلي" time="10:30 AM" />
-      </ScrollView>
+      <FlatList
+      showsVerticalScrollIndicator={false}
+        data={PatientsData}
+        renderItem={(itemData, index) => {
+          return (
+            <>
+              <PersonHistoryCard
+                done={itemData.item.done}
+                name={itemData.item.name.trim()}
+                time={itemData.item.time}
+                imageUri={itemData.item.imageUri}
+              />
+            </>
+          );
+        }}
+      />
     </View>
   );
 }

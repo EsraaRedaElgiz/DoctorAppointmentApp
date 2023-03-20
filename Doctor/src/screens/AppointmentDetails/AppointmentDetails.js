@@ -25,9 +25,11 @@ import Dialog from 'react-native-dialog';
 import {HeaderNavigation} from '../../../.././src/components/headerNavigation/HeaderNavigation';
 import {style} from '../../../.././src/styles/Style';
 // import { useNavigation } from '@react-navigation/native';
-
+import {useRoute} from '@react-navigation/native';
 function AppointmentDetails({navigation}) {
   // const navigation=useNavigation()
+  const route = useRoute();
+  const PatientsArray = route.params.PatientsArray;
   const [dialogVisible, setDialogVisible] = useState(false);
   const [getDay, setGetDay] = useState('');
   const [getMonth, setGetMonth] = useState('');
@@ -35,11 +37,11 @@ function AppointmentDetails({navigation}) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   const [appointmentDetailsObject, setAppointmentDetailsObject] = useState({
-    name: 'عاطف محمد',
+    name: PatientsArray.name,
     day: '20',
     month: 'مارس',
     year: '2023',
-    time: '12:00',
+    time: PatientsArray.time,
     status: 'م',
     appointmentStatus: 'مكتمل',
     histortStatus: 'public',
@@ -223,12 +225,25 @@ function AppointmentDetails({navigation}) {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.buttonStyle, { borderColor: appointmentDetailsObject.appointmentStatus === 'تم التأكيد'||appointmentDetailsObject.appointmentStatus==='مكتمل' ? COLORS.green : COLORS.red 
-          ,backgroundColor:appointmentDetailsObject.appointmentStatus==='تم التأكيد'||appointmentDetailsObject.appointmentStatus==="مكتمل"?'rgba(174, 210, 96,0.1)':'rgba(255, 0, 0,0.1)'
-          }
-          
-          ]}
-          disabled={appointmentDetailsObject.appointmentStatus==="ملغي"||appointmentDetailsObject.appointmentStatus==="مكتمل"}
+            style={[
+              styles.buttonStyle,
+              {
+                borderColor:
+                  appointmentDetailsObject.appointmentStatus === 'تم التأكيد' ||
+                  appointmentDetailsObject.appointmentStatus === 'مكتمل'
+                    ? COLORS.green
+                    : COLORS.red,
+                backgroundColor:
+                  appointmentDetailsObject.appointmentStatus === 'تم التأكيد' ||
+                  appointmentDetailsObject.appointmentStatus === 'مكتمل'
+                    ? 'rgba(174, 210, 96,0.1)'
+                    : 'rgba(255, 0, 0,0.1)',
+              },
+            ]}
+            disabled={
+              appointmentDetailsObject.appointmentStatus === 'ملغي' ||
+              appointmentDetailsObject.appointmentStatus === 'مكتمل'
+            }
             onPress={() => {
               setDialogVisible(dialogVisible => true);
             }}>
@@ -237,7 +252,9 @@ function AppointmentDetails({navigation}) {
                 styles.patientTextStyle,
                 {
                   color:
-                    appointmentDetailsObject.appointmentStatus === 'تم التأكيد'||appointmentDetailsObject.appointmentStatus==="مكتمل"
+                    appointmentDetailsObject.appointmentStatus ===
+                      'تم التأكيد' ||
+                    appointmentDetailsObject.appointmentStatus === 'مكتمل'
                       ? COLORS.green
                       : COLORS.red,
                 },

@@ -48,7 +48,7 @@ function DoctorFilterHistory({navigation}) {
       <View style={styles.checkBoxView}>
         <View style={styles.checkBoxComponent}>
           <CheckBox checked={checked} onPress={() => setChecked(!checked)} />
-          <Text style={styles.checkBoxText}>المكتمل</Text>
+          <Text style={styles.checkBoxText}>تم الحضور</Text>
         </View>
         <View style={styles.checkBoxComponent}>
           <CheckBox checked={!checked} onPress={() => setChecked(!checked)} />

@@ -4,23 +4,21 @@ import {HeaderHomeDoctor, Statistics} from '../../Components';
 import {style} from '../../../../src/styles/Style';
 import {ListTiltle} from '../../../../src/components/Home';
 import PatientsListHome from '../../Components/PatientsListHome/PatientsListHome';
-import {PADDINGS} from '../../../../src/constants/Constants';
-import {RFPercentage, RFValue} from 'react-native-responsive-fontsize';
+import {PADDINGS, COLORS} from '../../../../src/constants/Constants';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 const HomeDoctor = ({navigation}) => {
   return (
     <>
       <HeaderHomeDoctor />
-      <View style={style.bigContainer}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingBottom: RFValue(80)}}>
+      <View style={styles.container}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Statistics />
           <ListTiltle
             Title="مواعيد اليوم"
             seeAll="اضافة"
             onPress={() => {
-             navigation.navigate("AddAppointmentBySecretary")
+              navigation.navigate('AddAppointmentBySecretary');
             }}
           />
           <PatientsListHome />
@@ -32,4 +30,10 @@ const HomeDoctor = ({navigation}) => {
 
 export default HomeDoctor;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.white,
+    paddingHorizontal: PADDINGS.mdPadding,
+  },
+});
