@@ -155,8 +155,8 @@ function AppointmentDetails({navigation}) {
         style={styles.afterEachCardMargin}
         onPress={() => {
           navigation.navigate('Prescription');
+        // console.log("ll")
         }}
-        // onPress={()=>{console.log("kk")}}
       />
     );
   };

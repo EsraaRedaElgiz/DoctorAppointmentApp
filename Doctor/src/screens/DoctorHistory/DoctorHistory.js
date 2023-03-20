@@ -39,6 +39,11 @@ function DoctorHistory({ navigation }) {
                 name={itemData.item.name.trim()}
                 time={itemData.item.time}
                 imageUri={itemData.item.imageUri}
+                onPress={()=>{
+                  navigation.navigate("AppointmentDetails",{
+                    PatientsArray:itemData.item
+                  })
+                }}
               />
             </>
           );
