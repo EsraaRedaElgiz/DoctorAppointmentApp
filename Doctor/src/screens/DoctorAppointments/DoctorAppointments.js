@@ -18,6 +18,7 @@ function DoctorAppointments({navigation}) {
   return (
     <View style={styles.container}>
       <HeaderNavigation
+      rightButtonHide
         icon
         iconName="sliders"
         title="المواعيد"

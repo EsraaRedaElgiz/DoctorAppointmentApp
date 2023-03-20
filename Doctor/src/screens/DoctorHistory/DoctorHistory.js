@@ -1,23 +1,24 @@
 import React from 'react';
 import {View, Text, ScrollView, Button, FlatList} from 'react-native';
 import styles from './DoctorHistoryStyles';
-import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
-import {COLORS, PADDINGS} from '../../../../src/constants/Constants';
+import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
+import { COLORS, PADDINGS } from '../../../../src/constants/Constants';
 import Calender from '../../../../src/components/Calender/Calender';
 import {PatientsData} from '../../../../src/utils';
 import PersonHistoryCard from '../../Components/PresonHistoryCard/PersonHistoryCard';
 
-function DoctorHistory({navigation}) {
+function DoctorHistory({ navigation }) {
   return (
     <View style={styles.container}>
       <HeaderNavigation
+        rightButtonHide
         icon
         iconName="sliders"
         title="التاريخ"
         color={COLORS.darkGray3}
         // onPress={()}
         onPressBtn={() => {
-          navigation.navigate('DoctorFilterHistory');
+          navigation.navigate("DoctorFilterHistory")
         }}
       />
       <View style={styles.headerView}>
