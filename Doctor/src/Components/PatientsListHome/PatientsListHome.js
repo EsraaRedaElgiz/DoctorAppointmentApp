@@ -17,7 +17,7 @@ const PatientsListHome = () => {
           return (
             <>
               <PersonAppointmentCard
-                name={itemData.item.name}
+                name={itemData.item.name.trim()}
                 time={itemData.item.time}
                 confirmed={itemData.item.confirmed}
                 imageUri={itemData.item.imageUri}

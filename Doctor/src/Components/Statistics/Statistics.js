@@ -15,7 +15,7 @@ import {useNavigation} from '@react-navigation/native';
 const Statistics = () => {
   const navigation = useNavigation();
   const ActiveColor = '#2f73fc';
-  const [StatisticsValue, setStatisticsValue] = useState(25);
+  const [StatisticsValue, setStatisticsValue] = useState(50);
   return (
     <>
       <ListTiltle Title="احصائيات اليوم" />
@@ -44,7 +44,7 @@ const Statistics = () => {
                 مواعيد اليوم
               </Text>
               <Text style={[style.textTitleBold, {color: COLORS.blue}]}>
-                8/24
+                12/24
               </Text>
             </View>
           </View>

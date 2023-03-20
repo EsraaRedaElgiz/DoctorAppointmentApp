@@ -3,11 +3,11 @@ import {View, Text, ScrollView, Image} from 'react-native';
 import GeneralPage from '../../../../src/components/GeneralPage/GeneralPage';
 import ProfileImage from '../../../../src/components/ProfileImage/ProfileImage';
 import UserProfileButton from '../../../../src/components/UserProfileButton/UserProfileButton';
-import { DoctorProfileData } from '../../../../src/utils/DummyData';
+import {DoctorProfileData} from '../../../../src/utils/DummyData';
 import styles from './DoctorProfileTabsStyles';
 import {useNavigation} from '@react-navigation/native';
-function DoctorProfileTabs(props) {
-  const navigation = useNavigation();
+function DoctorProfileTabs({navigation}) {
+  // const navigation = useNavigation();
   return (
     <GeneralPage>
       <View style={styles.container}>
@@ -25,18 +25,16 @@ function DoctorProfileTabs(props) {
                 iconName={el.icon}
                 onPress={() => {
                   idx == 0
-                    ? navigation.navigate('MedicalID1')
+                    ? navigation.navigate('DoctorViewProfile')
                     : idx == 1
-                    ? navigation.navigate('History')
+                    ? navigation.navigate('EditDoctorDetails')
                     : idx == 2
-                    ? navigation.navigate('Payment')
+                    ? navigation.navigate('DoctorNewPassword')
                     : idx == 3
-                    ? navigation.navigate('NewPassword')
+                    ? navigation.navigate('DoctorSupportTeam')
                     : idx == 4
-                    ? navigation.navigate('SupportTeam')
+                    ? null
                     : idx == 5
-                    ? null // will change
-                    : idx == 6
                     ? navigation.navigate('LogIn')
                     : null;
                 }}

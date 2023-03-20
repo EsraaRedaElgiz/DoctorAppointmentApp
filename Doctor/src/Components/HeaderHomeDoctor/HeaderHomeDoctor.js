@@ -10,9 +10,11 @@ import {
 } from '../../../../src/constants/Constants';
 import {style} from '../../../../src/styles/Style';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import {DoctorsData} from '../../../../src/utils';
+import Images from '../../../../src/constants/Images';
 const HeaderHomeDoctor = () => {
-  const navigation=useNavigation()
+  const navigation = useNavigation();
   let date = new Date();
   let day = date.getDate();
   let month = date.toLocaleString('default', {month: 'long'});
@@ -22,18 +24,15 @@ const HeaderHomeDoctor = () => {
       <View style={styles.image_userNameContainer}>
         <Pressable
           onPress={() => {
-            navigation.navigate("DoctorViewProfile")
+            navigation.navigate('DoctorViewProfile');
           }}>
-          <Image
-            source={{
-              uri: 'https://img.freepik.com/free-photo/smiling-doctor-with-strethoscope-isolated-grey_651396-974.jpg?w=740&t=st=1678903589~exp=1678904189~hmac=4c4da7bf447127fcedc6c412bfd9c4ef385ae0c8aceeb9d11550b6b8d99eb7ae',
-            }}
-            style={styles.userImage}
-          />
+          <Image source={DoctorsData[0].image} style={styles.userImage} />
         </Pressable>
         <View style={styles.textConatiner}>
           <Text style={style.textContent}> مرحبا</Text>
-          <Text style={style.textContentBold}>د جمال عبد العال</Text>
+          <Text style={style.textContentBold}>
+            {'د ' + DoctorsData[0].name}
+          </Text>
         </View>
       </View>
       <View
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: PADDINGS.xsPadding,
     paddingHorizontal: PADDINGS.mdPadding,
-    backgroundColor:COLORS.white
+    backgroundColor: COLORS.white,
   },
   image_userNameContainer: {
     minWidth: RFValue(120),
