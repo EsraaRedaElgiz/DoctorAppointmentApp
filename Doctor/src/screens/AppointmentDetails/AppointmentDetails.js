@@ -36,12 +36,12 @@ function AppointmentDetails({navigation}) {
   const globalState = useSelector(state => state);
   const [appointmentDetailsObject, setAppointmentDetailsObject] = useState({
     name: 'عاطف محمد',
-    day: '19',
+    day: '20',
     month: 'مارس',
     year: '2023',
     time: '12:00',
     status: 'م',
-    appointmentStatus: 'معلق',
+    appointmentStatus: 'مكتمل',
     histortStatus: 'public',
   });
   useEffect(() => {
@@ -223,19 +223,12 @@ function AppointmentDetails({navigation}) {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[
-              styles.buttonStyle,
-              {
-                borderColor:
-                  appointmentDetailsObject.appointmentStatus === 'تم التأكيد'
-                    ? COLORS.green
-                    : COLORS.red,
-                backgroundColor:
-                  appointmentDetailsObject.appointmentStatus === 'تم التأكيد'
-                    ? 'rgba(174, 210, 96,0.1)'
-                    : 'rgba(255, 0, 0,0.1)',
-              },
-            ]}
+            style={[styles.buttonStyle, { borderColor: appointmentDetailsObject.appointmentStatus === 'تم التأكيد'||appointmentDetailsObject.appointmentStatus==='مكتمل' ? COLORS.green : COLORS.red 
+          ,backgroundColor:appointmentDetailsObject.appointmentStatus==='تم التأكيد'||appointmentDetailsObject.appointmentStatus==="مكتمل"?'rgba(174, 210, 96,0.1)':'rgba(255, 0, 0,0.1)'
+          }
+          
+          ]}
+          disabled={appointmentDetailsObject.appointmentStatus==="ملغي"||appointmentDetailsObject.appointmentStatus==="مكتمل"}
             onPress={() => {
               setDialogVisible(dialogVisible => true);
             }}>
@@ -244,7 +237,7 @@ function AppointmentDetails({navigation}) {
                 styles.patientTextStyle,
                 {
                   color:
-                    appointmentDetailsObject.appointmentStatus === 'تم التأكيد'
+                    appointmentDetailsObject.appointmentStatus === 'تم التأكيد'||appointmentDetailsObject.appointmentStatus==="مكتمل"
                       ? COLORS.green
                       : COLORS.red,
                 },

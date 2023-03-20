@@ -29,8 +29,8 @@ function DoctorSupportTeam(props) {
   };
   return (
     <View style={styles.container}>
-      <HeaderNavigation title="فريق الدعم" />
-      <ScrollView style={styles.ScrollViewStyle}>
+      <HeaderNavigation title="فريق الدعم" color={COLORS.darkGray3}/>
+      <ScrollView style={styles.ScrollViewStyle} showsVerticalScrollIndicator={false}>
         <Controller
           name="input"
           control={control}
@@ -64,8 +64,10 @@ function DoctorSupportTeam(props) {
         <TouchableOpacity style={styles.callView}>
           <Ionicons name="call" size={ICONS.xxlIcon} color={COLORS.blue} />
         </TouchableOpacity>
-        <GeneralButton title="ارسال" onPress={handleSubmit(onSubmit)} />
       </ScrollView>
+      <View style={styles.viewButtonStyle}>
+      <GeneralButton title="ارسال" onPress={handleSubmit(onSubmit)} />
+      </View>
     </View>
   );
 }
