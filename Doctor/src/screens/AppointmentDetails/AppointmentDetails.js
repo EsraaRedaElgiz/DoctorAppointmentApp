@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   View,
   StatusBar,
@@ -20,13 +20,14 @@ import styles from './styles';
 import AppointmentAndHistoryComponent from '../../../.././src/components/AppointmentAndHistoryComponent/AppointmentAndHistoryComponent';
 import GeneralButton from '../../../.././src/components/GeneralButton/GeneralButton';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {RFValue} from 'react-native-responsive-fontsize';
 import Dialog from 'react-native-dialog';
-import { HeaderNavigation } from '../../../.././src/components/headerNavigation/HeaderNavigation';
+import {HeaderNavigation} from '../../../.././src/components/headerNavigation/HeaderNavigation';
 import {style} from '../../../.././src/styles/Style';
+// import { useNavigation } from '@react-navigation/native';
 
-
-function AppointmentDetails() {
+function AppointmentDetails({navigation}) {
+  // const navigation=useNavigation()
   const [dialogVisible, setDialogVisible] = useState(false);
   const [getDay, setGetDay] = useState('');
   const [getMonth, setGetMonth] = useState('');
@@ -35,13 +36,13 @@ function AppointmentDetails() {
   const globalState = useSelector(state => state);
   const [appointmentDetailsObject, setAppointmentDetailsObject] = useState({
     name: 'عاطف محمد',
-    day: '18',
+    day: '19',
     month: 'مارس',
     year: '2023',
     time: '12:00',
     status: 'م',
     appointmentStatus: 'معلق',
-    histortStatus: 'private',
+    histortStatus: 'public',
   });
   useEffect(() => {
     setGetDay(getDay => {
@@ -139,8 +140,8 @@ function AppointmentDetails() {
   ];
 
   keyextractor = (item, index) => index.toString();
-  const renderitems = ({ item, index }) => {
-    const { doctorName, doctorSpeciality, day, month, year } = item;
+  const renderitems = ({item, index}) => {
+    const {doctorName, doctorSpeciality, day, month, year} = item;
     return (
       <AppointmentAndHistoryComponent
         doctorName={doctorName}
@@ -150,15 +151,18 @@ function AppointmentDetails() {
         month={month}
         year={year}
         style={styles.afterEachCardMargin}
-      //onPress={()=>alert(index)}
+        onPress={() => {
+          navigation.navigate('Prescription');
+        }}
+        // onPress={()=>{console.log("kk")}}
       />
     );
   };
   const changeAppointmentStatus = () => {
-    const obj = { ...appointmentDetailsObject };
+    const obj = {...appointmentDetailsObject};
     if (obj.appointmentStatus == 'معلق') {
       setAppointmentDetailsObject(prev => {
-        return { ...prev, appointmentStatus: 'تم التأكيد' };
+        return {...prev, appointmentStatus: 'تم التأكيد'};
       });
     }
   };
@@ -170,7 +174,7 @@ function AppointmentDetails() {
         color={COLORS.darkGray3}
         padding={PADDINGS.mdPadding}
         onPress={() => {
-          console.log('hi');
+          navigation.goBack();
         }}
       />
       <View style={styles.appointmentDetailsContainer}>
@@ -206,22 +210,32 @@ function AppointmentDetails() {
           </View>
         </View>
         <View style={styles.appointmentDetailsContainerLeftViewStyle}>
-
-
           <TouchableOpacity
-            style={[styles.buttonStyle,{backgroundColor:'rgba(47, 115, 252,0.1)'}]}
-          >
-            <Text
-              style={[styles.patientTextStyle, { color: COLORS.blue }]}>
+            style={[
+              styles.buttonStyle,
+              {backgroundColor: 'rgba(47, 115, 252,0.1)'},
+            ]}
+            onPress={() => {
+              navigation.navigate('UserDetails');
+            }}>
+            <Text style={[styles.patientTextStyle, {color: COLORS.blue}]}>
               التفاصيل
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.buttonStyle, { borderColor: appointmentDetailsObject.appointmentStatus === 'تم التأكيد' ? COLORS.green : COLORS.red 
-          ,backgroundColor:appointmentDetailsObject.appointmentStatus==='تم التأكيد'?'rgba(174, 210, 96,0.1)':'rgba(255, 0, 0,0.1)'
-          }
-          
-          ]}
+            style={[
+              styles.buttonStyle,
+              {
+                borderColor:
+                  appointmentDetailsObject.appointmentStatus === 'تم التأكيد'
+                    ? COLORS.green
+                    : COLORS.red,
+                backgroundColor:
+                  appointmentDetailsObject.appointmentStatus === 'تم التأكيد'
+                    ? 'rgba(174, 210, 96,0.1)'
+                    : 'rgba(255, 0, 0,0.1)',
+              },
+            ]}
             onPress={() => {
               setDialogVisible(dialogVisible => true);
             }}>
@@ -245,9 +259,9 @@ function AppointmentDetails() {
       </View>
       {appointmentDetailsObject.histortStatus === 'public' ? (
         appointmentDetailsObject.appointmentStatus === 'تم التأكيد' &&
-          JSON.parse(appointmentDetailsObject.day) === getDay &&
-          appointmentDetailsObject.month === getMonth &&
-          JSON.parse(appointmentDetailsObject.year) === getYear ? (
+        JSON.parse(appointmentDetailsObject.day) === getDay &&
+        appointmentDetailsObject.month === getMonth &&
+        JSON.parse(appointmentDetailsObject.year) === getYear ? (
           <>
             <FlatList
               keyExtractor={keyextractor}
@@ -258,7 +272,12 @@ function AppointmentDetails() {
               contentContainerStyle={styles.flatListContentContainerStyle}
             />
             <View style={styles.buttonViewContainer}>
-              <GeneralButton title="اضافة روشته" />
+              <GeneralButton
+                title="اضافة روشته"
+                onPress={() => {
+                  navigation.navigate('DoctorPrescription');
+                }}
+              />
             </View>
           </>
         ) : (
@@ -276,41 +295,41 @@ function AppointmentDetails() {
         appointmentDetailsObject.month === getMonth &&
         JSON.parse(appointmentDetailsObject.year) === getYear ? (
         <View style={styles.viewForLockAndButtonStyle}>
-
           <View style={styles.viewForLockAndTextStyle}>
-
-              <View>
-                <Fontisto
-                  name="locked"
-                  size={RFValue(100)}
-                  color={COLORS.black}
-                />
-              </View>
-              <View style={styles.viewForPrivateTextStyle}>
-                <Text style={styles.privateTextStyle}>هذا التاريخ خاص</Text>
-              </View>
-
+            <View>
+              <Fontisto
+                name="locked"
+                size={RFValue(100)}
+                color={COLORS.black}
+              />
+            </View>
+            <View style={styles.viewForPrivateTextStyle}>
+              <Text style={styles.privateTextStyle}>هذا التاريخ خاص</Text>
+            </View>
           </View>
 
           <View>
-            <GeneralButton title="اضافة روشته" />
+            <GeneralButton
+              title="اضافة روشته"
+              onPress={() => {
+                navigation.navigate('DoctorPrescription');
+              }}
+            />
           </View>
         </View>
       ) : (
         <View style={styles.viewForLockAndButtonStyle}>
           <View style={styles.viewForLockAndTextStyle}>
-
-              <View>
-                <Fontisto
-                  name="locked"
-                  size={RFValue(100)}
-                  color={COLORS.darkGray3}
-                />
-              </View>
-              <View style={styles.viewForPrivateTextStyle}>
-                <Text style={styles.privateTextStyle}>هذا التاريخ خاص</Text>
-              </View>
-
+            <View>
+              <Fontisto
+                name="locked"
+                size={RFValue(100)}
+                color={COLORS.darkGray3}
+              />
+            </View>
+            <View style={styles.viewForPrivateTextStyle}>
+              <Text style={styles.privateTextStyle}>هذا التاريخ خاص</Text>
+            </View>
           </View>
         </View>
       )}

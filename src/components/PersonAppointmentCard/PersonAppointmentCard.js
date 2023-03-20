@@ -1,13 +1,13 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {COLORS, FONTS, MARGIN} from '../../constants/Constants';
 import LinearGradient from 'react-native-linear-gradient';
 
 function PersonAppointmentCard(props) {
-  const {name, pending, confirmed, time, imageUri} = props;
+  const {name, pending, confirmed, time, imageUri, onPress} = props;
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={onPress}>
       <View style={styles.wrap1}>
         <LinearGradient
           colors={[COLORS.blue, COLORS.lightBlue]}
@@ -22,7 +22,7 @@ function PersonAppointmentCard(props) {
                 : 'https://img.freepik.com/free-photo/smiling-doctor-with-strethoscope-isolated-grey_651396-974.jpg?w=740&t=st=1678903589~exp=1678904189~hmac=4c4da7bf447127fcedc6c412bfd9c4ef385ae0c8aceeb9d11550b6b8d99eb7ae',
             }}
           />
-          <View style={[styles.timeView,{alignItems:'flex-start'}]}>
+          <View style={[styles.timeView, {alignItems: 'flex-start'}]}>
             <Text style={styles.name}>{name ? name : 'عبدالرحمن عياد'}</Text>
             <Text style={styles.time}>{time}</Text>
           </View>
@@ -45,7 +45,7 @@ function PersonAppointmentCard(props) {
           ]}
         />
       </View>
-    </View>
+    </Pressable>
   );
 }
 

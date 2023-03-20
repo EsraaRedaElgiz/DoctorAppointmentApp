@@ -8,7 +8,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import {COLORS} from '../../../../src/constants/Constants';
 import {CheckBox} from 'react-native-elements';
 import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
-function DoctorFilterHistory() {
+function DoctorFilterHistory({navigation}) {
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [date, setDate] = useState('');
   const [dateError, setDateError] = useState('');
@@ -20,7 +20,13 @@ function DoctorFilterHistory() {
   };
   return (
     <View style={styles.container}>
-      <HeaderNavigation title="فلتر" />
+      <HeaderNavigation
+        title="تصنيف"
+        color={COLORS.darkGray3}
+        onPress={() => {
+          navigation.goBack();
+        }}
+      />
       <Text style={styles.title}>اختر تاريخ محدد</Text>
       <View style={styles.dateInputView}>
         <ViewLikeTextInput
@@ -64,7 +70,12 @@ function DoctorFilterHistory() {
         />
       )}
       <View style={styles.buttonView}>
-        <GeneralButton title="تم" />
+        <GeneralButton
+          title="تم"
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
       </View>
     </View>
   );

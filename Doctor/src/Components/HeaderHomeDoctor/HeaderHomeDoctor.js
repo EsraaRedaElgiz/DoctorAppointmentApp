@@ -10,7 +10,9 @@ import {
 } from '../../../../src/constants/Constants';
 import {style} from '../../../../src/styles/Style';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native';
 const HeaderHomeDoctor = () => {
+  const navigation=useNavigation()
   let date = new Date();
   let day = date.getDate();
   let month = date.toLocaleString('default', {month: 'long'});
@@ -20,7 +22,7 @@ const HeaderHomeDoctor = () => {
       <View style={styles.image_userNameContainer}>
         <Pressable
           onPress={() => {
-            Alert.alert('go to user profile');
+            navigation.navigate("DoctorViewProfile")
           }}>
           <Image
             source={{

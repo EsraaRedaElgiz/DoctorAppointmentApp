@@ -6,6 +6,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {COLORS} from '../constants/Constants';
 
 const AppContainer = props => {
+
   const {isAuth} = props;
   return (
     <>

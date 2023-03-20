@@ -7,6 +7,7 @@ import {
   Pressable,
   FlatList,
   Alert,
+  ImageBackground,
 } from 'react-native';
 import React, {useState} from 'react';
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -25,9 +26,13 @@ import GeneralButton from '../../../../src/components/GeneralButton/GeneralButto
 import {style} from '../../../../src/styles/Style';
 import {DoctorsData} from '../../../../src/utils';
 import {Rating} from 'react-native-stock-star-rating';
-import { ListTiltle } from '../../../../src/components/Home';
+import {ListTiltle} from '../../../../src/components/Home';
+import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
+import {useNavigation} from '@react-navigation/native';
+
 // import {useRoute} from '@react-navigation/native';
 const DoctorViewProfile = () => {
+  const navigation = useNavigation();
   const region = {
     latitude: 30.033333,
     longitude: 31.233334,
@@ -43,10 +48,17 @@ const DoctorViewProfile = () => {
           style={{backgroundColor: COLORS.white}}
           showsVerticalScrollIndicator={false}>
           {/* image */}
-          <Image
+
+          <ImageBackground
             source={DoctorsData[0].image}
-            style={{width: '100%', height: RFValue(300)}}
-          />
+            style={{width: '100%', height: RFValue(300)}}>
+            <HeaderNavigation
+              padding={PADDINGS.mdPadding}
+              onPress={() => {
+                navigation.goBack();
+              }}
+            />
+          </ImageBackground>
 
           {/* NameAndSpecialty */}
           <View style={styles.textsContainer}>
@@ -139,21 +151,6 @@ const DoctorViewProfile = () => {
             </View>
           </View>
         </ScrollView>
-
-        <GeneralButton
-          title="حجز "
-          style={{
-            width: '90%',
-            alignSelf: 'center',
-            marginBottom: MARGIN.mdMargin,
-          }}
-          onPress={() => {
-            // navigation.navigate('BookAppointment', {
-            //   DoctorArray: DoctorArray,
-            // });
-            Alert.alert('Go to ');
-          }}
-        />
       </View>
     </>
   );
@@ -210,8 +207,6 @@ const CardsDoctor = props => {
   );
 };
 export {CardsDoctor};
-
-
 
 const styles = StyleSheet.create({
   textsContainer: {

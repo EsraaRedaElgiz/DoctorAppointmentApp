@@ -119,7 +119,12 @@ function DoctorPrescription({navigation}) {
         <View style={styles.diagnosisView}>
           <GeneralTextInput placeholder="اكتب التشخيص" multiline />
         </View>
-        <Text style={style.textContentBold}>العلاج</Text>
+        <View style={styles.analysisAndDiagnosis}>
+          <Text style={style.textContentBold}>العلاج</Text>
+          <TouchableOpacity style={styles.plusIconView}>
+            <Icon name="plus" style={styles.icon} />
+          </TouchableOpacity>
+        </View>
         <View style={{marginVertical: MARGIN.mdMargin}}>
           <Table borderStyle={{borderWidth: 1}}>
             <Row

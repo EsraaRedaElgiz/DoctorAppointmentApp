@@ -15,7 +15,7 @@ function viewLikeTextInput(props) {
         </Text>
       </View>
       <TouchableOpacity onPress={onPress}>
-        <FontAwesome5 name={iconName} size={RFValue(24)} />
+        <FontAwesome5 name={iconName} size={RFValue(24)} color={COLORS.darkGray}/>
       </TouchableOpacity>
     </View>
   );

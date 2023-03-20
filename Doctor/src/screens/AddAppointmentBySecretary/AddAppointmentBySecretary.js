@@ -20,7 +20,7 @@ import {useForm, Controller} from 'react-hook-form';
 import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ViewLikeTextInput from '../../../../src/components/ViewLikeTextInput/ViewLikeTextInput';
-function AddAppointmentBySecretary() {
+function AddAppointmentBySecretary({navigation}) {
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [timePickerVisible, setTimePickerVisible] = useState(false);
   const [date, setDate] = useState('');
@@ -86,6 +86,7 @@ function AddAppointmentBySecretary() {
         return '';
       });
       reset();
+      navigation.goBack();
     }
   };
   return (
@@ -108,6 +109,7 @@ function AddAppointmentBySecretary() {
           setTimeError(timeError => {
             return '';
           });
+          navigation.goBack();
         }}
       />
       <ScrollView

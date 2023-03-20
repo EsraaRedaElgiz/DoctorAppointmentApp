@@ -3,11 +3,14 @@ import React from 'react';
 import {PatientsData} from '../../../../src/utils';
 import PersonAppointmentCard from '../../../../src/components/PersonAppointmentCard/PersonAppointmentCard';
 import {RFValue} from 'react-native-responsive-fontsize';
+import { useNavigation } from '@react-navigation/native';
 
 const PatientsListHome = () => {
+  const navigation=useNavigation()
   return (
     <View>
       <FlatList
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingHorizontal: RFValue(1)}}
         data={PatientsData}
         renderItem={(itemData, index) => {
@@ -18,6 +21,9 @@ const PatientsListHome = () => {
                 time={itemData.item.time}
                 confirmed={itemData.item.confirmed}
                 imageUri={itemData.item.imageUri}
+                onPress={()=>{
+                  navigation.navigate("AppointmentDetails")
+                }}
               />
             </>
           );
