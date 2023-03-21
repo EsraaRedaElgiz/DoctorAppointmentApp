@@ -10,7 +10,7 @@ function App() {
   //   <>
   //   {/* <DoctorPrescription/> */}
   //   {/* <Prescription/> */}
-    // { <EditDoctorDetails/> 
+  //    {/* <EditDoctorDetails/>  */}
   //   </>
   // )
   const globalState = useSelector(state => state);
