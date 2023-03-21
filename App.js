@@ -9,6 +9,7 @@ function App() {
   ) : (
     <AppContainer isAuth={globalState.AuthReducer.isLoggedIn} />
   );
+  
 }
 
 export default App;

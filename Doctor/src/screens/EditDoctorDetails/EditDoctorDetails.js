@@ -1,9 +1,9 @@
-import { View, Text, StyleSheet, TouchableOpacity ,ScrollView,StatusBar,Modal,Dimensions} from 'react-native'
+import { View, Text,TouchableOpacity ,StyleSheet,ScrollView,StatusBar,Modal,Dimensions} from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import { COLORS, FONTS, PADDINGS, RADIUS } from '../../../../src/constants/Constants';
+import styles from"./EditDoctorDetailsStyle"
 import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
 import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
-import GeneralPage from '../../../../src/components/GeneralPage/GeneralPage';
 import ProfileImage from '../../../../src/components/ProfileImage/ProfileImage';
 import DropDown from '../../../../src/components/DropDown/DropDown';
 import Reusabletextinput from '../../../../src/components/AppTextinput/AppTextinput';
@@ -14,6 +14,7 @@ import { requestCameraPermission } from '../../../../src/utils/CameraPermissin';
 import { Controller, useForm } from 'react-hook-form'
 import { style } from '../../../../src/styles/Style';
 import { CheckBox } from 'react-native-elements';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 export default function EditDoctorDetails() {
  const { control, handleSubmit, formState: { errors },setValue } = useForm({
   defaultValues:{
@@ -29,9 +30,21 @@ export default function EditDoctorDetails() {
     section:''
   }
 });
+const region = {
+  latitude: 30.78650859999999,
+  longitude: 31.0003757,
+  latitudeDelta: 0.0922,
+  longitudeDelta: 0.0421,
+};
+const mapRef = useRef();
+
+  const [long, setLong] = useState(0);
+  const [lat, setLat] = useState(0);
+  
  const onSubmit = data => console.log(data);
  const [photo_uri, setphoto_uri] = useState("");
  const Specialization = ["اسنان", "باطنة", "صدر", "عيون"]
+ const [modalVisible, setModalVisible] = useState(false);
  const [modal_Visible_wokdays, setmodal_Visible_wokdays] = useState(false);
  const { width, height } = Dimensions.get('screen');
  const data = [
@@ -116,6 +129,18 @@ const GetSelect = () => {
   // }
   setValue("Workdays", daysText, {shouldValidate: true});
 }
+const get_location = () => {
+  // let browser_url =
+  //   'https://www.google.de/maps/@' +
+  //   region.latitude +
+  //   ',' +
+  //   region.longitude +
+  //   '?q=';
+
+  let browser_url =
+    'تم تعديل الموقع بنجاح'
+  setValue('Location', browser_url, { shouldValidate: true });
+};
  return (
   
    <View style={styles.Continer}>
@@ -205,6 +230,7 @@ const GetSelect = () => {
          value={value}
          onChangeText={onChange}
          onBlur={onBlur}
+         onTouchStart={() => setModalVisible(true)}
          bordercolor={errors.Location ? "#f00" : COLORS.gray}
         />
          <Text style={{ color: "red", alignSelf: "flex-start" }}>
@@ -464,6 +490,59 @@ const GetSelect = () => {
       <Text style={styles.optionTextStyle}>انهاء</Text>
      </TouchableOpacity>
     </RBSheet>
+    <Modal
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+        <MapView
+          ref={mapRef}
+          provider={PROVIDER_GOOGLE}
+          initialRegion={region}
+          showsUserLocation={true}
+          followsUserLocation={true}
+          loadingEnabled
+          loadingIndicatorColor={COLORS.blue}
+          style={{ flex: 1 }}
+          onRegionChangeComplete={(region, details) => {
+            console.log('regoin change :>>> ', JSON.stringify(region));
+            console.log('regoin details :>>> ', JSON.stringify(details));
+            setLong(region.longitude);
+            setLat(region.latitude);
+          }}
+          onPress={e => {
+            console.log(
+              e.nativeEvent.coordinate.latitude,
+              e.nativeEvent.coordinate.longitude,
+            );
+            console.log('position : ', e.nativeEvent.position);
+            setLong(e.nativeEvent.coordinate.longitude);
+            setLat(e.nativeEvent.coordinate.latitude);
+            mapRef.current.animateToRegion({
+              latitude: e.nativeEvent.coordinate.latitude,
+              longitude: e.nativeEvent.coordinate.longitude,
+              latitudeDelta: 0.05,
+              longitudeDelta: 0.05,
+            });
+            mapRef.current
+              .addressForCoordinate({
+                latitude: e.nativeEvent.coordinate.latitude,
+                longitude: e.nativeEvent.coordinate.longitude,
+              })
+              .then(res => console.log(res));
+            get_location();
+          }}>
+          <Marker
+            coordinate={{
+              latitude: lat,
+              longitude: long,
+            }}
+            pinColor={'green'}
+            draggable
+          // onDragEnd={(e) => console.log("test :>>>> ", e.nativeEvent.coordinate)}
+          ></Marker>
+        </MapView>
+      </Modal>
     
     <Modal
         visible={modal_Visible_wokdays}
@@ -518,87 +597,3 @@ const GetSelect = () => {
    </View>
  )
 }
-const styles = StyleSheet.create({
- Continer: {
-  flex: 1,
-  backgroundColor: COLORS.white,
-  padding: PADDINGS.mdPadding
- },
- image: {
-  flex: 1,
-  alignItems: "center",
-  justifyContent: "center"
- },
- Specalizationandexperience: {
-  width: "100%",
-  alignItems: "center",
-  justifyContent: "space-around",
-  flexDirection: "row",
-  marginTop: RFValue(10)
- },
- viewofDropDown: {
-  width: "48%",
-  height: RFValue(70),
-  alignItems: "center",
-  justifyContent: "space-around",
- },
- viewofinput: {
-  width: "47%",
-  height: RFValue(70),
-  alignItems: "center",
-  justifyContent: "space-around",
- },
- bottominputview: {
-  marginBottom: RFValue(0)
- }, timeandsection: {
-  width: "100%",
-  alignItems: "center",
-  justifyContent: "space-around",
-  flexDirection: "row",
- },
- dropDownMarginBottom: {
-  marginTop: RFValue(6),
- },
- startandend: {
-  width: "31%",
-  height: 65,
-  marginBottom: RFValue(10)
- },
- eachOptionInBottonTab: {
-  width: '100%',
-  height: RFValue(50),
-  alignItems: 'center',
-  justifyContent: 'center',
- },
- optionTextStyle: {
-  fontSize: FONTS.h5,
-  color: COLORS.blue,
-  fontWeight: '600',
- }, line: {
-  height: RFValue(1),
-  backgroundColor: COLORS.gray,
-  width: '90%',
- },
- buttonViewStyle: {
-   backgroundColor: COLORS.white,
-   paddingBottom: PADDINGS.mdPadding
-
- },
- modelofcheckbox: {
-  flex: 1,
-  backgroundColor: "#fff",
-  alignItems: "center",
-  justifyContent: "center",
-  backgroundColor: "#0005"
-},
-viewofcheckbox: {
-  width: "50%",
-  alignItems: "center",
-  justifyContent: "flex-start",
-  flexDirection: "row"
-}, viewImageStyle: {
-  width: '100%',
-  alignItems: 'center',
-  justifyContent: 'center',
-}
-})
