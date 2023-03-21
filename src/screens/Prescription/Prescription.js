@@ -125,7 +125,7 @@ function Prescription({navigation}) {
         </View>
         <Text style={style.textContentBold}>العلاج</Text>
         <View style={{marginVertical: MARGIN.mdMargin}}>
-          {/* <Table borderStyle={{borderWidth: 1}}>
+          <Table borderStyle={{borderWidth: 1}}>
             <Row
               data={head}
               flexArr={[1, 1, 1]}
@@ -140,25 +140,8 @@ function Prescription({navigation}) {
                 textStyle={styles.text}
               />
             </TableWrapper>
-          </Table> */}
-
-          <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
-             <Row
-              data={['الدواء', 'المدة', 'ملاحظات']}
-              style={styles.head}
-              textStyle={styles.text}
-            />
-
-            <Rows
-              data={[
-                ['lorim', 'يومان', 'مرة'],
-                ['hello', 'يوم', '3 مرات'],
-                ['Hiii', 'يومان', 'مرة'],
-                ['tmam', 'يومان', 'مرة'],
-              ]}
-              textStyle={styles.text}
-            /> 
           </Table>
+
         </View>
         <Text style={style.textContentBold}>التحاليل</Text>
         <View style={styles.analysis}>

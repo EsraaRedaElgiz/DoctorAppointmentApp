@@ -7,8 +7,11 @@ import {userProfileData} from '../../utils/DummyData';
 import styles from './UserProfileStyle';
 import {useNavigation} from '@react-navigation/native';
 import Images from '../../constants/Images';
+import { useDispatch } from 'react-redux';
+import {  setLoggedOut } from '../../Redux/Reducers/AuthSlice';
 function UserProfile(props) {
   const navigation = useNavigation();
+  const dispatch=useDispatch()
   return (
     <GeneralPage>
       <View style={styles.container}>
@@ -36,7 +39,7 @@ function UserProfile(props) {
                     : idx == 5
                     ? null // will change
                     : idx == 6
-                    ? navigation.navigate('LogIn')
+                    ? dispatch(setLoggedOut())
                     : null;
                 }}
               />
