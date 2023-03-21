@@ -31,8 +31,8 @@ import {HeaderNavigation} from '../../../../src/components/headerNavigation/Head
 import {useNavigation} from '@react-navigation/native';
 
 // import {useRoute} from '@react-navigation/native';
-const DoctorViewProfile = () => {
-  const navigation = useNavigation();
+const DoctorViewProfile = ({navigation}) => {
+  //const navigation = useNavigation();
   const region = {
     latitude: 30.033333,
     longitude: 31.233334,
@@ -50,7 +50,9 @@ const DoctorViewProfile = () => {
           {/* image */}
 
           <ImageBackground
-            source={DoctorsData[0].image}
+            source={{
+              uri: 'https://img.freepik.com/free-photo/smiling-doctor-with-strethoscope-isolated-grey_651396-974.jpg?w=740&t=st=1678903589~exp=1678904189~hmac=4c4da7bf447127fcedc6c412bfd9c4ef385ae0c8aceeb9d11550b6b8d99eb7ae',
+            }}
             style={{width: '100%', height: RFValue(300)}}>
             <HeaderNavigation
               padding={PADDINGS.mdPadding}

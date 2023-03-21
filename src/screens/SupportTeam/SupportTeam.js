@@ -11,10 +11,11 @@ import {useForm, Controller} from 'react-hook-form';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import GeneralPage from '../../components/GeneralPage/GeneralPage';
-import {COLORS, ICONS} from '../../constants/Constants';
+import {COLORS, ICONS, PADDINGS} from '../../constants/Constants';
 import styles from './SupportTeamStyle';
 import {useNavigation} from '@react-navigation/native';
 import {Alert} from 'react-native/Libraries/Alert/Alert';
+import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
 function SupportTeam(props) {
   const navigation = useNavigation();
   const {
@@ -29,8 +30,11 @@ function SupportTeam(props) {
   };
   return (
     <View style={styles.container}>
-      <HeaderNavigation title="فريق الدعم" />
-      <ScrollView style={styles.ScrollViewStyle}>
+      <HeaderNavigation title="فريق الدعم" color={COLORS.darkGray3} 
+      onPress={() => {
+          navigation.goBack();
+        }}/>
+      <ScrollView style={styles.ScrollViewStyle} showsVerticalScrollIndicator={false}>
         <Controller
           name="input"
           control={control}
@@ -64,8 +68,11 @@ function SupportTeam(props) {
         <TouchableOpacity style={styles.callView}>
           <Ionicons name="call" size={ICONS.xxlIcon} color={COLORS.blue} />
         </TouchableOpacity>
-        <GeneralButton title="ارسال" onPress={handleSubmit(onSubmit)} />
       </ScrollView>
+      <View style={styles.viewButtonStyle}>
+      <GeneralButton title="ارسال" onPress={handleSubmit(onSubmit)} />
+      </View>
+
     </View>
   );
 }

@@ -68,7 +68,10 @@ const styles = StyleSheet.create({
   errorTextStyle: {
     marginBottom: height * 0.14,
     color: COLORS.red,
-  },
+  },viewButtonStyle: {
+    paddingBottom:PADDINGS.mdPadding,
+    backgroundColor:COLORS.white
+  }
 });
 
 export default styles;

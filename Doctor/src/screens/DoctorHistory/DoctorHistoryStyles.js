@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: MARGIN.xsMargin,
     marginBottom: MARGIN.mdMargin,
+    paddingHorizontal: PADDINGS.xsPadding,
   },
   dateText: {
     fontSize: FONTS.h5,

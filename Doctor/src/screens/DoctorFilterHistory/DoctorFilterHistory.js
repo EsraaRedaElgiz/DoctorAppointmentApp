@@ -48,11 +48,11 @@ function DoctorFilterHistory({navigation}) {
       <View style={styles.checkBoxView}>
         <View style={styles.checkBoxComponent}>
           <CheckBox checked={checked} onPress={() => setChecked(!checked)} />
-          <Text style={styles.checkBoxText}>المكتمل</Text>
+          <Text style={styles.checkBoxText}>مكتمل</Text>
         </View>
         <View style={styles.checkBoxComponent}>
           <CheckBox checked={!checked} onPress={() => setChecked(!checked)} />
-          <Text style={styles.checkBoxText}>الملغي</Text>
+          <Text style={styles.checkBoxText}>ملغى</Text>
         </View>
       </View>
       {datePickerVisible && (

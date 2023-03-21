@@ -25,9 +25,12 @@ import Dialog from 'react-native-dialog';
 import {HeaderNavigation} from '../../../.././src/components/headerNavigation/HeaderNavigation';
 import {style} from '../../../.././src/styles/Style';
 // import { useNavigation } from '@react-navigation/native';
-
+import {useRoute} from '@react-navigation/native';
 function AppointmentDetails({navigation}) {
   // const navigation=useNavigation()
+  const route = useRoute();
+  const PatientsArray = route.params.PatientsArray;
+  const appointmentStatus = route.params.appointmentStatus;
   const [dialogVisible, setDialogVisible] = useState(false);
   const [getDay, setGetDay] = useState('');
   const [getMonth, setGetMonth] = useState('');
@@ -35,13 +38,13 @@ function AppointmentDetails({navigation}) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   const [appointmentDetailsObject, setAppointmentDetailsObject] = useState({
-    name: 'عاطف محمد',
-    day: '19',
+    name: PatientsArray.name,
+    day: '21',
     month: 'مارس',
     year: '2023',
-    time: '12:00',
+    time: PatientsArray.time,
     status: 'م',
-    appointmentStatus: 'معلق',
+    appointmentStatus: appointmentStatus,
     histortStatus: 'public',
   });
   useEffect(() => {
@@ -128,14 +131,14 @@ function AppointmentDetails({navigation}) {
       doctorSpeciality: 'الطب العام والداخلي',
       day: '4',
       month: 'سبتمبر',
-      year: '2023',
+      year: '2022',
     },
     {
-      doctorName: 'سامي علي',
+      doctorName: 'محمد طارق',
       doctorSpeciality: 'الطب العام والداخلي',
-      day: '4',
+      day: '5',
       month: 'سبتمبر',
-      year: '2023',
+      year: '2022',
     },
   ];
 
@@ -153,8 +156,8 @@ function AppointmentDetails({navigation}) {
         style={styles.afterEachCardMargin}
         onPress={() => {
           navigation.navigate('Prescription');
+          // console.log("ll")
         }}
-        // onPress={()=>{console.log("kk")}}
       />
     );
   };
@@ -182,7 +185,7 @@ function AppointmentDetails({navigation}) {
           <View style={styles.viewImageStyle}>
             <Image
               style={styles.imageStyle}
-              source={require('../../assets/Images/patientImage.jpg')}
+              source={{uri: PatientsArray.imageUri}}
             />
           </View>
           <View>
@@ -202,9 +205,11 @@ function AppointmentDetails({navigation}) {
             </View>
             <View>
               <Text style={styles.historyAndTimeTextStyle}>
-                {appointmentDetailsObject.time +
+                {
+                  appointmentDetailsObject.time /*+
                   ' ' +
-                  appointmentDetailsObject.status}
+                  appointmentDetailsObject.status*/
+                }
               </Text>
             </View>
           </View>
@@ -216,7 +221,10 @@ function AppointmentDetails({navigation}) {
               {backgroundColor: 'rgba(47, 115, 252,0.1)'},
             ]}
             onPress={() => {
-              navigation.navigate('UserDetails');
+              navigation.navigate('UserDetails', {
+                photo: PatientsArray.imageUri,
+                name: PatientsArray.name,
+              });
             }}>
             <Text style={[styles.patientTextStyle, {color: COLORS.blue}]}>
               التفاصيل
@@ -227,15 +235,22 @@ function AppointmentDetails({navigation}) {
               styles.buttonStyle,
               {
                 borderColor:
-                  appointmentDetailsObject.appointmentStatus === 'تم التأكيد'
+                  appointmentDetailsObject.appointmentStatus === 'تم التأكيد' ||
+                  appointmentDetailsObject.appointmentStatus === 'مكتمل'
                     ? COLORS.green
                     : COLORS.red,
                 backgroundColor:
-                  appointmentDetailsObject.appointmentStatus === 'تم التأكيد'
+                  appointmentDetailsObject.appointmentStatus === 'تم التأكيد' ||
+                  appointmentDetailsObject.appointmentStatus === 'مكتمل'
                     ? 'rgba(174, 210, 96,0.1)'
                     : 'rgba(255, 0, 0,0.1)',
               },
             ]}
+            disabled={
+              appointmentDetailsObject.appointmentStatus === 'ملغى' ||
+              appointmentDetailsObject.appointmentStatus === 'مكتمل' ||
+              appointmentDetailsObject.appointmentStatus==="تم التأكيد"
+            }
             onPress={() => {
               setDialogVisible(dialogVisible => true);
             }}>
@@ -244,7 +259,9 @@ function AppointmentDetails({navigation}) {
                 styles.patientTextStyle,
                 {
                   color:
-                    appointmentDetailsObject.appointmentStatus === 'تم التأكيد'
+                    appointmentDetailsObject.appointmentStatus ===
+                      'تم التأكيد' ||
+                    appointmentDetailsObject.appointmentStatus === 'مكتمل'
                       ? COLORS.green
                       : COLORS.red,
                 },

@@ -23,6 +23,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: MARGIN.xsMargin,
     marginBottom: MARGIN.mdMargin,
+    // backgroundColor:"#f00",
+    paddingHorizontal: PADDINGS.xsPadding,
   },
   dateText: {
     fontSize: FONTS.h5,

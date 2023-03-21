@@ -149,6 +149,9 @@ const get_location = () => {
      title="تعديل المعلومات"
      backgroundColor={COLORS.white}
      color={COLORS.black}
+     onPress={()=>{
+      navigation.goBack()
+     }}
     />
     <ScrollView
     showsVerticalScrollIndicator={false}

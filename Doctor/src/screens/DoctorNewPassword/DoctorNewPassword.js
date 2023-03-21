@@ -38,7 +38,7 @@ function DoctorNewPassword({navigation}) {
     }
     dispatch(insertData(data))*/
     reset();
-    navigation.navigate('UserProfile');
+    navigation.goBack()
   };
 
   return (
@@ -49,7 +49,7 @@ function DoctorNewPassword({navigation}) {
         padding={PADDINGS.mdPadding}
         onPress={() => {
           reset();
-          navigation.navigate('UserProfile');
+          navigation.goBack()
         }}
       />
       <ScrollView

@@ -8,6 +8,7 @@ import DoctorAppointments from '../screens/DoctorAppointments/DoctorAppointments
 import UserDetails from '../screens/UserDetails/UserDetails';
 import Prescription from '../../../src/screens/Prescription/Prescription';
 import DoctorPrescription from '../screens/DoctorPrescription/DoctorPrescription';
+import DoctorFilterAppointment from '../screens/DoctorFilterAppointments/DoctorFilterAppointments';
 const Stack = createNativeStackNavigator();
 const DoctorHomeStack = () => {
   return (
@@ -25,6 +26,8 @@ const DoctorHomeStack = () => {
       <Stack.Screen name="UserDetails" component={UserDetails} />
       <Stack.Screen name="Prescription" component={Prescription} />
       <Stack.Screen name="DoctorPrescription" component={DoctorPrescription} />
+      <Stack.Screen name="DoctorAppointments" component={DoctorAppointments} />
+      <Stack.Screen name="DoctorFilterAppointment" component={DoctorFilterAppointment} />
     </Stack.Navigator>
   );
 };

@@ -15,9 +15,14 @@ import PersonAppointmentCard from '../../../../src/components/PersonAppointmentC
 import {PatientsData} from '../../../../src/utils';
 
 function DoctorAppointments({navigation}) {
+  let date = new Date();
+  let day = date.getDate();
+  let month = date.toLocaleString('default', {month: 'long'});
+  let year = date.getFullYear();
   return (
     <View style={styles.container}>
       <HeaderNavigation
+        rightButtonHide
         icon
         iconName="sliders"
         title="المواعيد"
@@ -30,7 +35,7 @@ function DoctorAppointments({navigation}) {
         }}
       />
       <View style={styles.headerView}>
-        <Text style={styles.dateText}> 4 Feb 2023</Text>
+        <Text style={styles.dateText}> {day+"\t" + month +"\t"+ year}</Text>
         <Pressable
           onPress={() => {
             navigation.navigate('AddAppointmentBySecretary');
@@ -42,34 +47,30 @@ function DoctorAppointments({navigation}) {
         <Calender />
       </View>
       <View style={styles.line} />
-      {/* <ScrollView
+      <FlatList
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollViewContentStyle}> */}
-        {/* <PersonAppointmentCard pending time="10:30 AM" />
-        <PersonAppointmentCard confirmed name="ايمن جاب الله" time="10:30 AM" />
-        <PersonAppointmentCard confirmed name="اسراء السباكة" time="10:30 AM" />
-        <PersonAppointmentCard confirmed name="مروة" time="10:30 AM" />
-        <PersonAppointmentCard pending name="يوسف" time="10:30 AM" />
-        <PersonAppointmentCard confirmed name="عدي حاتم" time="10:30 AM" />
-        <PersonAppointmentCard pending name="الشاذلي" time="10:30 AM" /> */}
-        <FlatList
-        showsVerticalScrollIndicator={false}
-          data={PatientsData}
-          renderItem={(itemData, index) => {
-            return (
-              <>
-                <PersonAppointmentCard
-                  confirmed={itemData.item.confirmed}
-                  name={itemData.item.name}
-                  time={itemData.item.time}
-                  onPress={()=>{
-                    navigation.navigate("AppointmentDetails")
-                  }}
-                />
-              </>
-            );
-          }}
-        />
+        data={PatientsData}
+        renderItem={(itemData, index) => {
+          return (
+            <>
+              <PersonAppointmentCard
+                confirmed={itemData.item.confirmed}
+                name={itemData.item.name.trim()}
+                time={itemData.item.time}
+                imageUri={itemData.item.imageUri}
+                onPress={() => {
+                  navigation.navigate('AppointmentDetails', {
+                    PatientsArray: itemData.item,
+                    appointmentStatus: itemData.item.confirmed
+                      ? 'تم التأكيد'
+                      : 'معلق',
+                  });
+                }}
+              />
+            </>
+          );
+        }}
+      />
       {/* </ScrollView> */}
     </View>
   );

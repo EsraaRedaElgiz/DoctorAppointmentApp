@@ -3,10 +3,10 @@ import React from 'react';
 import {PatientsData} from '../../../../src/utils';
 import PersonAppointmentCard from '../../../../src/components/PersonAppointmentCard/PersonAppointmentCard';
 import {RFValue} from 'react-native-responsive-fontsize';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const PatientsListHome = () => {
-  const navigation=useNavigation()
+  const navigation = useNavigation();
   return (
     <View>
       <FlatList
@@ -17,12 +17,15 @@ const PatientsListHome = () => {
           return (
             <>
               <PersonAppointmentCard
-                name={itemData.item.name}
+                name={itemData.item.name.trim()}
                 time={itemData.item.time}
                 confirmed={itemData.item.confirmed}
                 imageUri={itemData.item.imageUri}
-                onPress={()=>{
-                  navigation.navigate("AppointmentDetails")
+                onPress={() => {
+                  navigation.navigate('AppointmentDetails', {
+                    PatientsArray: itemData.item,
+                    appointmentStatus:itemData.item.confirmed?"تم التأكيد":"معلق"
+                  });
                 }}
               />
             </>
