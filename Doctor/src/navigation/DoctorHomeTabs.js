@@ -38,7 +38,7 @@ const DoctorHomeTabs = () => {
             headerShown: false,
             tabBarHideOnKeyboard: true,
             tabBarStyle: {
-              backgroundColor: COLORS.blue,
+              backgroundColor: COLORS.white,
             },
             tabBarIcon: ({focused}) => (
               <Ionicons
@@ -48,17 +48,18 @@ const DoctorHomeTabs = () => {
                     : iconNameUnselect[route.name]
                 }
                 size={ICONS.mdIcon}
-                color={focused ? COLORS.white : COLORS.gray}
+                color={focused ? COLORS.blue : COLORS.gray}
               />
             ),
             tabBarLabel: ({focused}) => (
-              <Text
+              focused?( <Text
                 style={[
                   style.textSmallContentBold,
-                  {color: focused ? COLORS.white : COLORS.gray},
+                  {color: focused ? COLORS.blue : COLORS.gray},
                 ]}>
                 {label[route.name]}
-              </Text>
+              </Text>):null
+             
             ),
           };
         }}>
