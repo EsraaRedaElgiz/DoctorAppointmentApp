@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text,View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import DoctorHomeStack from './DoctorHomeStack';
 import DoctorAppointmentStack from './AppointmentStack';
@@ -38,8 +38,9 @@ const DoctorHomeTabs = () => {
             headerShown: false,
             tabBarHideOnKeyboard: true,
             tabBarStyle: {
-              backgroundColor: COLORS.blue,
+              backgroundColor: COLORS.white,
             },
+            tabBarVisibilityAnimationConfig:true,
             tabBarIcon: ({focused}) => (
               <Ionicons
                 name={
@@ -48,18 +49,22 @@ const DoctorHomeTabs = () => {
                     : iconNameUnselect[route.name]
                 }
                 size={ICONS.mdIcon}
-                color={focused ? COLORS.white : COLORS.gray}
+                color={focused ? COLORS.blue : COLORS.gray}
               />
             ),
-            tabBarLabel: ({focused}) => (
-              <Text
-                style={[
-                  style.textSmallContentBold,
-                  {color: focused ? COLORS.white : COLORS.gray},
-                ]}>
-                {label[route.name]}
-              </Text>
-            ),
+            tabBarLabel: ({focused}) =>
+              focused ? (
+                <>
+                  <Text
+                    style={[
+                      style.textSmallContentBold,
+                      {color: focused ? COLORS.blue : COLORS.gray},
+                    ]}>
+                    {label[route.name]}
+                  </Text>
+                  <View style={style.underLineBottomTab}></View>
+                </>
+              ) : null,
           };
         }}>
         <Tab.Screen name="Home" component={DoctorHomeStack} />
