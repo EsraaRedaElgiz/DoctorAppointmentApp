@@ -99,17 +99,19 @@ function MedicalSheet({ navigation }) {
   const onSubmit = data => {
     //console.log(JSON.stringify(data) + "img" + photo_uri);
     let formdata = new FormData();
-    formdata.append("type_id", 2)
+    formdata.append("type_id", '2')
     formdata.append("first_name", name)
+    formdata.append("last_name", "")
     formdata.append("phone", phoneNum)
     formdata.append("email", email)
     formdata.append("password", password)
-    formdata.append("image", { uri: photo_uri.uri, name: photo_uri.fileName, type: photo_uri.type })
+    formdata.append("image", JSON.stringify({uri: photo_uri.uri, name: photo_uri.fileName, type: photo_uri.type}))
     formdata.append("patient_blood_type", data.bloodType)
     formdata.append("patient_weight", data.weight)
     formdata.append("patient_height", data.height)
     formdata.append("age", data.age)
-    formdata.append("gender", data.gender)
+    formdata.append("gender", "Male") // Male or Female
+    console.log(formdata);
     dispatch(registerUser(formdata))
     success === true ? navigation.navigate('LogIn') : null
     success === true ? setphoto_uri(photo_uri => {

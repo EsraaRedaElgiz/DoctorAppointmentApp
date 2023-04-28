@@ -24,5 +24,8 @@ const store = configureStore({
     HistoryReducer: HistoryReducer,
     AuthReducer: AuthReducer,
   },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: false
+  }),
 });
 export default store;

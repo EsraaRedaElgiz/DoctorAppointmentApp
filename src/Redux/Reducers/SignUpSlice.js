@@ -1,5 +1,6 @@
 import { createSlice ,createAsyncThunk} from "@reduxjs/toolkit"
 import axios from "axios"
+import Axios from "../../utils/axios"
 const initState = {
     name: "",
     phoneNum: "",
@@ -15,11 +16,18 @@ export const registerUser  = createAsyncThunk(
     async (args, thunkAPI) => {
         const { rejectWithValue } = thunkAPI
         try {
-            const response = await axios.post('https://doctor-graduation-project.000webhostapp.com/api/patient/user_signup.php', args)
-            console.log(JSON.stringify(response))
-
+            const response = await Axios({
+                    method: "POST",
+                    url: "/patient/user_signup.php",
+                    data: args,
+                    headers: {
+                        "Content-Type": "multipart/form-data"
+                    }
+                })
+            console.log(JSON.stringify(response.data))
+            return response;
         } catch (error) {
-            console.log(rejectWithValue(error.message))
+            console.log(error)
             return rejectWithValue(error.message);
 
         }
@@ -45,11 +53,11 @@ const signUpSlice = createSlice({
             state.isLoading = true;
             state.error = null;
         }),
-        builder.addCase(registerUser .fulfilled, (state, action) => {
+        builder.addCase(registerUser.fulfilled, (state, action) => {
             state.isLoading = false;
             state.success=true;
         }),
-        builder.addCase(registerUser .rejected, (state, action) => {
+        builder.addCase(registerUser.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
         })

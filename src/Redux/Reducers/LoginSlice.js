@@ -3,6 +3,7 @@ import { setLoggedIn } from "../../Redux/Reducers/AuthSlice"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { USER_TOKEN,USER_DATA } from '../../constants/Constants';
 import axios from 'axios';
+import Axios from '../../utils/axios';
 
 /*const userToken = AsyncStorage.getItem('userToken')
   ? AsyncStorage.getItem('userToken')
@@ -18,17 +19,19 @@ export const loginUser = createAsyncThunk(
   async (args, thunkAPI) => {
     const { rejectWithValue, dispatch } = thunkAPI
     try {
-      const response = await axios.post('https://doctor-graduation-project.000webhostapp.com/api/general/login.php', args)
-      console.log(JSON.stringify(response))
-      AsyncStorage.getItem(USER_TOKEN).then(res => {
-        if (res === 'USER_TOKEN') {
-          AsyncStorage.setItem(USER_TOKEN, JSON.stringify(response.user_token))
-          AsyncStorage.setItem(USER_DATA,JSON.stringify(response))
+      const response = await Axios({method: "POST", url: "/general/login.php", data: args})
+      console.log(JSON.stringify(response?.data))
+      // AsyncStorage.getItem(USER_TOKEN).then(res => {
+      //   if (res === 'USER_TOKEN') {
+        await  AsyncStorage.setItem(USER_TOKEN, JSON.stringify(response.data.user_token))
+        await  AsyncStorage.setItem(USER_DATA,JSON.stringify(response.data))
          
-        } 
-      })
+      //   } 
+      // })
       dispatch(setLoggedIn())
       //
+
+      return response.data;
     } catch (error) {
       console.log(rejectWithValue(error.message))
       return rejectWithValue(error.message);
@@ -46,7 +49,8 @@ const LoginSlice = createSlice({
       builder.addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.userInfo=action.payload;
-        //state.userToken=action.payload.userToken;
+        // state.userToken=action.payload.userToken;
+        // state.userInfo = action.payload
       }),
       builder.addCase(loginUser.rejected, (state, action) => {
         state.isLoading = false;
