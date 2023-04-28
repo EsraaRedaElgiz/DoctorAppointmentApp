@@ -12,24 +12,17 @@ import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import { TextInput } from 'react-native-paper';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import { useSelector, useDispatch } from 'react-redux';
-/*import {
+import {
   setName,
   setPhoneNum,
   setEmail,
   setPassword,
-  setConfirmPassword,
-} from '../../Redux/Reducers/SignUpSlice';*/
+} from '../../Redux/Reducers/SignUpSlice';
 import { useForm, Controller } from 'react-hook-form';
 import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
-//import { insertData } from "../../Redux/Reducers/SignUpSlice";
 function SignUp({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const [name, setName] = useState("")
-  const [phoneNum, setPhoneNum] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
   const [secured_pass_first, set_secured_pass_first] = useState(true);
   const [secured_pass_second, set_secured_pass_second] = useState(true);
 
@@ -42,7 +35,7 @@ function SignUp({ navigation }) {
   } = useForm({
 
     defaultValues: {
-      name:"",
+      name: "",
       phoneNum: "",
       email: "",
       password: "",
@@ -59,11 +52,15 @@ function SignUp({ navigation }) {
          password: data.password,
          confirmPassword: data.confirmPassword
        }
-       dispatch(insertData(data))
+       dispatch(registerUser(data))
        */
-    reset()
+    dispatch(setName(data.name))
+    dispatch(setPhoneNum(data.phoneNum))
+    dispatch(setEmail(data.email))
+    dispatch(setPassword(data.password))
     navigation.navigate('MedicalSheet');
-    
+    reset()
+
 
   };
 

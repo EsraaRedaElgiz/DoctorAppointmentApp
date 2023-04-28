@@ -8,26 +8,23 @@ import {
   Image,
 } from 'react-native';
 import styles from './styles';
-import {CheckBox} from 'react-native-elements';
+import { CheckBox } from 'react-native-elements';
 import { COLORS, ICONS, PADDINGS } from '../../constants/Constants';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import { TextInput } from 'react-native-paper';
 import ReusableArrowButton from '../../components/AppRightIcon/AppRightIcon';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  setEmail,
-  setPassword,
-  setRememberMe,
-} from '../../Redux/Reducers/LoginSlice';
 import { useForm, Controller } from 'react-hook-form';
 import LoginWithG from '../../utils/LoginWithG';
 import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
-import { setLoggedIn } from "../../Redux/Reducers/AuthSlice"
+//import { setLoggedIn } from "../../Redux/Reducers/AuthSlice"
 import { RFValue } from 'react-native-responsive-fontsize';
+import { loginUser } from '../../Redux/Reducers/LoginSlice';
 function LogIn({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
+  const { isLoading, userInfo } = globalState.LoginReducer
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [secured_pass, set_secured_pass] = useState(true);
   const {
@@ -44,15 +41,15 @@ function LogIn({ navigation }) {
   });
   const onSubmit = data => {
     //console.log(JSON.stringify(data) + "before" + toggleCheckBox);
-    /*const data = {
+    const sendData = {
       email: data.email,
-        password: data.phoneNum,
-       rememberMe: toggleCheckbox
-      }
-      dispatch(insertData(data))*/
-    reset()
-    setToggleCheckBox(toggleCheckBox => { return false })
-    dispatch(setLoggedIn())
+      password: data.password,
+      //rememberMe: toggleCheckbox
+      type:2
+    }
+    dispatch(loginUser(sendData))
+    userInfo !== null ? reset() : null
+    userInfo !== null ? setToggleCheckBox(toggleCheckBox => { return false }) : null
 
   };
 
@@ -162,16 +159,16 @@ function LogIn({ navigation }) {
                     <CheckBox
                       onPress={() =>
                         setToggleCheckBox(toggleCheckBox => { return !toggleCheckBox })
-                        
+
                       }
                       checked={toggleCheckBox}
                       checkedColor={COLORS.blue}
                       uncheckedColor={COLORS.gray}
-                      containerStyle={{marginLeft:RFValue(-10)}}
+                      containerStyle={{ marginLeft: RFValue(-10) }}
                     />
                   </View>
                   <View>
-                    <Text style={[styles.textAfterTextinputsStyle,{marginLeft:RFValue(-10)}]}>تذكرني</Text>
+                    <Text style={[styles.textAfterTextinputsStyle, { marginLeft: RFValue(-10) }]}>تذكرني</Text>
                   </View>
                 </View>
                 <TouchableOpacity
@@ -200,6 +197,7 @@ function LogIn({ navigation }) {
                 // onPress={()=>alert(toggleCheckBox)}
                 onPress={handleSubmit(onSubmit)}
                 style={styles.buttonMargin}
+                isLoading={isLoading}
               />
               <View style={styles.viewForLastTextStyle}>
                 <View>

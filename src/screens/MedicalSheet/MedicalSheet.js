@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   StatusBar,
@@ -7,30 +7,23 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
-import {COLORS, FONTS, PADDINGS} from '../../constants/Constants';
+import { COLORS, FONTS, PADDINGS } from '../../constants/Constants';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import HeaderArrowAndWord from '../../components/HeaderArrowAndWord/HeaderArrowAndWord';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import DropDown from '../../components/DropDown/DropDown';
-import {useSelector, useDispatch} from 'react-redux';
-/*import {
-  setPhotoUri,
-  setBloodType,
-  setWeight,
-  setHeight,
-  setAge,
-  setGender,
-} from '../../Redux/Reducers/MedicalSheetSlice';*/
-import {useForm, Controller} from 'react-hook-form';
+import { useSelector, useDispatch } from 'react-redux';
+import { useForm, Controller } from 'react-hook-form';
 import * as ImagePicker from 'react-native-image-picker';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import {requestCameraPermission} from '../../utils/CameraPermissin';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
-import {setLoggedIn} from '../../Redux/Reducers/AuthSlice';
+import { requestCameraPermission } from '../../utils/CameraPermissin';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+import { registerUser } from "../../Redux/Reducers/SignUpSlice";
 
-function MedicalSheet({navigation}) {
+function MedicalSheet({ navigation }) {
+
   useEffect(() => {
     requestCameraPermission();
   }, []);
@@ -42,7 +35,7 @@ function MedicalSheet({navigation}) {
         path: 'images',
       },
     };
-    ImagePicker.launchImageLibrary({options, includeBase64: true}, res => {
+    ImagePicker.launchImageLibrary({ options, includeBase64: true }, res => {
       if (res.didCancel) {
         console.log('User cancelled image picker');
       } else if (res.error) {
@@ -51,8 +44,10 @@ function MedicalSheet({navigation}) {
         console.log('User tapped custom button: ', res.customButton);
         alert(res.customButton);
       } else {
-        setphoto_uri(photo_uri => res.assets[0].uri); //الصوره اللي اخترناها هتتحط مكان الديفولت
+        setphoto_uri(photo_uri => res.assets[0]); //الصوره اللي اخترناها هتتحط مكان الديفولت
         // upload_img(res.assets[0].base64)//بيبعت الصوره للباك
+        //console.log(res.assets[0])
+
       }
     });
   };
@@ -73,19 +68,16 @@ function MedicalSheet({navigation}) {
         console.log('User tapped custom button: ', res.customButton);
         alert(res.customButton);
       } else {
-        setphoto_uri(photo_uri => res.assets[0].uri);
+        setphoto_uri(photo_uri => res.assets[0]);//هبعت للباك الاسم والصوره اللي هنا يو ار اي
         //upload_img(res.assets[0].base64)
+        // console.log(res.assets[0])
       }
     });
   };
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
+  const { isLoading, success, name, phoneNum, email, password } = globalState.SignUpReducer
   const [photo_uri, setphoto_uri] = useState('');
-  const [bloodType, setBloodType] = useState('');
-  const [weight, setWeight] = useState('');
-  const [height, setHeight] = useState('');
-  const [age, setAge] = useState('');
-  const [gender, setGender] = useState('');
 
   const blood = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
   const type = ['ذكر', 'أنثي'];
@@ -93,7 +85,7 @@ function MedicalSheet({navigation}) {
     control,
     handleSubmit,
     reset,
-    formState: {errors},
+    formState: { errors },
     watch,
   } = useForm({
     defaultValues: {
@@ -106,21 +98,24 @@ function MedicalSheet({navigation}) {
   });
   const onSubmit = data => {
     //console.log(JSON.stringify(data) + "img" + photo_uri);
-    /*const data = {
-      photoUri: photo_uri,
-      bloodType:data.bloodType,
-      weight:data.weight,
-      height:data.height,
-      age: data.age,
-      gender: data.gender,
-      }
-      dispatch(insertData(data))*/
-    setphoto_uri(photo_uri => {
+    let formdata = new FormData();
+    formdata.append("type_id", 2)
+    formdata.append("first_name", name)
+    formdata.append("phone", phoneNum)
+    formdata.append("email", email)
+    formdata.append("password", password)
+    formdata.append("image", { uri: photo_uri.uri, name: photo_uri.fileName, type: photo_uri.type })
+    formdata.append("patient_blood_type", data.bloodType)
+    formdata.append("patient_weight", data.weight)
+    formdata.append("patient_height", data.height)
+    formdata.append("age", data.age)
+    formdata.append("gender", data.gender)
+    dispatch(registerUser(formdata))
+    success === true ? navigation.navigate('LogIn') : null
+    success === true ? setphoto_uri(photo_uri => {
       return '';
-    });
-    reset();
-    // dispatch(setLoggedIn())
-    navigation.navigate('LogIn');
+    }) : null
+    success === true ? reset() : null
   };
   return (
     <>
@@ -149,7 +144,7 @@ function MedicalSheet({navigation}) {
                 <ProfileImage
                   iconOnImage={true}
                   onPressPen={() => refRBSheet.current.open()}
-                  imageUri={photo_uri}
+                  imageUri={photo_uri.uri}
                 />
               ) : (
                 <ProfileImage
@@ -167,7 +162,7 @@ function MedicalSheet({navigation}) {
                   rules={{
                     required: true,
                   }}
-                  render={({field: {onChange, onBlur, value}}) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <DropDown
                       style={styles.dropDownMarginBottom}
                       data={blood}
@@ -200,7 +195,7 @@ function MedicalSheet({navigation}) {
                       }
                     },
                   }}
-                  render={({field: {onChange, onBlur, value}}) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <Reusabletextinput
                       placeholder="الوزن"
                       keyboardType="numeric"
@@ -216,8 +211,8 @@ function MedicalSheet({navigation}) {
                   {errors.weight?.type === 'required'
                     ? 'يجب ادخال الوزن'
                     : errors.weight?.type === 'validate'
-                    ? 'يجب ادخال رقم'
-                    : ''}
+                      ? 'يجب ادخال رقم'
+                      : ''}
                 </Text>
               </View>
               <View style={styles.eachTextInputMargin}>
@@ -231,7 +226,7 @@ function MedicalSheet({navigation}) {
                       }
                     },
                   }}
-                  render={({field: {onChange, onBlur, value}}) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <Reusabletextinput
                       placeholder="الطول"
                       keyboardType="numeric"
@@ -247,8 +242,8 @@ function MedicalSheet({navigation}) {
                   {errors.height?.type === 'required'
                     ? 'بجب ادخال الطول'
                     : errors.height?.type === 'validate'
-                    ? 'يجب ادخال رقم'
-                    : ''}
+                      ? 'يجب ادخال رقم'
+                      : ''}
                 </Text>
               </View>
               <View style={styles.eachTextInputMargin}>
@@ -262,7 +257,7 @@ function MedicalSheet({navigation}) {
                       }
                     },
                   }}
-                  render={({field: {onChange, onBlur, value}}) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <Reusabletextinput
                       placeholder="السن"
                       keyboardType="numeric"
@@ -278,8 +273,8 @@ function MedicalSheet({navigation}) {
                   {errors.age?.type === 'required'
                     ? 'يجب ادخال السن'
                     : errors.age?.type === 'validate'
-                    ? 'يجب ادخال رقم'
-                    : ''}
+                      ? 'يجب ادخال رقم'
+                      : ''}
                 </Text>
               </View>
               <View style={styles.eachTextInputMargin}>
@@ -288,7 +283,7 @@ function MedicalSheet({navigation}) {
                   rules={{
                     required: true,
                   }}
-                  render={({field: {onChange, onBlur, value}}) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <DropDown
                       style={styles.dropDownMarginBottom}
                       data={type}
@@ -344,7 +339,7 @@ function MedicalSheet({navigation}) {
                   });
                 }}
                 style={styles.eachOptionInBottonTab}>
-                <Text style={[styles.optionTextStyle, {color: COLORS.red}]}>
+                <Text style={[styles.optionTextStyle, { color: COLORS.red }]}>
                   مسح الصوره
                 </Text>
               </TouchableOpacity>
@@ -359,7 +354,9 @@ function MedicalSheet({navigation}) {
         </View>
       </ScrollView>
       <View style={styles.buttonViewStyle}>
-        <GeneralButton title="تأكيد" onPress={handleSubmit(onSubmit)} />
+        <GeneralButton title="تأكيد" onPress={handleSubmit(onSubmit)}
+          isLoading={isLoading}
+        />
       </View>
     </>
   );
