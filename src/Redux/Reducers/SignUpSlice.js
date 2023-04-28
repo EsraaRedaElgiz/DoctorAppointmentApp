@@ -1,33 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice ,createAsyncThunk} from "@reduxjs/toolkit"
+import axios from "axios"
 const initState = {
     name: "",
     phoneNum: "",
     email: "",
     password: "",
-    confirmPassword: "",
     isLoading: false,
     error: null,
+    success:false
 }
 //backed
-/*export const insertData = createAsyncThunk(
-    "SignUp/insertData",
+export const registerUser  = createAsyncThunk(
+    "SignUp/registerUser ",
     async (args, thunkAPI) => {
         const { rejectWithValue } = thunkAPI
         try {
-            const response = await fetch('link', {
-                method: 'POST',
-                body: JSON.stringify(args),
-                headers: {
-                    'Content-Type': 'application/json; charset=UTF-8',
-                },
-            })
-            const data = await response.json();
-            return data;
+            const response = await axios.post('https://doctor-graduation-project.000webhostapp.com/api/patient/user_signup.php', args)
+            console.log(JSON.stringify(response))
 
         } catch (error) {
+            console.log(rejectWithValue(error.message))
             return rejectWithValue(error.message);
+
         }
-    })*/
+    })
 const signUpSlice = createSlice({
     name: "SignUp",
     initialState: initState,
@@ -41,24 +37,23 @@ const signUpSlice = createSlice({
             state.email = action.payload;
         }, setPassword: (state, action) => {
             state.password = action.payload;
-        }, setConfirmPassword: (state, action) => {
-            state.confirmPassword = action.payload;
-        },
+        }
     },
-    //backend
-    /*extraReducers:{
-        [insertData.pending]: (state, action) => {
+    
+    extraReducers:(builder)=> {
+        builder.addCase(registerUser.pending, (state, action) => {
             state.isLoading = true;
             state.error = null;
-        },
-        [insertData.fulfilled]: (state, action) => {
+        }),
+        builder.addCase(registerUser .fulfilled, (state, action) => {
             state.isLoading = false;
-        },
-        [insertData.rejected]: (state, action) => {
+            state.success=true;
+        }),
+        builder.addCase(registerUser .rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.payload;
-        },
-    }*/
+        })
+    }
 });
 export default signUpSlice.reducer;
 export const {
@@ -66,5 +61,4 @@ export const {
     setPhoneNum,
     setEmail,
     setPassword,
-    setConfirmPassword,
 } = signUpSlice.actions;

@@ -1,42 +1,41 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 const initState = {
-  photoUri: '',
-  bloodType: '',
-  weight: '',
-  height: '',
-  age: '',
-  gender: '',
+  isLoading: false,
+  error: null,
 };
+export const completeRegisterUser = createAsyncThunk(
+  "MedicalSheet/completeRegisterUser ",
+  async (args, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI
+    try {
+      const response = await axios.post('link', args)
+      console.log(JSON.stringify(response))
+
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+
+  })
 const medicalSheetSlice = createSlice({
   name: 'MedicalSheet',
   initialState: initState,
-  reducers: {
-    setPhotoUri: (state, action) => {
-      state.photoUri = action.payload;
-    },
-    setBloodType: (state, action) => {
-      state.bloodType = action.payload;
-    },
-    setWeight: (state, action) => {
-      state.weight = action.payload;
-    },
-    setHeight: (state, action) => {
-      state.height = action.payload;
-    },
-    setAge: (state, action) => {
-      state.age = action.payload;
-    },
-    setGender: (state, action) => {
-      state.gender = action.payload;
-    },
-  },
+  extraReducers: (builder) => {
+    builder.addCase(completeRegisterUser.pending, (state, action) => {
+      state.isLoading = true;
+      state.error = null;
+    }),
+      builder.addCase(completeRegisterUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+      }),
+      builder.addCase(completeRegisterUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+  }
+
 });
 export default medicalSheetSlice.reducer;
 export const {
-  setPhotoUri,
-  setBloodType,
-  setWeight,
-  setHeight,
-  setAge,
-  setGender,
+
 } = medicalSheetSlice.actions;

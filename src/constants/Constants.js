@@ -1,6 +1,8 @@
 import {RFValue} from 'react-native-responsive-fontsize';
 
 export const INTO_DONE = 'INTO_DONE';
+export const USER_TOKEN = 'USER_TOKEN';
+export const USER_DATA = 'USER_DATA';
 
 export const COLORS = {
   blue: '#2F73FC',
