@@ -9,6 +9,7 @@ import Payment from '../screens/Payment/Payment';
 import AddCard from '../screens/AddCard/AddCard';
 import MedicalID1 from '../screens/MedicalID1/MedicalID1';
 import EditPersonDetails from '../screens/EditPersonDetails/EditPersonDetails';
+import Prescription from '../screens/Prescription/Prescription';
 const Stack = createNativeStackNavigator();
 const UserProfileStack = () => {
   return (
@@ -25,6 +26,7 @@ const UserProfileStack = () => {
         <Stack.Screen name="SupportTeam" component={SupportTeam} />
         <Stack.Screen name="Payment" component={Payment} />
         <Stack.Screen name="AddCard" component={AddCard} />
+        <Stack.Screen name="Prescription" component={Prescription} />
       </Stack.Navigator>
     </>
   );

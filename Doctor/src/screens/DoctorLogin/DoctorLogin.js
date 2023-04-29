@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -8,28 +8,34 @@ import {
   Image,
 } from 'react-native';
 import styles from './DoctorLoginStyles';
-import {CheckBox} from 'react-native-elements';
-import {COLORS, PADDINGS} from '../../../../src/constants/Constants';
+import { CheckBox } from 'react-native-elements';
+import { COLORS, PADDINGS } from '../../../../src/constants/Constants';
 import Reusabletextinput from '../../../../src/components/AppTextinput/AppTextinput';
-import {TextInput} from 'react-native-paper';
+import { TextInput } from 'react-native-paper';
 import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import {useForm, Controller} from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import LoginWithG from '../../utils/LoginWithG';
-import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
-import {setLoggedIn} from '../../../../src/Redux/Reducers/AuthSlice';
-import {RFValue} from 'react-native-responsive-fontsize';
-function DoctorLogin({navigation}) {
+import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
+import { setLoggedIn } from '../../../../src/Redux/Reducers/AuthSlice';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { loginUser } from '../../../../src/Redux/Reducers/LoginSlice';
+import { setSuccess } from '../../Redux/Reducers/DoctorSignUpSlice';
+function DoctorLogin({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
+  const { isLoading, userInfo } = globalState.LoginReducer
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [secured_pass, set_secured_pass] = useState(true);
+  useEffect(()=>{
+    dispatch(setSuccess(false))
+  },[])
   const {
     control,
     handleSubmit,
     reset,
-    formState: {errors},
+    formState: { errors },
     watch,
   } = useForm({
     defaultValues: {
@@ -39,17 +45,15 @@ function DoctorLogin({navigation}) {
   });
   const onSubmit = data => {
     //console.log(JSON.stringify(data) + "before" + toggleCheckBox);
-    /*const data = {
+    const sendData = {
       email: data.email,
-        password: data.phoneNum,
-       rememberMe: toggleCheckbox
-      }
-      dispatch(insertData(data))*/
-    reset();
-    setToggleCheckBox(toggleCheckBox => {
-      return false;
-    });
-    dispatch(setLoggedIn());
+      password: data.password,
+      //rememberMe: toggleCheckbox
+      type: 1
+    }
+    dispatch(loginUser(sendData))
+    userInfo!=null? reset():null;
+    userInfo!=null? setToggleCheckBox(toggleCheckBox => {return false;}):null;
   };
 
   return (
@@ -68,7 +72,7 @@ function DoctorLogin({navigation}) {
             setToggleCheckBox(toggleCheckBox => {
               return false;
             });
-            navigation.goBack();
+            navigation.navigate("DoctorSignup");
           }}
         />
         <View style={styles.container}>
@@ -94,7 +98,7 @@ function DoctorLogin({navigation}) {
                     required: true,
                     pattern: /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/,
                   }}
-                  render={({field: {onChange, onBlur, value}}) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <Reusabletextinput
                       placeholder="عنوان البريد الالكتروني"
                       keyboardType="email-address"
@@ -110,8 +114,8 @@ function DoctorLogin({navigation}) {
                   {errors.email?.type === 'required'
                     ? 'يجب ادخال عنوان البريد الالكتروني'
                     : errors.email?.type === 'pattern'
-                    ? 'يجب ادخال عنوان بريد الكتروني صحيح'
-                    : ''}
+                      ? 'يجب ادخال عنوان بريد الكتروني صحيح'
+                      : ''}
                 </Text>
               </View>
               <View style={styles.eachTextinputAndErrorTextContainer}>
@@ -123,7 +127,7 @@ function DoctorLogin({navigation}) {
                       /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
                     maxLength: 20,
                   }}
-                  render={({field: {onChange, onBlur, value}}) => (
+                  render={({ field: { onChange, onBlur, value } }) => (
                     <Reusabletextinput
                       placeholder="كلمه المرور"
                       bordercolor={errors.password ? COLORS.red : COLORS.gray}
@@ -151,10 +155,10 @@ function DoctorLogin({navigation}) {
                   {errors.password?.type === 'required'
                     ? 'يجب ادخال كلمة المرور'
                     : errors.password?.type === 'pattern'
-                    ? 'كلمه المرور يجب لا تقل عن 8 ارقام وحرف كبير وحرف صغير وعلامه مميزه'
-                    : errors.password?.type === 'maxLength'
-                    ? 'كلمة المرور يجب ان لا تزيد عن 20 حرف ورقم'
-                    : ''}
+                      ? 'كلمه المرور يجب لا تقل عن 8 ارقام وحرف كبير وحرف صغير وعلامه مميزه'
+                      : errors.password?.type === 'maxLength'
+                        ? 'كلمة المرور يجب ان لا تزيد عن 20 حرف ورقم'
+                        : ''}
                 </Text>
               </View>
               <View style={styles.viewForfirstTextAfterTextinputs}>
@@ -169,14 +173,14 @@ function DoctorLogin({navigation}) {
                       checked={toggleCheckBox}
                       checkedColor={COLORS.blue}
                       uncheckedColor={COLORS.gray}
-                      containerStyle={{marginLeft: RFValue(-10)}}
+                      containerStyle={{ marginLeft: RFValue(-10) }}
                     />
                   </View>
                   <View>
                     <Text
                       style={[
                         styles.textAfterTextinputsStyle,
-                        {marginLeft: RFValue(-10)},
+                        { marginLeft: RFValue(-10) },
                       ]}>
                       تذكرني
                     </Text>
@@ -210,10 +214,12 @@ function DoctorLogin({navigation}) {
                 // onPress={()=>alert(toggleCheckBox)}
                 onPress={handleSubmit(onSubmit)}
                 style={styles.buttonMargin}
+                isLoading={isLoading}
+
               />
               <View style={styles.viewForLastTextStyle}>
                 <View>
-                  <Text style={{color: COLORS.darkGray3}}>ليس لديك حساب ؟</Text>
+                  <Text style={{ color: COLORS.darkGray3 }}>ليس لديك حساب ؟</Text>
                 </View>
                 <TouchableOpacity
                   onPress={() => {

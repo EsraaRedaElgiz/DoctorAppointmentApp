@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
-import Axios from "../../utils/axios"
-import { setLoggedOut } from "../../Redux/Reducers/AuthSlice"
+import Axios from "../../../../src/utils/axios"
+import { setLoggedOut } from "../../../../src/Redux/Reducers/AuthSlice"
 
 const initState = {
     name: "",
@@ -13,14 +13,14 @@ const initState = {
     success: false
 }
 //backed
-export const registerUser = createAsyncThunk(
-    "SignUp/registerUser ",
+export const registerDoctor = createAsyncThunk(
+    "DoctorSignUp/registerDoctor ",
     async (args, thunkAPI) => {
         const { rejectWithValue, dispatch } = thunkAPI
         try {
             await Axios({
                 method: "POST",
-                url: "/patient/user_signup.php",
+                url: "/doctor/user_signup.php",
                 data: args,
                 headers: {
                     "Content-Type": "multipart/form-data"
@@ -28,7 +28,7 @@ export const registerUser = createAsyncThunk(
             }).then((res) => {
                 if (res.status == 200) {
 
-                    if (res.data === "Success add patient data") {
+                    if (res.data === "Success sigunp") {
                         dispatch(setSuccess(true))
                         
                     } else {
@@ -48,8 +48,8 @@ export const registerUser = createAsyncThunk(
 
         }
     })
-const signUpSlice = createSlice({
-    name: "SignUp",
+const doctorSignUpSlice = createSlice({
+    name: "DoctorSignUp",
     initialState: initState,
     reducers: {
         setName: (state, action) => {
@@ -67,14 +67,14 @@ const signUpSlice = createSlice({
     },
 
     extraReducers: (builder) => {
-        builder.addCase(registerUser.pending, (state, action) => {
+        builder.addCase(registerDoctor.pending, (state, action) => {
             state.isLoading = true;
             state.error = null;
         }),
-            builder.addCase(registerUser.fulfilled, (state, action) => {
+            builder.addCase(registerDoctor.fulfilled, (state, action) => {
                 state.isLoading = false;
             }),
-            builder.addCase(registerUser.rejected, (state, action) => {
+            builder.addCase(registerDoctor.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             })
@@ -83,11 +83,11 @@ const signUpSlice = createSlice({
         })
     }
 });
-export default signUpSlice.reducer;
+export default doctorSignUpSlice.reducer;
 export const {
     setName,
     setPhoneNum,
     setEmail,
     setPassword,
     setSuccess
-} = signUpSlice.actions;
+} = doctorSignUpSlice.actions;

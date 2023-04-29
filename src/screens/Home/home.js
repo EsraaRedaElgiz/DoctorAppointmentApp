@@ -1,5 +1,5 @@
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Header,
   CovidCard,
@@ -7,9 +7,24 @@ import {
   SpecialityList,
   TopDoctors,
 } from '../../components/Home';
-import {COLORS, PADDINGS} from '../../constants/Constants';
+import {COLORS, PADDINGS, USER_DATA, USER_TOKEN} from '../../constants/Constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Home = ({navigation}) => {
+
+  useEffect(() => {
+    getToken()
+  }, [])
+
+  const getToken = async ()=> {
+    const token = await AsyncStorage.getItem(USER_TOKEN);
+    const data = await AsyncStorage.getItem(USER_DATA);
+    console.log('token => ', token);
+    console.log('data => ', data);
+  }
+
+
+
   return (
     <>
       <View style={{backgroundColor: COLORS.white, flex: 1}}>

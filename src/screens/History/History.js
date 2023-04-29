@@ -67,9 +67,7 @@ function History({ navigation }) {
         icon
         iconName={visible==false?"lock":"unlock"}
        color={COLORS.darkGray3}
-        onPress={() => {
-          navigation.goBack();
-        }}
+       rightButtonHide
         onPressBtn={()=>{setVisible(visible=>{return !visible});showToast()}}
         padding={PADDINGS.mdPadding}
       />

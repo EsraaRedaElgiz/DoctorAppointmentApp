@@ -8,8 +8,10 @@ import auth from '@react-native-firebase/auth';
 import styles from '../screens/DoctorLogin/DoctorLoginStyles';
 import {useNavigation} from '@react-navigation/native';
 import Images from '../../../src/constants/Images';
-
+import { useDispatch } from 'react-redux';
+import { setLoggedIn } from '../../../src/Redux/Reducers/AuthSlice';
 function LoginWithG() {
+  const dispatch=useDispatch()
   //video
   const [userData, setUserData] = useState({});
   const navigation = useNavigation();
@@ -28,7 +30,8 @@ function LoginWithG() {
     console.log(res.user); //المفروض الداتا دي تتبعت لللباك وتحطي هنا النفجيشن
     //alert(JSON.stringify(res.user))
     setUserData(res.user);
-    navigation.navigate('CompleteInformation');
+    // navigation.navigate('CompleteInformation');
+    dispatch(setLoggedIn())
   };
 
   //

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
- StyleSheet,
+  StyleSheet,
   ScrollView,
   StatusBar,
   TouchableOpacity,
@@ -11,16 +11,14 @@ import {
   TextInput,
 } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import GeneralPage from '../../../../src/components/GeneralPage/GeneralPage';
 import Reusabletextinput from '../../../../src/components/AppTextinput/AppTextinput';
 import {
   COLORS,
-  FONTS,
   PADDINGS,
   RADIUS,
 } from '../../../../src/constants/Constants';
 import { RFValue } from 'react-native-responsive-fontsize';
-import styles from"./CompeleteinfoStyle"
+import styles from "./CompeleteinfoStyle"
 import ProfileImage from '../../../../src/components/ProfileImage/ProfileImage';
 import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
@@ -32,8 +30,13 @@ import { CheckBox } from 'react-native-elements';
 import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
 import { useForm, Controller } from 'react-hook-form';
 import { style } from '../../../../src/styles/Style';
-import ViewLikeTextInput from '../../../../src/components/ViewLikeTextInput/ViewLikeTextInput';
+import { registerDoctor, setSuccess } from '../../Redux/Reducers/DoctorSignUpSlice';
+import { useDispatch, useSelector } from 'react-redux';
 const Compeleteinformation = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const globalState = useSelector(state => state);
+  const { isLoading, success, name, phoneNum, email, password } = globalState.DoctorSignUpReducer
+
   const [photo_uri, setphoto_uri] = useState('');
   const [specialty, setspecialty] = useState('');
   const [exp, setexp] = useState('');
@@ -60,6 +63,7 @@ const Compeleteinformation = ({ navigation }) => {
     handleSubmit,
     formState: { errors },
     setValue,
+    reset
   } = useForm({
     defaultValues: {
       spealization: '',
@@ -74,10 +78,44 @@ const Compeleteinformation = ({ navigation }) => {
       section: '',
     },
   });
+  //
   const onSubmit = data => {
-    navigation.navigate('DoctorLogIn');
-    console.log(data);
+    console.log("data", data);
+    let formdata = new FormData();
+    formdata.append("type_id", '1')
+    formdata.append("first_name", name)
+    formdata.append("last_name", "tttt")//
+    formdata.append("phone", phoneNum)
+    formdata.append("email", email)
+    formdata.append("age", "20")///////////
+    formdata.append("password", password)
+    formdata.append("speciality_id", data.spealization)
+    formdata.append("doctor_about", data.About)
+    formdata.append("gender", "Male") // Male or Female
+    formdata.append("image", JSON.stringify({ uri: photo_uri.uri, name: photo_uri.fileName, type: photo_uri.type }))
+    formdata.append("doctor_experience", data.exp)
+    formdata.append("branch_address", data.Adressdescription)
+    formdata.append("branch_location", data.Location)
+    formdata.append("branch_is_default", "1")
+    formdata.append("branch_phone", phoneNum)
+    formdata.append("branch_working_days", data.Workdays)
+    formdata.append("latitude", lat)
+    formdata.append("longitude", long)
+    formdata.append("booking_price", data.price)
+    formdata.append("start_time", data.start)
+    formdata.append("end_time", data.end)
+    formdata.append("session_time", data.section)
+    dispatch(registerDoctor(formdata))
+    console.log(formdata)
+    console.log(success)
+    success == true ?
+      navigation.navigate('DoctorLogIn') : null;
+    success === true ? setphoto_uri(photo_uri => {
+      return '';
+    }) : null
+    success === true ? reset() : null
   };
+  //
   const data = [
     { id: 1, txt: 'السبت', isChecked: false },
     { id: 2, txt: 'الأحد', isChecked: false },
@@ -114,7 +152,7 @@ const Compeleteinformation = ({ navigation }) => {
         console.log('User tapped custom button: ', res.customButton);
         alert(res.customButton);
       } else {
-        setphoto_uri(photo_uri => res.assets[0].uri);
+        setphoto_uri(photo_uri => res.assets[0]);
       }
     });
   };
@@ -135,7 +173,7 @@ const Compeleteinformation = ({ navigation }) => {
         console.log('User tapped custom button: ', res.customButton);
         alert(res.customButton);
       } else {
-        setphoto_uri(photo_uri => res.assets[0].uri);
+        setphoto_uri(photo_uri => res.assets[0]);
         //upload_img(res.assets[0].base64)
       }
     });
@@ -186,8 +224,13 @@ const Compeleteinformation = ({ navigation }) => {
         backgroundColor={COLORS.blue}
         color={COLORS.white}
         onPress={() => {
+          setphoto_uri(photo_uri => {
+            return '';
+          });
           reset();
           navigation.goBack();
+          dispatch(setSuccess(false))
+
         }}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -196,7 +239,7 @@ const Compeleteinformation = ({ navigation }) => {
             <ProfileImage
               iconOnImage={true}
               onPressPen={() => refRBSheet.current.open()}
-              imageUri={photo_uri}
+              imageUri={photo_uri.uri}
             />
           ) : (
             <ProfileImage
@@ -222,6 +265,8 @@ const Compeleteinformation = ({ navigation }) => {
                       data={Specialization}
                       borderColor={errors.spealization ? 'red' : COLORS.gray}
                       onSelect={onChange}
+                      value={value}
+                      color={value == '' ? COLORS.darkGray : COLORS.darkGray3}
                     />
                     <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
                       {errors.spealization?.type === 'required'
@@ -526,7 +571,9 @@ const Compeleteinformation = ({ navigation }) => {
         </View>
       </ScrollView>
       <View style={styles.buttonViewStyle}>
-        <GeneralButton title="تأكيد" onPress={handleSubmit(onSubmit)} />
+        <GeneralButton title="تأكيد" onPress={handleSubmit(onSubmit)}
+          isLoading={isLoading}
+        />
       </View>
       <RBSheet
         ref={refRBSheet}
@@ -651,8 +698,8 @@ const Compeleteinformation = ({ navigation }) => {
             {Days.map((Day, index) => {
               return (
                 <View
-                key={index}
-                style={styles.viewofcheckbox}>
+                  key={index}
+                  style={styles.viewofcheckbox}>
                   <CheckBox
                     checked={Day.isChecked}
                     onPress={() => {

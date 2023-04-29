@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -8,26 +8,50 @@ import {
   Image,
 } from 'react-native';
 import styles from './styles';
-import {CheckBox} from 'react-native-elements';
-import { COLORS, ICONS, PADDINGS } from '../../constants/Constants';
+import { CheckBox } from 'react-native-elements';
+import { COLORS, ICONS, PADDINGS, USER_DATA, USER_TOKEN } from '../../constants/Constants';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import { TextInput } from 'react-native-paper';
 import ReusableArrowButton from '../../components/AppRightIcon/AppRightIcon';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  setEmail,
-  setPassword,
-  setRememberMe,
-} from '../../Redux/Reducers/LoginSlice';
 import { useForm, Controller } from 'react-hook-form';
 import LoginWithG from '../../utils/LoginWithG';
 import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
-import { setLoggedIn } from "../../Redux/Reducers/AuthSlice"
+//import { setLoggedIn } from "../../Redux/Reducers/AuthSlice"
 import { RFValue } from 'react-native-responsive-fontsize';
+import { loginUser } from '../../Redux/Reducers/LoginSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setSuccess } from "../../Redux/Reducers/SignUpSlice"
+
 function LogIn({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
+
+
+  useEffect(()=>{
+    dispatch(setSuccess(false))
+  },[])
+ /* 
+ كنت بشوف لما عمل لوج اوت كل حاجه بتتمسح ولا لا فعملتها هنا
+   const {  success } = globalState.SignUpReducer
+
+ useEffect(() => {
+    getToken()
+  }, [])
+
+  const getToken = async ()=> {
+    const token = await AsyncStorage.getItem(USER_TOKEN);
+    const data = await AsyncStorage.getItem(USER_DATA);
+    console.log('token => ', token);
+    console.log('data => ', data);
+    console.log("success in medicalsheet",success)
+    console.log("userinfo in login",userInfo)
+
+  }*/
+
+ 
+  const { isLoading, userInfo } = globalState.LoginReducer
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [secured_pass, set_secured_pass] = useState(true);
   const {
@@ -44,15 +68,15 @@ function LogIn({ navigation }) {
   });
   const onSubmit = data => {
     //console.log(JSON.stringify(data) + "before" + toggleCheckBox);
-    /*const data = {
+    const sendData = {
       email: data.email,
-        password: data.phoneNum,
-       rememberMe: toggleCheckbox
-      }
-      dispatch(insertData(data))*/
-    reset()
-    setToggleCheckBox(toggleCheckBox => { return false })
-    dispatch(setLoggedIn())
+      password: data.password,
+      //rememberMe: toggleCheckbox
+      type:2
+    }
+    dispatch(loginUser(sendData))
+    userInfo !== null ? reset() : null
+    userInfo !== null ? setToggleCheckBox(toggleCheckBox => { return false }) : null
 
   };
 
@@ -70,7 +94,7 @@ function LogIn({ navigation }) {
           onPress={() => {
             reset()
             setToggleCheckBox(toggleCheckBox => { return false })
-            navigation.goBack();
+            navigation.navigate("SignUp");
           }}
         />
         <View style={styles.container}>
@@ -162,16 +186,16 @@ function LogIn({ navigation }) {
                     <CheckBox
                       onPress={() =>
                         setToggleCheckBox(toggleCheckBox => { return !toggleCheckBox })
-                        
+
                       }
                       checked={toggleCheckBox}
                       checkedColor={COLORS.blue}
                       uncheckedColor={COLORS.gray}
-                      containerStyle={{marginLeft:RFValue(-10)}}
+                      containerStyle={{ marginLeft: RFValue(-10) }}
                     />
                   </View>
                   <View>
-                    <Text style={[styles.textAfterTextinputsStyle,{marginLeft:RFValue(-10)}]}>تذكرني</Text>
+                    <Text style={[styles.textAfterTextinputsStyle, { marginLeft: RFValue(-10) }]}>تذكرني</Text>
                   </View>
                 </View>
                 <TouchableOpacity
@@ -200,6 +224,7 @@ function LogIn({ navigation }) {
                 // onPress={()=>alert(toggleCheckBox)}
                 onPress={handleSubmit(onSubmit)}
                 style={styles.buttonMargin}
+                isLoading={isLoading}
               />
               <View style={styles.viewForLastTextStyle}>
                 <View>

@@ -65,9 +65,7 @@ function Appointment({ navigation }) {
       <HeaderNavigation
         title="المواعيد"
         color={COLORS.darkGray3}
-        onPress={() => {
-          navigation.goBack();
-        }}
+        rightButtonHide
         padding={PADDINGS.mdPadding}
       />
 
