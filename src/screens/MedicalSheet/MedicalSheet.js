@@ -24,7 +24,7 @@ import { registerUser } from "../../Redux/Reducers/SignUpSlice";
 import { setSuccess } from "../../Redux/Reducers/SignUpSlice"
 
 function MedicalSheet({ navigation }) {
-
+  const [photo_uri, setphoto_uri] = useState('');
   useEffect(() => {
     requestCameraPermission();
   }, []);
@@ -78,7 +78,6 @@ function MedicalSheet({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   const { isLoading, success, name, phoneNum, email, password } = globalState.SignUpReducer
-  const [photo_uri, setphoto_uri] = useState('');
 
   const blood = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
   const type = ['ذكر', 'أنثي'];
@@ -106,12 +105,12 @@ function MedicalSheet({ navigation }) {
     formdata.append("phone", phoneNum)
     formdata.append("email", email)
     formdata.append("password", password)
-    formdata.append("image", JSON.stringify({uri: photo_uri.uri, name: photo_uri.fileName, type: photo_uri.type}))
+    formdata.append("image", JSON.stringify({ uri: photo_uri.uri, name: photo_uri.fileName, type: photo_uri.type }))
     formdata.append("patient_blood_type", data.bloodType)
     formdata.append("patient_weight", data.weight)
     formdata.append("patient_height", data.height)
     formdata.append("age", data.age)
-    formdata.append("gender", data.gender==="ذكر"?"Male":"Female") // Male or Female
+    formdata.append("gender", data.gender === "ذكر" ? "Male" : "Female") // Male or Female
     dispatch(registerUser(formdata))
     console.log(formdata.getParts())
     //console.log(success)
