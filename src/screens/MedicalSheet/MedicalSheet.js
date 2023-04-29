@@ -21,6 +21,7 @@ import { requestCameraPermission } from '../../utils/CameraPermissin';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
 import { registerUser } from "../../Redux/Reducers/SignUpSlice";
+import { setSuccess } from "../../Redux/Reducers/SignUpSlice"
 
 function MedicalSheet({ navigation }) {
 
@@ -110,9 +111,10 @@ function MedicalSheet({ navigation }) {
     formdata.append("patient_weight", data.weight)
     formdata.append("patient_height", data.height)
     formdata.append("age", data.age)
-    formdata.append("gender", "Male") // Male or Female
-    console.log(formdata);
+    formdata.append("gender", data.gender==="ذكر"?"Male":"Female") // Male or Female
     dispatch(registerUser(formdata))
+    console.log(formdata.getParts())
+    //console.log(success)
     success === true ? navigation.navigate('LogIn') : null
     success === true ? setphoto_uri(photo_uri => {
       return '';
@@ -132,6 +134,7 @@ function MedicalSheet({ navigation }) {
           });
           reset();
           navigation.goBack();
+          dispatch(setSuccess(false))
         }}
       />
       <ScrollView

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -17,12 +17,16 @@ import {
   setPhoneNum,
   setEmail,
   setPassword,
+  setSuccess
 } from '../../Redux/Reducers/SignUpSlice';
 import { useForm, Controller } from 'react-hook-form';
 import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
 function SignUp({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
+  useEffect(()=>{
+    dispatch(setSuccess(false))
+  },[])
   const [secured_pass_first, set_secured_pass_first] = useState(true);
   const [secured_pass_second, set_secured_pass_second] = useState(true);
 

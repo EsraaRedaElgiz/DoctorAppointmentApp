@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 import { CheckBox } from 'react-native-elements';
-import { COLORS, ICONS, PADDINGS } from '../../constants/Constants';
+import { COLORS, ICONS, PADDINGS, USER_DATA, USER_TOKEN } from '../../constants/Constants';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import { TextInput } from 'react-native-paper';
 import ReusableArrowButton from '../../components/AppRightIcon/AppRightIcon';
@@ -21,9 +21,36 @@ import { HeaderNavigation } from '../../components/headerNavigation/HeaderNaviga
 //import { setLoggedIn } from "../../Redux/Reducers/AuthSlice"
 import { RFValue } from 'react-native-responsive-fontsize';
 import { loginUser } from '../../Redux/Reducers/LoginSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setSuccess } from "../../Redux/Reducers/SignUpSlice"
+
 function LogIn({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
+
+
+  useEffect(()=>{
+    dispatch(setSuccess(false))
+  },[])
+ /* 
+ كنت بشوف لما عمل لوج اوت كل حاجه بتتمسح ولا لا فعملتها هنا
+   const {  success } = globalState.SignUpReducer
+
+ useEffect(() => {
+    getToken()
+  }, [])
+
+  const getToken = async ()=> {
+    const token = await AsyncStorage.getItem(USER_TOKEN);
+    const data = await AsyncStorage.getItem(USER_DATA);
+    console.log('token => ', token);
+    console.log('data => ', data);
+    console.log("success in medicalsheet",success)
+    console.log("userinfo in login",userInfo)
+
+  }*/
+
+ 
   const { isLoading, userInfo } = globalState.LoginReducer
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [secured_pass, set_secured_pass] = useState(true);
@@ -67,7 +94,7 @@ function LogIn({ navigation }) {
           onPress={() => {
             reset()
             setToggleCheckBox(toggleCheckBox => { return false })
-            navigation.goBack();
+            navigation.navigate("SignUp");
           }}
         />
         <View style={styles.container}>

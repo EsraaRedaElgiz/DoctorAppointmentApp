@@ -1,6 +1,8 @@
-import { createSlice ,createAsyncThunk} from "@reduxjs/toolkit"
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import axios from "axios"
 import Axios from "../../utils/axios"
+import { setLoggedOut } from "../../Redux/Reducers/AuthSlice"
+
 const initState = {
     name: "",
     phoneNum: "",
@@ -8,26 +10,40 @@ const initState = {
     password: "",
     isLoading: false,
     error: null,
-    success:false
+    success: false
 }
 //backed
-export const registerUser  = createAsyncThunk(
+export const registerUser = createAsyncThunk(
     "SignUp/registerUser ",
     async (args, thunkAPI) => {
-        const { rejectWithValue } = thunkAPI
+        const { rejectWithValue, dispatch } = thunkAPI
         try {
-            const response = await Axios({
-                    method: "POST",
-                    url: "/patient/user_signup.php",
-                    data: args,
-                    headers: {
-                        "Content-Type": "multipart/form-data"
+            await Axios({
+                method: "POST",
+                url: "/patient/user_signup.php",
+                data: args,
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            }).then((res) => {
+                if (res.status == 200) {
+
+                    if (res.data === "Success add patient data") {
+                        dispatch(setSuccess(true))
+                        
+                    } else {
+                        console.log(res.data);
                     }
-                })
-            console.log(JSON.stringify(response.data))
-            return response;
+
+                } else {
+                    alert("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا")
+                }
+            }).catch((err) => {
+                console.log(err)
+            })
+
         } catch (error) {
-            console.log(error)
+            console.log(error.message)
             return rejectWithValue(error.message);
 
         }
@@ -45,21 +61,25 @@ const signUpSlice = createSlice({
             state.email = action.payload;
         }, setPassword: (state, action) => {
             state.password = action.payload;
+        }, setSuccess: (state, action) => {
+            state.success = action.payload;
         }
     },
-    
-    extraReducers:(builder)=> {
+
+    extraReducers: (builder) => {
         builder.addCase(registerUser.pending, (state, action) => {
             state.isLoading = true;
             state.error = null;
         }),
-        builder.addCase(registerUser.fulfilled, (state, action) => {
-            state.isLoading = false;
-            state.success=true;
-        }),
-        builder.addCase(registerUser.rejected, (state, action) => {
-            state.isLoading = false;
-            state.error = action.payload;
+            builder.addCase(registerUser.fulfilled, (state, action) => {
+                state.isLoading = false;
+            }),
+            builder.addCase(registerUser.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = action.payload;
+            })
+        builder.addCase(setLoggedOut, (state, action) => {
+            state.success = false
         })
     }
 });
@@ -69,4 +89,5 @@ export const {
     setPhoneNum,
     setEmail,
     setPassword,
+    setSuccess
 } = signUpSlice.actions;
