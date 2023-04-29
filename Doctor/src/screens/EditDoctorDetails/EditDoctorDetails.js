@@ -15,6 +15,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { style } from '../../../../src/styles/Style';
 import { CheckBox } from 'react-native-elements';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import axios from 'axios';
 export default function EditDoctorDetails() {
  const { control, handleSubmit, formState: { errors },setValue } = useForm({
   defaultValues:{
@@ -60,7 +61,9 @@ const [Days, setDays] = useState(data);
  const refRBSheet = useRef();
  useEffect(() => {
   requestCameraPermission();
- }, []);
+  get_data();
+ }, []
+ );
  const selectFromGallery = () => {
   let options = {
    storageOptions: {
@@ -141,6 +144,18 @@ const get_location = () => {
     'تم تعديل الموقع بنجاح'
   setValue('Location', browser_url, { shouldValidate: true });
 };
+const get_data=()=>{
+  const token='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2Nzc2MjQ1NTAsImlzcyI6ImxvY2FsaG9zdCIsImNhdCI6IjIwMjMtMDMtMDFUMDA6NDk6MTArMDI6MDAiLCJleHAiOjE3MDkxNjA1NTAsImlkIjo3LCJlbWFpbCI6InRlc3QxQGdtYWlsLmNvbSJ9.4-mwHc6rqsn2O7rBg4JyUsXwJ31_czOqGg-yiq0R9Rle9D_T9xQdPFil_-Aje8cYqZh3rTwFMHBV5KvjQeOHRg'
+ axios.get("https://doctor-graduation-project.000webhostapp.com/api/general/profile.php",{
+  headers:{
+    'Authorization':`Bearer ${token}`
+  }
+ })
+ .then(res=>{
+  console.log(res.data)
+});
+
+}
  return (
   
    <View style={styles.Continer}>
@@ -570,7 +585,9 @@ const get_location = () => {
             </View>
             {Days.map((Day, index) => {
               return (
-                <View style={styles.viewofcheckbox}>
+                <View style={styles.viewofcheckbox}
+                key={index}
+                >
                   <CheckBox
                     checked={Day.isChecked}
                     onPress={() => {
