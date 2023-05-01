@@ -112,7 +112,7 @@ function MedicalSheet({ navigation }) {
     formdata.append("age", data.age)
     formdata.append("gender", data.gender === "ذكر" ? "Male" : "Female") // Male or Female
     dispatch(registerUser(formdata))
-    console.log(formdata.getParts())
+    console.log(formdata)
     //console.log(success)
     success === true ? navigation.navigate('LogIn') : null
     success === true ? setphoto_uri(photo_uri => {

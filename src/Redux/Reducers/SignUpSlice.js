@@ -29,7 +29,7 @@ export const registerUser = createAsyncThunk(
                 if (res.status == 200) {
 
                     if (res.data === "Success add patient data") {
-                        dispatch(setSuccess(true))
+                        dispatch(setSuccess(true));
                         
                     } else {
                         console.log(res.data);
@@ -43,7 +43,7 @@ export const registerUser = createAsyncThunk(
             })
 
         } catch (error) {
-            console.log(error.message)
+            //console.log(error.message)
             return rejectWithValue(error.message);
 
         }

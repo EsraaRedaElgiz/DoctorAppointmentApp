@@ -1,22 +1,30 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, StatusBar, FlatList } from 'react-native';
+import { View, StatusBar, FlatList, ActivityIndicator } from 'react-native';
 import { COLORS, PADDINGS } from '../../constants/Constants';
 import styles from './styles';
 import HeaderArrowAndWord from '../../components/HeaderArrowAndWord/HeaderArrowAndWord';
 import AppointmentAndHistoryComponent from '../../components/AppointmentAndHistoryComponent/AppointmentAndHistoryComponent';
 //for backend
-//import { getAppointmentes } from '../../Redux/Reducers/AppointmentSlice'
-//
-//import {appointment} from '../../utils/DummyData'
+import { getAppointmentes } from '../../Redux/Reducers/AppointmentSlice'
 import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+import { Text } from 'react-native-paper';
+import { RFValue } from 'react-native-responsive-fontsize';
 function Appointment({ navigation }) {
+
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  /*useEffect(() => {
-        dispatch(getAppointmentes())
-    }, [])*/
-  const appointments = [
+  const { isLoading, appointmentes } = globalState.AppointmentReducer
+  useEffect(() => {
+
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(getAppointmentes())
+    });
+
+    return unsubscribe;
+  }, [navigation])
+
+  /*const appointments = [
     {
       doctorName: "سامي علي",
       doctorSpeciality: "الطب العام والداخلي",
@@ -27,7 +35,7 @@ function Appointment({ navigation }) {
       status: "م"
     }, {
       doctorName: "احمد محمد",
-      doctorSpeciality:"طب الاسنان",
+      doctorSpeciality: "طب الاسنان",
       day: "5",
       month: "سبتمبر",
       year: "2023",
@@ -35,23 +43,51 @@ function Appointment({ navigation }) {
       status: "م"
     }
 
-  ]
+  ]*/
+
+  const getMonthName = monthnum => {
+    if(monthnum==='01'){
+      return 'يناير';
+    }else if(monthnum==='02'){
+      return 'فبراير';
+    }else if(monthnum==='03'){
+      return 'مارس';
+    }else if(monthnum==='04'){
+      return 'ابريل';
+    }else if(monthnum==='05'){
+      return 'مايو';
+    }else if(monthnum==='06'){
+      return 'يونيو';
+    }else if(monthnum==='07'){
+      return 'يوليو';
+    }else if(monthnum==='08'){
+      return 'اغسطس';
+    }else if(monthnum==='09'){
+      return 'سبتمبر';
+    }else if(monthnum==='10'){
+      return 'اكتوبر';
+    }else if(monthnum==='11'){
+      return 'نوفمبر';
+    }else if(monthnum==='12'){
+      return 'ديسمبر';
+    }
+  };
   keyextractor = (item, index) => index.toString();
   const renderitems = ({ item, index }) => {
-    const { doctorName, doctorSpeciality, day, month, year, time, status } = item
+    const { doctorName, doctorSpeciality, day, month, year ,appointment_time,appointment_date,doctor} = item
     return (
       <AppointmentAndHistoryComponent
-        doctorName={doctorName}
-        doctorSpeciality={doctorSpeciality}
+        doctorName={doctor.user_first_name}
+        doctorSpeciality={doctorSpeciality}//ady
         dateShow={true}
-        day={day}
-        month={month}
-        year={year}
+        day={appointment_date.substring(8, 10)}
+        month={getMonthName(JSON.stringify(appointment_date.substring(5, 7)))}//هنباصي القيسمه دي في فانكشن بتحول الشهر لاسماء
+        year={appointment_date.substring(0, 4)}
         timeShow={true}
-        time={time}
-        status={status}
+        time={appointment_time}
         style={styles.afterEachCardMargin}
         disabled={true}
+        doctorImageUri={doctor.user_image}
 
       />
 
@@ -68,15 +104,22 @@ function Appointment({ navigation }) {
         rightButtonHide
         padding={PADDINGS.mdPadding}
       />
+      {isLoading ? <ActivityIndicator size={RFValue(30)} color={COLORS.blue} /> :
+        (appointmentes.length > 0 ? (
+          <FlatList
+            keyExtractor={keyextractor}
+            data={appointmentes}
+            renderItem={renderitems}
+            style={styles.flatListStyle}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.flatListContentContainerStyle}
+          />) : (
+          <View style={{ height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center' }}>
+            <Text >لا يوجد مواعيد حتي الأن</Text>
 
-      <FlatList
-        keyExtractor={keyextractor}
-        data={appointments}
-        renderItem={renderitems}
-        style={styles.flatListStyle}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.flatListContentContainerStyle}
-      />
+          </View>)
+        )}
+
     </View>
   );
 }

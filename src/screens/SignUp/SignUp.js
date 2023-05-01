@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import styles from './style';
-import { COLORS, PADDINGS } from '../../constants/Constants';
+import { COLORS, IS_DOCTOR, PADDINGS } from '../../constants/Constants';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import { TextInput } from 'react-native-paper';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
@@ -21,12 +21,18 @@ import {
 } from '../../Redux/Reducers/SignUpSlice';
 import { useForm, Controller } from 'react-hook-form';
 import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 function SignUp({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   useEffect(()=>{
     dispatch(setSuccess(false))
+    getDoc()
   },[])
+  const getDoc = async ()=> {
+    const doc = await AsyncStorage.getItem(IS_DOCTOR);
+    console.log('doc => ', doc);
+  }
   const [secured_pass_first, set_secured_pass_first] = useState(true);
   const [secured_pass_second, set_secured_pass_second] = useState(true);
 

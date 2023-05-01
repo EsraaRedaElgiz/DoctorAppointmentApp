@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {Text, View, Image, StatusBar, ScrollView} from 'react-native';
 import styles from './styles';
-import {COLORS} from '../../../constants/Constants';
+import {COLORS,IS_DOCTOR} from '../../../constants/Constants';
 import GeneralButton from '../../../components/GeneralButton/GeneralButton';
 import {useDispatch} from 'react-redux';
 import Images from '../../../constants/Images';
 import {setIsDoctor} from '../../../Redux/Reducers/AuthSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 function DoctorOrPatient({navigation}) {
   const dispatch = useDispatch();
   return (
@@ -26,12 +27,15 @@ function DoctorOrPatient({navigation}) {
           style={styles.marginAfterFirstButton}
           onPress={() => {
             navigation.navigate('SignUp');
+            AsyncStorage.setItem(IS_DOCTOR,JSON.stringify(0))
           }}
         />
         <GeneralButton
           title="دكتور"
           onPress={() => {
-            dispatch(setIsDoctor());
+            dispatch(setIsDoctor(true));
+            AsyncStorage.setItem(IS_DOCTOR,JSON.stringify(1))
+
           }}
         />
       </View>

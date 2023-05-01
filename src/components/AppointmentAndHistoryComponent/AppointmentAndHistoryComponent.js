@@ -1,6 +1,6 @@
 import React from 'react';
-import {Text, View, TouchableOpacity, Image, StyleSheet} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   RADIUS,
   FONTS,
@@ -25,6 +25,7 @@ function AppointmentAndHistoryComponent(props) {
     status,
     onPress,
     disabled,
+    doctorImageUri
   } = props;
 
   return (
@@ -34,11 +35,13 @@ function AppointmentAndHistoryComponent(props) {
       disabled={disabled}>
       <View style={styles.innerContainer}>
         <View style={styles.imageContainer}>
-          <Image source={Images.doctor2} style={styles.imageStyle} />
+          {doctorImageUri ?
+            <Image source={{ uri: doctorImageUri }} style={styles.imageStyle} />
+            : <Image source={require('../../assets/Images/doctorDefaultImage.jpg')} style={styles.imageStyle} />}
         </View>
         <View style={styles.viewTextStyle}>
           <View style={styles.eachLineMargin}>
-            <Text style={styles.doctorNameStyle}>{'د ' + doctorName}</Text>
+            <Text style={styles.doctorNameStyle}>{doctorName}</Text>
           </View>
           <View style={styles.eachLineMargin}>
             <Text style={styles.specialityTextStyle}>{doctorSpeciality}</Text>
@@ -136,13 +139,13 @@ const styles = StyleSheet.create({
     fontSize: FONTS.h5,
     fontFamily: FONTS.Amaranth,
     color: COLORS.darkGray3,
-    textAlign:'left'
+    textAlign: 'left'
   },
   specialityTextStyle: {
     fontSize: FONTS.h6,
     color: COLORS.darkGray2,
     fontFamily: FONTS.Amaranth,
-    textAlign:'left'
+    textAlign: 'left'
   },
   timaAndDateContainer: {
     flexDirection: 'row',
