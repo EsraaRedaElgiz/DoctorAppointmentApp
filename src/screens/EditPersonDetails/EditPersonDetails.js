@@ -23,8 +23,11 @@ import DropDown from '../../components/DropDown/DropDown';
 import {requestCameraPermission} from '../../utils/CameraPermissin';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
+import {useSelector} from 'react-redux';
 
 function EditPersonDetails(props) {
+  const globalState = useSelector(state => state);
+  const {name, age, height, weight} = globalState.PersonalDetailsReducer;
   const {navigation} = props;
   const [visible, setVisible] = useState(false);
   const [photo_uri, setphoto_uri] = useState();
@@ -35,19 +38,17 @@ function EditPersonDetails(props) {
     reset,
     watch,
     formState: {errors},
-  } = useForm(
-    {
-      defaultValues: {
-        name:"",
-        bloodType: "",
-        weight: "",
-        height: "",
-        age: "",
-        gender: "",
-        phone:""
-      },
-    }
-  );
+  } = useForm({
+    defaultValues: {
+      name: name,
+      bloodType: 'bloodType',
+      weight: `${weight}`,
+      height: `${height}`,
+      age: `${age}`,
+      gender: 'gender',
+      phone: '',
+    },
+  });
   const onSubmit = data => {
     //console.log(data);
     reset();
@@ -130,7 +131,7 @@ function EditPersonDetails(props) {
       />
       <View style={styles.container}>
         <ProfileImage
-          nameAfterImage={"محمد عبدالحميد"}
+          nameAfterImage={'محمد عبدالحميد'}
           iconOnImage
           iconBgColor
           onPressPen={() => refRBSheet.current.open()}
@@ -172,8 +173,7 @@ function EditPersonDetails(props) {
                 onSelect={onChange}
                 value={value}
                 onBlur={onBlur}
-                color={value==""?COLORS.darkGray:COLORS.darkGray3}
-
+                color={value == '' ? COLORS.darkGray : COLORS.darkGray3}
               />
             );
           }}
@@ -289,7 +289,7 @@ function EditPersonDetails(props) {
                 onSelect={onChange}
                 value={value}
                 onBlur={onBlur}
-                color={value==""?COLORS.darkGray:COLORS.darkGray3}
+                color={value == '' ? COLORS.darkGray : COLORS.darkGray3}
               />
             );
           }}

@@ -2,6 +2,7 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const initialState = {
+  name: '',
   bloodType: '',
   weight: 0,
   height: 0,
@@ -9,8 +10,8 @@ const initialState = {
   gender: '',
   phone: '',
   isLoading: false,
+  success: false,
   error: null,
-  success: null,
 };
 
 export const getPersonalDetails = createAsyncThunk(
@@ -43,17 +44,23 @@ const personalDetailsSlice = createSlice({
       console.log('action.payload in pending ', action.payload);
     }),
       builder.addCase(getPersonalDetails.fulfilled, (state, action) => {
-        (state.bloodType = action.payload.patient_blood_type),
-          (state.weight = action.payload.patient_weight),
-          (state.height = action.payload.patient_height),
-          (state.age = action.payload.user_age),
-          (state.gender = action.payload.user_gender);
-        console.log('state in fulfilled ', state);
+        state.isLoading = false;
+        state.success = true;
+        // (state.bloodType = action.payload.user_first_name+" "+action.payload.user_last_name),
+        // (state.bloodType = action.payload.patient_blood_type),
+        //   (state.weight = action.payload.patient_weight),
+        //   (state.height = action.payload.patient_height),
+        //   (state.age = action.payload.user_age),
+        //   (state.gender = action.payload.user_gender);
+        // console.log('state in fulfilled ', state);
+        console.log('state : ', state);
+        console.log('action.payload in fulfilled : ', action.payload);
       }),
       builder.addCase(getPersonalDetails.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = true;
-        console.log('state in rejected ', state);
+        state.success = false;
+        state.error = action.payload;
+        console.log('Error ', state.error);
       });
   },
 });

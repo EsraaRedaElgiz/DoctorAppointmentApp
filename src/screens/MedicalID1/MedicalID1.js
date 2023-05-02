@@ -11,7 +11,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getPersonalDetails} from '../../Redux/Reducers/PersonalDetailsSlice';
 function MedicalID1(props) {
   const globalState = useSelector(state => state);
-  const {bloodType, gender, age, height, weight} =
+  const {name, bloodType, gender, age, height, weight} =
     globalState.PersonalDetailsReducer;
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -35,7 +35,7 @@ function MedicalID1(props) {
       />
       <View style={styles.container}>
         <ProfileImage
-          nameAfterImage={'محمد عبدالحميد'}
+          nameAfterImage={name}
           imageUri={
             'https://img.freepik.com/free-photo/smiling-doctor-with-strethoscope-isolated-grey_651396-974.jpg?w=740&t=st=1678903589~exp=1678904189~hmac=4c4da7bf447127fcedc6c412bfd9c4ef385ae0c8aceeb9d11550b6b8d99eb7ae'
           }
