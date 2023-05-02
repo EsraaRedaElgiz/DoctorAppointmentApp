@@ -10,6 +10,7 @@ import AppointmentReducer from './Reducers/AppointmentSlice';
 import HistoryReducer from './Reducers/HistorySlice';
 import AuthReducer from './Reducers/AuthSlice';
 import DoctorSignUpReducer from '../../Doctor/src/Redux/Reducers/DoctorSignUpSlice';
+import AddAppointmentBySecretaryReducer from '../../Doctor/src/Redux/Reducers/AddAppointmentBySecretarySlice';
 import {configureStore} from '@reduxjs/toolkit';
 const store = configureStore({
   reducer: {
@@ -24,7 +25,8 @@ const store = configureStore({
     AppointmentReducer: AppointmentReducer,
     HistoryReducer: HistoryReducer,
     AuthReducer: AuthReducer,
-    DoctorSignUpReducer:DoctorSignUpReducer
+    DoctorSignUpReducer:DoctorSignUpReducer,
+    AddAppointmentBySecretaryReducer:AddAppointmentBySecretaryReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     serializableCheck: false
