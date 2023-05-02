@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,32 +7,32 @@ import {
   ScrollView,
 } from 'react-native';
 import styles from './style';
-import { COLORS, IS_DOCTOR, PADDINGS } from '../../constants/Constants';
+import {COLORS, IS_DOCTOR, PADDINGS} from '../../constants/Constants';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
-import { TextInput } from 'react-native-paper';
+import {TextInput} from 'react-native-paper';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
-import { useSelector, useDispatch } from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   setName,
   setPhoneNum,
   setEmail,
   setPassword,
-  setSuccess
+  setSuccess,
 } from '../../Redux/Reducers/SignUpSlice';
-import { useForm, Controller } from 'react-hook-form';
-import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+import {useForm, Controller} from 'react-hook-form';
+import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-function SignUp({ navigation }) {
+function SignUp({navigation}) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  useEffect(()=>{
-    dispatch(setSuccess(false))
-    getDoc()
-  },[])
-  const getDoc = async ()=> {
+  useEffect(() => {
+    dispatch(setSuccess(false));
+    getDoc();
+  }, []);
+  const getDoc = async () => {
     const doc = await AsyncStorage.getItem(IS_DOCTOR);
     console.log('doc => ', doc);
-  }
+  };
   const [secured_pass_first, set_secured_pass_first] = useState(true);
   const [secured_pass_second, set_secured_pass_second] = useState(true);
 
@@ -40,40 +40,36 @@ function SignUp({ navigation }) {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: {errors},
     watch,
   } = useForm({
-
     defaultValues: {
-      name: "",
-      phoneNum: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      name: '',
+      phoneNum: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
     },
   });
   const onSubmit = data => {
     //console.log(data);
     //backend
     /* const data = {
-       name: data.name,
-         phoneNum: data.phoneNum,
-         email: data.email,
-         password: data.password,
-         confirmPassword: data.confirmPassword
-       }
-       dispatch(registerUser(data))
+      name: data.name,
+        phoneNum: data.phoneNum,
+        email: data.email,
+        password: data.password,
+        confirmPassword: data.confirmPassword
+      }
+        dispatch(registerUser(data))
        */
-    dispatch(setName(data.name))
-    dispatch(setPhoneNum(data.phoneNum))
-    dispatch(setEmail(data.email))
-    dispatch(setPassword(data.password))
+    dispatch(setName(data.name));
+    dispatch(setPhoneNum(data.phoneNum));
+    dispatch(setEmail(data.email));
+    dispatch(setPassword(data.password));
     navigation.navigate('MedicalSheet');
-    reset()
-
-
+    reset();
   };
-
 
   return (
     <>
@@ -87,9 +83,8 @@ function SignUp({ navigation }) {
           backgroundColor={COLORS.blue}
           padding={PADDINGS.mdPadding}
           onPress={() => {
-            reset()
+            reset();
             navigation.navigate('DoctorOrPatient');
-
           }}
         />
         <View style={styles.container}>
@@ -116,7 +111,7 @@ function SignUp({ navigation }) {
                     minLength: 2,
                     maxLength: 30,
                   }}
-                  render={({ field: { onChange, onBlur, value } }) => (
+                  render={({field: {onChange, onBlur, value}}) => (
                     <Reusabletextinput
                       placeholder="الاسم"
                       bordercolor={errors.name ? COLORS.red : COLORS.gray}
@@ -131,10 +126,10 @@ function SignUp({ navigation }) {
                   {errors.name?.type === 'required'
                     ? 'يجب ادخال الاسم'
                     : errors.name?.type === 'minLength'
-                      ? 'الاسم يجب ان لا يقل عن حرفين'
-                      : errors.name?.type === 'maxLength'
-                        ? 'الاسم يجب ان لا يزيد عن 30 حرف'
-                        : ''}
+                    ? 'الاسم يجب ان لا يقل عن حرفين'
+                    : errors.name?.type === 'maxLength'
+                    ? 'الاسم يجب ان لا يزيد عن 30 حرف'
+                    : ''}
                 </Text>
               </View>
               <View style={styles.eachtextinputmargin}>
@@ -145,7 +140,7 @@ function SignUp({ navigation }) {
                     pattern:
                       /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{5,6}$/im,
                   }}
-                  render={({ field: { onChange, onBlur, value } }) => (
+                  render={({field: {onChange, onBlur, value}}) => (
                     <Reusabletextinput
                       placeholder="رقم الهاتف"
                       keyboardType="phone-pad"
@@ -153,7 +148,6 @@ function SignUp({ navigation }) {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       value={value}
-
                     />
                   )}
                   name="phoneNum"
@@ -162,8 +156,8 @@ function SignUp({ navigation }) {
                   {errors.phoneNum?.type === 'required'
                     ? 'يجب ادخال رقم الهاتف'
                     : errors.phoneNum?.type === 'pattern'
-                      ? 'يجب ادخال رقم هاتف صحيح'
-                      : ''}
+                    ? 'يجب ادخال رقم هاتف صحيح'
+                    : ''}
                 </Text>
               </View>
               <View style={styles.eachtextinputmargin}>
@@ -173,7 +167,7 @@ function SignUp({ navigation }) {
                     required: true,
                     pattern: /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/,
                   }}
-                  render={({ field: { onChange, onBlur, value } }) => (
+                  render={({field: {onChange, onBlur, value}}) => (
                     <Reusabletextinput
                       placeholder="عنوان البريد الالكتروني"
                       keyboardType="email-address"
@@ -181,7 +175,6 @@ function SignUp({ navigation }) {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       value={value}
-
                     />
                   )}
                   name="email"
@@ -190,8 +183,8 @@ function SignUp({ navigation }) {
                   {errors.email?.type === 'required'
                     ? 'يجب ادخال عنوان البريد الالكتروني'
                     : errors.email?.type === 'pattern'
-                      ? 'يجب ادخال عنوان بريد الكتروني صحيح'
-                      : ''}
+                    ? 'يجب ادخال عنوان بريد الكتروني صحيح'
+                    : ''}
                 </Text>
               </View>
               <View style={styles.eachtextinputmargin}>
@@ -203,14 +196,18 @@ function SignUp({ navigation }) {
                       /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
                     maxLength: 20,
                   }}
-                  render={({ field: { onChange, onBlur, value } }) => (
+                  render={({field: {onChange, onBlur, value}}) => (
                     <Reusabletextinput
                       placeholder="كلمه المرور"
                       right={
                         <TextInput.Icon
                           icon={secured_pass_first ? 'eye-off' : 'eye'}
                           iconColor={COLORS.darkGray}
-                          onPress={() => set_secured_pass_first(secured_pass_first => { return !secured_pass_first })}
+                          onPress={() =>
+                            set_secured_pass_first(secured_pass_first => {
+                              return !secured_pass_first;
+                            })
+                          }
                         />
                       }
                       bordercolor={errors.password ? COLORS.red : COLORS.gray}
@@ -218,7 +215,6 @@ function SignUp({ navigation }) {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       value={value}
-
                     />
                   )}
                   name="password"
@@ -227,10 +223,10 @@ function SignUp({ navigation }) {
                   {errors.password?.type === 'required'
                     ? 'يجب ادخال كلمة المرور'
                     : errors.password?.type === 'pattern'
-                      ? 'كلمه المرور يجب لا تقل عن 8 ارقام وحرف كبير وحرف صغير وعلامه مميزه'
-                      : errors.password?.type === 'maxLength'
-                        ? 'كلمة المرور يجب ان لا تزيد عن 20 حرف ورقم'
-                        : ''}
+                    ? 'كلمه المرور يجب لا تقل عن 8 ارقام وحرف كبير وحرف صغير وعلامه مميزه'
+                    : errors.password?.type === 'maxLength'
+                    ? 'كلمة المرور يجب ان لا تزيد عن 20 حرف ورقم'
+                    : ''}
                 </Text>
               </View>
               <View style={styles.eachtextinputmargin}>
@@ -244,14 +240,18 @@ function SignUp({ navigation }) {
                       }
                     },
                   }}
-                  render={({ field: { onChange, onBlur, value } }) => (
+                  render={({field: {onChange, onBlur, value}}) => (
                     <Reusabletextinput
                       placeholder="تأكيد كلمه المرور"
                       right={
                         <TextInput.Icon
                           icon={secured_pass_second ? 'eye-off' : 'eye'}
                           iconColor={COLORS.darkGray}
-                          onPress={() => set_secured_pass_second(secured_pass_second => { return !secured_pass_second })}
+                          onPress={() =>
+                            set_secured_pass_second(secured_pass_second => {
+                              return !secured_pass_second;
+                            })
+                          }
                         />
                       }
                       bordercolor={
@@ -261,7 +261,6 @@ function SignUp({ navigation }) {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       value={value}
-
                     />
                   )}
                   name="confirmPassword"
@@ -270,8 +269,8 @@ function SignUp({ navigation }) {
                   {errors.confirmPassword?.type === 'required'
                     ? 'يجب ادخال تأكيد كلمة المرور'
                     : errors.confirmPassword?.type === 'validate'
-                      ? 'كلمة المرور غير متطابقه'
-                      : ''}
+                    ? 'كلمة المرور غير متطابقه'
+                    : ''}
                 </Text>
               </View>
               <View style={styles.viewForfirstTextAfterTextinputs}>
@@ -298,7 +297,6 @@ function SignUp({ navigation }) {
                 title="متابعة"
                 onPress={handleSubmit(onSubmit)}
                 style={styles.buttonMargin}
-
               />
               <View style={styles.viewForLastTextStyle}>
                 <View>
@@ -308,8 +306,8 @@ function SignUp({ navigation }) {
                 </View>
                 <TouchableOpacity
                   onPress={() => {
-                    reset()
-                    navigation.navigate('LogIn')
+                    reset();
+                    navigation.navigate('LogIn');
                   }}>
                   <Text style={styles.bluetextstyle}> تسجيل الدخول </Text>
                 </TouchableOpacity>

@@ -1,17 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit"
+import {createSlice} from '@reduxjs/toolkit';
 const initState = {
-    emailToSendVerificationCode: "",
-}
+  emailToSendVerificationCode: '',
+};
 const SendEmailSlice = createSlice({
-    name: "ForgetPassword",
-    initialState: initState,
-    reducers: {
-        setEmailToSendVerificationCode: (state, action) => {
-            state.emailToSendVerificationCode = action.payload;
-        }
+  name: 'ForgetPassword',
+  initialState: initState,
+  reducers: {
+    setEmailToSendVerificationCode: (state, action) => {
+      state.emailToSendVerificationCode = action.payload;
     },
+  },
 });
 export default SendEmailSlice.reducer;
-export const {
-    setEmailToSendVerificationCode,
-} = SendEmailSlice.actions;
+export const {setEmailToSendVerificationCode} = SendEmailSlice.actions;
