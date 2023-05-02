@@ -32,7 +32,8 @@ type axiosType = {
 };
 
 const Axios = async ({method, url, data, params, headers}: axiosType) => {
-  const token = await AsyncStorage.getItem(USER_TOKEN);
+  let token = await AsyncStorage.getItem(USER_TOKEN);
+  token= token!=null? JSON.parse(token):undefined
 
   const response = axiosInstance({
     method,

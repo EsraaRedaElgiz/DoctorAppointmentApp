@@ -48,7 +48,7 @@ const ListDoctorsSearch = () => {
                     style.textContentBold,
                     {color: COLORS.darkGray3, fontWeight: 'normal'},
                   ]}>
-                  {'د' + ' ' + itemData.item.name.trim()}{' '}
+                  {itemData.item.name.trim()}{' '}
                 </Text>
                 <Text style={[style.textContent, {color: COLORS.darkGray2}]}>
                   {itemData.item.price+"\tجنيه"} 

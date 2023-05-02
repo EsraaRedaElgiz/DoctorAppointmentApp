@@ -7,7 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import styles from './DoctorSignupStyles';
-import { COLORS, PADDINGS } from '../../../../src/constants/Constants';
+import { COLORS, IS_DOCTOR, PADDINGS } from '../../../../src/constants/Constants';
 import Reusabletextinput from '../../../../src/components/AppTextinput/AppTextinput';
 import { TextInput } from 'react-native-paper';
 import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
@@ -23,12 +23,18 @@ import { useForm, Controller } from 'react-hook-form';
 import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
 //import { insertData } from "../../Redux/Reducers/SignUpSlice";
 import { setIsDoctor } from '../../../../src/Redux/Reducers/AuthSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 function DoctorSignup({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   useEffect(() => {
     dispatch(setSuccess(false))
+    getDoc()
   }, [])
+  const getDoc = async ()=> {
+    const doc = await AsyncStorage.getItem(IS_DOCTOR);
+    console.log('doc => ', doc);
+  }
   const [secured_pass_first, set_secured_pass_first] = useState(true);
   const [secured_pass_second, set_secured_pass_second] = useState(true);
 
@@ -81,7 +87,7 @@ function DoctorSignup({ navigation }) {
           onPress={() => {
             reset();
             navigation.navigate('DoctorOrPatient');
-            dispatch(setIsDoctor())
+            dispatch(setIsDoctor(false))
           }}
         />
         <View style={styles.container}>

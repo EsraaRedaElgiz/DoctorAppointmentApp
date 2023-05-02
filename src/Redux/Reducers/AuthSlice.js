@@ -18,7 +18,7 @@ const AuthSlice = createSlice({
       AsyncStorage.removeItem(USER_DATA);
     },
     setIsDoctor: (state, action) => {
-      state.isDoctor = !state.isDoctor;
+      state.isDoctor = action.payload;
     },
   },
 });

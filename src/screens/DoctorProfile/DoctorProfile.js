@@ -61,7 +61,7 @@ const DoctorProfile = ({navigation}) => {
 
           {/* NameAndSpecialty */}
           <View style={styles.textsContainer}>
-            <Text style={style.textTitleBold}>{'د\t' + DoctorArray.name}</Text>
+            <Text style={style.textTitleBold}>{DoctorArray.name}</Text>
             <Text
               style={[
                 style.textContent,
