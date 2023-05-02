@@ -1,17 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit"
+import {createSlice} from '@reduxjs/toolkit';
 const initState = {
-    code: "",
-}
+  code: '',
+};
 const vertificationCodeSlice = createSlice({
-    name: "VertificationCode",
-    initialState: initState,
-    reducers: {
-        setVertificationCode: (state, action) => {
-            state.code = action.payload;
-        }
+  name: 'VertificationCode',
+  initialState: initState,
+  reducers: {
+    setVertificationCode: (state, action) => {
+      state.code = action.payload;
     },
+  },
 });
 export default vertificationCodeSlice.reducer;
-export const {
-    setVertificationCode,
-} = vertificationCodeSlice.actions;
+export const {setVertificationCode} = vertificationCodeSlice.actions;
