@@ -20,7 +20,12 @@ import {useForm, Controller} from 'react-hook-form';
 import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ViewLikeTextInput from '../../../../src/components/ViewLikeTextInput/ViewLikeTextInput';
+import { AddAppointmentBySec } from '../../Redux/Reducers/AddAppointmentBySecretarySlice';
+import { setSuccessAdd } from '../../Redux/Reducers/AddAppointmentBySecretarySlice';
 function AddAppointmentBySecretary({navigation}) {
+  const dispatch=useDispatch()
+  const globalState=useSelector(state=>state)
+  const {  successAdd,isLoading } = globalState.AddAppointmentBySecretaryReducer
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [timePickerVisible, setTimePickerVisible] = useState(false);
   const [date, setDate] = useState('');
@@ -65,28 +70,28 @@ function AddAppointmentBySecretary({navigation}) {
     if (date.length > 0 && time.length > 0) {
       //console.log(JSON.stringify(data)+" "+date+" "+time);
       //backend
-      /* const data = {
-        name: data.name,
-          phoneNum: data.phoneNum,
+       const sendData = {
+          patient_name: data.name,
+          patient_phone: data.phoneNum,
           date:date,
-          time:time
+          //time:time.trim() //wait seconds to remove from back
+          time:"05:20:00"
         }
-        dispatch(insertData(data))
-    */
-      setDate(date => {
+        dispatch(AddAppointmentBySec(sendData))
+      successAdd===true? setDate(date => {
         return '';
-      });
-      setDateError(dateError => {
+      }):null;
+      successAdd===true? setDateError(dateError => {
         return '';
-      });
-      setTime(time => {
+      }):null;
+      successAdd===true? setTime(time => {
         return '';
-      });
-      setTimeError(timeError => {
+      }):null;
+      successAdd===true? setTimeError(timeError => {
         return '';
-      });
-      reset();
-      navigation.goBack();
+      }):null;
+      successAdd===true?reset():null;
+      successAdd===true?navigation.goBack():null;
     }
   };
   return (
@@ -110,6 +115,7 @@ function AddAppointmentBySecretary({navigation}) {
             return '';
           });
           navigation.goBack();
+          dispatch(setSuccessAdd(false))
         }}
       />
       <ScrollView
@@ -220,7 +226,7 @@ function AddAppointmentBySecretary({navigation}) {
         </View>
       </ScrollView>
       <View style={styles.viewButtonContainerStyle}>
-        <GeneralButton title="حفظ" onPress={handleSubmit(onSubmit)} />
+        <GeneralButton title="حفظ" onPress={handleSubmit(onSubmit)} isLoading={isLoading} />
       </View>
       {datePickerVisible && (
         <DateTimePicker

@@ -26,12 +26,14 @@ import * as ImagePicker from 'react-native-image-picker';
 import { requestCameraPermission } from '../../../../src/utils/CameraPermissin';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import DropDown from '../../../../src/components/DropDown/DropDown';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { CheckBox } from 'react-native-elements';
 import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
 import { useForm, Controller } from 'react-hook-form';
 import { style } from '../../../../src/styles/Style';
 import { registerDoctor, setSuccess } from '../../Redux/Reducers/DoctorSignUpSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { set } from 'date-fns';
 const Compeleteinformation = ({ navigation }) => {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
@@ -50,6 +52,9 @@ const Compeleteinformation = ({ navigation }) => {
   const Specialization = ['اسنان', 'باطنة', 'صدر', 'عيون'];
   const [modalVisible, setModalVisible] = useState(false);
   const [modal_Visible_wokdays, setmodal_Visible_wokdays] = useState(false);
+  const[modal_Visible_start_time,setmodal_Visible_start_time]=useState(false)
+  const[modal_Visible_end_time,setmodal_Visible_end_time]=useState(false)
+  const[modal_Visible_section_time,setmodal_Visible_section_time]=useState(false)
   const { width, height } = Dimensions.get('screen');
   const [checked, setchecked] = useState(select);
   const region = {
@@ -214,6 +219,21 @@ const Compeleteinformation = ({ navigation }) => {
     let browser_url =
       'تم تحديد الموقع بنجاح'
     setValue('Location', browser_url, { shouldValidate: true });
+  };
+  const onTimeSelected = (event, value) => {
+    setmodal_Visible_start_time(false);
+    console.log(JSON.stringify(value + '').substring(16, 22))
+    setValue("start",JSON.stringify(value + '').substring(16, 22), { shouldValidate: true })
+  };
+  const onTimeSelected_endtime = (event, value) => {
+    setmodal_Visible_end_time(false);
+    console.log(JSON.stringify(value + '').substring(16, 22))
+    setValue("end",JSON.stringify(value + '').substring(16, 22), { shouldValidate: true })
+  };
+  const onTimeSelected_sectiontime = (event, value) => {
+    setmodal_Visible_section_time(false);
+    console.log(JSON.stringify(value + '').substring(16, 22))
+    setValue("section",JSON.stringify(value + '').substring(16, 22), { shouldValidate: true })
   };
   return (
     <View style={styles.container}>
@@ -470,11 +490,6 @@ const Compeleteinformation = ({ navigation }) => {
                 name="start"
                 rules={{
                   required: true,
-                  validate: val => {
-                    if (val * 0 != 0) {
-                      return 'must number';
-                    }
-                  },
                 }}
                 render={({ field: { value, onChange, onBlur } }) => (
                   <>
@@ -485,13 +500,15 @@ const Compeleteinformation = ({ navigation }) => {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       bordercolor={errors.start ? '#f00' : COLORS.gray}
+                      onTouchStart={() =>{
+                        setmodal_Visible_start_time(true)
+                      }
+                      }
                     />
                     <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
                       {errors.start?.type === 'required'
                         ? 'يجب ادخال البداية'
-                        : errors.start?.type === 'validate'
-                          ? 'يجب ادخال رقم'
-                          : ''}
+                        :  ''}
                     </Text>
                   </>
                 )}
@@ -503,11 +520,6 @@ const Compeleteinformation = ({ navigation }) => {
                 name="end"
                 rules={{
                   required: true,
-                  validate: val => {
-                    if (val * 0 != 0) {
-                      return 'must number';
-                    }
-                  },
                 }}
                 render={({
                   field: { value, onChange, onBlur },
@@ -521,14 +533,17 @@ const Compeleteinformation = ({ navigation }) => {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       bordercolor={errors.end ? '#f00' : COLORS.gray}
+                      onTouchStart={()=>{
+                        setmodal_Visible_end_time(true)
+
+                      }
+                    }
                     />
 
                     <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
                       {errors.end?.type === 'required'
                         ? 'يجب ادخال النهاية'
-                        : error?.type === 'validate'
-                          ? 'يجب ادخال رقم'
-                          : ''}
+                        :  ''}
                     </Text>
                   </>
                 )}
@@ -540,11 +555,7 @@ const Compeleteinformation = ({ navigation }) => {
                 name="section"
                 rules={{
                   required: 'يجب تحديد المدة',
-                  validate: val => {
-                    if (val * 0 != 0) {
-                      return 'must number';
-                    }
-                  },
+                  
                 }}
                 render={({ field: { value, onChange, onBlur } }) => (
                   <>
@@ -555,13 +566,16 @@ const Compeleteinformation = ({ navigation }) => {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       bordercolor={errors.section ? '#f00' : COLORS.gray}
+                      onTouchStart={()=>{
+                        setmodal_Visible_section_time(true)
+
+                      }
+                    }
                     />
                     <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
                       {errors.section?.type === 'required'
                         ? 'يجب ادخال المدة'
-                        : errors.section?.type === 'validate'
-                          ? 'يجب ادخال رقم'
-                          : ''}
+                        :''}
                     </Text>
                   </>
                 )}
@@ -710,7 +724,7 @@ const Compeleteinformation = ({ navigation }) => {
                 </View>
               );
             })}
-            <View></View>
+            
             <View
               style={{
                 width: '100%',
@@ -728,6 +742,65 @@ const Compeleteinformation = ({ navigation }) => {
             </View>
           </View>
         </View>
+      </Modal>
+      <Modal
+
+      visible={modal_Visible_start_time}
+      onRequestClose={() => {
+        setmodal_Visible_start_time(!modal_Visible_start_time);
+      }}
+      transparent={true}
+      >
+        <DateTimePicker
+          testID="TimePicker"
+          label="Pick A Date"
+          onChange={onTimeSelected}
+          mode={'time'}
+          value={new Date(Date.now())}
+          is24Hour={false}
+          display="spinner"
+          negativeButton={{label: 'Cancel', textColor: 'red',}}
+          positiveButton={{label: 'ok', textColor: COLORS.blue}}
+        />
+      </Modal>
+
+      <Modal
+      visible={modal_Visible_end_time}
+      onRequestClose={() => {
+        setmodal_Visible_end_time(!modal_Visible_end_time,);
+      }}
+      transparent={true}
+      >
+        <DateTimePicker
+          testID="TimePicker"
+          label="Pick A Date"
+          onChange={onTimeSelected_endtime}
+          mode={'time'}
+          value={new Date(Date.now())}
+          is24Hour={false}
+          display="spinner"
+          negativeButton={{label: 'Cancel', textColor: 'red',}}
+          positiveButton={{label: 'ok', textColor: COLORS.blue}}
+        />
+      </Modal>
+      <Modal
+      visible={modal_Visible_section_time}
+      onRequestClose={() => {
+        setmodal_Visible_section_time(!modal_Visible_end_time,);
+      }}
+      transparent={true}
+      >
+        <DateTimePicker
+          testID="TimePicker"
+          label="Pick A Date"
+          onChange={onTimeSelected_sectiontime}
+          mode={'time'}
+          value={new Date(Date.now())}
+          is24Hour={true}
+          display="spinner"
+          negativeButton={{label: 'Cancel', textColor: 'red'}}
+          positiveButton={{label: 'ok', textColor: COLORS.blue,}}
+        />
       </Modal>
     </View>
   );
