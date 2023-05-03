@@ -27,11 +27,12 @@ import {useSelector} from 'react-redux';
 
 function EditPersonDetails(props) {
   const globalState = useSelector(state => state);
-  const {name, age, height, weight} = globalState.PersonalDetailsReducer;
+  const {name, age, height, weight, bloodType, gender, phone} =
+    globalState.PersonalDetailsReducer;
   const {navigation} = props;
   const [visible, setVisible] = useState(false);
   const [photo_uri, setphoto_uri] = useState();
-  const [bloodType, setBloodType] = useState('نوع الدم');
+  const [bloodTypePage, setBloodType] = useState('نوع الدم');
   const {
     control,
     handleSubmit,
@@ -41,12 +42,12 @@ function EditPersonDetails(props) {
   } = useForm({
     defaultValues: {
       name: name,
-      bloodType: 'bloodType',
+      bloodType: `${bloodType}`,
       weight: `${weight}`,
       height: `${height}`,
       age: `${age}`,
-      gender: 'gender',
-      phone: '',
+      gender: `${gender}`,
+      phone: `${phone}`,
     },
   });
   const onSubmit = data => {
@@ -109,7 +110,7 @@ function EditPersonDetails(props) {
   };
 
   const bloodTypeList = ['A+', 'B+', 'C+'];
-  const gender = ['ذكر', 'انثي'];
+  const genderPage = ['ذكر', 'انثي'];
 
   return (
     <GeneralPage>
@@ -131,7 +132,7 @@ function EditPersonDetails(props) {
       />
       <View style={styles.container}>
         <ProfileImage
-          nameAfterImage={'محمد عبدالحميد'}
+          nameAfterImage={name}
           iconOnImage
           iconBgColor
           onPressPen={() => refRBSheet.current.open()}
@@ -159,7 +160,7 @@ function EditPersonDetails(props) {
           {errors.name?.type === 'required' ? 'يجب ادخال اسم' : ''}
         </Text>
         <Controller
-          name="bloodType"
+          name="bloodTypePage"
           control={control}
           rules={{
             required: true,

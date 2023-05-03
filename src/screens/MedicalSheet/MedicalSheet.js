@@ -107,11 +107,13 @@ function MedicalSheet({navigation}) {
     formdata.append('password', password);
     formdata.append(
       'image',
-      JSON.stringify({
+      // JSON.stringify({
+      {
         uri: photo_uri.uri,
         name: photo_uri.fileName,
         type: photo_uri.type,
-      }),
+      },
+      // }),
     );
     formdata.append('patient_blood_type', data.bloodType);
     formdata.append('patient_weight', data.weight);

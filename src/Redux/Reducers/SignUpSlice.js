@@ -27,14 +27,17 @@ export const registerUser = createAsyncThunk(
         },
       })
         .then(res => {
+          console.log(res.data);
           if (res.status == 200) {
             if (res.data === 'Success add patient data') {
               dispatch(setSuccess(true));
+              console.log(res.data);
             } else {
               console.log(res.data);
             }
           } else {
             alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
+            console.log(res.data);
           }
         })
         .catch(err => {
@@ -74,6 +77,7 @@ const signUpSlice = createSlice({
     }),
       builder.addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.success = true;
       }),
       builder.addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
