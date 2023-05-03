@@ -18,6 +18,7 @@ export const registerUser = createAsyncThunk(
   async (args, thunkAPI) => {
     const {rejectWithValue, dispatch} = thunkAPI;
     try {
+      let response=""
       await Axios({
         method: 'POST',
         url: '/patient/user_signup.php',
@@ -29,7 +30,7 @@ export const registerUser = createAsyncThunk(
         .then(res => {
           if (res.status == 200) {
             if (res.data === 'Success add patient data') {
-              dispatch(setSuccess(true));
+              response=res.data;
             } else {
               console.log(res.data);
             }
@@ -40,6 +41,8 @@ export const registerUser = createAsyncThunk(
         .catch(err => {
           console.log(err);
         });
+        return response;
+      
     } catch (error) {
       //console.log(error.message)
       return rejectWithValue(error.message);
@@ -74,6 +77,8 @@ const signUpSlice = createSlice({
     }),
       builder.addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
+        //action.payload==="Success add patient data"?state.success=true:null
+        //console.log(action.payload)
       }),
       builder.addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;

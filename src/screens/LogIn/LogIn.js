@@ -22,35 +22,32 @@ import { HeaderNavigation } from '../../components/headerNavigation/HeaderNaviga
 import { RFValue } from 'react-native-responsive-fontsize';
 import { loginUser } from '../../Redux/Reducers/LoginSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setSuccess } from "../../Redux/Reducers/SignUpSlice"
 
 function LogIn({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
 
 
-  useEffect(()=>{
-    dispatch(setSuccess(false))
-  },[])
- /* 
- كنت بشوف لما عمل لوج اوت كل حاجه بتتمسح ولا لا فعملتها هنا
-   const {  success } = globalState.SignUpReducer
 
- useEffect(() => {
-    getToken()
-  }, [])
-
-  const getToken = async ()=> {
-    const token = await AsyncStorage.getItem(USER_TOKEN);
-    const data = await AsyncStorage.getItem(USER_DATA);
-    console.log('token => ', token);
-    console.log('data => ', data);
-    console.log("success in medicalsheet",success)
-    console.log("userinfo in login",userInfo)
-
-  }*/
-
+  /* 
+  كنت بشوف لما عمل لوج اوت كل حاجه بتتمسح ولا لا فعملتها هنا
+    const {  success } = globalState.SignUpReducer
  
+  useEffect(() => {
+     getToken()
+   }, [])
+ 
+   const getToken = async ()=> {
+     const token = await AsyncStorage.getItem(USER_TOKEN);
+     const data = await AsyncStorage.getItem(USER_DATA);
+     console.log('token => ', token);
+     console.log('data => ', data);
+     console.log("success in medicalsheet",success)
+     console.log("userinfo in login",userInfo)
+ 
+   }*/
+
+
   const { isLoading, userInfo } = globalState.LoginReducer
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [secured_pass, set_secured_pass] = useState(true);
@@ -72,11 +69,16 @@ function LogIn({ navigation }) {
       email: data.email,
       password: data.password,
       //rememberMe: toggleCheckbox
-      type:2
+      type: 2
     }
-    dispatch(loginUser(sendData))
-    userInfo !== null ? reset() : null
-    userInfo !== null ? setToggleCheckBox(toggleCheckBox => { return false }) : null
+    dispatch(loginUser(sendData)).unwrap().then(() => {
+      if (userInfo !== null) {
+        reset()
+        setToggleCheckBox(toggleCheckBox => { return false })
+
+      }
+    }).catch((err) => {console.log(err.message) });
+   
 
   };
 

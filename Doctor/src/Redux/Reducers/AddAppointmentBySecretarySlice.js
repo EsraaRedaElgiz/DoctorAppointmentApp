@@ -14,6 +14,7 @@ export const AddAppointmentBySec = createAsyncThunk(
     async (args, thunkAPI) => {
         const { rejectWithValue, dispatch } = thunkAPI
         try {
+            let response=""
             await Axios
                 ({
                     method: "POST",
@@ -23,7 +24,7 @@ export const AddAppointmentBySec = createAsyncThunk(
                     if (res.status == 200) {
 
                         if (res.data.status==true) {
-                            dispatch(setSuccessAdd(true))
+                            response=res.data.status
                         } else {
                             console.log(res.data);
                         }
@@ -33,6 +34,7 @@ export const AddAppointmentBySec = createAsyncThunk(
                 }).catch((err) => {
                     console.log(err)
                 })
+                return response;
         } catch (error) {
             console.log(rejectWithValue(error.message))
             return rejectWithValue(error.message);

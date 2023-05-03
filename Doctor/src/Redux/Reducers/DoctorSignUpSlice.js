@@ -18,6 +18,7 @@ export const registerDoctor = createAsyncThunk(
     async (args, thunkAPI) => {
         const { rejectWithValue, dispatch } = thunkAPI
         try {
+            let response=""
             await Axios({
                 method: "POST",
                 url: "/doctor/user_signup.php",
@@ -29,8 +30,8 @@ export const registerDoctor = createAsyncThunk(
                 if (res.status == 200) {
 
                     if (res.data === "Success sigunp") {
-                        dispatch(setSuccess(true))
-                        
+                        //dispatch(setSuccess(true))
+                        response=res.data;
                     } else {
                         console.log(res.data);
                     }
@@ -41,6 +42,7 @@ export const registerDoctor = createAsyncThunk(
             }).catch((err) => {
                 console.log(err)
             })
+            return response;
 
         } catch (error) {
             console.log(error.message)
