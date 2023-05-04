@@ -28,6 +28,7 @@ export const registerUser = createAsyncThunk(
         },
       })
         .then(res => {
+          console.log(res.data);
           if (res.status == 200) {
             if (res.data === 'Success add patient data') {
               response=res.data;
@@ -36,6 +37,7 @@ export const registerUser = createAsyncThunk(
             }
           } else {
             alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
+            console.log(res.data);
           }
         })
         .catch(err => {

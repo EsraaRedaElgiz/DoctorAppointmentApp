@@ -40,7 +40,7 @@ const HomeTabs = () => {
             tabBarStyle: {
               backgroundColor: COLORS.white,
             },
-            tabBarVisibilityAnimationConfig:true,
+            tabBarVisibilityAnimationConfig: true,
             tabBarIcon: ({focused}) => (
               <Ionicons
                 name={
@@ -62,8 +62,7 @@ const HomeTabs = () => {
                     ]}>
                     {label[route.name]}
                   </Text>
-                  <View
-                    style={style.underLineBottomTab}></View>
+                  <View style={style.underLineBottomTab}></View>
                 </>
               ) : null,
           };
