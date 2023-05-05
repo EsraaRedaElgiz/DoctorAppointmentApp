@@ -23,31 +23,33 @@ import DropDown from '../../components/DropDown/DropDown';
 import {requestCameraPermission} from '../../utils/CameraPermissin';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
+import {useSelector} from 'react-redux';
 
 function EditPersonDetails(props) {
+  const globalState = useSelector(state => state);
+  const {name, age, height, weight, bloodType, gender, phone} =
+    globalState.PersonalDetailsReducer;
   const {navigation} = props;
   const [visible, setVisible] = useState(false);
   const [photo_uri, setphoto_uri] = useState();
-  const [bloodType, setBloodType] = useState('نوع الدم');
+  const [bloodTypePage, setBloodType] = useState('نوع الدم');
   const {
     control,
     handleSubmit,
     reset,
     watch,
     formState: {errors},
-  } = useForm(
-    {
-      defaultValues: {
-        name:"",
-        bloodType: "",
-        weight: "",
-        height: "",
-        age: "",
-        gender: "",
-        phone:""
-      },
-    }
-  );
+  } = useForm({
+    defaultValues: {
+      name: name,
+      bloodType: `${bloodType}`,
+      weight: `${weight}`,
+      height: `${height}`,
+      age: `${age}`,
+      gender: `${gender}`,
+      phone: `${phone}`,
+    },
+  });
   const onSubmit = data => {
     //console.log(data);
     reset();
@@ -108,7 +110,7 @@ function EditPersonDetails(props) {
   };
 
   const bloodTypeList = ['A+', 'B+', 'C+'];
-  const gender = ['ذكر', 'انثي'];
+  const genderPage = ['ذكر', 'انثي'];
 
   return (
     <GeneralPage>
@@ -130,7 +132,7 @@ function EditPersonDetails(props) {
       />
       <View style={styles.container}>
         <ProfileImage
-          nameAfterImage={"محمد عبدالحميد"}
+          nameAfterImage={name}
           iconOnImage
           iconBgColor
           onPressPen={() => refRBSheet.current.open()}
@@ -158,7 +160,7 @@ function EditPersonDetails(props) {
           {errors.name?.type === 'required' ? 'يجب ادخال اسم' : ''}
         </Text>
         <Controller
-          name="bloodType"
+          name="bloodTypePage"
           control={control}
           rules={{
             required: true,
@@ -172,8 +174,7 @@ function EditPersonDetails(props) {
                 onSelect={onChange}
                 value={value}
                 onBlur={onBlur}
-                color={value==""?COLORS.darkGray:COLORS.darkGray3}
-
+                color={value == '' ? COLORS.darkGray : COLORS.darkGray3}
               />
             );
           }}
@@ -289,7 +290,7 @@ function EditPersonDetails(props) {
                 onSelect={onChange}
                 value={value}
                 onBlur={onBlur}
-                color={value==""?COLORS.darkGray:COLORS.darkGray3}
+                color={value == '' ? COLORS.darkGray : COLORS.darkGray3}
               />
             );
           }}

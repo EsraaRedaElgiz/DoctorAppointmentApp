@@ -46,45 +46,45 @@ function Appointment({ navigation }) {
   ]*/
 
   const getMonthName = monthnum => {
-    if(monthnum==='01'){
+    if(monthnum=='01'){
       return 'يناير';
-    }else if(monthnum==='02'){
+    }else if(monthnum=='02'){
       return 'فبراير';
-    }else if(monthnum==='03'){
+    }else if(monthnum=='03'){
       return 'مارس';
-    }else if(monthnum==='04'){
+    }else if(monthnum=='04'){
       return 'ابريل';
-    }else if(monthnum==='05'){
+    }else if(monthnum=='05'){
       return 'مايو';
-    }else if(monthnum==='06'){
+    }else if(monthnum=='06'){
       return 'يونيو';
-    }else if(monthnum==='07'){
+    }else if(monthnum=='07'){
       return 'يوليو';
-    }else if(monthnum==='08'){
+    }else if(monthnum=='08'){
       return 'اغسطس';
-    }else if(monthnum==='09'){
+    }else if(monthnum=='09'){
       return 'سبتمبر';
-    }else if(monthnum==='10'){
+    }else if(monthnum=='10'){
       return 'اكتوبر';
-    }else if(monthnum==='11'){
+    }else if(monthnum=='11'){
       return 'نوفمبر';
-    }else if(monthnum==='12'){
+    }else if(monthnum=='12'){
       return 'ديسمبر';
     }
   };
   keyextractor = (item, index) => index.toString();
   const renderitems = ({ item, index }) => {
-    const { doctorName, doctorSpeciality, day, month, year ,appointment_time,appointment_date,doctor} = item
+    const { appointment_time,appointment_date,doctor} = item
     return (
       <AppointmentAndHistoryComponent
         doctorName={doctor.user_first_name}
-        doctorSpeciality={doctorSpeciality}//ady
+        doctorSpeciality={doctor.speciality_name}
         dateShow={true}
         day={appointment_date.substring(8, 10)}
-        month={getMonthName(JSON.stringify(appointment_date.substring(5, 7)))}//هنباصي القيسمه دي في فانكشن بتحول الشهر لاسماء
+        month={getMonthName(appointment_date.substring(5, 7)).trim()}//هنباصي القيسمه دي في فانكشن بتحول الشهر لاسماء
         year={appointment_date.substring(0, 4)}
         timeShow={true}
-        time={appointment_time}
+        time={appointment_time.substring(0, 5)}
         style={styles.afterEachCardMargin}
         disabled={true}
         doctorImageUri={doctor.user_image}

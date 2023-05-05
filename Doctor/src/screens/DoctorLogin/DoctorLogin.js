@@ -28,9 +28,9 @@ function DoctorLogin({ navigation }) {
   const { isLoading, userInfo } = globalState.LoginReducer
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [secured_pass, set_secured_pass] = useState(true);
-  useEffect(()=>{
+  /*useEffect(()=>{
     dispatch(setSuccess(false))
-  },[])
+  },[])*/
   const {
     control,
     handleSubmit,
@@ -51,9 +51,14 @@ function DoctorLogin({ navigation }) {
       //rememberMe: toggleCheckbox
       type: 1
     }
-    dispatch(loginUser(sendData))
-    userInfo!=null? reset():null;
-    userInfo!=null? setToggleCheckBox(toggleCheckBox => {return false;}):null;
+    dispatch(loginUser(sendData)).unwrap().then(()=>{
+      if (userInfo !== null) {
+        reset()
+        setToggleCheckBox(toggleCheckBox => {return false;})
+
+      }
+    }).catch((err) => {console.log(err.message) });
+    
   };
 
   return (

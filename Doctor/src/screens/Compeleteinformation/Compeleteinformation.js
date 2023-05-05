@@ -31,14 +31,22 @@ import { CheckBox } from 'react-native-elements';
 import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
 import { useForm, Controller } from 'react-hook-form';
 import { style } from '../../../../src/styles/Style';
-import { registerDoctor, setSuccess } from '../../Redux/Reducers/DoctorSignUpSlice';
+import { registerDoctor } from '../../Redux/Reducers/DoctorSignUpSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { getSpecialities } from '../../../../src/Redux/Reducers/GetSpecialitiesSlice';
 import { set } from 'date-fns';
 const Compeleteinformation = ({ navigation }) => {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const { isLoading, success, name, phoneNum, email, password } = globalState.DoctorSignUpReducer
+  const { isLoading, name, phoneNum, email, password } = globalState.DoctorSignUpReducer
+  const { specialities } = globalState.GetSpecialitiesReducer
+  useEffect(() => {
+    requestCameraPermission();
+    dispatch(getSpecialities()).unwrap().then(() => {
+      //console.log(specialities)
 
+    })
+  }, []);
   const [photo_uri, setphoto_uri] = useState('');
   const [specialty, setspecialty] = useState('');
   const [exp, setexp] = useState('');
@@ -49,12 +57,12 @@ const Compeleteinformation = ({ navigation }) => {
   const [start, setstart] = useState("")
   const [End, setEnd] = useState("")
   const [section, setsection] = useState("")
-  const Specialization = ['اسنان', 'باطنة', 'صدر', 'عيون'];
+  const Specialization = specialities.map(spec=>spec.specialty_name);
   const [modalVisible, setModalVisible] = useState(false);
   const [modal_Visible_wokdays, setmodal_Visible_wokdays] = useState(false);
-  const[modal_Visible_start_time,setmodal_Visible_start_time]=useState(false)
-  const[modal_Visible_end_time,setmodal_Visible_end_time]=useState(false)
-  const[modal_Visible_section_time,setmodal_Visible_section_time]=useState(false)
+  const [modal_Visible_start_time, setmodal_Visible_start_time] = useState(false)
+  const [modal_Visible_end_time, setmodal_Visible_end_time] = useState(false)
+  const [modal_Visible_section_time, setmodal_Visible_section_time] = useState(false)
   const { width, height } = Dimensions.get('screen');
   const [checked, setchecked] = useState(select);
   const region = {
@@ -85,7 +93,6 @@ const Compeleteinformation = ({ navigation }) => {
   });
   //
   const onSubmit = data => {
-    console.log("data", data);
     let formdata = new FormData();
     formdata.append("type_id", '1')
     formdata.append("first_name", name)
@@ -94,10 +101,13 @@ const Compeleteinformation = ({ navigation }) => {
     formdata.append("email", email)
     formdata.append("age", "20")///////////
     formdata.append("password", password)
-    formdata.append("speciality_id", data.spealization)
+    let selectedSpecIndex=Specialization.indexOf(data.spealization)
+    let selectedSpecId=specialities[selectedSpecIndex].specialty_id
+    formdata.append("speciality_id", JSON.stringify(selectedSpecId))
     formdata.append("doctor_about", data.About)
     formdata.append("gender", "Male") // Male or Female
-    formdata.append("image", JSON.stringify({ uri: photo_uri.uri, name: photo_uri.fileName, type: photo_uri.type }))
+    formdata.append("image", photo_uri != "" ? { uri: photo_uri.uri, name: photo_uri.fileName, type: photo_uri.type } :
+      JSON.stringify({ uri: photo_uri.uri, name: photo_uri.fileName, type: photo_uri.type }))
     formdata.append("doctor_experience", data.exp)
     formdata.append("branch_address", data.Adressdescription)
     formdata.append("branch_location", data.Location)
@@ -107,18 +117,20 @@ const Compeleteinformation = ({ navigation }) => {
     formdata.append("latitude", lat)
     formdata.append("longitude", long)
     formdata.append("booking_price", data.price)
-    formdata.append("start_time", data.start)
-    formdata.append("end_time", data.end)
-    formdata.append("session_time", data.section)
-    dispatch(registerDoctor(formdata))
-    console.log(formdata)
-    console.log(success)
-    success == true ?
-      navigation.navigate('DoctorLogIn') : null;
-    success === true ? setphoto_uri(photo_uri => {
-      return '';
-    }) : null
-    success === true ? reset() : null
+    formdata.append("start_time", data.start.trim())
+    formdata.append("end_time", data.end.trim())
+    formdata.append("session_time", data.section.trim())
+    dispatch(registerDoctor(formdata)).unwrap().then((res) => {
+      if (res === "Success sigunp") {
+        navigation.navigate('DoctorLogIn')
+        setphoto_uri(photo_uri => {
+          return '';
+        })
+        reset()
+      }
+    })
+    console.log("specid=>"+JSON.stringify( selectedSpecId))
+
   };
   //
   const data = [
@@ -132,9 +144,6 @@ const Compeleteinformation = ({ navigation }) => {
   ];
   const [Days, setDays] = useState(data);
   const select = [];
-  useEffect(() => {
-    requestCameraPermission();
-  }, []);
   const refRBSheet = useRef();
   const mapRef = useRef();
 
@@ -222,18 +231,18 @@ const Compeleteinformation = ({ navigation }) => {
   };
   const onTimeSelected = (event, value) => {
     setmodal_Visible_start_time(false);
-    console.log(JSON.stringify(value + '').substring(16, 22))
-    setValue("start",JSON.stringify(value + '').substring(16, 22), { shouldValidate: true })
+    //console.log(JSON.stringify(value + '').substring(16, 22))
+    setValue("start", JSON.stringify(value + '').substring(16, 22), { shouldValidate: true })
   };
   const onTimeSelected_endtime = (event, value) => {
     setmodal_Visible_end_time(false);
-    console.log(JSON.stringify(value + '').substring(16, 22))
-    setValue("end",JSON.stringify(value + '').substring(16, 22), { shouldValidate: true })
+    //console.log(JSON.stringify(value + '').substring(16, 22))
+    setValue("end", JSON.stringify(value + '').substring(16, 22), { shouldValidate: true })
   };
   const onTimeSelected_sectiontime = (event, value) => {
     setmodal_Visible_section_time(false);
-    console.log(JSON.stringify(value + '').substring(16, 22))
-    setValue("section",JSON.stringify(value + '').substring(16, 22), { shouldValidate: true })
+    //console.log(JSON.stringify(value + '').substring(16, 22))
+    setValue("section", JSON.stringify(value + '').substring(16, 22), { shouldValidate: true })
   };
   return (
     <View style={styles.container}>
@@ -249,7 +258,6 @@ const Compeleteinformation = ({ navigation }) => {
           });
           reset();
           navigation.goBack();
-          dispatch(setSuccess(false))
 
         }}
       />
@@ -500,7 +508,7 @@ const Compeleteinformation = ({ navigation }) => {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       bordercolor={errors.start ? '#f00' : COLORS.gray}
-                      onTouchStart={() =>{
+                      onTouchStart={() => {
                         setmodal_Visible_start_time(true)
                       }
                       }
@@ -508,7 +516,7 @@ const Compeleteinformation = ({ navigation }) => {
                     <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
                       {errors.start?.type === 'required'
                         ? 'يجب ادخال البداية'
-                        :  ''}
+                        : ''}
                     </Text>
                   </>
                 )}
@@ -533,17 +541,17 @@ const Compeleteinformation = ({ navigation }) => {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       bordercolor={errors.end ? '#f00' : COLORS.gray}
-                      onTouchStart={()=>{
+                      onTouchStart={() => {
                         setmodal_Visible_end_time(true)
 
                       }
-                    }
+                      }
                     />
 
                     <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
                       {errors.end?.type === 'required'
                         ? 'يجب ادخال النهاية'
-                        :  ''}
+                        : ''}
                     </Text>
                   </>
                 )}
@@ -555,7 +563,7 @@ const Compeleteinformation = ({ navigation }) => {
                 name="section"
                 rules={{
                   required: 'يجب تحديد المدة',
-                  
+
                 }}
                 render={({ field: { value, onChange, onBlur } }) => (
                   <>
@@ -566,16 +574,16 @@ const Compeleteinformation = ({ navigation }) => {
                       onChangeText={onChange}
                       onBlur={onBlur}
                       bordercolor={errors.section ? '#f00' : COLORS.gray}
-                      onTouchStart={()=>{
+                      onTouchStart={() => {
                         setmodal_Visible_section_time(true)
 
                       }
-                    }
+                      }
                     />
                     <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
                       {errors.section?.type === 'required'
                         ? 'يجب ادخال المدة'
-                        :''}
+                        : ''}
                     </Text>
                   </>
                 )}
@@ -650,8 +658,8 @@ const Compeleteinformation = ({ navigation }) => {
           loadingIndicatorColor={COLORS.blue}
           style={{ flex: 1 }}
           onRegionChangeComplete={(region, details) => {
-            console.log('regoin change :>>> ', JSON.stringify(region));
-            console.log('regoin details :>>> ', JSON.stringify(details));
+            //console.log('regoin change :>>> ', JSON.stringify(region));
+            //console.log('regoin details :>>> ', JSON.stringify(details));
             setLong(region.longitude);
             setLat(region.latitude);
           }}
@@ -724,7 +732,7 @@ const Compeleteinformation = ({ navigation }) => {
                 </View>
               );
             })}
-            
+
             <View
               style={{
                 width: '100%',
@@ -745,11 +753,11 @@ const Compeleteinformation = ({ navigation }) => {
       </Modal>
       <Modal
 
-      visible={modal_Visible_start_time}
-      onRequestClose={() => {
-        setmodal_Visible_start_time(!modal_Visible_start_time);
-      }}
-      transparent={true}
+        visible={modal_Visible_start_time}
+        onRequestClose={() => {
+          setmodal_Visible_start_time(!modal_Visible_start_time);
+        }}
+        transparent={true}
       >
         <DateTimePicker
           testID="TimePicker"
@@ -759,17 +767,17 @@ const Compeleteinformation = ({ navigation }) => {
           value={new Date(Date.now())}
           is24Hour={false}
           display="spinner"
-          negativeButton={{label: 'Cancel', textColor: 'red',}}
-          positiveButton={{label: 'ok', textColor: COLORS.blue}}
+          negativeButton={{ label: 'Cancel', textColor: 'red', }}
+          positiveButton={{ label: 'ok', textColor: COLORS.blue }}
         />
       </Modal>
 
       <Modal
-      visible={modal_Visible_end_time}
-      onRequestClose={() => {
-        setmodal_Visible_end_time(!modal_Visible_end_time,);
-      }}
-      transparent={true}
+        visible={modal_Visible_end_time}
+        onRequestClose={() => {
+          setmodal_Visible_end_time(!modal_Visible_end_time,);
+        }}
+        transparent={true}
       >
         <DateTimePicker
           testID="TimePicker"
@@ -779,16 +787,16 @@ const Compeleteinformation = ({ navigation }) => {
           value={new Date(Date.now())}
           is24Hour={false}
           display="spinner"
-          negativeButton={{label: 'Cancel', textColor: 'red',}}
-          positiveButton={{label: 'ok', textColor: COLORS.blue}}
+          negativeButton={{ label: 'Cancel', textColor: 'red', }}
+          positiveButton={{ label: 'ok', textColor: COLORS.blue }}
         />
       </Modal>
       <Modal
-      visible={modal_Visible_section_time}
-      onRequestClose={() => {
-        setmodal_Visible_section_time(!modal_Visible_end_time,);
-      }}
-      transparent={true}
+        visible={modal_Visible_section_time}
+        onRequestClose={() => {
+          setmodal_Visible_section_time(!modal_Visible_end_time,);
+        }}
+        transparent={true}
       >
         <DateTimePicker
           testID="TimePicker"
@@ -798,8 +806,8 @@ const Compeleteinformation = ({ navigation }) => {
           value={new Date(Date.now())}
           is24Hour={true}
           display="spinner"
-          negativeButton={{label: 'Cancel', textColor: 'red'}}
-          positiveButton={{label: 'ok', textColor: COLORS.blue,}}
+          negativeButton={{ label: 'Cancel', textColor: 'red' }}
+          positiveButton={{ label: 'ok', textColor: COLORS.blue, }}
         />
       </Modal>
     </View>

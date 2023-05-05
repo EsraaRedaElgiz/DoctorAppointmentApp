@@ -9,9 +9,11 @@ import {
 } from '../../components/Home';
 import {COLORS, PADDINGS, USER_DATA, USER_TOKEN} from '../../constants/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useSelector } from 'react-redux';
 
 const Home = ({navigation}) => {
-
+  const globalState = useSelector(state => state);
+  const { userInfo } = globalState.LoginReducer;
   useEffect(() => {
     getToken()
   }, [])
@@ -21,6 +23,7 @@ const Home = ({navigation}) => {
     const data = await AsyncStorage.getItem(USER_DATA);
     console.log('token => ', token);
     console.log('data => ', data);
+    //console.log("userinfo",userInfo)
   }
 
 

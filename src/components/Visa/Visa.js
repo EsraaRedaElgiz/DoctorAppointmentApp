@@ -13,7 +13,7 @@ import {COLORS, FONTS} from '../../constants/Constants';
 const {width, height} = Dimensions.get('window');
 
 function Visa(props) {
-  const {visa, master, ...rest} = props;
+  const {visa, master, name, cardNumber, date, ...rest} = props;
   const visaType = visa
     ? require('../../assets/Images/visa.jpg')
     : master
@@ -30,18 +30,15 @@ function Visa(props) {
         />
       </View>
       <View style={styles.visaNumberView}>
-        <Text style={styles.visaNumber}>4444</Text>
-        <Text style={styles.visaNumber}>3333</Text>
-        <Text style={styles.visaNumber}>2222</Text>
-        <Text style={styles.visaNumber}>1111</Text>
+        <Text style={styles.visaNumber}>{cardNumber}</Text>
       </View>
       <View style={styles.visaData}>
         <View style={styles.date}>
           <Text style={styles.visaTextData}>Date</Text>
-          <Text style={styles.visaTextData}>13/4</Text>
+          <Text style={styles.visaTextData}>{date}</Text>
         </View>
         <View>
-          <Text style={styles.visaTextData}>ABDELRAHMAN AYAD</Text>
+          <Text style={styles.visaTextData}>{name}</Text>
         </View>
       </View>
     </TouchableOpacity>

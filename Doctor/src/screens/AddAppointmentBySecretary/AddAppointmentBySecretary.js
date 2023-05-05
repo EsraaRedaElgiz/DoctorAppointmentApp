@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   StatusBar,
@@ -15,12 +15,16 @@ import {
 } from '../../../.././src/constants/Constants';
 import Reusabletextinput from '../../../.././src/components/AppTextinput/AppTextinput';
 import GeneralButton from '../../../.././src/components/GeneralButton/GeneralButton';
-import {useSelector, useDispatch} from 'react-redux';
-import {useForm, Controller} from 'react-hook-form';
-import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
+import { useSelector, useDispatch } from 'react-redux';
+import { useForm, Controller } from 'react-hook-form';
+import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import ViewLikeTextInput from '../../../../src/components/ViewLikeTextInput/ViewLikeTextInput';
-function AddAppointmentBySecretary({navigation}) {
+import { AddAppointmentBySec } from '../../Redux/Reducers/AddAppointmentBySecretarySlice';
+function AddAppointmentBySecretary({ navigation }) {
+  const dispatch = useDispatch()
+  const globalState = useSelector(state => state)
+  const { isLoading } = globalState.AddAppointmentBySecretaryReducer
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [timePickerVisible, setTimePickerVisible] = useState(false);
   const [date, setDate] = useState('');
@@ -43,7 +47,7 @@ function AddAppointmentBySecretary({navigation}) {
     control,
     handleSubmit,
     reset,
-    formState: {errors},
+    formState: { errors },
     watch,
   } = useForm({
     defaultValues: {
@@ -65,28 +69,30 @@ function AddAppointmentBySecretary({navigation}) {
     if (date.length > 0 && time.length > 0) {
       //console.log(JSON.stringify(data)+" "+date+" "+time);
       //backend
-      /* const data = {
-        name: data.name,
-          phoneNum: data.phoneNum,
-          date:date,
-          time:time
+      const sendData = {
+        patient_name: data.name,
+        patient_phone: data.phoneNum,
+        date: date,
+        time: time.trim() 
+      }
+      dispatch(AddAppointmentBySec(sendData)).unwrap().then((res) => {
+        if (res === true) {
+          navigation.goBack()
+          setDate(date => {
+            return '';
+          })
+          setDateError(dateError => {
+            return '';
+          })
+          setTime(time => {
+            return '';
+          })
+          setTimeError(timeError => {
+            return '';
+          })
+          reset()
         }
-        dispatch(insertData(data))
-    */
-      setDate(date => {
-        return '';
-      });
-      setDateError(dateError => {
-        return '';
-      });
-      setTime(time => {
-        return '';
-      });
-      setTimeError(timeError => {
-        return '';
-      });
-      reset();
-      navigation.goBack();
+      }).catch((err) => {console.log(err.message) })
     }
   };
   return (
@@ -131,7 +137,7 @@ function AddAppointmentBySecretary({navigation}) {
                   minLength: 2,
                   maxLength: 30,
                 }}
-                render={({field: {onChange, onBlur, value}}) => (
+                render={({ field: { onChange, onBlur, value } }) => (
                   <Reusabletextinput
                     placeholder="الاسم"
                     bordercolor={errors.name ? COLORS.red : COLORS.gray}
@@ -146,10 +152,10 @@ function AddAppointmentBySecretary({navigation}) {
                 {errors.name?.type === 'required'
                   ? 'يجب ادخال الاسم'
                   : errors.name?.type === 'minLength'
-                  ? 'الاسم يجب ان لا يقل عن حرفين'
-                  : errors.name?.type === 'maxLength'
-                  ? 'الاسم يجب ان لا يزيد عن 30 حرف'
-                  : ''}
+                    ? 'الاسم يجب ان لا يقل عن حرفين'
+                    : errors.name?.type === 'maxLength'
+                      ? 'الاسم يجب ان لا يزيد عن 30 حرف'
+                      : ''}
               </Text>
             </View>
             <View style={styles.eachTextInputMargin}>
@@ -160,7 +166,7 @@ function AddAppointmentBySecretary({navigation}) {
                   pattern:
                     /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{5,6}$/im,
                 }}
-                render={({field: {onChange, onBlur, value}}) => (
+                render={({ field: { onChange, onBlur, value } }) => (
                   <Reusabletextinput
                     placeholder="رقم الهاتف"
                     keyboardType="phone-pad"
@@ -176,8 +182,8 @@ function AddAppointmentBySecretary({navigation}) {
                 {errors.phoneNum?.type === 'required'
                   ? 'يجب ادخال رقم الهاتف'
                   : errors.phoneNum?.type === 'pattern'
-                  ? 'يجب ادخال رقم هاتف صحيح'
-                  : ''}
+                    ? 'يجب ادخال رقم هاتف صحيح'
+                    : ''}
               </Text>
             </View>
             <View style={styles.viewSecondTextStyle}>
@@ -196,7 +202,7 @@ function AddAppointmentBySecretary({navigation}) {
                 borderColor={dateError ? COLORS.red : COLORS.gray}
                 textColor={date == '' ? COLORS.darkGray : COLORS.darkGray3}
               />
-              <Text style={{color: COLORS.red}}>
+              <Text style={{ color: COLORS.red }}>
                 {date.length == '' ? dateError : ''}
               </Text>
             </View>
@@ -212,7 +218,7 @@ function AddAppointmentBySecretary({navigation}) {
                 borderColor={timeError ? COLORS.red : COLORS.gray}
                 textColor={time == '' ? COLORS.darkGray : COLORS.darkGray3}
               />
-              <Text style={{color: COLORS.red}}>
+              <Text style={{ color: COLORS.red }}>
                 {time.length == '' ? timeError : ''}
               </Text>
             </View>
@@ -220,7 +226,7 @@ function AddAppointmentBySecretary({navigation}) {
         </View>
       </ScrollView>
       <View style={styles.viewButtonContainerStyle}>
-        <GeneralButton title="حفظ" onPress={handleSubmit(onSubmit)} />
+        <GeneralButton title="حفظ" onPress={handleSubmit(onSubmit)} isLoading={isLoading} />
       </View>
       {datePickerVisible && (
         <DateTimePicker
@@ -232,8 +238,8 @@ function AddAppointmentBySecretary({navigation}) {
           is24Hour={true}
           dateFormat="day month year"
           display="spinner"
-          negativeButton={{label: 'Cancel', textColor: 'red'}}
-          positiveButton={{label: 'ok', textColor: COLORS.blue}}
+          negativeButton={{ label: 'Cancel', textColor: 'red' }}
+          positiveButton={{ label: 'ok', textColor: COLORS.blue }}
         />
       )}
       {timePickerVisible && (
@@ -245,8 +251,8 @@ function AddAppointmentBySecretary({navigation}) {
           value={new Date(Date.now())}
           is24Hour={false}
           display="spinner"
-          negativeButton={{label: 'Cancel', textColor: 'red'}}
-          positiveButton={{label: 'ok', textColor: COLORS.blue}}
+          negativeButton={{ label: 'Cancel', textColor: 'red' }}
+          positiveButton={{ label: 'ok', textColor: COLORS.blue }}
         />
       )}
     </View>
