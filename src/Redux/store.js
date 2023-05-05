@@ -14,6 +14,7 @@ import AddAppointmentBySecretaryReducer from '../../Doctor/src/Redux/Reducers/Ad
 import PersonalDetailsReducer from './Reducers/PersonalDetailsSlice';
 import GetSpecialitiesReducer from './Reducers/GetSpecialitiesSlice';
 import PaymentCardReducer from './Reducers/PaymentCardSlice';
+import AppointmentDetailsReducer from '../../Doctor/src/Redux/Reducers/AppointmentDetailsSlice';
 import {configureStore} from '@reduxjs/toolkit';
 const store = configureStore({
   reducer: {
@@ -33,6 +34,7 @@ const store = configureStore({
     PersonalDetailsReducer: PersonalDetailsReducer,
     GetSpecialitiesReducer:GetSpecialitiesReducer,
     PaymentCardReducer: PaymentCardReducer,
+    AppointmentDetailsReducer:AppointmentDetailsReducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

@@ -103,7 +103,7 @@ const Compeleteinformation = ({ navigation }) => {
     formdata.append("password", password)
     let selectedSpecIndex=Specialization.indexOf(data.spealization)
     let selectedSpecId=specialities[selectedSpecIndex].specialty_id
-    formdata.append("speciality_id", JSON.stringify(selectedSpecId))
+    formdata.append("speciality_id", selectedSpecId)
     formdata.append("doctor_about", data.About)
     formdata.append("gender", "Male") // Male or Female
     formdata.append("image", photo_uri != "" ? { uri: photo_uri.uri, name: photo_uri.fileName, type: photo_uri.type } :
@@ -129,7 +129,7 @@ const Compeleteinformation = ({ navigation }) => {
         reset()
       }
     })
-    console.log("specid=>"+JSON.stringify( selectedSpecId))
+  console.log(formdata)
 
   };
   //

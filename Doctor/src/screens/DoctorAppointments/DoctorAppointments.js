@@ -13,8 +13,11 @@ import {COLORS, PADDINGS} from '../../../../src/constants/Constants';
 import Calender from '../../../../src/components/Calender/Calender';
 import PersonAppointmentCard from '../../../../src/components/PersonAppointmentCard/PersonAppointmentCard';
 import {PatientsData} from '../../../../src/utils';
+import { useDispatch } from 'react-redux';
+import { getAppointmentDetails } from '../../Redux/Reducers/AppointmentDetailsSlice';
 
 function DoctorAppointments({navigation}) {
+  const dispatch = useDispatch()
   let date = new Date();
   let day = date.getDate();
   let month = date.toLocaleString('default', {month: 'long'});
@@ -59,12 +62,17 @@ function DoctorAppointments({navigation}) {
                 time={itemData.item.time}
                 imageUri={itemData.item.imageUri}
                 onPress={() => {
-                  navigation.navigate('AppointmentDetails', {
-                    PatientsArray: itemData.item,
-                    appointmentStatus: itemData.item.confirmed
-                      ? 'تم التأكيد'
-                      : 'معلق',
-                  });
+                  dispatch(getAppointmentDetails("2")).unwrap().then((res) => { //instead of 2 i will pass appointment_id
+                    if(res.appointment_id){
+                      navigation.navigate('AppointmentDetails', {
+                        PatientsArray: itemData.item,
+                        appointmentStatus:itemData.item.confirmed?"تم التأكيد":"معلق"
+                      });
+                    }else{
+                      alert("حدث خطأ اثناء الاتصال بالخادم لعرض تفاصيل الموعد من فضلك حاول مجددا ")
+                    }
+                    
+                  })
                 }}
               />
             </>

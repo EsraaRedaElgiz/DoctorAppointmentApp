@@ -4,9 +4,12 @@ import {PatientsData} from '../../../../src/utils';
 import PersonAppointmentCard from '../../../../src/components/PersonAppointmentCard/PersonAppointmentCard';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useNavigation} from '@react-navigation/native';
+import { getAppointmentDetails } from '../../Redux/Reducers/AppointmentDetailsSlice';
+import { useDispatch } from 'react-redux';
 
 const PatientsListHome = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   return (
     <View>
       <FlatList
@@ -22,10 +25,18 @@ const PatientsListHome = () => {
                 confirmed={itemData.item.confirmed}
                 imageUri={itemData.item.imageUri}
                 onPress={() => {
-                  navigation.navigate('AppointmentDetails', {
-                    PatientsArray: itemData.item,
-                    appointmentStatus:itemData.item.confirmed?"تم التأكيد":"معلق"
-                  });
+                  dispatch(getAppointmentDetails("2")).unwrap().then((res) => { //instead of 2 i will pass appointment_id
+                    if(res.appointment_id){
+                      navigation.navigate('AppointmentDetails', {
+                        PatientsArray: itemData.item,
+                        appointmentStatus:itemData.item.confirmed?"تم التأكيد":"معلق"
+                      });
+                    }else{
+                      alert("حدث خطأ اثناء الاتصال بالخادم لعرض تفاصيل الموعد من فضلك حاول مجددا ")
+                    }
+                    
+                  })
+                  
                 }}
               />
             </>

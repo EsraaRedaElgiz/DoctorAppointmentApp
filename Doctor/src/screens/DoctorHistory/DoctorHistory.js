@@ -6,8 +6,11 @@ import {COLORS, PADDINGS} from '../../../../src/constants/Constants';
 import Calender from '../../../../src/components/Calender/Calender';
 import {PatientsData} from '../../../../src/utils';
 import PersonHistoryCard from '../../Components/PresonHistoryCard/PersonHistoryCard';
+import { useDispatch } from 'react-redux';
+import { getAppointmentDetails } from '../../Redux/Reducers/AppointmentDetailsSlice';
 
 function DoctorHistory({navigation}) {
+  const dispatch = useDispatch()
   let date = new Date();
   let day = date.getDate();
   let month = date.toLocaleString('default', {month: 'long'});
@@ -44,10 +47,17 @@ function DoctorHistory({navigation}) {
                 time={itemData.item.time}
                 imageUri={itemData.item.imageUri}
                 onPress={() => {
-                  navigation.navigate('AppointmentDetails', {
-                    PatientsArray: itemData.item,
-                    appointmentStatus: itemData.item.done ? 'مكتمل' : 'ملغى',
-                  });
+                  dispatch(getAppointmentDetails("2")).unwrap().then((res) => { //instead of 2 i will pass appointment_id
+                    if(res.appointment_id){
+                      navigation.navigate('AppointmentDetails', {
+                        PatientsArray: itemData.item,
+                        appointmentStatus:itemData.item.done?"مكتمل":"ملغى"
+                      });
+                    }else{
+                      alert("حدث خطأ اثناء الاتصال بالخادم لعرض تفاصيل الموعد من فضلك حاول مجددا ")
+                    }
+                    
+                  })
                 }}
               />
             </>

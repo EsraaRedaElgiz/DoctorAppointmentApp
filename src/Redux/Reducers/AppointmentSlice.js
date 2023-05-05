@@ -16,13 +16,13 @@ export const getAppointmentes = createAsyncThunk(
     try {
       await Axios({
         method: 'GET',
-        url: '/patient/appointments.php',
+        url: '/patient/appointments.php?filter=upcoming',
         //params:{}
       })
         .then(res => {
           if (res.status == 200) {
             if (Array.isArray(res.data)) {
-              console.log('arr', res.data);
+              //console.log('arr', res.data);
               dispatch(setAppointmentsArr(res.data));
             } else {
               console.log(res.data);

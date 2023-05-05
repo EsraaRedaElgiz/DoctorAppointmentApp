@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { View, StatusBar, FlatList, ActivityIndicator } from 'react-native';
+import { View, StatusBar, FlatList, ActivityIndicator,Text } from 'react-native';
 import { COLORS, PADDINGS } from '../../constants/Constants';
 import styles from './styles';
 import HeaderArrowAndWord from '../../components/HeaderArrowAndWord/HeaderArrowAndWord';
@@ -8,7 +8,6 @@ import AppointmentAndHistoryComponent from '../../components/AppointmentAndHisto
 //for backend
 import { getAppointmentes } from '../../Redux/Reducers/AppointmentSlice'
 import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
-import { Text } from 'react-native-paper';
 import { RFValue } from 'react-native-responsive-fontsize';
 function Appointment({ navigation }) {
 
