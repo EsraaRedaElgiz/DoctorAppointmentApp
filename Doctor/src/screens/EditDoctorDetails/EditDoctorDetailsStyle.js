@@ -1,4 +1,4 @@
-import  StyleSheet  from "react-native/Libraries/StyleSheet/StyleSheet"
+import { StyleSheet} from"react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import { COLORS, FONTS, PADDINGS, RADIUS } from '../../../../src/constants/Constants';
 const styles = StyleSheet.create({
@@ -15,21 +15,13 @@ const styles = StyleSheet.create({
  Specalizationandexperience: {
   width: "100%",
   alignItems: "center",
-  justifyContent: "space-around",
+  justifyContent: "space-between",
   flexDirection: "row",
-  marginTop: RFValue(10)
+  // marginTop: RFValue(10)
  },
  viewofDropDown: {
-  width: "48%",
-  height: RFValue(70),
-  alignItems: "center",
-  justifyContent: "space-around",
- },
- viewofinput: {
   width: "47%",
   height: RFValue(70),
-  alignItems: "center",
-  justifyContent: "space-around",
  },
  bottominputview: {
   marginBottom: RFValue(0)
@@ -64,8 +56,7 @@ const styles = StyleSheet.create({
  },
  buttonViewStyle: {
    backgroundColor: COLORS.white,
-   paddingBottom: PADDINGS.mdPadding
-
+   paddingBottom: PADDINGS.mdPadding,
  },
  modelofcheckbox: {
   flex: 1,
