@@ -1,16 +1,16 @@
 import React from 'react';
-import {View, Text, ScrollView, Image} from 'react-native';
+import {View, Text, ScrollView, Image, Linking} from 'react-native';
 import GeneralPage from '../../../../src/components/GeneralPage/GeneralPage';
 import ProfileImage from '../../../../src/components/ProfileImage/ProfileImage';
 import UserProfileButton from '../../../../src/components/UserProfileButton/UserProfileButton';
 import {DoctorProfileData} from '../../../../src/utils/DummyData';
 import styles from './DoctorProfileTabsStyles';
 import {useNavigation} from '@react-navigation/native';
-import { setLoggedOut } from '../../../../src/Redux/Reducers/AuthSlice';
-import { useDispatch } from 'react-redux';
+import {setLoggedOut} from '../../../../src/Redux/Reducers/AuthSlice';
+import {useDispatch} from 'react-redux';
 function DoctorProfileTabs({navigation}) {
   // const navigation = useNavigation();
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   return (
     <GeneralPage>
       <View style={styles.container}>
@@ -36,10 +36,16 @@ function DoctorProfileTabs({navigation}) {
                     : idx == 3
                     ? navigation.navigate('DoctorSupportTeam')
                     : idx == 4
-                    ? null
+                    ? Linking.openURL(
+                        'https://sites.google.com/view/doclinicapp/',
+                      )
                     : idx == 5
-                    ? null
-                    : dispatch(setLoggedOut())
+                    ? Linking.openURL(
+                        'https://sites.google.com/view/doclinicterms/',
+                      )
+                    : idx == 6
+                    ? dispatch(setLoggedOut())
+                    : null;
                 }}
               />
             </View>
