@@ -113,7 +113,7 @@ const Compeleteinformation = ({ navigation }) => {
     formdata.append("branch_location", data.Location)
     formdata.append("branch_is_default", "1")
     formdata.append("branch_phone", phoneNum)
-    formdata.append("branch_working_days", data.Workdays)
+    formdata.append("branch_working_days", /*data.Workdays*/JSON.stringify([{day:"friday",enabled:true}]))
     formdata.append("latitude", lat)
     formdata.append("longitude", long)
     formdata.append("booking_price", data.price)
