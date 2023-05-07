@@ -32,6 +32,14 @@ function AddCard(props) {
       card_exp_date: data.date,
     };
     console.log(cardData);
+    // send data like this exactly
+    /*
+    {
+    "card_holder": "Test dev",
+    "card_number": "1234567891234567",
+    "card_exp_date": "06/25"
+    }
+    */
     dispatch(AddCardAction(cardData))
       .unwrap()
       .then(() => {
