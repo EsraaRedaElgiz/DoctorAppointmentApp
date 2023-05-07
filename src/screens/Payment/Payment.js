@@ -41,7 +41,7 @@ function Payment(props) {
           paddingHorizontal: PADDINGS.mdPadding,
         }}>
         {isLoading ? (
-          <ActivityIndicator size={30} color={COLORS.blue} />
+          <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
         ) : (
           <FlatList
             data={cards}

@@ -8,13 +8,16 @@ import GeneralPage from '../../components/GeneralPage/GeneralPage';
 import VisaTypeCard from '../../components/VisaTypeCard/VisaTypeCard';
 import {COLORS, FONTS, PADDINGS} from '../../constants/Constants';
 import styles from './AddCardStyle';
-
+import {useSelector, useDispatch} from 'react-redux';
 const {width, height} = Dimensions.get('window');
 import {useNavigation} from '@react-navigation/native';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 import {style} from '../../styles/Style';
+import {AddCardAction} from '../../Redux/Reducers/AddCardSlice';
 
 function AddCard(props) {
+  const globalState = useSelector(state => state);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const {
     control,
@@ -22,9 +25,24 @@ function AddCard(props) {
     handleSubmit,
     formState: {errors},
   } = useForm();
-  const onSubmit = () => {
-    reset();
-    navigation.goBack();
+  const onSubmit = data => {
+    const cardData = {
+      card_holder: data.personName,
+      card_number: data.cardNumber,
+      card_exp_date: data.date,
+    };
+    console.log(cardData);
+    dispatch(AddCardAction(cardData))
+      .unwrap()
+      .then(() => {
+        if (cardData.card_holder !== null) {
+          navigation.goBack();
+          reset();
+        }
+      })
+      .catch(error => {
+        console.log('error nav ' + error);
+      });
   };
   const [payment, setPayment] = useState([
     {image: require('../../assets/Images/paypal.png')},
@@ -172,7 +190,11 @@ function AddCard(props) {
         </View>
       </GeneralPage>
       <View style={styles.button}>
-        <GeneralButton title="تأكيد" onPress={handleSubmit(onSubmit)} />
+        <GeneralButton
+          isLoading={globalState.AddCardReducer.isLoading}
+          title="تأكيد"
+          onPress={handleSubmit(onSubmit)}
+        />
       </View>
     </Fragment>
   );

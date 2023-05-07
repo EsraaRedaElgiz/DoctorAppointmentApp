@@ -31,21 +31,45 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 const {height} = Dimensions.get('window');
 import {style} from '../../styles/Style';
+import {useSelector, useDispatch} from 'react-redux';
+import {getPrescription} from '../../Redux/Reducers/PrescriptionSlice';
 
 function Prescription({navigation}) {
+  const globalState = useSelector(state => state);
+  const dispatch = useDispatch();
   const [photo_uri, setphoto_uri] = useState(null);
   const [analysis_uri, set_analysis_uri] = useState(null);
   const [rumor_uri, set_rumor_uri] = useState(null);
   const [imageIndex, setImageIndex] = useState(null);
   const [head, setHead] = useState(['الدواء', 'المدة', 'ملاحظات']);
-  const [data, setData] = useState([
-    ['lorim', 'يومان', 'مرة'],
-    ['hello', 'يوم', '3 مرات'],
-    ['Hiii', 'يومان', 'مرة'],
-    ['tmam', 'يومان', 'مرة'],
-  ]);
+  // const [data, setData] = useState([
+  //   ['lorim', 'يومان', 'مرة'],
+  //   ['hello', 'يوم', '3 مرات'],
+  //   ['Hiii', 'يومان', 'مرة'],
+  //   ['tmam', 'يومان', 'مرة'],
+  // ]);
   const [visible, setVisible] = useState(false);
+  const treatments = globalState.PrescriptionReducer.diagnosisTreatment.map(
+    (el, idx) => el.treatment,
+  );
+  const times = globalState.PrescriptionReducer.diagnosisTreatment.map(
+    (el, idx) => el.dose_per_day,
+  );
+  const notes = globalState.PrescriptionReducer.diagnosisTreatment.map(
+    (el, idx) => el.notes,
+  );
 
+  const row1 = [treatments[0], times[0], notes[0]];
+  const row2 = [treatments[1], times[1], notes[1]];
+  const row3 = [treatments[2], times[2], notes[2]];
+
+  const data = [row1, row2, row3];
+
+  useEffect(() => {
+    dispatch(getPrescription());
+    console.log(globalState.PrescriptionReducer.diagnosis);
+    console.log(globalState.PrescriptionReducer.diagnosisTreatment);
+  }, []);
   useEffect(() => {
     requestCameraPermission();
   }, []);
@@ -116,11 +140,7 @@ function Prescription({navigation}) {
         <Text style={style.textContentBold}>التشخيص</Text>
         <View style={styles.diagnosisView}>
           <Text style={[style.textContent, styles.diagnosisText]}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam non
-            velit vel nunc blandit venenatis. Quisque vulputate lacinia elit,
-            nec varius enim mollis eu. Sed eget eleifend eros. Etiam vel eros id
-            elit mattis efficitur. Pellentesque hendrerit quis mi ut commodo.
-            Nullam est est, imperdiet vel mi maximus, pulvinar sodales orci.
+            {globalState.PrescriptionReducer.diagnosis}
           </Text>
         </View>
         <Text style={style.textContentBold}>العلاج</Text>
@@ -141,7 +161,6 @@ function Prescription({navigation}) {
               />
             </TableWrapper>
           </Table>
-
         </View>
         <Text style={style.textContentBold}>التحاليل</Text>
         <View style={styles.analysis}>
