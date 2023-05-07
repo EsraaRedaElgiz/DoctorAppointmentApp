@@ -15,8 +15,13 @@ const userProfileData = [
     title: 'تغيير كلمة المرور',
     icon: 'left',
   },
+  
   {
     title: 'فريق الدعم',
+    icon: 'left',
+  },
+  {
+    title: ' سياسة الخصوصية',
     icon: 'left',
   },
   {
