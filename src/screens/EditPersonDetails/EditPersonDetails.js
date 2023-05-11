@@ -168,6 +168,7 @@ function EditPersonDetails(props) {
           render={({field: {onChange, onBlur, value}}) => {
             return (
               <DropDown
+                defaultValue={bloodType}
                 data={bloodTypeList}
                 placeholder="فصيلة الدم"
                 borderColor={errors.bloodType ? '#f00' : COLORS.gray}
@@ -284,7 +285,8 @@ function EditPersonDetails(props) {
           render={({field: {onChange, onBlur, value}}) => {
             return (
               <DropDown
-                data={gender}
+                defaultValue={gender == 'Male' ? genderPage[0] : genderPage[1]}
+                data={genderPage}
                 placeholder="النوع"
                 borderColor={errors.gender ? '#f00' : COLORS.gray}
                 onSelect={onChange}

@@ -8,7 +8,7 @@ import {
   Modal,
   Dimensions,
 } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   COLORS,
   FONTS,
@@ -16,41 +16,67 @@ import {
   RADIUS,
 } from '../../../../src/constants/Constants';
 import styles from './EditDoctorDetailsStyle';
-import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
+import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
 import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
 import ProfileImage from '../../../../src/components/ProfileImage/ProfileImage';
 import DropDown from '../../../../src/components/DropDown/DropDown';
 import Reusabletextinput from '../../../../src/components/AppTextinput/AppTextinput';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {RFValue} from 'react-native-responsive-fontsize';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import * as ImagePicker from 'react-native-image-picker';
-import { requestCameraPermission } from '../../../../src/utils/CameraPermissin';
+import {requestCameraPermission} from '../../../../src/utils/CameraPermissin';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Controller, useForm } from 'react-hook-form';
-import { style } from '../../../../src/styles/Style';
-import { CheckBox } from 'react-native-elements';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-export default function EditDoctorDetails({ navigation }) {
+import {Controller, useForm} from 'react-hook-form';
+import {style} from '../../../../src/styles/Style';
+import {CheckBox} from 'react-native-elements';
+import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import {useSelector} from 'react-redux';
+export default function EditDoctorDetails({navigation}) {
+  const globalState = useSelector(state => state);
+  const {
+    name,
+    email,
+    age,
+    gender,
+    phone,
+    image,
+    doctor_about,
+    doctor_experience,
+    speciality_name,
+    clinic_logo,
+    clinic_name,
+    branch_address,
+    branch_phone,
+    branch_working_days,
+    booking_price,
+    start_time,
+    end_time,
+    session_time,
+    isLoading,
+    success,
+    error,
+  } = globalState.DoctorDetailsReducer;
+
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
     setValue,
   } = useForm({
     defaultValues: {
-      name: '',
-      phoneNum: '',
-      email: '',
-      spealization: '',
-      exp: '',
+      name: name,
+      phoneNum: phone,
+      email: email,
+      spealization: speciality_name,
+      exp: doctor_experience,
       Location: '',
-      Adressdescription: '',
-      About: '',
-      Workdays: '',
-      price: '',
-      start: '',
-      end: '',
-      section: '',
+      Adressdescription: branch_address,
+      About: doctor_about,
+      Workdays: branch_working_days,
+      price: booking_price,
+      start: start_time,
+      end: end_time,
+      section: session_time,
     },
   });
   const region = {
@@ -72,18 +98,20 @@ export default function EditDoctorDetails({ navigation }) {
   const Specialization = ['اسنان', 'باطنة', 'صدر', 'عيون'];
   const [modalVisible, setModalVisible] = useState(false);
   const [modal_Visible_wokdays, setmodal_Visible_wokdays] = useState(false);
-  const [modal_Visible_start_time, setmodal_Visible_start_time] = useState(false)
-  const [modal_Visible_end_time, setmodal_Visible_end_time] = useState(false)
-  const [modal_Visible_section_time, setmodal_Visible_section_time] = useState(false)
-  const { width, height } = Dimensions.get('screen');
+  const [modal_Visible_start_time, setmodal_Visible_start_time] =
+    useState(false);
+  const [modal_Visible_end_time, setmodal_Visible_end_time] = useState(false);
+  const [modal_Visible_section_time, setmodal_Visible_section_time] =
+    useState(false);
+  const {width, height} = Dimensions.get('screen');
   const data = [
-    { id: 1, txt: 'السبت', isChecked: false },
-    { id: 2, txt: 'الأحد', isChecked: false },
-    { id: 3, txt: 'الاثنين', isChecked: false },
-    { id: 4, txt: 'الثلاثاء', isChecked: false },
-    { id: 5, txt: 'الأربعاء', isChecked: false },
-    { id: 6, txt: 'الخميس', isChecked: false },
-    { id: 7, txt: 'الجمعة', isChecked: false },
+    {id: 1, txt: 'السبت', isChecked: false},
+    {id: 2, txt: 'الأحد', isChecked: false},
+    {id: 3, txt: 'الاثنين', isChecked: false},
+    {id: 4, txt: 'الثلاثاء', isChecked: false},
+    {id: 5, txt: 'الأربعاء', isChecked: false},
+    {id: 6, txt: 'الخميس', isChecked: false},
+    {id: 7, txt: 'الجمعة', isChecked: false},
   ];
   const [Days, setDays] = useState(data);
   const refRBSheet = useRef();
@@ -97,7 +125,7 @@ export default function EditDoctorDetails({ navigation }) {
         path: 'images',
       },
     };
-    ImagePicker.launchImageLibrary({ options, includeBase64: true }, res => {
+    ImagePicker.launchImageLibrary({options, includeBase64: true}, res => {
       if (res.didCancel) {
         console.log('User cancelled image picker');
       } else if (res.error) {
@@ -136,7 +164,7 @@ export default function EditDoctorDetails({ navigation }) {
   const handleChange = id => {
     let temp = Days.map(product => {
       if (id === product.id) {
-        return { ...product, isChecked: !product.isChecked };
+        return {...product, isChecked: !product.isChecked};
       }
       return product;
     });
@@ -156,7 +184,7 @@ export default function EditDoctorDetails({ navigation }) {
     //     selected.push(keys[index])
     //   }
     // }
-    setValue('Workdays', daysText, { shouldValidate: true });
+    setValue('Workdays', daysText, {shouldValidate: true});
   };
   const get_location = () => {
     // let browser_url =
@@ -167,23 +195,30 @@ export default function EditDoctorDetails({ navigation }) {
     //   '?q=';
 
     let browser_url = 'تم تعديل الموقع بنجاح';
-    setValue('Location', browser_url, { shouldValidate: true });
+    setValue('Location', browser_url, {shouldValidate: true});
   };
   const onTimeSelected = (event, value) => {
     setmodal_Visible_start_time(false);
-    console.log(JSON.stringify(value + '').substring(16, 22))
-    setValue("start", JSON.stringify(value + '').substring(16, 22), { shouldValidate: true })
+    console.log(JSON.stringify(value + '').substring(16, 22));
+    setValue('start', JSON.stringify(value + '').substring(16, 22), {
+      shouldValidate: true,
+    });
   };
   const onTimeSelected_endtime = (event, value) => {
     setmodal_Visible_end_time(false);
-    console.log(JSON.stringify(value + '').substring(16, 22))
-    setValue("end", JSON.stringify(value + '').substring(16, 22), { shouldValidate: true })
+    console.log(JSON.stringify(value + '').substring(16, 22));
+    setValue('end', JSON.stringify(value + '').substring(16, 22), {
+      shouldValidate: true,
+    });
   };
   const onTimeSelected_sectiontime = (event, value) => {
     setmodal_Visible_section_time(false);
-    console.log(JSON.stringify(value + '').substring(16, 22))
-    setValue("section", JSON.stringify(value + '').substring(16, 22), { shouldValidate: true })
+    console.log(JSON.stringify(value + '').substring(16, 22));
+    setValue('section', JSON.stringify(value + '').substring(16, 22), {
+      shouldValidate: true,
+    });
   };
+
   return (
     <View style={styles.Continer}>
       <StatusBar backgroundColor={COLORS.blue} />
@@ -196,12 +231,14 @@ export default function EditDoctorDetails({ navigation }) {
         }}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <ProfileImage
-          iconOnImage={true}
-          iconBgColor
-          onPressPen={() => refRBSheet.current.open()}
-          imageUri={photo_uri}
-        />
+        <View style={styles.imageProfileView}>
+          <ProfileImage
+            iconOnImage={true}
+            iconBgColor
+            onPressPen={() => refRBSheet.current.open()}
+            imageUri={photo_uri}
+          />
+        </View>
         <Controller
           name="name"
           control={control}
@@ -210,7 +247,7 @@ export default function EditDoctorDetails({ navigation }) {
             minLength: 2,
             maxLength: 30,
           }}
-          render={({ field: { onChange, onBlur, value } }) => {
+          render={({field: {onChange, onBlur, value}}) => {
             return (
               <Reusabletextinput
                 placeholder="الاسم"
@@ -222,22 +259,22 @@ export default function EditDoctorDetails({ navigation }) {
             );
           }}
         />
-        <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
-          {errors.name?.type === 'required' ? 'يجب ادخال اسم'
+        <Text style={{color: 'red', alignSelf: 'flex-start'}}>
+          {errors.name?.type === 'required'
+            ? 'يجب ادخال اسم'
             : errors.name?.type === 'minLength'
-              ? 'الاسم يجب ان لا يقل عن حرفين'
-              : errors.name?.type === 'maxLength'
-                ? 'الاسم يجب ان لا يزيد عن 30 حرف'
-                : ''}
+            ? 'الاسم يجب ان لا يقل عن حرفين'
+            : errors.name?.type === 'maxLength'
+            ? 'الاسم يجب ان لا يزيد عن 30 حرف'
+            : ''}
         </Text>
         <Controller
           control={control}
           rules={{
             required: true,
-            pattern:
-              /^(\+201|01|00201)[0-2,5]{1}[0-9]{8}/g,
+            pattern: /^(\+201|01|00201)[0-2,5]{1}[0-9]{8}/g,
           }}
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({field: {onChange, onBlur, value}}) => (
             <Reusabletextinput
               placeholder="رقم الهاتف"
               keyboardType="phone-pad"
@@ -249,12 +286,12 @@ export default function EditDoctorDetails({ navigation }) {
           )}
           name="phoneNum"
         />
-        <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+        <Text style={{color: 'red', alignSelf: 'flex-start'}}>
           {errors.phoneNum?.type === 'required'
             ? 'يجب ادخال رقم الهاتف'
             : errors.phoneNum?.type === 'pattern'
-              ? 'يجب ادخال رقم هاتف صحيح'
-              : ''}
+            ? 'يجب ادخال رقم هاتف صحيح'
+            : ''}
         </Text>
         <Controller
           control={control}
@@ -262,7 +299,7 @@ export default function EditDoctorDetails({ navigation }) {
             required: true,
             pattern: /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/,
           }}
-          render={({ field: { onChange, onBlur, value } }) => (
+          render={({field: {onChange, onBlur, value}}) => (
             <Reusabletextinput
               placeholder="عنوان البريد الالكتروني"
               keyboardType="email-address"
@@ -274,12 +311,12 @@ export default function EditDoctorDetails({ navigation }) {
           )}
           name="email"
         />
-        <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+        <Text style={{color: 'red', alignSelf: 'flex-start'}}>
           {errors.email?.type === 'required'
             ? 'يجب ادخال عنوان البريد الالكتروني'
             : errors.email?.type === 'pattern'
-              ? 'يجب ادخال عنوان بريد الكتروني صحيح'
-              : ''}
+            ? 'يجب ادخال عنوان بريد الكتروني صحيح'
+            : ''}
         </Text>
         <View style={styles.Specalizationandexperience}>
           <View style={styles.viewofDropDown}>
@@ -289,16 +326,25 @@ export default function EditDoctorDetails({ navigation }) {
               rules={{
                 required: true,
               }}
-              render={({ field: { value, onChange, onBlur } }) => (
+              render={({field: {value, onChange, onBlur}}) => (
                 <>
                   <DropDown
+                    defaultValue={
+                      speciality_name === 'أسنان'
+                        ? Specialization[0]
+                        : speciality_name === 'باطنة'
+                        ? Specialization[1]
+                        : speciality_name === 'صدر'
+                        ? Specialization[2]
+                        : Specialization[3]
+                    }
                     style={styles.dropDownMarginBottom}
                     placeholder="التخصص"
                     data={Specialization}
                     borderColor={errors.spealization ? '#f00' : COLORS.gray}
                     onSelect={onChange}
                   />
-                  <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                  <Text style={{color: 'red', alignSelf: 'flex-start'}}>
                     {errors.spealization?.type === 'required'
                       ? 'التخصص يكون مطلوب'
                       : ''}
@@ -319,7 +365,7 @@ export default function EditDoctorDetails({ navigation }) {
                   }
                 },
               }}
-              render={({ field: { value, onChange, onBlur } }) => (
+              render={({field: {value, onChange, onBlur}}) => (
                 <>
                   <Reusabletextinput
                     value={value}
@@ -328,12 +374,12 @@ export default function EditDoctorDetails({ navigation }) {
                     onBlur={onBlur}
                     bordercolor={errors.exp ? '#f00' : COLORS.gray}
                   />
-                  <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                  <Text style={{color: 'red', alignSelf: 'flex-start'}}>
                     {errors.exp?.type === 'required'
                       ? 'يجب ادخال الخبرة'
                       : errors.exp?.type === 'validate'
-                        ? 'يجب ادخال رقم'
-                        : ''}
+                      ? 'يجب ادخال رقم'
+                      : ''}
                   </Text>
                 </>
               )}
@@ -347,7 +393,7 @@ export default function EditDoctorDetails({ navigation }) {
             rules={{
               required: true,
             }}
-            render={({ field: { value, onChange, onBlur } }) => (
+            render={({field: {value, onChange, onBlur}}) => (
               <>
                 <Reusabletextinput
                   placeholder="الموقع"
@@ -357,7 +403,7 @@ export default function EditDoctorDetails({ navigation }) {
                   onTouchStart={() => setModalVisible(true)}
                   bordercolor={errors.Location ? '#f00' : COLORS.gray}
                 />
-                <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                <Text style={{color: 'red', alignSelf: 'flex-start'}}>
                   {errors.Location?.type === 'required'
                     ? 'يجب توافر الموقع'
                     : ''}
@@ -373,7 +419,7 @@ export default function EditDoctorDetails({ navigation }) {
             rules={{
               required: true,
             }}
-            render={({ field: { value, onChange, onBlur } }) => (
+            render={({field: {value, onChange, onBlur}}) => (
               <>
                 <Reusabletextinput
                   placeholder="وصف عنوان العيادة"
@@ -382,7 +428,7 @@ export default function EditDoctorDetails({ navigation }) {
                   onBlur={onBlur}
                   bordercolor={errors.Adressdescription ? '#f00' : COLORS.gray}
                 />
-                <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                <Text style={{color: 'red', alignSelf: 'flex-start'}}>
                   {errors.Adressdescription?.type === 'required'
                     ? 'يجب وصف العنوان'
                     : ''}
@@ -398,7 +444,7 @@ export default function EditDoctorDetails({ navigation }) {
             rules={{
               required: true,
             }}
-            render={({ field: { value, onChange, onBlur } }) => (
+            render={({field: {value, onChange, onBlur}}) => (
               <>
                 <Reusabletextinput
                   placeholder="السيرة الذاتية"
@@ -408,7 +454,7 @@ export default function EditDoctorDetails({ navigation }) {
                   bordercolor={errors.About ? '#f00' : COLORS.gray}
                 />
 
-                <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                <Text style={{color: 'red', alignSelf: 'flex-start'}}>
                   {errors.About?.type === 'required'
                     ? 'السيرة الذاتية مطلوبة'
                     : ''}
@@ -425,8 +471,8 @@ export default function EditDoctorDetails({ navigation }) {
               required: true,
             }}
             render={({
-              field: { value, onChange, onBlur },
-              fieldState: { error },
+              field: {value, onChange, onBlur},
+              fieldState: {error},
             }) => (
               <>
                 <Reusabletextinput
@@ -440,7 +486,7 @@ export default function EditDoctorDetails({ navigation }) {
                   }}
                 />
 
-                <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                <Text style={{color: 'red', alignSelf: 'flex-start'}}>
                   {errors.Workdays?.type === 'required'
                     ? 'يجب وضع ايام العمل'
                     : ''}
@@ -461,7 +507,7 @@ export default function EditDoctorDetails({ navigation }) {
                 }
               },
             }}
-            render={({ field: { value, onChange, onBlur } }) => (
+            render={({field: {value, onChange, onBlur}}) => (
               <>
                 <Reusabletextinput
                   placeholder="سعر الكشف"
@@ -470,12 +516,12 @@ export default function EditDoctorDetails({ navigation }) {
                   onBlur={onBlur}
                   bordercolor={errors.price ? '#f00' : COLORS.gray}
                 />
-                <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                <Text style={{color: 'red', alignSelf: 'flex-start'}}>
                   {errors.price?.type === 'required'
                     ? 'يجب ادخال سعر الكشف'
                     : errors.price?.type === 'validate'
-                      ? 'يجب ادخال رقم'
-                      : ''}
+                    ? 'يجب ادخال رقم'
+                    : ''}
                 </Text>
               </>
             )}
@@ -488,9 +534,8 @@ export default function EditDoctorDetails({ navigation }) {
               name="start"
               rules={{
                 required: true,
-
               }}
-              render={({ field: { value, onChange, onBlur } }) => (
+              render={({field: {value, onChange, onBlur}}) => (
                 <>
                   <Reusabletextinput
                     placeholder="البداية"
@@ -499,11 +544,10 @@ export default function EditDoctorDetails({ navigation }) {
                     onBlur={onBlur}
                     bordercolor={errors.start ? '#f00' : COLORS.gray}
                     onTouchStart={() => {
-                      setmodal_Visible_start_time(true)
-                    }
-                    }
+                      setmodal_Visible_start_time(true);
+                    }}
                   />
-                  <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                  <Text style={{color: 'red', alignSelf: 'flex-start'}}>
                     {errors.start?.type === 'required'
                       ? 'يجب ادخال البداية'
                       : ''}
@@ -518,9 +562,8 @@ export default function EditDoctorDetails({ navigation }) {
               name="end"
               rules={{
                 required: true,
-
               }}
-              render={({ field: { value, onChange, onBlur } }) => (
+              render={({field: {value, onChange, onBlur}}) => (
                 <>
                   <Reusabletextinput
                     placeholder="النهاية"
@@ -529,14 +572,11 @@ export default function EditDoctorDetails({ navigation }) {
                     onBlur={onBlur}
                     bordercolor={errors.end ? '#f00' : COLORS.gray}
                     onTouchStart={() => {
-                      setmodal_Visible_end_time(true)
-                    }
-                    }
+                      setmodal_Visible_end_time(true);
+                    }}
                   />
-                  <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
-                    {errors.end?.type === 'required'
-                      ? 'يجب ادخال النهاية'
-                      : ''}
+                  <Text style={{color: 'red', alignSelf: 'flex-start'}}>
+                    {errors.end?.type === 'required' ? 'يجب ادخال النهاية' : ''}
                   </Text>
                 </>
               )}
@@ -548,9 +588,8 @@ export default function EditDoctorDetails({ navigation }) {
               name="section"
               rules={{
                 required: 'يجب تحديد المدة',
-
               }}
-              render={({ field: { value, onChange, onBlur } }) => (
+              render={({field: {value, onChange, onBlur}}) => (
                 <>
                   <Reusabletextinput
                     placeholder="المدة"
@@ -559,11 +598,10 @@ export default function EditDoctorDetails({ navigation }) {
                     onBlur={onBlur}
                     bordercolor={errors.section ? '#f00' : COLORS.gray}
                     onTouchStart={() => {
-                      setmodal_Visible_section_time(true)
-                    }
-                    }
+                      setmodal_Visible_section_time(true);
+                    }}
                   />
-                  <Text style={{ color: 'red', alignSelf: 'flex-start' }}>
+                  <Text style={{color: 'red', alignSelf: 'flex-start'}}>
                     {errors.section?.type === 'required'
                       ? 'يجب ادخال المدة'
                       : ''}
@@ -612,7 +650,7 @@ export default function EditDoctorDetails({ navigation }) {
             setphoto_uri(photo_uri => '');
           }}
           style={styles.eachOptionInBottonTab}>
-          <Text style={[styles.optionTextStyle, { color: COLORS.red }]}>
+          <Text style={[styles.optionTextStyle, {color: COLORS.red}]}>
             مسح الصوره
           </Text>
         </TouchableOpacity>
@@ -636,7 +674,7 @@ export default function EditDoctorDetails({ navigation }) {
           followsUserLocation={true}
           loadingEnabled
           loadingIndicatorColor={COLORS.blue}
-          style={{ flex: 1 }}
+          style={{flex: 1}}
           onRegionChangeComplete={(region, details) => {
             console.log('regoin change :>>> ', JSON.stringify(region));
             console.log('regoin details :>>> ', JSON.stringify(details));
@@ -672,7 +710,7 @@ export default function EditDoctorDetails({ navigation }) {
             }}
             pinColor={'green'}
             draggable
-          // onDragEnd={(e) => console.log("test :>>>> ", e.nativeEvent.coordinate)}
+            // onDragEnd={(e) => console.log("test :>>>> ", e.nativeEvent.coordinate)}
           ></Marker>
         </MapView>
       </Modal>
@@ -700,9 +738,7 @@ export default function EditDoctorDetails({ navigation }) {
             </View>
             {Days.map((Day, index) => {
               return (
-                <View style={styles.viewofcheckbox}
-                  key={index}
-                >
+                <View style={styles.viewofcheckbox} key={index}>
                   <CheckBox
                     checked={Day.isChecked}
                     onPress={() => {
@@ -722,7 +758,7 @@ export default function EditDoctorDetails({ navigation }) {
               }}>
               <GeneralButton
                 title="تأكيد"
-                style={{ width: '90%' }}
+                style={{width: '90%'}}
                 onPress={() => {
                   setmodal_Visible_wokdays(!modal_Visible_wokdays);
                   GetSelect();
@@ -734,13 +770,11 @@ export default function EditDoctorDetails({ navigation }) {
       </Modal>
 
       <Modal
-
         visible={modal_Visible_start_time}
         onRequestClose={() => {
           setmodal_Visible_start_time(!modal_Visible_start_time);
         }}
-        transparent={true}
-      >
+        transparent={true}>
         <DateTimePicker
           testID="TimePicker"
           label="Pick A Date"
@@ -749,19 +783,17 @@ export default function EditDoctorDetails({ navigation }) {
           value={new Date(Date.now())}
           is24Hour={false}
           display="spinner"
-          negativeButton={{ label: 'Cancel', textColor: 'red', }}
-          positiveButton={{ label: 'ok', textColor: COLORS.blue }}
+          negativeButton={{label: 'Cancel', textColor: 'red'}}
+          positiveButton={{label: 'ok', textColor: COLORS.blue}}
         />
       </Modal>
 
       <Modal
-
         visible={modal_Visible_end_time}
         onRequestClose={() => {
           setmodal_Visible_end_time(!modal_Visible_end_time);
         }}
-        transparent={true}
-      >
+        transparent={true}>
         <DateTimePicker
           testID="TimePicker"
           label="Pick A Date"
@@ -770,18 +802,16 @@ export default function EditDoctorDetails({ navigation }) {
           value={new Date(Date.now())}
           is24Hour={false}
           display="spinner"
-          negativeButton={{ label: 'Cancel', textColor: 'red', }}
-          positiveButton={{ label: 'ok', textColor: COLORS.blue }}
+          negativeButton={{label: 'Cancel', textColor: 'red'}}
+          positiveButton={{label: 'ok', textColor: COLORS.blue}}
         />
       </Modal>
       <Modal
-
         visible={modal_Visible_section_time}
         onRequestClose={() => {
           setmodal_Visible_section_time(!modal_Visible_end_time);
         }}
-        transparent={true}
-      >
+        transparent={true}>
         <DateTimePicker
           testID="TimePicker"
           label="Pick A Date"
@@ -790,8 +820,8 @@ export default function EditDoctorDetails({ navigation }) {
           value={new Date(Date.now())}
           is24Hour={true}
           display="spinner"
-          negativeButton={{ label: 'Cancel', textColor: 'red', }}
-          positiveButton={{ label: 'ok', textColor: COLORS.blue }}
+          negativeButton={{label: 'Cancel', textColor: 'red'}}
+          positiveButton={{label: 'ok', textColor: COLORS.blue}}
         />
       </Modal>
     </View>

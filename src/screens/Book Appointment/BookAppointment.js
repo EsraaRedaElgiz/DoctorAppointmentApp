@@ -40,7 +40,7 @@ const BookAppointment = ({navigation}) => {
     setCheckCash(false);
   };
   return (
-    <View style={[style.bigContainer, {flex: 1}]}>
+    <View style={{backgroundColor: COLORS.white, flex: 1}}>
       <HeaderNavigation
         title="حجز الميعاد"
         color={COLORS.darkGray3}
@@ -55,7 +55,7 @@ const BookAppointment = ({navigation}) => {
         {/* FlatList Days */}
         {/* <View style={styles.flatListDaysContainer}>
           {/* design item */}
-          {/* <View style={styles.dayConatiner}>
+        {/* <View style={styles.dayConatiner}>
             <View style={styles.num_day_contanier}>
               <Text style={style.textContentBold}>4</Text>
             </View>
@@ -64,7 +64,7 @@ const BookAppointment = ({navigation}) => {
             </View>
           </View>
         </View>  */}
-        <Calender/>
+        <Calender />
         {/* FlatList Times */}
         <ScrollView>
           <View style={styles.flatListTimesContainer}>
@@ -112,22 +112,21 @@ const BookAppointment = ({navigation}) => {
       </ScrollView>
       <GeneralButton
         title="حجز"
-        style={{marginBottom:MARGIN.mdMargin}}
+        style={{
+          marginBottom: MARGIN.mdMargin,
+          marginHorizontal: PADDINGS.mdPadding,
+        }}
         onPress={() => {
           checkedCash || checkedCerdit
             ? navigation.navigate(
                 checkedCash ? 'PaymentCash' : 'PaymentCreditCard',
                 {BookArray: DoctorArray},
               )
-            : Alert.alert(
-                'تحذير',
-                "من فضلك ادخل جميع البيانات ",
-                [
-                  {
-                    text: 'OK',
-                  },
-                ],
-              );
+            : Alert.alert('تحذير', 'من فضلك ادخل جميع البيانات ', [
+                {
+                  text: 'OK',
+                },
+              ]);
         }}
       />
     </View>
@@ -164,7 +163,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: RFValue(2),
     alignSelf: 'center',
-    marginTop:MARGIN.mdMargin
+    marginTop: MARGIN.mdMargin,
   },
   flatListCheckBoxsContainer: {
     justifyContent: 'space-between',
