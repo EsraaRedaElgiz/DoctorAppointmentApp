@@ -83,14 +83,6 @@ function DoctorAppointments({navigation}) {
                   name={item.user_first_name}
                   time={item.appointment_time}
                   imageUri={item.user_image}
-                  // confirmed={item[index].appointment_status}
-                  // name={item[index].user_first_name}
-                  // time={item[index].appointment_time}
-                  // imageUri={item[index].user_image}
-                  // confirmed={itemData.item.confirmed}
-                  // name={itemData.item.name.trim()}
-                  // time={itemData.item.time}
-                  // imageUri={itemData.item.imageUri}
                   onPress={() => {
                     dispatch(getAppointmentDetails('2'))
                       .unwrap()

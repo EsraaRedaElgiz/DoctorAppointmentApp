@@ -1,16 +1,30 @@
-import React from 'react';
-import {View, Text, ScrollView, Button, FlatList} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  Button,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
 import styles from './DoctorHistoryStyles';
 import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
 import {COLORS, PADDINGS} from '../../../../src/constants/Constants';
 import Calender from '../../../../src/components/Calender/Calender';
 import {PatientsData} from '../../../../src/utils';
 import PersonHistoryCard from '../../Components/PresonHistoryCard/PersonHistoryCard';
-import { useDispatch } from 'react-redux';
-import { getAppointmentDetails } from '../../Redux/Reducers/AppointmentDetailsSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {getAppointmentDetails} from '../../Redux/Reducers/AppointmentDetailsSlice';
+import {getDoctorHistory} from '../../Redux/Reducers/DoctorHistorySlice';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 function DoctorHistory({navigation}) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const globalState = useSelector(state => state);
+  const {isLoading, history} = globalState.DoctorHistoryReducer;
+  useEffect(() => {
+    dispatch(getDoctorHistory());
+  }, []);
   let date = new Date();
   let day = date.getDate();
   let month = date.toLocaleString('default', {month: 'long'});
@@ -35,35 +49,55 @@ function DoctorHistory({navigation}) {
         <Calender />
       </View>
       <View style={styles.line} />
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={PatientsData}
-        renderItem={(itemData, index) => {
-          return (
-            <>
-              <PersonHistoryCard
-                done={itemData.item.done}
-                name={itemData.item.name.trim()}
-                time={itemData.item.time}
-                imageUri={itemData.item.imageUri}
-                onPress={() => {
-                  dispatch(getAppointmentDetails("2")).unwrap().then((res) => { //instead of 2 i will pass appointment_id
-                    if(res.appointment_id){
-                      navigation.navigate('AppointmentDetails', {
-                        PatientsArray: itemData.item,
-                        appointmentStatus:itemData.item.done?"مكتمل":"ملغى"
+      {isLoading ? (
+        <View style={styles.activityIndicatorViewStyle}>
+          <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
+        </View>
+      ) : history.length == 0 ? (
+        <View style={styles.activityIndicatorViewStyle}>
+          <Text>لا يوجد حجوزات سابقة</Text>
+        </View>
+      ) : (
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          data={history}
+          renderItem={(item, index) => {
+            return (
+              <>
+                <PersonHistoryCard
+                  done={true}
+                  name={item.patient.user_first_name.trim()}
+                  // time={itemData.item.time}
+                  imageUri={item.user_image}
+                  // done={itemData.item.done}
+                  // name={itemData.item.name.trim()}
+                  // time={itemData.item.time}
+                  // imageUri={itemData.item.imageUri}
+                  onPress={() => {
+                    dispatch(getAppointmentDetails('2'))
+                      .unwrap()
+                      .then(res => {
+                        //instead of 2 i will pass appointment_id
+                        if (res.appointment_id) {
+                          navigation.navigate('AppointmentDetails', {
+                            PatientsArray: itemData.item,
+                            appointmentStatus: itemData.item.done
+                              ? 'مكتمل'
+                              : 'ملغى',
+                          });
+                        } else {
+                          alert(
+                            'حدث خطأ اثناء الاتصال بالخادم لعرض تفاصيل الموعد من فضلك حاول مجددا ',
+                          );
+                        }
                       });
-                    }else{
-                      alert("حدث خطأ اثناء الاتصال بالخادم لعرض تفاصيل الموعد من فضلك حاول مجددا ")
-                    }
-                    
-                  })
-                }}
-              />
-            </>
-          );
-        }}
-      />
+                  }}
+                />
+              </>
+            );
+          }}
+        />
+      )}
     </View>
   );
 }
