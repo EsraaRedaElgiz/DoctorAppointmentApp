@@ -18,7 +18,6 @@ import PagerView from 'react-native-pager-view';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {FONTS, COLORS} from '../../constants/Constants';
 
-
 // to show all weeks in month 4 week
 const dates = eachWeekOfInterval({
   start: subDays(new Date(), 7), //time of weeks before today
@@ -79,7 +78,7 @@ const styles = StyleSheet.create({
   dateCard: {
     backgroundColor: '#fff',
     height: RFValue(70),
-    width: RFValue(45),
+    width: RFValue(42),
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 2,
