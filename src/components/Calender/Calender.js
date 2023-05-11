@@ -6,27 +6,33 @@ import {
   subDays,
 } from 'date-fns';
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity,ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Pressable,
+} from 'react-native';
 import PagerView from 'react-native-pager-view';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {FONTS, COLORS} from '../../constants/Constants';
 
-const dates = eachWeekOfInterval(
-  {
-    start: subDays(new Date(), 14),
-    end: addDays(new Date(), 14),
-  },
-  {
-    weekStartsOn: 1,
-  },
-).reduce((acc, cur) => {
+
+// to show all weeks in month 4 week
+const dates = eachWeekOfInterval({
+  start: subDays(new Date(), 7), //time of weeks before today
+  end: addDays(new Date(), 21), //time of weeks after today
+}).reduce((acc, current) => {
   const allDays = eachDayOfInterval({
-    start: cur,
-    end: addDays(cur, 4),
+    start: current,
+    end: addDays(current, 6),
   });
   acc.push(allDays);
   return acc;
 }, []);
+
+console.log(dates);
 function Calender() {
   const [chosenDay, setChosenDay] = useState(null);
   return (
@@ -37,18 +43,20 @@ function Calender() {
             {week.map((day, idx) => {
               const dayName = format(day, 'eee');
               return (
-                <TouchableOpacity
-                  onPress={() => setChosenDay(idx)}
-                  key={idx}
-                  style={[
-                    styles.dateCard,
-                    idx === chosenDay
-                      ? {backgroundColor: COLORS.lightBlue}
-                      : null,
-                  ]}>
-                  <Text style={styles.dayText}>{day.getDate()}</Text>
-                  <Text style={styles.dayText}>{dayName}</Text>
-                </TouchableOpacity>
+                <>
+                  <Pressable
+                    onPress={() => setChosenDay(day)}
+                    key={idx}
+                    style={[
+                      styles.dateCard,
+                      day === chosenDay
+                        ? {backgroundColor: COLORS.lightBlue}
+                        : null,
+                    ]}>
+                    <Text style={styles.dayText}>{dayName}</Text>
+                    <Text style={styles.dayText}>{day.getDate()}</Text>
+                  </Pressable>
+                </>
               );
             })}
           </View>
@@ -65,23 +73,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   calenderView: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     justifyContent: 'space-around',
   },
   dateCard: {
+    backgroundColor: '#fff',
+    height: RFValue(70),
+    width: RFValue(45),
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 2,
+    borderRadius: RFValue(10),
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    width: RFValue(55),
-    height: RFValue(70),
-    backgroundColor: '#fff',
-    elevation: 2,
-    marginEnd: RFValue(2),
-    borderRadius: RFValue(10),
   },
   dayText: {
-    fontSize: FONTS.h6,
-    fontWeight: 'bold',
+    fontSize: FONTS.h5,
+    // fontWeight: 'bold',
   },
 });
 
