@@ -41,7 +41,12 @@ const styles = StyleSheet.create({
   line: {
     height: RFValue(1),
     backgroundColor: COLORS.gray,
-    // marginBottom: MARGIN.mdMargin,
+    marginBottom: MARGIN.mdMargin,
+  },
+  activityIndicatorViewStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

@@ -5,12 +5,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {USER_TOKEN} from '../../constants/Constants';
 
 const initState = {
-  appointmentes: [],
+  appointments: [],
   isLoading: false,
   error: null,
 };
-export const getAppointmentes = createAsyncThunk(
-  'appointments/getAppointmentes',
+export const getAppointments = createAsyncThunk(
+  'appointments/getAppointments',
   async (args, thunkAPI) => {
     const {rejectWithValue, dispatch} = thunkAPI;
     try {
@@ -46,21 +46,21 @@ const AppointmentSlice = createSlice({
   initialState: initState,
   reducers: {
     setAppointmentsArr: (state, action) => {
-      state.appointmentes = action.payload;
+      state.appointments = action.payload;
     },
   },
   extraReducers: builder => {
     builder
-      .addCase(getAppointmentes.pending, (state, action) => {
+      .addCase(getAppointments.pending, (state, action) => {
         state.isLoading = true;
         state.error = null;
         console.log('pending');
       })
-      .addCase(getAppointmentes.fulfilled, (state, action) => {
+      .addCase(getAppointments.fulfilled, (state, action) => {
         state.isLoading = false;
         console.log('success');
       })
-      .addCase(getAppointmentes.rejected, (state, action) => {
+      .addCase(getAppointments.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
         console.log('failed');

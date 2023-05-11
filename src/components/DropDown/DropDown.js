@@ -6,14 +6,24 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import SelectDropdown from 'react-native-select-dropdown';
 
 function DropDown(props) {
-  const {data, placeholder, style, onSelect, borderColor,color, ...rest} = props;
+  const {
+    data,
+    placeholder,
+    style,
+    onSelect,
+    borderColor,
+    color,
+    defaultValue,
+    ...rest
+  } = props;
   return (
     <View style={[styles.dropDownView, style]}>
       <SelectDropdown
+        defaultValue={defaultValue}
         renderDropdownIcon={() => (
           <Icon name="caretdown" size={ICONS.xsIcon} color={COLORS.darkGray} />
         )}
-        buttonTextStyle={[styles.buttonTextStyle,{color:color}]}
+        buttonTextStyle={[styles.buttonTextStyle, {color: color}]}
         rowTextStyle={{textAlign: 'right'}}
         buttonStyle={{
           flex: 1,

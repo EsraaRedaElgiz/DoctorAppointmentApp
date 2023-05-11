@@ -1,5 +1,4 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import axios from 'axios';
 import Axios from '../../utils/axios';
 
 const initialState = {
@@ -10,6 +9,7 @@ const initialState = {
   age: 0,
   gender: '',
   phone: '',
+  image: '',
   isLoading: true,
   success: false,
   error: null,
@@ -20,21 +20,11 @@ export const getPersonalDetails = createAsyncThunk(
   async (_, thunkAPI) => {
     const {rejectWithValue} = thunkAPI;
     try {
-      // await axios
-      //   .get('/general/profile.php')
-      //   .then(res => {
-      //     console.log(res.data);
-      //     return res.data;
-      //   })
-      //   .catch(error => {
-      //     console.log('Error : ', error);
-      //   });
       const response = await Axios({
         method: 'get',
         url: '/general/profile.php',
       });
       return response.data;
-      // .catch(error => console.log('Catch error'));
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -61,7 +51,7 @@ const personalDetailsSlice = createSlice({
           (state.age = action.payload.user_age),
           (state.phone = action.payload.user_phone),
           (state.gender = action.payload.user_gender);
-        // console.log('state in fulfilled ', state);
+        state.image = action.payload.user_image;
         console.log('state : ', state);
         console.log('action.payload in fulfilled : ', action.payload);
       }),

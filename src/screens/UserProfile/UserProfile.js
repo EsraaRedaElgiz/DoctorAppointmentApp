@@ -1,5 +1,12 @@
-import React from 'react';
-import {View, Text, ScrollView, Image, Linking} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  ActivityIndicator,
+  Linking,
+} from 'react-native';
 import GeneralPage from '../../components/GeneralPage/GeneralPage';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
 import UserProfileButton from '../../components/UserProfileButton/UserProfileButton';
@@ -7,20 +14,29 @@ import {userProfileData} from '../../utils/DummyData';
 import styles from './UserProfileStyle';
 import {useNavigation} from '@react-navigation/native';
 import Images from '../../constants/Images';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setLoggedOut} from '../../Redux/Reducers/AuthSlice';
+import {getPersonalDetails} from '../../Redux/Reducers/PersonalDetailsSlice';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {COLORS} from '../../constants/Constants';
 function UserProfile(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const globalState = useSelector(state => state);
+  useEffect(() => {
+    dispatch(getPersonalDetails());
+  }, []);
   return (
     <GeneralPage>
       <View style={styles.container}>
-        <ProfileImage
-          nameAfterImage={'محمد عبدالحميد'}
-          imageUri={
-            'https://img.freepik.com/free-photo/smiling-doctor-with-strethoscope-isolated-grey_651396-974.jpg?w=740&t=st=1678903589~exp=1678904189~hmac=4c4da7bf447127fcedc6c412bfd9c4ef385ae0c8aceeb9d11550b6b8d99eb7ae'
-          }
-        />
+        {globalState.PersonalDetailsReducer.isLoading ? (
+          <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
+        ) : (
+          <ProfileImage
+            nameAfterImage={globalState.PersonalDetailsReducer.name}
+            imageUri={globalState.PersonalDetailsReducer.image}
+          />
+        )}
         {userProfileData.map((el, idx) => {
           return (
             <View key={idx} style={styles.userProfileButtonView}>
