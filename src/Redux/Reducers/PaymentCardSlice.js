@@ -1,5 +1,7 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import Axios from '../../utils/axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { USER_DATA } from '../../constants/Constants';
 
 // const initialState = {
 //   cardId: 0,
@@ -21,12 +23,18 @@ const initialState = {
 export const getPaymentCard = createAsyncThunk(
   'paymentCard/getPaymentCard',
   async (_, thunkAPI) => {
-    const {rejectWithValue} = thunkAPI;
+    const { rejectWithValue } = thunkAPI;
     try {
+      // let data = await AsyncStorage.getItem(USER_DATA);
+      // data = JSON.parse(data);
+      // const u_id = data?.user_id;
+      // console.log(data)
       const response = await Axios({
         method: 'get',
-        url: '/patient/payment_cards.php?user_id=2',
+        url: `/patient/payment_cards.php?user_id=108`,
       });
+
+      console.log(response.data)
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);
