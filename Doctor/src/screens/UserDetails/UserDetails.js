@@ -8,11 +8,15 @@ import { useNavigation } from '@react-navigation/native';
 import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
 import { PADDINGS, COLORS } from '../../../../src/constants/Constants';
 import { useRoute } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 function UserDetails(props) {
   const navigation = useNavigation();
   const route = useRoute();
-  const imageUri = route.params.photo
-  const name=route.params.name
+  //const imageUri = route.params.photo
+  //const name=route.params.name
+  const globalState = useSelector(state => state);
+  const { appointmentDetails } = globalState.AppointmentDetailsReducer
+
   return (
     <GeneralPage>
       <HeaderNavigation
@@ -29,18 +33,16 @@ function UserDetails(props) {
       />
       <View style={styles.container}>
         <ProfileImage
-          nameAfterImage={name}
-          imageUri={
-            imageUri
-          }
+          nameAfterImage={appointmentDetails.patient.user_first_name}
+          imageUri={appointmentDetails.patient.user_image}
         />
 
-        <UserData data="A+" label="نوع الدم" />
-        <UserData data="70" label="الوزن" />
-        <UserData data="189" label="الطول" />
-        <UserData data="25" label="العمر" />
-        <UserData data="ذكر" label="النوع" />
-        <UserData data="01020304060" label="رقم الهاتف" />
+        <UserData data={appointmentDetails.patient.patient_blood_type} label="نوع الدم" />
+        <UserData data={appointmentDetails.patient.patient_weight} label="الوزن" />
+        <UserData data={appointmentDetails.patient.patient_height} label="الطول" />
+        <UserData data={appointmentDetails.patient.user_age} label="العمر" />
+        <UserData data={appointmentDetails.patient.user_gender==="Male"?"ذكر":"انثي"} label="النوع" />
+        <UserData data={appointmentDetails.patient.user_phone} label="رقم الهاتف" />
       </View>
     </GeneralPage>
   );

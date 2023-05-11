@@ -66,9 +66,9 @@ function DoctorHistory({navigation}) {
               <>
                 <PersonHistoryCard
                   done={true}
-                  name={item.patient.user_first_name.trim()}
+                  ///name={item.patient.user_first_name.trim()}
                   // time={itemData.item.time}
-                  imageUri={item.user_image}
+                 /// imageUri={item.user_image}
                   // done={itemData.item.done}
                   // name={itemData.item.name.trim()}
                   // time={itemData.item.time}
@@ -79,12 +79,12 @@ function DoctorHistory({navigation}) {
                       .then(res => {
                         //instead of 2 i will pass appointment_id
                         if (res.appointment_id) {
-                          navigation.navigate('AppointmentDetails', {
+                          navigation.navigate('AppointmentDetails',/* {
                             PatientsArray: itemData.item,
                             appointmentStatus: itemData.item.done
                               ? 'مكتمل'
                               : 'ملغى',
-                          });
+                          }*/);
                         } else {
                           alert(
                             'حدث خطأ اثناء الاتصال بالخادم لعرض تفاصيل الموعد من فضلك حاول مجددا ',

@@ -35,7 +35,7 @@ console.log(dates);
 function Calender() {
   const [chosenDay, setChosenDay] = useState(null);
   return (
-    <ScrollView horizontal>
+    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
       <View style={styles.container}>
         {dates.map((week, index) => {
           return (

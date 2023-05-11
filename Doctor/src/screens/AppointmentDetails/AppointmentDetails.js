@@ -30,9 +30,9 @@ import { getAppointmentDetails, setAppointmentDetails } from '../../Redux/Reduce
 import { ActivityIndicator } from 'react-native-paper';
 function AppointmentDetails({ navigation }) {
   // const navigation=useNavigation()
-  const route = useRoute();
-  const PatientsArray = route.params.PatientsArray;
-  const appointmentStatus = route.params.appointmentStatus;
+  //const route = useRoute();
+  //const PatientsArray = route.params.PatientsArray;
+  //const appointmentStatus = route.params.appointmentStatus;
   const [dialogVisible, setDialogVisible] = useState(false);
   const [getDay, setGetDay] = useState('');
   const [getMonth, setGetMonth] = useState('');
@@ -257,10 +257,10 @@ function AppointmentDetails({ navigation }) {
                   { backgroundColor: 'rgba(47, 115, 252,0.1)' },
                 ]}
                 onPress={() => {
-                  navigation.navigate('UserDetails', {
+                  navigation.navigate('UserDetails', /*{
                     photo: PatientsArray.imageUri,
                     name: PatientsArray.name,
-                  });
+                  }*/);
                 }}>
                 <Text style={[styles.patientTextStyle, { color: COLORS.blue }]}>
                   التفاصيل
