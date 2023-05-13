@@ -12,7 +12,7 @@ import {RFValue} from 'react-native-responsive-fontsize';
 function Appointment({navigation}) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const {isLoading, appointmentes} = globalState.AppointmentReducer;
+  const {isLoading, appointments} = globalState.AppointmentReducer;
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       dispatch(getAppointments());
@@ -30,16 +30,7 @@ function Appointment({navigation}) {
       year: "2023",
       time: "5:30",
       status: "م"
-    }, {
-      doctorName: "احمد محمد",
-      doctorSpeciality: "طب الاسنان",
-      day: "5",
-      month: "سبتمبر",
-      year: "2023",
-      time: "5:30",
-      status: "م"
-    }
-
+    },
   ]*/
 
   const getMonthName = monthnum => {
@@ -100,10 +91,10 @@ function Appointment({navigation}) {
       />
       {isLoading ? (
         <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
-      ) : appointmentes.length > 0 ? (
+      ) : appointments.length > 0 ? (
         <FlatList
           keyExtractor={keyextractor}
-          data={appointmentes}
+          data={appointments}
           renderItem={renderitems}
           style={styles.flatListStyle}
           showsVerticalScrollIndicator={false}

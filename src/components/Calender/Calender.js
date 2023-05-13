@@ -35,41 +35,45 @@ console.log(dates);
 function Calender() {
   const [chosenDay, setChosenDay] = useState(null);
   return (
-    <PagerView style={styles.container}>
-      {dates.map((week, index) => {
-        return (
-          <View key={index} style={styles.calenderView}>
-            {week.map((day, idx) => {
-              const dayName = format(day, 'eee');
-              return (
-                <>
-                  <Pressable
-                    onPress={() => setChosenDay(day)}
-                    key={idx}
-                    style={[
-                      styles.dateCard,
-                      day === chosenDay
-                        ? {backgroundColor: COLORS.lightBlue}
-                        : null,
-                    ]}>
-                    <Text style={styles.dayText}>{dayName}</Text>
-                    <Text style={styles.dayText}>{day.getDate()}</Text>
-                  </Pressable>
-                </>
-              );
-            })}
-          </View>
-        );
-      })}
-    </PagerView>
+    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <View style={styles.container}>
+        {dates.map((week, index) => {
+          return (
+            <View key={index} style={styles.calenderView}>
+              {week.map((day, idx) => {
+                const dayName = format(day, 'eee');
+                return (
+                  <>
+                    <Pressable
+                      onPress={() => setChosenDay(day)}
+                      key={idx}
+                      style={[
+                        styles.dateCard,
+                        day === chosenDay
+                          ? {backgroundColor: COLORS.lightBlue}
+                          : null,
+                      ]}>
+                      <Text style={styles.dayText}>{dayName}</Text>
+                      <Text style={styles.dayText}>{day.getDate()}</Text>
+                    </Pressable>
+                  </>
+                );
+              })}
+            </View>
+          );
+        })}
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: RFValue(85),
+    height: RFValue(95),
     width: '100%',
     alignItems: 'center',
+    flexDirection: 'row-reverse',
+    paddingLeft: RFValue(2),
   },
   calenderView: {
     flexDirection: 'row-reverse',
@@ -77,19 +81,20 @@ const styles = StyleSheet.create({
   },
   dateCard: {
     backgroundColor: '#fff',
-    height: RFValue(70),
-    width: RFValue(42),
+    height: RFValue(85),
+    width: RFValue(65),
     alignItems: 'center',
     justifyContent: 'center',
-    elevation: 2,
+    elevation:RFValue(3),
     borderRadius: RFValue(10),
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
+    marginLeft:RFValue(9) ,
   },
   dayText: {
     fontSize: FONTS.h5,
-    // fontWeight: 'bold',
+    fontWeight: 'bold',
   },
 });
 

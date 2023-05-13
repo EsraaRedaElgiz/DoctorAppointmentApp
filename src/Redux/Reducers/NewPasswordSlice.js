@@ -22,7 +22,7 @@ export const changePassword = createAsyncThunk(
               response = res.data.success;
             } else {
               console.log(res.data);
-              Alert.alert("خطأ فى كلمه المرور القديمه \n حاول مره اخرى");
+              Alert.alert("خطأ فى كلمه المرور القديمه حاول مره اخرى");
             }
           } else {
             Alert.alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
@@ -30,7 +30,7 @@ export const changePassword = createAsyncThunk(
         })
         .catch(err => {
           console.log(err);
-          Alert.alert(' خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');// right
+          Alert.alert(' خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');// right //لو مفيش نت هيدخل هنا
         });
       return response;
     } catch (error) {

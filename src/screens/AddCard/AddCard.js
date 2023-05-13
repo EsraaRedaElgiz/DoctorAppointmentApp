@@ -148,7 +148,7 @@ function AddCard(props) {
                       {marginRight: RFValue(20)},
                     ]}>
                     <Reusabletextinput
-                      keyboardType="number-pad"
+                      // keyboardType="number-pad"
                       placeholder="التاريخ"
                       bordercolor={errors.date ? '#f00' : COLORS.gray}
                       onChangeText={onChange}
