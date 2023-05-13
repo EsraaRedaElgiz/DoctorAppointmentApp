@@ -23,7 +23,7 @@ function DoctorHistory({navigation}) {
   const globalState = useSelector(state => state);
   const {isLoading, history} = globalState.DoctorHistoryReducer;
   useEffect(() => {
-    dispatch(getDoctorHistory());
+    dispatch(getDoctorHistory({filter: 'history'}));
   }, []);
   let date = new Date();
   let day = date.getDate();

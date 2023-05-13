@@ -37,7 +37,7 @@ function DoctorAppointments({navigation}) {
   let month = date.toLocaleString('default', {month: 'long'});
   let year = date.getFullYear();
   useEffect(() => {
-    dispatch(getDoctorAppointments());
+    dispatch(getDoctorAppointments({filter: 'upcoming'}));
   }, []);
   return (
     <View style={styles.container}>
