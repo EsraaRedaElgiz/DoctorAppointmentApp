@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   PermissionsAndroid,
   Button,
+  ActivityIndicator,
 } from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import {useForm, Controller} from 'react-hook-form';
@@ -23,10 +24,12 @@ import DropDown from '../../components/DropDown/DropDown';
 import {requestCameraPermission} from '../../utils/CameraPermissin';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import {updateUserProfileAction} from '../../Redux/Reducers/UpdateUserProfileSlice';
 
 function EditPersonDetails(props) {
   const globalState = useSelector(state => state);
+  const dispatch = useDispatch();
   const {name, age, height, weight, bloodType, gender, phone} =
     globalState.PersonalDetailsReducer;
   const {navigation} = props;
@@ -51,7 +54,20 @@ function EditPersonDetails(props) {
     },
   });
   const onSubmit = data => {
-    //console.log(data);
+    console.log(data);
+    dispatch(
+      updateUserProfileAction({
+        first_name: name,
+        height: height,
+        weight: weight,
+      }),
+    )
+      .then(result => {
+        console.log(result);
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
     reset();
     navigation.navigate('MedicalID1');
   };
@@ -117,18 +133,13 @@ function EditPersonDetails(props) {
       <HeaderNavigation
         title="المعلومات الشخصية"
         text
-        btn="تم"
+        btn={'تم'}
         padding={PADDINGS.mdPadding}
         color={COLORS.darkGray3}
         onPress={() => {
           navigation.goBack();
         }}
         onPressBtn={handleSubmit(onSubmit)}
-        // onPressBtn={() => {
-        //   handleSubmit(onSubmit);
-        //   // navigation.navigate('MedicalID1');
-        //   //must all textInputs be vaild (validation react-hook-form)
-        // }}
       />
       <View style={styles.container}>
         <ProfileImage
