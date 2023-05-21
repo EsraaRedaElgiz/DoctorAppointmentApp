@@ -16,12 +16,14 @@ let initialState = {
 
 export const getDoctorAppointments = createAsyncThunk(
   'doctorAppointments/getDoctorAppointments',
-  async (_, thunkAPI) => {
+  async (data, thunkAPI) => {
     const {rejectWithValue} = thunkAPI;
     try {
       let response = await Axios({
         method: 'GET',
-        url: '/doctor/appointments.php', // /doctor/appointments.php?filter=history&status=2&date=2023-03-18
+        // url: '/doctor/appointments.php?filter=upcoming', // /doctor/appointments.php?filter=history&status=2&date=2023-03-18
+        url: '/doctor/appointments.php',
+        params: data,
       });
       // console.log('response.data =>' + JSON.stringify(response));
       return response.data; // return  empty array !!!

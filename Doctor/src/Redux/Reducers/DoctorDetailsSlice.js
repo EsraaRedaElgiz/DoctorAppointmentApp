@@ -53,8 +53,7 @@ const doctorDetailsSlice = createSlice({
       builder.addCase(getDoctorDetails.fulfilled, (state, action) => {
         state.isLoading = false;
         state.success = true;
-        state.name =
-          action.payload.user_first_name + ' ' + action.payload.user_last_name;
+        state.name = action.payload.user_first_name;
         state.email = action.payload.user_email;
         state.age = action.payload.user_age;
         state.phone = action.payload.user_phone;

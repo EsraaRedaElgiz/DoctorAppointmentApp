@@ -22,6 +22,7 @@ import DoctorAppointmentReducer from '../../Doctor/src/Redux/Reducers/DoctorAppo
 import DoctorHistoryReducer from '../../Doctor/src/Redux/Reducers/DoctorHistorySlice';
 import DoctorDetailsReducer from '../../Doctor/src/Redux/Reducers/DoctorDetailsSlice';
 import HistoryPublicOrPrivateReducer from './Reducers/HistoryPublicOrPrivateSlice'
+import UpdateUserProfileReducer from './Reducers/UpdateUserProfileSlice';
 const store = configureStore({
   reducer: {
     SignUpReducer: SignUpReducer,
@@ -46,7 +47,8 @@ const store = configureStore({
     DoctorAppointmentReducer: DoctorAppointmentReducer,
     DoctorHistoryReducer: DoctorHistoryReducer,
     DoctorDetailsReducer: DoctorDetailsReducer,
-    HistoryPublicOrPrivateReducer:HistoryPublicOrPrivateReducer
+    HistoryPublicOrPrivateReducer:HistoryPublicOrPrivateReducer,
+    UpdateUserProfileReducer: UpdateUserProfileReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

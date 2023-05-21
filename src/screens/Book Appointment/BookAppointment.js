@@ -1,5 +1,5 @@
-import {ScrollView, StyleSheet, Text, View, Alert} from 'react-native';
-import React, {useState} from 'react';
+import {ScrollView, StyleSheet, Text, View, Alert,Pressable} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import {
   FONTS,
@@ -15,22 +15,35 @@ import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigati
 import {Checkbox} from 'react-native-paper';
 import {useRoute} from '@react-navigation/native';
 import Calender from '../../components/Calender/Calender';
+import moment from 'moment';
 const BookAppointment = ({navigation}) => {
   const route = useRoute();
   const DoctorArray = route.params.DoctorArray;
-  //  let now = new Date();
-
-  // // Tota number of days in current month
-  // const totalDays = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
-
-  // // Today's day
-  // const today = now.getDate();
-  // console.log(today)
-  // // Remaining days of the month
-  // const remainingDays = totalDays - today;
-  // console.log(remainingDays)
   const [checkedCash, setCheckCash] = useState(false);
   const [checkedCerdit, setcheckedCerdit] = useState(false);
+const [chosenTime,setChosenTime]=useState(null)
+  //session time
+  const [timeSlots, setTimeSlots] = useState([]);
+  const craeteTimeSlots = (fromTime, ToTime) => {
+    let startTime = moment(fromTime, 'hh:mm A');
+    let endTime = moment(ToTime, 'hh:mm A');
+
+    if (endTime.isBefore(startTime)) {
+      endTime.add(1, 'day');
+    }
+
+    let arr = [];
+    while (startTime <= endTime) {
+      arr.push(new moment(startTime).format('hh:mm A'));
+      startTime.add(30, 'minute'); //30 this number of session
+    }
+
+    return arr;
+  };
+  useEffect(() => {
+    setTimeSlots(craeteTimeSlots('08:00 AM', '8:00 PM')); // 08:00 start time ,9:00 end time
+  }, []);
+
   const cashFun = () => {
     setCheckCash(true);
     setcheckedCerdit(false);
@@ -44,6 +57,7 @@ const BookAppointment = ({navigation}) => {
       <HeaderNavigation
         title="حجز الميعاد"
         color={COLORS.darkGray3}
+        padding={PADDINGS.smPadding}
         onPress={() => {
           navigation.goBack();
         }}
@@ -52,35 +66,22 @@ const BookAppointment = ({navigation}) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingHorizontal: PADDINGS.smPadding}}>
         <ListTiltle Title="التاريخ" />
-        {/* FlatList Days */}
-        {/* <View style={styles.flatListDaysContainer}>
-          {/* design item */}
-        {/* <View style={styles.dayConatiner}>
-            <View style={styles.num_day_contanier}>
-              <Text style={style.textContentBold}>4</Text>
-            </View>
-            <View style={styles.num_day_contanier}>
-              <Text style={style.textContentBold}>الخميس</Text>
-            </View>
-          </View>
-        </View>  */}
+
         <Calender />
         {/* FlatList Times */}
         <ScrollView>
           <View style={styles.flatListTimesContainer}>
-            {/* design Item */}
-            <View style={styles.timeContainer}>
-              <Text style={styles.timeTextStyle}>10:00</Text>
-              <Text style={styles.timeTextStyle}>مساء</Text>
-            </View>
-            <View style={styles.timeContainer}>
-              <Text style={styles.timeTextStyle}>9:00</Text>
-              <Text style={styles.timeTextStyle}>صباحا</Text>
-            </View>
-            <View style={styles.timeContainer}>
-              <Text style={styles.timeTextStyle}>10:00</Text>
-              <Text style={styles.timeTextStyle}>مساء</Text>
-            </View>
+            {timeSlots.map((item, index) => {
+              return (
+                <>
+                  <Pressable style={styles.timeContainer}
+                  onPress={()=>{setChosenTime()}}
+                  >
+                    <Text style={styles.timeTextStyle}>{item}</Text>
+                  </Pressable>
+                </>
+              );
+            })}
           </View>
         </ScrollView>
         <ListTiltle Title="طريقة الدفع" />
@@ -164,6 +165,7 @@ const styles = StyleSheet.create({
     padding: RFValue(2),
     alignSelf: 'center',
     marginTop: MARGIN.mdMargin,
+    paddingLeft:PADDINGS.mdPadding,
   },
   flatListCheckBoxsContainer: {
     justifyContent: 'space-between',
@@ -185,7 +187,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: RFValue(17),
     backgroundColor: COLORS.white,
     elevation: RFValue(3),
-    marginRight: MARGIN.smMargin,
+    marginRight: MARGIN.mdMargin,
     marginBottom: MARGIN.mdMargin,
   },
   timeTextStyle: {
@@ -201,5 +203,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between',
+    marginBottom:MARGIN.lgMargin
   },
 });
