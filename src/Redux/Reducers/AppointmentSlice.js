@@ -54,16 +54,16 @@ const AppointmentSlice = createSlice({
       .addCase(getAppointments.pending, (state, action) => {
         state.isLoading = true;
         state.error = null;
-        console.log('pending');
+        //console.log('pending');
       })
       .addCase(getAppointments.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log('success');
+        //console.log('success');
       })
       .addCase(getAppointments.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-        console.log('failed');
+        //console.log('failed');
       });
   },
 });

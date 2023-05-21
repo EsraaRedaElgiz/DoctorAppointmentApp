@@ -52,16 +52,16 @@ const HistorySlice = createSlice({
       .addCase(getHistory.pending, (state, action) => {
         state.isLoading = true;
         state.error = null;
-        console.log('pending');
+       // console.log('pending');
       })
       .addCase(getHistory.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log('success');
+       // console.log('success');
       })
       .addCase(getHistory.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-        console.log('failed');
+        //console.log('failed');
       });
   },
 });

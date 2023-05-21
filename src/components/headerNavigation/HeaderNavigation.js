@@ -4,12 +4,14 @@ import {
   View,
   Pressable,
   TouchableOpacity,
+  ActivityIndicator
 } from 'react-native';
 import React from 'react';
 import {style} from '../../styles/Style';
 import {COLORS, ICONS} from '../../constants/Constants';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { RFValue } from 'react-native-responsive-fontsize';
 const HeaderNavigation = props => {
   const {
     title,
@@ -22,7 +24,8 @@ const HeaderNavigation = props => {
     text,
     icon,
     iconName,
-    rightButtonHide
+    rightButtonHide,
+    load
   } = props;
   return (
     <View
@@ -58,7 +61,7 @@ const HeaderNavigation = props => {
             size={ICONS.lgIcon}
             color={COLORS.darkGray}
           />
-        ) : null}
+        ):load?(<ActivityIndicator size={RFValue(30)} color={COLORS.blue} />) : null}
       </TouchableOpacity>
     </View>
   );

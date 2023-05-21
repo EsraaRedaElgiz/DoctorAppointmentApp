@@ -20,21 +20,28 @@ export const changePassword = createAsyncThunk(
           if (res.status == 200) {
             if (res.data.success) {
               response = res.data.success;
-            } else {
-              console.log(res.data);
+            } else if(res.data.errors[0].old_password=="Incorrect old password") {
               Alert.alert("خطأ فى كلمه المرور القديمه حاول مره اخرى");
+            }else{
+              Alert.alert(res.data);
             }
           } else {
             Alert.alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
           }
         })
         .catch(err => {
-          console.log(err);
-          Alert.alert(' خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');// right //لو مفيش نت هيدخل هنا
+          //console.log(err.message);
+          if(err.message=="Network Error"){
+            Alert.alert(' خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');// right //لو مفيش نت هيدخل هنا
+          }else{
+            Alert.alert(err.message)
+
+          }
         });
       return response;
     } catch (error) {
       console.log(rejectWithValue(error.message));
+      Alert.alert(' خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
       return rejectWithValue(error.message);
     }
   },
@@ -46,16 +53,16 @@ const newPasswordSlice = createSlice({
     builder.addCase(changePassword.pending, (state, action) => {
       state.isLoading = true;
       state.error = null;
-      console.log('pending');
+      //console.log('pending');
     }),
       builder.addCase(changePassword.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log('sucess');
+       // console.log('sucess');
       }),
       builder.addCase(changePassword.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-        console.log('failed');
+        //console.log('failed');
       });
   },
 });
