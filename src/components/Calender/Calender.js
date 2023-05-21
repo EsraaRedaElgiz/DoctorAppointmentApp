@@ -35,7 +35,7 @@ console.log(dates);
 function Calender() {
   const [chosenDay, setChosenDay] = useState(null);
   return (
-    <ScrollView horizontal>
+    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
       <View style={styles.container}>
         {dates.map((week, index) => {
           return (
@@ -81,16 +81,16 @@ const styles = StyleSheet.create({
   },
   dateCard: {
     backgroundColor: '#fff',
-    height: RFValue(85),
-    width: RFValue(65),
+    height: RFValue(80),
+    width: RFValue(55),
     alignItems: 'center',
     justifyContent: 'center',
-    elevation:RFValue(3),
+    elevation: RFValue(2),
     borderRadius: RFValue(10),
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft:RFValue(9) ,
+    marginLeft: RFValue(9),
   },
   dayText: {
     fontSize: FONTS.h5,

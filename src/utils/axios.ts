@@ -45,7 +45,6 @@ const Axios = async ({method, url, data, params, headers}: axiosType) => {
       ...headers,
     },
   });
-
   return response;
 };
 

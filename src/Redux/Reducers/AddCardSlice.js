@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import Axios from '../../utils/axios';
+import {getPaymentCard} from "../Reducers/PaymentCardSlice"
 
 const initialState = {
   cardHolder: '',
@@ -13,7 +14,7 @@ const initialState = {
 export const AddCardAction = createAsyncThunk(
   'addCard/AddCardAction',
   async (cartData, thunkAPI) => {
-    const {rejectWithValue} = thunkAPI;
+    const {rejectWithValue,dispatch} = thunkAPI;
     try {
       console.log('in CreateAsyncThunk ' + JSON.stringify(cartData));
       const response = await Axios({
@@ -21,6 +22,8 @@ export const AddCardAction = createAsyncThunk(
         url: '/patient/insert_cards.php',
         data: cartData,
       });
+      dispatch(getPaymentCard())
+      console.log(response.data)
       return response.data;
     } catch (error) {
       console.log('Axios ' + error);

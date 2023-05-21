@@ -22,7 +22,7 @@ const HeaderNavigation = props => {
     text,
     icon,
     iconName,
-    rightButtonHide
+    rightButtonHide,
   } = props;
   return (
     <View
@@ -30,17 +30,13 @@ const HeaderNavigation = props => {
         style.headerNavigationContainer,
         {backgroundColor: backgroundColor, paddingHorizontal: padding},
       ]}>
-        {
-          !rightButtonHide?
-          (
-      <Pressable style={style.rightIconContainer} onPress={onPress}>
-        <AntDesign name="right" color={COLORS.darkGray} size={ICONS.smIcon} />
-      </Pressable>):(
-        <View style={[style.rightIconContainer,{elevation:0}]}>
-
-        </View>
-      )
-      }
+      {!rightButtonHide ? (
+        <Pressable style={style.rightIconContainer} onPress={onPress}>
+          <AntDesign name="right" color={COLORS.darkGray} size={ICONS.smIcon} />
+        </Pressable>
+      ) : (
+        <View style={[style.rightIconContainer, {elevation: 0}]}></View>
+      )}
       <View
         style={{
           flex: 1,

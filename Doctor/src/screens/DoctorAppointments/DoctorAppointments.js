@@ -37,7 +37,7 @@ function DoctorAppointments({navigation}) {
   let month = date.toLocaleString('default', {month: 'long'});
   let year = date.getFullYear();
   useEffect(() => {
-    dispatch(getDoctorAppointments());
+    dispatch(getDoctorAppointments({filter: 'upcoming'}));
   }, []);
   return (
     <View style={styles.container}>
@@ -76,11 +76,13 @@ function DoctorAppointments({navigation}) {
           showsVerticalScrollIndicator={false}
           data={appointments}
           renderItem={({item, index}) => {
+            console.log(item.patient.user_first_name);
+            console.log(item.appointment_time);
             return (
               <>
                 <PersonAppointmentCard
                   confirmed={item.appointment_status === 2 ? false : true}
-                  name={item.user_first_name}
+                  name={item.patient.user_first_name}
                   time={item.appointment_time}
                   imageUri={item.user_image}
                   onPress={() => {
@@ -89,12 +91,14 @@ function DoctorAppointments({navigation}) {
                       .then(res => {
                         //instead of 2 i will pass appointment_id
                         if (res.appointment_id) {
-                          navigation.navigate('AppointmentDetails', {
+                          navigation.navigate(
+                            'AppointmentDetails' /*{
                             PatientsArray: itemData.item,
                             appointmentStatus: itemData.item.confirmed
                               ? 'تم التأكيد'
                               : 'معلق',
-                          });
+                          }*/,
+                          );
                         } else {
                           alert(
                             'حدث خطأ اثناء الاتصال بالخادم لعرض تفاصيل الموعد من فضلك حاول مجددا ',
