@@ -41,4 +41,4 @@ const updateUserProfileSlice = createSlice({
   },
 });
 
-export default updateUserProfileSlice;
+export default updateUserProfileSlice.reducer;
