@@ -21,7 +21,7 @@ function History({ navigation }) {
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const { isLoading, history } = globalState.HistoryReducer;
+  const { isLoading, history,error } = globalState.HistoryReducer;
   const { isLoad } = globalState.HistoryPublicOrPrivateReducer;
 
   useEffect(() => {
@@ -150,7 +150,8 @@ function History({ navigation }) {
       />
       {isLoading ? (
         <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
-      ) : history.length > 0 ? (
+      ) : error==null?
+      (history.length > 0 ? (
         <FlatList
           keyExtractor={keyextractor}
           data={history}
@@ -169,7 +170,18 @@ function History({ navigation }) {
           }}>
           <Text>لا يوجد تاريخ مرضي حتي الأن</Text>
         </View>
-      )}
+      )):(
+        <View  
+        style={{
+          height: '100%',
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+          <Text>حدث خطأ اثناء الاتصال بالانترنت</Text>
+        </View>
+      )
+      }
     </View>
   );
 }

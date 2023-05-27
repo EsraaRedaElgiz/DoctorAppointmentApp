@@ -23,7 +23,7 @@ export const changePassword = createAsyncThunk(
             } else if(res.data.errors[0].old_password=="Incorrect old password") {
               Alert.alert("خطأ فى كلمه المرور القديمه حاول مره اخرى");
             }else{
-              Alert.alert(res.data);
+              Alert.alert(JSON.stringify(res.data));
             }
           } else {
             Alert.alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
@@ -34,7 +34,7 @@ export const changePassword = createAsyncThunk(
           if(err.message=="Network Error"){
             Alert.alert(' خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');// right //لو مفيش نت هيدخل هنا
           }else{
-            Alert.alert(err.message)
+            Alert.alert(JSON.stringify(err.message))
 
           }
         });

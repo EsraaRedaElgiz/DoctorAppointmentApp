@@ -17,6 +17,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getAppointmentDetails} from '../../Redux/Reducers/AppointmentDetailsSlice';
 import {getDoctorHistory} from '../../Redux/Reducers/DoctorHistorySlice';
 import {RFValue} from 'react-native-responsive-fontsize';
+import { Alert } from 'react-native';
 
 function DoctorHistory({navigation}) {
   const dispatch = useDispatch();
@@ -88,7 +89,7 @@ function DoctorHistory({navigation}) {
                           }*/,
                           );
                         } else {
-                          alert(
+                          Alert.alert(
                             'حدث خطأ اثناء الاتصال بالخادم لعرض تفاصيل الموعد من فضلك حاول مجددا ',
                           );
                         }

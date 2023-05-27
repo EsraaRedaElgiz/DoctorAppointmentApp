@@ -26,16 +26,20 @@ export const getAppointments = createAsyncThunk(
               dispatch(setAppointmentsArr(res.data));
             } else {
               console.log(res.data);
+              dispatch(setError(JSON.stringify(res.data)))
             }
           } else {
             alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
+            dispatch(setError("حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا"))
           }
         })
         .catch(err => {
           console.log(err);
+          dispatch(setError(JSON.stringify(err)))
         });
     } catch (error) {
       console.log(error.message);
+      dispatch(setError(JSON.stringify(error)))
       return rejectWithValue(error.message);
     }
   },
@@ -47,7 +51,9 @@ const AppointmentSlice = createSlice({
   reducers: {
     setAppointmentsArr: (state, action) => {
       state.appointments = action.payload;
-    },
+    },setError: (state, action) => {
+      state.error = action.payload;
+    }
   },
   extraReducers: builder => {
     builder
@@ -68,4 +74,4 @@ const AppointmentSlice = createSlice({
   },
 });
 export default AppointmentSlice.reducer;
-export const {setAppointmentsArr} = AppointmentSlice.actions;
+export const {setAppointmentsArr,setError} = AppointmentSlice.actions;
