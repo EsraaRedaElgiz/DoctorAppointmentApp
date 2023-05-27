@@ -12,7 +12,7 @@ import {RFValue} from 'react-native-responsive-fontsize';
 function Appointment({navigation}) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const {isLoading, appointments} = globalState.AppointmentReducer;
+  const {isLoading, appointments,error} = globalState.AppointmentReducer;
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       dispatch(getAppointments());
@@ -91,7 +91,8 @@ function Appointment({navigation}) {
       />
       {isLoading ? (
         <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
-      ) : appointments.length > 0 ? (
+      ) : error==null ?(
+      appointments.length > 0 ? (
         <FlatList
           keyExtractor={keyextractor}
           data={appointments}
@@ -110,7 +111,18 @@ function Appointment({navigation}) {
           }}>
           <Text>لا يوجد مواعيد حتي الأن</Text>
         </View>
-      )}
+      )):(
+        <View  
+        style={{
+          height: '100%',
+          width: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+          <Text>حدث خطأ اثناء الاتصال بالانترنت</Text>
+        </View>
+      )
+    }
     </View>
   );
 }

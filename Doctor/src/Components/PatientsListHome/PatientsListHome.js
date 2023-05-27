@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, Text, View, FlatList, Alert} from 'react-native';
 import React from 'react';
 import {PatientsData} from '../../../../src/utils';
 import PersonAppointmentCard from '../../../../src/components/PersonAppointmentCard/PersonAppointmentCard';
@@ -32,7 +32,7 @@ const PatientsListHome = () => {
                         appointmentStatus:itemData.item.confirmed?"تم التأكيد":"معلق"
                       });
                     }else{
-                      alert("حدث خطأ اثناء الاتصال بالخادم لعرض تفاصيل الموعد من فضلك حاول مجددا ")
+                      Alert.alert("حدث خطأ اثناء الاتصال بالخادم لعرض تفاصيل الموعد من فضلك حاول مجددا ")
                     }
                     
                   })

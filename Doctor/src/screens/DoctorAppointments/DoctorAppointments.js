@@ -7,6 +7,7 @@ import {
   Pressable,
   FlatList,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import styles from './DoctorAppointmentsStyles';
 import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
@@ -100,7 +101,7 @@ function DoctorAppointments({navigation}) {
                           }*/,
                           );
                         } else {
-                          alert(
+                          Alert.alert(
                             'حدث خطأ اثناء الاتصال بالخادم لعرض تفاصيل الموعد من فضلك حاول مجددا ',
                           );
                         }

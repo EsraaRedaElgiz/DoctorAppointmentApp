@@ -4,6 +4,7 @@ export const INTO_DONE = 'INTO_DONE';
 export const USER_TOKEN = 'USER_TOKEN';
 export const USER_DATA = 'USER_DATA';
 export const IS_DOCTOR = 'IS_DOCTOR';
+export const USER_HISTORY_STATUS='USER_HISTORY_STATUS';
 
 export const COLORS = {
   blue: '#2F73FC',
