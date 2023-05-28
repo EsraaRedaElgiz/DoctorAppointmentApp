@@ -10,7 +10,7 @@ const initialState = {
   gender: '',
   phone: '',
   image: '',
-  isLoading: true,
+  isLoading: false,
   success: false,
   error: null,
 };
@@ -56,7 +56,7 @@ const personalDetailsSlice = createSlice({
         // console.log('action.payload in fulfilled : ', action.payload);
       }),
       builder.addCase(getPersonalDetails.rejected, (state, action) => {
-        state.isLoading = true;
+        state.isLoading = false;
         state.success = false;
         state.error = action.payload;
         // console.log('Error ', state.error);

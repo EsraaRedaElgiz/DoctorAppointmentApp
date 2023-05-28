@@ -1,5 +1,5 @@
-import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
-import React from 'react';
+import {StyleSheet, Text, View, Image, Pressable,ActivityIndicator,Alert} from 'react-native';
+import React,{useEffect} from 'react';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {
   COLORS,
@@ -13,8 +13,16 @@ import Images from '../../../constants/Images';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {style} from '../../../styles/Style';
 import {useNavigation} from '@react-navigation/native';
-const Header = () => {
+import { useDispatch, useSelector } from 'react-redux';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+const Header = (props) => {
   const navigation = useNavigation();
+  const dispatch=useDispatch();
+  const globalState = useSelector(state => state);
+  const { isLoading,name,image } = globalState.PersonalDetailsReducer
+  
+  
   return (
     <View style={styles.headerContainer}>
       <View style={styles.image_userNameContainer}>
@@ -22,16 +30,26 @@ const Header = () => {
           onPress={() => {
             navigation.navigate('MedicalID1');
           }}>
-          <Image
-            source={{
-              uri: 'https://img.freepik.com/free-photo/smiling-doctor-with-strethoscope-isolated-grey_651396-974.jpg?w=740&t=st=1678903589~exp=1678904189~hmac=4c4da7bf447127fcedc6c412bfd9c4ef385ae0c8aceeb9d11550b6b8d99eb7ae',
-            }}
-            style={styles.userImage}
-          />
+          {image!=""?<Image
+          source={{
+            uri: image,
+          }}
+          style={styles.userImage}
+        />:<View style={[styles.userImage,{backgroundColor:COLORS.gray,alignItems:'center',justifyContent:'center'}]}>
+          <Ionicons
+              name="person-sharp"
+              size={RFValue(35)}
+              color={COLORS.darkGray}
+            />
+          </View>}
+          
         </Pressable>
         <View style={styles.textConatiner}>
           <Text style={style.textContent}> مرحبا</Text>
-          <Text style={style.textContentBold}>محمد عبد الحميد</Text>
+          {isLoading?<ActivityIndicator size={RFValue(15)} color={COLORS.blue} />:
+          name!=""?<Text style={style.textContentBold}>{name.trim()}</Text>:<Text>اسم المستخدم</Text>
+          }
+          
         </View>
       </View>
 
