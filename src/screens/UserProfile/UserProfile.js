@@ -23,20 +23,18 @@ function UserProfile(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
+  const {isLoading, name, image} = globalState.PersonalDetailsReducer;
   useEffect(() => {
     dispatch(getPersonalDetails());
   }, []);
-  return (
+  return globalState.PersonalDetailsReducer.isLoading ? (
+    <View style={styles.isLoadingViewStyle}>
+      <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
+    </View>
+  ) : (
     <GeneralPage>
       <View style={styles.container}>
-        {globalState.PersonalDetailsReducer.isLoading ? (
-          <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
-        ) : (
-          <ProfileImage
-            nameAfterImage={globalState.PersonalDetailsReducer.name}
-            imageUri={globalState.PersonalDetailsReducer.image}
-          />
-        )}
+        <ProfileImage nameAfterImage={name} imageUri={image} />
         {userProfileData.map((el, idx) => {
           return (
             <View key={idx} style={styles.userProfileButtonView}>

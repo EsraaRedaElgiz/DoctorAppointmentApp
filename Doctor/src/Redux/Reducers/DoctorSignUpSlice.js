@@ -2,6 +2,7 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 import Axios from '../../../../src/utils/axios';
 import {setLoggedOut} from '../../../../src/Redux/Reducers/AuthSlice';
+import { Alert } from 'react-native';
 
 const initState = {
   name: '',
@@ -32,19 +33,28 @@ export const registerDoctor = createAsyncThunk(
             if (res.data === 'Success sigunp') {
               //dispatch(setSuccess(true))
               response = res.data;
+            }else if(res.data.errors.email == "Email or Phone are exist"){
+              Alert.alert("عنوان البريد الالكتروني او رقم الهاتف موجود بالفعل")
             } else {
-              console.log(res.data);
+              //console.log(res.data);
+              Alert.alert(JSON.stringify(res.data))
             }
           } else {
-            alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
+            Alert.alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
           }
         })
         .catch(err => {
-          console.log(err);
+          if (err.message == "Network Error") {
+            Alert.alert(' خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');// right //لو مفيش نت هيدخل هنا
+          } else {
+            Alert.alert(JSON.stringify(err.message))
+
+          }
         });
       return response;
     } catch (error) {
-      console.log(error.message);
+      //console.log(error.message);
+      Alert.alert(' خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
       return rejectWithValue(error.message);
     }
   },

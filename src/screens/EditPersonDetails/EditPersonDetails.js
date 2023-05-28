@@ -26,6 +26,7 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 import {useSelector, useDispatch} from 'react-redux';
 import {updateUserProfileAction} from '../../Redux/Reducers/UpdateUserProfileSlice';
+import {getPersonalDetails} from '../../Redux/Reducers/PersonalDetailsSlice';
 
 function EditPersonDetails(props) {
   const globalState = useSelector(state => state);
@@ -54,21 +55,28 @@ function EditPersonDetails(props) {
     },
   });
   const onSubmit = data => {
-    console.log(data);
+    console.log('data in update user profile' + JSON.stringify(data));
     dispatch(
       updateUserProfileAction({
-        first_name: name,
-        height: height,
-        weight: weight,
+        first_name: data.name,
+        height: data.height,
+        weight: data.weight,
+        phone: data.phone,
+        blood_type: data.bloodTypePage,
       }),
     )
       .then(result => {
-        console.log(result);
+        dispatch(getPersonalDetails());
+        console.log(
+          'result in dispatch updateUserProfileAction ' +
+            JSON.stringify(result),
+        );
       })
       .catch(err => {
         console.log(err.message);
       });
     reset();
+    dispatch(getPersonalDetails());
     navigation.navigate('MedicalID1');
   };
   useEffect(() => {

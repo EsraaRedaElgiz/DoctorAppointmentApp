@@ -1,3 +1,5 @@
+import {getPersonalDetails} from './PersonalDetailsSlice';
+
 const {createSlice, createAsyncThunk} = require('@reduxjs/toolkit');
 const {default: Axios} = require('../../utils/axios');
 
@@ -9,13 +11,14 @@ const initialState = {
 export const updateUserProfileAction = createAsyncThunk(
   'updateUserProfile/updateUserProfileAction',
   async (data, thunkAPI) => {
-    const {rejectWithValue} = thunkAPI;
+    const {rejectWithValue, dispatch} = thunkAPI;
     try {
       const response = await Axios({
         method: 'POST',
         url: '/patient/update_profile.php',
         data: data,
       });
+      dispatch(getPersonalDetails());
       return response;
     } catch (error) {
       rejectWithValue(error.message);
@@ -41,4 +44,4 @@ const updateUserProfileSlice = createSlice({
   },
 });
 
-export default updateUserProfileSlice;
+export default updateUserProfileSlice.reducer;

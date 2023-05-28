@@ -14,10 +14,43 @@ import {DoctorsData} from '../../utils';
 import PaymentCard from '../../components/Appointment/PaymentCard';
 import {style} from '../../styles/Style';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
-import { useRoute } from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 const PaymentCash = ({navigation}) => {
-  const route=useRoute()
-  const BookArray=route.params.BookArray
+  const globalState = useSelector(state => state);
+  const route = useRoute();
+  const BookArray = route.params.BookArray;
+  const {date} = globalState.BookAppointmentReducer;
+  const getMonthName = monthnum => {
+    if (monthnum == '01') {
+      return 'يناير';
+    } else if (monthnum == '02') {
+      return 'فبراير';
+    } else if (monthnum == '03') {
+      return 'مارس';
+    } else if (monthnum == '04') {
+      return 'ابريل';
+    } else if (monthnum == '05') {
+      return 'مايو';
+    } else if (monthnum == '06') {
+      return 'يونيو';
+    } else if (monthnum == '07') {
+      return 'يوليو';
+    } else if (monthnum == '08') {
+      return 'اغسطس';
+    } else if (monthnum == '09') {
+      return 'سبتمبر';
+    } else if (monthnum == '10') {
+      return 'اكتوبر';
+    } else if (monthnum == '11') {
+      return 'نوفمبر';
+    } else if (monthnum == '12') {
+      return 'ديسمبر';
+    }
+  };
+  const formatDate = `${JSON.stringify(date).slice(9, 10)} ${getMonthName(
+    JSON.stringify(date).slice(6, 8),
+  )} ${JSON.stringify(date).slice(1, 5)}`;
   return (
     <>
       <View
@@ -34,12 +67,12 @@ const PaymentCash = ({navigation}) => {
             }}
           />
           <PaymentCard
-            image={BookArray.image}
-            name={BookArray.name}
+            image={BookArray.user_image}
+            name={BookArray.user_first_name}
             rating={BookArray.rating}
             price={BookArray.price}
-            speciality={BookArray.specialtiy}
-            date={"30\t"+"ديسمبر"+"\t2020"}
+            speciality={BookArray.speciality_name}
+            date={formatDate}
             time="4:30"
           />
           <View style={styles.textContainer}>
@@ -51,7 +84,7 @@ const PaymentCash = ({navigation}) => {
         </View>
         <GeneralButton
           title="تم"
-          style={{marginBottom:MARGIN.mdMargin}}
+          style={{marginBottom: MARGIN.mdMargin}}
           onPress={() => {
             Alert.alert(
               'تذكير',

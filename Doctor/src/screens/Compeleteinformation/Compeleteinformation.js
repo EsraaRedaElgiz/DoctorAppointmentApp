@@ -57,7 +57,7 @@ const Compeleteinformation = ({ navigation }) => {
   const [start, setstart] = useState("")
   const [End, setEnd] = useState("")
   const [section, setsection] = useState("")
-  const Specialization = specialities.map(spec=>spec.specialty_name);
+  const Specialization = specialities.map(spec => spec.specialty_name);
   const [modalVisible, setModalVisible] = useState(false);
   const [modal_Visible_wokdays, setmodal_Visible_wokdays] = useState(false);
   const [modal_Visible_start_time, setmodal_Visible_start_time] = useState(false)
@@ -101,8 +101,8 @@ const Compeleteinformation = ({ navigation }) => {
     formdata.append("email", email)
     formdata.append("age", "20")///////////
     formdata.append("password", password)
-    let selectedSpecIndex=Specialization.indexOf(data.spealization)
-    let selectedSpecId=specialities[selectedSpecIndex].specialty_id
+    let selectedSpecIndex = Specialization.indexOf(data.spealization)
+    let selectedSpecId = specialities[selectedSpecIndex].specialty_id
     formdata.append("speciality_id", selectedSpecId)
     formdata.append("doctor_about", data.About)
     formdata.append("gender", "Male") // Male or Female
@@ -113,7 +113,28 @@ const Compeleteinformation = ({ navigation }) => {
     formdata.append("branch_location", data.Location)
     formdata.append("branch_is_default", "1")
     formdata.append("branch_phone", phoneNum)
-    formdata.append("branch_working_days", /*data.Workdays*/JSON.stringify([{day:"friday",enabled:true}]))
+    let arr = Days.filter(day => day.isChecked == true)
+    let daysarr = []
+    for (let i = 0; i < arr.length; i++) {
+      /*let dayname = arr[i].txt
+      if (dayname == "السبت") {
+        dayname = "sat"
+      } else if (dayname == "الأحد") {
+        dayname = "sun"
+      } else if (dayname == "الاثنين") {
+        dayname = "mon"
+      } else if (dayname == "الثلاثاء") {
+        dayname = "tue"
+      } else if (dayname == "الأربعاء") {
+        dayname = "wed"
+      } else if (dayname == "الخميس") {
+        dayname = "thu"
+      } else if (dayname == "الجمعة") {
+        dayname = "fri"
+      }*/
+      daysarr.push({ day: arr[i].txt, enabled: true })
+    }
+    formdata.append("branch_working_days", /*data.Workdays*/JSON.stringify(daysarr))
     formdata.append("latitude", lat)
     formdata.append("longitude", long)
     formdata.append("booking_price", data.price)
@@ -129,7 +150,8 @@ const Compeleteinformation = ({ navigation }) => {
         reset()
       }
     })
-  console.log(formdata)
+
+    //console.log(formdata)
 
   };
   //

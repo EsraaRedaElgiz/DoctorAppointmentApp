@@ -5,25 +5,28 @@ import {
   TextInput,
   ScrollView,
   Image,
+  Linking,
   TouchableOpacity,
 } from 'react-native';
-import { useForm, Controller } from 'react-hook-form';
+import {useForm, Controller} from 'react-hook-form';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
 import GeneralPage from '../../../../src/components/GeneralPage/GeneralPage';
-import { COLORS, ICONS } from '../../../../src/constants/Constants';
+import {COLORS, ICONS} from '../../../../src/constants/Constants';
 import styles from './DoctorSupportTeamStyles.js';
-import { useNavigation } from '@react-navigation/native';
-import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
-function DoctorSupportTeam({ navigation }) {
+import {useNavigation} from '@react-navigation/native';
+import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
+function DoctorSupportTeam({navigation}) {
   // const navigation = useNavigation();
+  const contact = '+0201026669167'; // support phone
   const {
     reset,
     handleSubmit,
     control,
-    formState: { errors },
+    formState: {errors},
   } = useForm();
   const onSubmit = data => {
+    Linking.openURL(`whatsapp://send?phone=${contact}&text=${data.input}`);
     reset();
     navigation.goBack();
   };
@@ -33,23 +36,25 @@ function DoctorSupportTeam({ navigation }) {
         title="فريق الدعم"
         color={COLORS.darkGray3}
         onPress={() => {
-          navigation.goBack()
+          navigation.goBack();
         }}
       />
-      <ScrollView style={styles.ScrollViewStyle} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        style={styles.ScrollViewStyle}
+        showsVerticalScrollIndicator={false}>
         <Controller
           name="input"
           control={control}
           rules={{
             required: true,
           }}
-          render={({ field: { onBlur, onChange, value } }) => {
+          render={({field: {onBlur, onChange, value}}) => {
             return (
               <TextInput
                 placeholder="ادخل مشكلتك"
                 style={[
                   styles.textInputStyle,
-                  { borderColor: errors.input ? COLORS.red : COLORS.gray },
+                  {borderColor: errors.input ? COLORS.red : COLORS.gray},
                 ]}
                 multiline
                 onBlur={onBlur}

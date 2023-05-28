@@ -4,6 +4,7 @@ import {USER_TOKEN, USER_DATA} from '../../constants/Constants';
 import axios from 'axios';
 import Axios from '../../../../src/utils/axios';
 import {getDoctorAppointments} from './DoctorAppointmentSlice';
+import { Alert } from 'react-native';
 
 const initState = {
   isLoading: false,
@@ -27,18 +28,24 @@ export const AddAppointmentBySec = createAsyncThunk(
               response = res.data.status;
               dispatch(getDoctorAppointments());
             } else {
-              console.log(res.data);
+              //console.log(res.data);
+              Alert.alert(" يجب ادخال رقم هاتف لحساب موجود بالفعل واختيار تاريخ يوم بدءا من الغد" )
             }
           } else {
-            alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
+            Alert.alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
           }
         })
         .catch(err => {
-          console.log(err);
+          if(err.message=="Network Error"){
+            Alert.alert(' خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');// right //لو مفيش نت هيدخل هنا
+          }else{
+            Alert.alert(JSON.stringify(err.message))
+          }
         });
       return response;
     } catch (error) {
       console.log(rejectWithValue(error.message));
+      Alert.alert(' خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
       return rejectWithValue(error.message);
     }
   },

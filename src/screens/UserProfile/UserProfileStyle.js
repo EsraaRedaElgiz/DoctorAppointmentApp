@@ -3,6 +3,11 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {COLORS, FONTS, MARGIN, PADDINGS} from '../../constants/Constants';
 
 const styles = StyleSheet.create({
+  isLoadingViewStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   container: {
     flex: 1,
     padding: PADDINGS.mdPadding,

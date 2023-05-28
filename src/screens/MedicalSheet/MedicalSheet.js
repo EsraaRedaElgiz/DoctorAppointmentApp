@@ -130,7 +130,7 @@ function MedicalSheet({ navigation }) {
           reset()
         }
     }).catch((err) => {console.log(err.message) });
-    console.log(formdata);
+    //console.log(formdata);
 
   };
   return (

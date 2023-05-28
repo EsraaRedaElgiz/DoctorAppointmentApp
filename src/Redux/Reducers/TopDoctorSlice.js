@@ -1,29 +1,26 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import Axios from '../../utils/axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {USER_TOKEN} from '../../constants/Constants';
 
 const initState = {
-  appointments: [],
   isLoading: false,
   error: null,
-};
-export const getAppointments = createAsyncThunk(
-  'appointments/getAppointments',
+  topDoctors: []
+}
+export const getTopDoctors = createAsyncThunk(
+  'TopDoctors/getTopDoctors',
   async (args, thunkAPI) => {
-    const {rejectWithValue, dispatch} = thunkAPI;
+    const { rejectWithValue, dispatch } = thunkAPI;
     try {
       await Axios({
         method: 'GET',
-        url: '/patient/appointments.php?filter=upcoming',
-        //params:{}
+        url: '/patient/doctors.php?top_rate=1',
       })
         .then(res => {
           if (res.status == 200) {
             if (Array.isArray(res.data)) {
-              //console.log('arr', res.data);
-              dispatch(setAppointmentsArr(res.data));
+               console.log('arr', res.data);
+              dispatch(setTopDoctorsArr(res.data));
             } else {
               console.log(res.data);
               dispatch(setError(JSON.stringify(res.data)))
@@ -45,33 +42,33 @@ export const getAppointments = createAsyncThunk(
   },
 );
 
-const AppointmentSlice = createSlice({
-  name: 'appointments',
+const TopDoctorsSlice = createSlice({
+  name: 'TopDoctors',
   initialState: initState,
   reducers: {
-    setAppointmentsArr: (state, action) => {
-      state.appointments = action.payload;
-    },setError: (state, action) => {
+    setTopDoctorsArr: (state, action) => {
+      state.topDoctors = action.payload;
+    }, setError: (state, action) => {
       state.error = action.payload;
     }
   },
   extraReducers: builder => {
     builder
-      .addCase(getAppointments.pending, (state, action) => {
+      .addCase(getTopDoctors.pending, (state, action) => {
         state.isLoading = true;
         state.error = null;
-        //console.log('pending');
+        // console.log('pending');
       })
-      .addCase(getAppointments.fulfilled, (state, action) => {
+      .addCase(getTopDoctors.fulfilled, (state, action) => {
         state.isLoading = false;
-        //console.log('success');
+        // console.log('success');
       })
-      .addCase(getAppointments.rejected, (state, action) => {
+      .addCase(getTopDoctors.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
         //console.log('failed');
       });
   },
 });
-export default AppointmentSlice.reducer;
-export const {setAppointmentsArr,setError} = AppointmentSlice.actions;
+export default TopDoctorsSlice.reducer;
+export const { setTopDoctorsArr,setError } = TopDoctorsSlice.actions;

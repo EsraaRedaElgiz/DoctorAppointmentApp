@@ -1,7 +1,8 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import Axios from '../../utils/axios';
-import {setLoggedOut} from '../../Redux/Reducers/AuthSlice';
+import { setLoggedOut } from '../../Redux/Reducers/AuthSlice';
+import { Alert } from 'react-native';
 
 const initState = {
   name: '',
@@ -16,7 +17,7 @@ const initState = {
 export const registerUser = createAsyncThunk(
   'SignUp/registerUser ',
   async (args, thunkAPI) => {
-    const {rejectWithValue, dispatch} = thunkAPI;
+    const { rejectWithValue, dispatch } = thunkAPI;
     try {
       let response = '';
       await Axios({
@@ -32,20 +33,29 @@ export const registerUser = createAsyncThunk(
           if (res.status == 200) {
             if (res.data === 'Success add patient data') {
               response = res.data;
+            } else if (res.data.errors.email == "Email or Phone are exist") {
+              Alert.alert("عنوان البريد الالكتروني او رقم الهاتف موجود بالفعل")
             } else {
-              console.log(res.data);
+              //console.log(res.data);
+              Alert.alert(JSON.stringify(res.data))
             }
           } else {
-            alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
-            console.log(res.data);
+            Alert.alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
+            //console.log(res.data);
           }
         })
         .catch(err => {
-          console.log(err);
+          if (err.message == "Network Error") {
+            Alert.alert(' خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');// right //لو مفيش نت هيدخل هنا
+          } else {
+            Alert.alert(JSON.stringify(err.message))
+
+          }
         });
       return response;
     } catch (error) {
       //console.log(error.message)
+      Alert.alert(' خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
       return rejectWithValue(error.message);
     }
   },
@@ -91,5 +101,5 @@ const signUpSlice = createSlice({
   },
 });
 export default signUpSlice.reducer;
-export const {setName, setPhoneNum, setEmail, setPassword, setSuccess} =
+export const { setName, setPhoneNum, setEmail, setPassword, setSuccess } =
   signUpSlice.actions;

@@ -2,12 +2,9 @@ import React, {useEffect} from 'react';
 import AppContainer from './src/navigation/AppContainer';
 import {useDispatch, useSelector} from 'react-redux';
 import DoctorAppContainer from './Doctor/src/navigation/DoctorAppContainer';
-import EditDoctorDetails from './Doctor/src/screens/EditDoctorDetails/EditDoctorDetails';
 import {IS_DOCTOR} from './src/constants/Constants';
 import {setIsDoctor} from './src/Redux/Reducers/AuthSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {HomeDoctor} from './Doctor/src/screens';
-import {NavigationContainer} from '@react-navigation/native';
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
