@@ -19,7 +19,7 @@ import {Alert} from 'react-native/Libraries/Alert/Alert';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 function SupportTeam(props) {
   const navigation = useNavigation();
-  const contact = '+0201026669167';
+  const contact = '+0201026669167'; // support phone
   const {
     reset,
     handleSubmit,
