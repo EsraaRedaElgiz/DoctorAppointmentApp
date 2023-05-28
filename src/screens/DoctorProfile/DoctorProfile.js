@@ -49,7 +49,7 @@ const DoctorProfile = ({navigation}) => {
           {/* image */}
 
           <ImageBackground
-            source={DoctorArray.image}
+            source={{uri:DoctorArray.user_image}}
             style={{width: '100%', height: RFValue(300)}}>
             <HeaderNavigation
               padding={PADDINGS.mdPadding}
@@ -61,7 +61,7 @@ const DoctorProfile = ({navigation}) => {
 
           {/* NameAndSpecialty */}
           <View style={styles.textsContainer}>
-            <Text style={style.textTitleBold}>{DoctorArray.name}</Text>
+            <Text style={style.textTitleBold}>{DoctorArray.user_first_name}</Text>
             <Text
               style={[
                 style.textContent,
@@ -69,7 +69,7 @@ const DoctorProfile = ({navigation}) => {
                   color: COLORS.darkGray2,
                 },
               ]}>
-              {DoctorArray.specialtiy}
+              {DoctorArray.speciality_name}
             </Text>
           </View>
 
@@ -80,7 +80,7 @@ const DoctorProfile = ({navigation}) => {
             {/* About */}
             <Text style={style.textTitleBold}>حول</Text>
             <View style={styles.aboutStyleContainer}>
-              <Text style={style.textSmallContent}>{DoctorArray.about}</Text>
+              <Text style={style.textSmallContent}>{DoctorArray.doctor_about}</Text>
             </View>
             {/* Location */}
             <Text style={[style.textTitleBold, {marginTop: MARGIN.mdMargin}]}>
@@ -183,19 +183,19 @@ const Cards = props => {
     {
       id: 1,
       name: 'user-friends',
-      number: data.numberOfPatients,
+      number: data.numberOfPatients,//back
       text: 'المرضي',
     },
     {
       id: 2,
       name: 'medal',
-      number: data.numOfexperience,
+      number: data.doctor_experience,
       text: 'خبرة',
     },
     {
       id: 3,
       name: 'star',
-      number: data.rating,
+      number: data.rating,//back
       text: 'التقييم',
     },
   ];
