@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
+import React,{useState} from 'react';
 import {SearchBar, ListSpecialitySearch} from '../../components/Search';
 import {style} from '../../styles/Style';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
@@ -8,9 +8,10 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {COLORS} from '../../constants/Constants';
 
 const SpecialitySearch = ({navigation}) => {
+  const [SpecialtyFilterd, setSpecialtyFilterd] = useState(SpecialityData);
   return (
     <>
-      <View style={[style.bigContainer, {paddingBottom: RFValue(120)}]}>
+      <View style={[style.bigContainer,{flex:1}]}>
         <HeaderNavigation
           title=" البحث"
           color={COLORS.darkGray3}
@@ -18,8 +19,13 @@ const SpecialitySearch = ({navigation}) => {
             navigation.goBack();
           }}
         />
-        <SearchBar placeholder="البحث عن التخصصات" />
-        <ListSpecialitySearch />
+        <SearchBar
+          placeholder="البحث عن التخصصات"
+          SpecialtyFilterd={SpecialtyFilterd}
+          setSpecialtyFilterd={setSpecialtyFilterd}
+          SpecialityData={SpecialityData}
+        />
+        <ListSpecialitySearch SpecialtyFilterd={SpecialtyFilterd} />
       </View>
     </>
   );

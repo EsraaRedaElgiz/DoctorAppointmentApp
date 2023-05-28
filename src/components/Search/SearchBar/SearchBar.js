@@ -12,11 +12,32 @@ import {
 } from '../../../constants/Constants';
 import {style} from '../../../styles/Style';
 const SearchBar = props => {
-  const {placeholder, styleProp} = props;
+  const {
+    placeholder,
+    styleProp,
+    setArrayFilterd,
+    sortedArray,
+    setSpecialtyFilterd,
+    SpecialityData,
+  } = props;
 
   const [textInput, setTextInput] = useState('');
   const changeTextInput = enteredText => {
     setTextInput(enteredText);
+    if (sortedArray) {
+      setArrayFilterd(
+        sortedArray.filter(i =>
+          i.name.toLowerCase().includes(enteredText.toLowerCase()),
+        ),
+      );
+    } else {
+      setSpecialtyFilterd(
+        SpecialityData.filter(i =>
+          i.title.toLowerCase().includes(enteredText.toLowerCase()),
+        ),
+      );
+    }
+   
   };
 
   return (
