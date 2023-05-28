@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
 import {useForm, Controller} from 'react-hook-form';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -15,9 +16,10 @@ import {COLORS, ICONS, PADDINGS} from '../../constants/Constants';
 import styles from './SupportTeamStyle';
 import {useNavigation} from '@react-navigation/native';
 import {Alert} from 'react-native/Libraries/Alert/Alert';
-import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 function SupportTeam(props) {
   const navigation = useNavigation();
+  const contact = '+0201026669167';
   const {
     reset,
     handleSubmit,
@@ -25,16 +27,22 @@ function SupportTeam(props) {
     formState: {errors},
   } = useForm();
   const onSubmit = data => {
+    Linking.openURL(`whatsapp://send?phone=${contact}&text=${data.input}`);
     reset();
     navigation.goBack();
   };
   return (
     <View style={styles.container}>
-      <HeaderNavigation title="فريق الدعم" color={COLORS.darkGray3} 
-      onPress={() => {
+      <HeaderNavigation
+        title="فريق الدعم"
+        color={COLORS.darkGray3}
+        onPress={() => {
           navigation.goBack();
-        }}/>
-      <ScrollView style={styles.ScrollViewStyle} showsVerticalScrollIndicator={false}>
+        }}
+      />
+      <ScrollView
+        style={styles.ScrollViewStyle}
+        showsVerticalScrollIndicator={false}>
         <Controller
           name="input"
           control={control}
@@ -70,9 +78,8 @@ function SupportTeam(props) {
         </TouchableOpacity>
       </ScrollView>
       <View style={styles.viewButtonStyle}>
-      <GeneralButton title="ارسال" onPress={handleSubmit(onSubmit)} />
+        <GeneralButton title="ارسال" onPress={handleSubmit(onSubmit)} />
       </View>
-
     </View>
   );
 }
