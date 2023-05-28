@@ -26,15 +26,14 @@ const PaymentCard = props => {
   return (
     <Pressable style={style.CardContainer}>
       <View style={style.imageContainerStyle}>
-        <Image source={image} style={style.imageCard} />
+        <Image source={{uri: image}} style={style.imageCard} />
       </View>
-
       <View style={style.textsCardConatiner}>
         <View style={styles.threeSubContainer}>
           <View style={styles.nameContainer}>
             <Text
               style={[style.textSmallContentBold, {color: COLORS.darkGray3}]}>
-              {'د ' + name}
+              {name}
             </Text>
           </View>
           <View
@@ -70,7 +69,6 @@ const PaymentCard = props => {
               width: RFValue(110),
               flexDirection: 'row',
               alignItems: 'center',
-              justifyContent: 'space-around',
               marginRight: MARGIN.smMargin,
             }}>
             <FontAwesome name="calendar" size={ICONS.smIcon} />

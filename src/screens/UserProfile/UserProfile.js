@@ -23,6 +23,7 @@ function UserProfile(props) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
+  const {isLoading, name, image} = globalState.PersonalDetailsReducer;
   useEffect(() => {
     dispatch(getPersonalDetails());
   }, []);
@@ -33,10 +34,7 @@ function UserProfile(props) {
   ) : (
     <GeneralPage>
       <View style={styles.container}>
-        <ProfileImage
-          nameAfterImage={globalState.PersonalDetailsReducer.name}
-          imageUri={globalState.PersonalDetailsReducer.image}
-        />
+        <ProfileImage nameAfterImage={name} imageUri={image} />
         {userProfileData.map((el, idx) => {
           return (
             <View key={idx} style={styles.userProfileButtonView}>
