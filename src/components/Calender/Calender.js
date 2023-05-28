@@ -17,6 +17,8 @@ import {
 import PagerView from 'react-native-pager-view';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {FONTS, COLORS} from '../../constants/Constants';
+import {useDispatch} from 'react-redux';
+import {setDate, setTime} from '../../Redux/Reducers/BookAppointmentSlice';
 
 // to show all weeks in month 4 week
 const dates = eachWeekOfInterval({
@@ -34,6 +36,7 @@ const dates = eachWeekOfInterval({
 console.log(dates);
 function Calender() {
   const [chosenDay, setChosenDay] = useState(null);
+  const dispatch = useDispatch();
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
       <View style={styles.container}>
@@ -45,7 +48,10 @@ function Calender() {
                 return (
                   <>
                     <Pressable
-                      onPress={() => setChosenDay(day)}
+                      onPress={() => {
+                        setChosenDay(day);
+                        dispatch(setDate({date: day}));
+                      }}
                       key={idx}
                       style={[
                         styles.dateCard,

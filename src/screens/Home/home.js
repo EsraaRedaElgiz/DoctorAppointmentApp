@@ -1,5 +1,6 @@
+
 import { ScrollView, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {
   Header,
   CovidCard,
@@ -7,6 +8,7 @@ import {
   SpecialityList,
   TopDoctors,
 } from '../../components/Home';
+
 import { COLORS, PADDINGS, USER_DATA, USER_TOKEN } from '../../constants/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,8 +16,11 @@ import { getPersonalDetails } from '../../Redux/Reducers/PersonalDetailsSlice';
 import { RFValue } from 'react-native-responsive-fontsize';
 import {getTopDoctors} from '../../Redux/Reducers/TopDoctorSlice'
 
+
+
 const Home = ({ navigation }) => {
   const globalState = useSelector(state => state);
+
   const dispatch = useDispatch();
   const { userInfo } = globalState.LoginReducer;
   const { isLoading, name, image } = globalState.PersonalDetailsReducer
@@ -35,9 +40,7 @@ const Home = ({ navigation }) => {
     console.log('token => ', token);
     console.log('data => ', data);
     //console.log("userinfo",userInfo)
-  }
-
-
+  };
 
   return (
     <>

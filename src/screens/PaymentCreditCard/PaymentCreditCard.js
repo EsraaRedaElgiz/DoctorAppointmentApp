@@ -1,5 +1,12 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React, {useEffect} from 'react';
 import PaymentCard from '../../components/Appointment/PaymentCard';
 import {DoctorsData} from '../../utils';
 import {
@@ -17,9 +24,21 @@ import {style} from '../../styles/Style';
 import Visa from '../../components/Visa/Visa';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 import {useRoute} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {getPaymentCard} from '../../Redux/Reducers/PaymentCardSlice';
 const PaymentCreditCard = ({navigation}) => {
   const route = useRoute();
   const BookArray = route.params.BookArray;
+  const dispatch = useDispatch();
+  const globalState = useSelector(state => state);
+  const {cards, error, isLoading} = globalState.PaymentCardReducer;
+  useEffect(() => {
+    dispatch(getPaymentCard());
+  }, []);
+  const appendSpace = string => {
+    const newString = string.replaceAll(' ', '      ');
+    return newString;
+  };
   return (
     <View
       style={[style.bigContainer, {flex: 1, justifyContent: 'space-between'}]}>
@@ -40,21 +59,55 @@ const PaymentCreditCard = ({navigation}) => {
         time="4:30"
       />
       <ListTiltle
-        Title="اختر البطاقه"
-        seeAll=" اضافه بطاقه"
+        Title="اختر البطاقة"
+        seeAll=" اضافة بطاقة"
         onPress={() => {
           navigation.navigate('AddCard');
         }}
       />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Visa />
-        <Visa />
-        <Visa />
-        <Visa />
-      </ScrollView>
+      {isLoading ? (
+        <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
+      ) : error === null ? (
+        cards.length === 0 ? (
+          <View
+            style={{
+              height: '100%',
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Text>لا يوجد بطاقة حتي الأن</Text>
+          </View>
+        ) : (
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={cards}
+            renderItem={({item}) => {
+              return (
+                <Visa
+                  master
+                  name={item.card_holder}
+                  cardNumber={appendSpace(item.card_number)}
+                  date={item.card_exp_date}
+                />
+              );
+            }}
+          />
+        )
+      ) : (
+        <View
+          style={{
+            height: '60%',
+            width: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text>حدث خطأ اثناء الاتصال بالانترنت</Text>
+        </View>
+      )}
       <GeneralButton
         title="تاكيد"
-        style={{marginBottom:MARGIN.mdMargin}}
+        style={{marginBottom: MARGIN.mdMargin}}
         onPress={() => {
           navigation.navigate('CompletedAppointment');
         }}

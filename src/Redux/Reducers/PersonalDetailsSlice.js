@@ -37,8 +37,8 @@ const personalDetailsSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(getPersonalDetails.pending, (state, action) => {
       state.isLoading = true;
-      console.log('state in pending ', state);
-      console.log('action.payload in pending ', action.payload);
+      // console.log('state in pending ', state);
+      // console.log('action.payload in pending ', action.payload);
     }),
       builder.addCase(getPersonalDetails.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -52,14 +52,14 @@ const personalDetailsSlice = createSlice({
           (state.phone = action.payload.user_phone),
           (state.gender = action.payload.user_gender);
         state.image = action.payload.user_image;
-        console.log('state : ', state);
-        console.log('action.payload in fulfilled : ', action.payload);
+        // console.log('state : ', state);
+        // console.log('action.payload in fulfilled : ', action.payload);
       }),
       builder.addCase(getPersonalDetails.rejected, (state, action) => {
         state.isLoading = false;
         state.success = false;
         state.error = action.payload;
-        console.log('Error ', state.error);
+        // console.log('Error ', state.error);
       });
   },
 });
