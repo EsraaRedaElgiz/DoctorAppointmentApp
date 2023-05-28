@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   View,
   FlatList,
@@ -8,55 +8,38 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
-import { COLORS, PADDINGS, USER_HISTORY_STATUS } from '../../constants/Constants';
+import {COLORS, PADDINGS, USER_HISTORY_STATUS} from '../../constants/Constants';
 import styles from './styles';
 import HeaderArrowAndWord from '../../components/HeaderArrowAndWord/HeaderArrowAndWord';
 import AppointmentAndHistoryComponent from '../../components/AppointmentAndHistoryComponent/AppointmentAndHistoryComponent';
-import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { getHistory } from '../../Redux/Reducers/HistorySlice';
-import { historyStatus } from '../../Redux/Reducers/HistoryPublicOrPrivateSlice';
+import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {getHistory} from '../../Redux/Reducers/HistorySlice';
+import {historyStatus} from '../../Redux/Reducers/HistoryPublicOrPrivateSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-function History({ navigation }) {
+function History({navigation}) {
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const { isLoading, history,error } = globalState.HistoryReducer;
-  const { isLoad } = globalState.HistoryPublicOrPrivateReducer;
+  const {isLoading, history, error} = globalState.HistoryReducer;
+  const {isLoad} = globalState.HistoryPublicOrPrivateReducer;
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      getHistoryStatus()
+      getHistoryStatus();
       dispatch(getHistory());
     });
-
     return unsubscribe;
   }, [navigation]);
 
-  const getHistoryStatus =async()=>{
-   const value= await AsyncStorage.getItem(USER_HISTORY_STATUS)
-   if(JSON.parse(value)==1) {
-   setVisible(visible=>false)
-  }else if(JSON.parse(value)==0){
-    setVisible(visible=>true)
-
-  }}
-  /* const history = [
-     {
-       doctorName: "سامي علي",
-       doctorSpeciality: "الطب العام والداخلي",
-       day: "4",
-       month: "سبتمبر",
-       year: "2022",
-     }, {
-       doctorName: "احمد محمد",
-       doctorSpeciality: "طب الاسنان",
-       day: "6",
-       month: "سبتمبر",
-       year: "2022",
-     }
- 
-   ]*/
+  const getHistoryStatus = async () => {
+    const value = await AsyncStorage.getItem(USER_HISTORY_STATUS);
+    if (JSON.parse(value) == 1) {
+      setVisible(visible => false);
+    } else if (JSON.parse(value) == 0) {
+      setVisible(visible => true);
+    }
+  };
   const getMonthName = monthnum => {
     if (monthnum == '01') {
       return 'يناير';
@@ -85,8 +68,8 @@ function History({ navigation }) {
     }
   };
   keyextractor = (item, index) => index.toString();
-  const renderitems = ({ item, index }) => {
-    const { doctor, appointment_date } = item;
+  const renderitems = ({item, index}) => {
+    const {doctor, appointment_date} = item;
     return (
       <AppointmentAndHistoryComponent
         doctorName={doctor.user_first_name}
@@ -114,52 +97,75 @@ function History({ navigation }) {
   };
   const changeStatusButton = () => {
     if (visible == true) {
-      dispatch(historyStatus({ private: 1 })).unwrap().then((res) => {
-        if (res == true) {
-          setVisible(visible => {
-            return !visible;
-          });
-          showToast();
-        }
-      }).catch((err) => { console.log(err.message) });
+      dispatch(historyStatus({private: 1}))
+        .unwrap()
+        .then(res => {
+          if (res == true) {
+            setVisible(visible => {
+              return !visible;
+            });
+            showToast();
+          }
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
     } else if (visible == false) {
-      dispatch(historyStatus({ private: 0 })).unwrap().then((res) => {
-        if (res == true) {
-          setVisible(visible => {
-            return !visible;
-          });
-          showToast();
-        }
-      }).catch((err) => { console.log(err.message) });
+      dispatch(historyStatus({private: 0}))
+        .unwrap()
+        .then(res => {
+          if (res == true) {
+            setVisible(visible => {
+              return !visible;
+            });
+            showToast();
+          }
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
     }
-  }
+  };
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.blue} />
       <HeaderNavigation
         title="التاريخ"
         icon={isLoad == true ? false : true}
-        iconName={isLoad == false ? visible == false ? 'lock' : 'unlock' : false}
+        iconName={
+          isLoad == false ? (visible == false ? 'lock' : 'unlock') : false
+        }
         load={isLoad}
         color={COLORS.darkGray3}
         rightButtonHide
         onPressBtn={() => {
-         changeStatusButton()
+          changeStatusButton();
         }}
         padding={PADDINGS.mdPadding}
       />
       {isLoading ? (
         <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
-      ) : error==null?
-      (history.length > 0 ? (
-        <FlatList
-          keyExtractor={keyextractor}
-          data={history}
-          renderItem={renderitems}
-          style={styles.flatListStyle}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.flatListContentContainerStyle}
-        />
+      ) : error == null ? (
+        history.length > 0 ? (
+          <FlatList
+            keyExtractor={keyextractor}
+            data={history}
+            renderItem={renderitems}
+            style={styles.flatListStyle}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.flatListContentContainerStyle}
+          />
+        ) : (
+          <View
+            style={{
+              height: '100%',
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Text>لا يوجد تاريخ مرضي حتي الأن</Text>
+          </View>
+        )
       ) : (
         <View
           style={{
@@ -168,20 +174,9 @@ function History({ navigation }) {
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <Text>لا يوجد تاريخ مرضي حتي الأن</Text>
-        </View>
-      )):(
-        <View  
-        style={{
-          height: '100%',
-          width: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
           <Text>حدث خطأ اثناء الاتصال بالانترنت</Text>
         </View>
-      )
-      }
+      )}
     </View>
   );
 }

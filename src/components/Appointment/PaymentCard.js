@@ -51,7 +51,7 @@ const PaymentCard = props => {
           <View style={styles.rating_Price_date_time_Container}>
             <Text
               style={[style.textSmallContentBold, {color: COLORS.darkGray2}]}>
-              {price} جنيه
+              {price} جنية
             </Text>
           </View>
         </View>

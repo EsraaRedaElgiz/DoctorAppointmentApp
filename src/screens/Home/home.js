@@ -1,5 +1,5 @@
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {
   Header,
   CovidCard,
@@ -7,26 +7,29 @@ import {
   SpecialityList,
   TopDoctors,
 } from '../../components/Home';
-import {COLORS, PADDINGS, USER_DATA, USER_TOKEN} from '../../constants/Constants';
+import {
+  COLORS,
+  PADDINGS,
+  USER_DATA,
+  USER_TOKEN,
+} from '../../constants/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const Home = ({navigation}) => {
   const globalState = useSelector(state => state);
-  const { userInfo } = globalState.LoginReducer;
+  const {userInfo} = globalState.LoginReducer;
   useEffect(() => {
-    getToken()
-  }, [])
+    getToken();
+  }, []);
 
-  const getToken = async ()=> {
+  const getToken = async () => {
     const token = await AsyncStorage.getItem(USER_TOKEN);
     const data = await AsyncStorage.getItem(USER_DATA);
     console.log('token => ', token);
     console.log('data => ', data);
     //console.log("userinfo",userInfo)
-  }
-
-
+  };
 
   return (
     <>
