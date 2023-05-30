@@ -26,8 +26,8 @@ const dates = eachWeekOfInterval({
 }, []);
 
 console.log(dates);
-function Calender() {
-  const [chosenDay, setChosenDay] = useState(null);
+function Calender({chosenDay,setChosenDay}) {
+  
   const dispatch = useDispatch();
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false}>

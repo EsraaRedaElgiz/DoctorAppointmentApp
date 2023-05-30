@@ -104,6 +104,7 @@ const PaymentCreditCard = ({navigation}) => {
           navigation.navigate('AddCard');
         }}
       />
+      <View style={{flex:1}}>
       {isLoading ? (
         <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
       ) : error === null ? (
@@ -145,6 +146,8 @@ const PaymentCreditCard = ({navigation}) => {
           <Text>حدث خطأ اثناء الاتصال بالانترنت</Text>
         </View>
       )}
+      </View>
+      
       <GeneralButton
         title="تاكيد"
         style={{marginBottom: MARGIN.mdMargin}}
