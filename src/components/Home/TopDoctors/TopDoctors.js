@@ -6,13 +6,12 @@ import {style} from '../../../styles/Style';
 import {COLORS, ICONS, PADDINGS} from '../../../constants/Constants';
 import {useNavigation} from '@react-navigation/native';
 import {Rating} from 'react-native-stock-star-rating';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const TopDoctors = () => {
   const navigation = useNavigation();
   const globalState = useSelector(state => state);
-  const { topDoctors } =
-    globalState.TopDoctorReducer;
+  const {topDoctors} = globalState.TopDoctorReducer;
   // TO SHOW JUST 5 RATING
   const filterArray = DoctorsData.filter(el => el.rating == 5);
   return (
@@ -33,28 +32,29 @@ const TopDoctors = () => {
           }}>
           {/* ImageOnCards */}
           <View style={style.imageContainerStyle}>
-            <Image source={{uri:itemData.item.user_image}} style={style.imageCard} />
+            <Image
+              source={{uri: itemData.item.user_image}}
+              style={style.imageCard}
+            />
           </View>
-
           {/* TextOnCards */}
           <View style={style.textsCardConatiner}>
             <Text
               style={[
                 style.textContentBold,
-                {color: COLORS.darkGray3, fontWeight: 'normal',textAlign: 'left'},
+                {
+                  color: COLORS.darkGray3,
+                  fontWeight: 'normal',
+                  textAlign: 'left',
+                },
               ]}>
               {itemData.item.user_first_name}{' '}
             </Text>
             <Text style={[style.textSmallContent, {color: COLORS.darkGray2}]}>
               {'طبيب ' + itemData.item.speciality_name}{' '}
             </Text>
-
             {/* Rating */}
-            <Rating
-              stars={5}
-              maxStars={5}
-              size={ICONS.smIcon}
-            />
+            <Rating stars={5} maxStars={5} size={ICONS.smIcon} />
           </View>
         </Pressable>
       )}

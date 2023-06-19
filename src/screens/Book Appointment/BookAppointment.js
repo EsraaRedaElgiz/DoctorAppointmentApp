@@ -1,4 +1,11 @@
-import {ScrollView, StyleSheet, Text, View, Alert,Pressable} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  Pressable,
+} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import {
@@ -21,7 +28,8 @@ const BookAppointment = ({navigation}) => {
   const DoctorArray = route.params.DoctorArray;
   const [checkedCash, setCheckCash] = useState(false);
   const [checkedCerdit, setcheckedCerdit] = useState(false);
-const [chosenTime,setChosenTime]=useState(null)
+  const [chosenTime, setChosenTime] = useState(null);
+  const [chosenDay, setChosenDay] = useState(null);
   //session time
   const [timeSlots, setTimeSlots] = useState([]);
   const craeteTimeSlots = (fromTime, ToTime) => {
@@ -43,7 +51,6 @@ const [chosenTime,setChosenTime]=useState(null)
   useEffect(() => {
     setTimeSlots(craeteTimeSlots('08:00 AM', '8:00 PM')); // 08:00 start time ,9:00 end time
   }, []);
-
   const cashFun = () => {
     setCheckCash(true);
     setcheckedCerdit(false);
@@ -52,6 +59,7 @@ const [chosenTime,setChosenTime]=useState(null)
     setcheckedCerdit(true);
     setCheckCash(false);
   };
+
   return (
     <View style={{backgroundColor: COLORS.white, flex: 1}}>
       <HeaderNavigation
@@ -67,16 +75,24 @@ const [chosenTime,setChosenTime]=useState(null)
         contentContainerStyle={{paddingHorizontal: PADDINGS.smPadding}}>
         <ListTiltle Title="التاريخ" />
 
-        <Calender />
+        <Calender chosenDay={chosenDay} setChosenDay={setChosenDay} />
         {/* FlatList Times */}
         <ScrollView>
           <View style={styles.flatListTimesContainer}>
             {timeSlots.map((item, index) => {
               return (
                 <>
-                  <Pressable style={styles.timeContainer}
-                  onPress={()=>{setChosenTime()}}
-                  >
+                  <Pressable
+                    style={[
+                      styles.timeContainer,
+                      {
+                        backgroundColor:
+                          chosenTime === item ? COLORS.lightBlue : COLORS.white,
+                      },
+                    ]}
+                    onPress={() => {
+                      setChosenTime(item);
+                    }}>
                     <Text style={styles.timeTextStyle}>{item}</Text>
                   </Pressable>
                 </>
@@ -118,7 +134,7 @@ const [chosenTime,setChosenTime]=useState(null)
           marginHorizontal: PADDINGS.mdPadding,
         }}
         onPress={() => {
-          checkedCash || checkedCerdit
+          (checkedCash || checkedCerdit) && chosenTime && chosenDay
             ? navigation.navigate(
                 checkedCash ? 'PaymentCash' : 'PaymentCreditCard',
                 {BookArray: DoctorArray},
@@ -165,7 +181,6 @@ const styles = StyleSheet.create({
     padding: RFValue(2),
     alignSelf: 'center',
     marginTop: MARGIN.mdMargin,
-    paddingLeft:PADDINGS.mdPadding,
   },
   flatListCheckBoxsContainer: {
     justifyContent: 'space-between',
@@ -182,12 +197,11 @@ const styles = StyleSheet.create({
     height: RFValue(35),
     borderRadius: RADIUS.smRadius,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: RFValue(17),
     backgroundColor: COLORS.white,
     elevation: RFValue(3),
-    marginRight: MARGIN.mdMargin,
+    marginRight: RFValue(17),
     marginBottom: MARGIN.mdMargin,
   },
   timeTextStyle: {
@@ -203,6 +217,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between',
-    marginBottom:MARGIN.lgMargin
+    marginBottom: MARGIN.lgMargin,
   },
 });

@@ -12,22 +12,22 @@ import {SpecialityData} from '../../../utils';
 import {style} from '../../../styles/Style';
 import SearchBar from '../SearchBar/SearchBar';
 import {useNavigation} from '@react-navigation/native';
-const ListSpecialitySearch = () => {
-  // const [SpecialityDataUpdated, setSpecialityDataUpdated] =
-  //   useState(SpecialityData);
+const ListSpecialitySearch = ({SpecialtyFilterd}) => {
   const navigation = useNavigation();
   return (
     <>
+    
       <FlatList
         horizontal={false}
         numColumns={2}
         showsVerticalScrollIndicator={false}
-        data={SpecialityData}
+        data={SpecialtyFilterd}
         contentContainerStyle={{
           marginTop: MARGIN.mdMargin,
           padding: RFValue(2),
           paddingLeft: MARGIN.xsMargin,
           paddingRight: RFValue(4),
+          paddingBottom:RFValue(15)
         }}
         renderItem={(itemData, index) => (
           <>

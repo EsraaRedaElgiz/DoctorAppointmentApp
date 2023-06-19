@@ -47,9 +47,8 @@ const DoctorProfile = ({navigation}) => {
           style={{backgroundColor: COLORS.white}}
           showsVerticalScrollIndicator={false}>
           {/* image */}
-
           <ImageBackground
-            source={{uri:DoctorArray.user_image}}
+            source={{uri: DoctorArray.user_image}}
             style={{width: '100%', height: RFValue(300)}}>
             <HeaderNavigation
               padding={PADDINGS.mdPadding}
@@ -58,10 +57,11 @@ const DoctorProfile = ({navigation}) => {
               }}
             />
           </ImageBackground>
-
           {/* NameAndSpecialty */}
           <View style={styles.textsContainer}>
-            <Text style={style.textTitleBold}>{DoctorArray.user_first_name}</Text>
+            <Text style={style.textTitleBold}>
+              {DoctorArray.user_first_name}
+            </Text>
             <Text
               style={[
                 style.textContent,
@@ -72,15 +72,15 @@ const DoctorProfile = ({navigation}) => {
               {DoctorArray.speciality_name}
             </Text>
           </View>
-
           {/* Card */}
           <Cards data={DoctorArray} />
-
           <View style={styles.About_Location_Reviews}>
             {/* About */}
             <Text style={style.textTitleBold}>حول</Text>
             <View style={styles.aboutStyleContainer}>
-              <Text style={style.textSmallContent}>{DoctorArray.doctor_about}</Text>
+              <Text style={style.textSmallContent}>
+                {DoctorArray.doctor_about}
+              </Text>
             </View>
             {/* Location */}
             <Text style={[style.textTitleBold, {marginTop: MARGIN.mdMargin}]}>
@@ -94,7 +94,6 @@ const DoctorProfile = ({navigation}) => {
             <Pressable style={styles.PreviewMap}>
               <MapView initialRegion={region} style={{flex: 1}}></MapView>
             </Pressable>
-
             {/* Review */}
             <ListTiltle
               Title="التقييمات"
@@ -139,7 +138,6 @@ const DoctorProfile = ({navigation}) => {
                             style={styles.imgReview}
                           />
                         </View>
-
                         <ScrollView
                           nestedScrollEnabled={true}
                           showsVerticalScrollIndicator={false}>
@@ -155,7 +153,6 @@ const DoctorProfile = ({navigation}) => {
             </View>
           </View>
         </ScrollView>
-
         <GeneralButton
           title="حجز "
           style={{
@@ -184,7 +181,7 @@ const Cards = props => {
     {
       id: 1,
       name: 'user-friends',
-      number: data.numberOfPatients,//back
+      number: data.numberOfPatients, //back
       text: 'المرضي',
     },
     {
@@ -196,7 +193,7 @@ const Cards = props => {
     {
       id: 3,
       name: 'star',
-      number: data.rating,//back
+      number: data.rating, //back
       text: 'التقييم',
     },
   ];

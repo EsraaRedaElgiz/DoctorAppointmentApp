@@ -1,5 +1,10 @@
-
-import { ScrollView, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+} from 'react-native';
 import React, {useEffect} from 'react';
 import {
   Header,
@@ -9,30 +14,35 @@ import {
   TopDoctors,
 } from '../../components/Home';
 
-import { COLORS, PADDINGS, USER_DATA, USER_TOKEN } from '../../constants/Constants';
+import {
+  COLORS,
+  PADDINGS,
+  USER_DATA,
+  USER_TOKEN,
+} from '../../constants/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDispatch, useSelector } from 'react-redux';
-import { getPersonalDetails } from '../../Redux/Reducers/PersonalDetailsSlice';
-import { RFValue } from 'react-native-responsive-fontsize';
-import {getTopDoctors} from '../../Redux/Reducers/TopDoctorSlice'
+import {useDispatch, useSelector} from 'react-redux';
+import {getPersonalDetails} from '../../Redux/Reducers/PersonalDetailsSlice';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {getTopDoctors} from '../../Redux/Reducers/TopDoctorSlice';
 
-
-
-const Home = ({ navigation }) => {
+const Home = ({navigation}) => {
   const globalState = useSelector(state => state);
 
   const dispatch = useDispatch();
-  const { userInfo } = globalState.LoginReducer;
-  const { isLoading, name, image } = globalState.PersonalDetailsReducer
+  const {userInfo} = globalState.LoginReducer;
+  const {isLoading, name, image} = globalState.PersonalDetailsReducer;
   useEffect(() => {
     //getToken()
     const unsubscribe = navigation.addListener('focus', () => {
-      dispatch(getPersonalDetails()).unwrap().then((res) => {
-      }).catch((err) => { });
-      dispatch(getTopDoctors())
+      dispatch(getPersonalDetails())
+        .unwrap()
+        .then(res => {})
+        .catch(err => {});
+      dispatch(getTopDoctors());
     });
     return unsubscribe;
-  }, [navigation])
+  }, [navigation]);
 
   const getToken = async () => {
     const token = await AsyncStorage.getItem(USER_TOKEN);
@@ -44,40 +54,52 @@ const Home = ({ navigation }) => {
 
   return (
     <>
-      {isLoading == true ?
-        <View style={{ backgroundColor: COLORS.white, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      {isLoading == true ? (
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
           <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
         </View>
-        :
-        isLoading == false && name != "" ? (
-          <View style={{ backgroundColor: COLORS.white, flex: 1 }}>
-
-            <Header />
-            <ScrollView showsVerticalScrollIndicator={false}>
-              <CovidCard />
-              <ListTiltle
-                Title="التخصصات "
-                seeAll="اظهار الكل"
-                styleProp={{
-                  paddingHorizontal: PADDINGS.mdPadding,
-                }}
-                onPress={() => {
-                  navigation.navigate('SpecialitySearch');
-                }}
-              />
-              <SpecialityList />
-              <ListTiltle
-                Title="افضل الأطباء"
-                styleProp={{
-                  paddingHorizontal: PADDINGS.mdPadding,
-                }}
-              />
-              <TopDoctors />
-            </ScrollView>
-          </View>) :
-          <View style={{ backgroundColor: COLORS.white, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>حدث خطأ اثناء الاتصال بالانترنت</Text>
-          </View>}
+      ) : isLoading == false && name != '' ? (
+        <View style={{backgroundColor: COLORS.white, flex: 1}}>
+          <Header />
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <CovidCard />
+            <ListTiltle
+              Title="التخصصات "
+              seeAll="اظهار الكل"
+              styleProp={{
+                paddingHorizontal: PADDINGS.mdPadding,
+              }}
+              onPress={() => {
+                navigation.navigate('SpecialitySearch');
+              }}
+            />
+            <SpecialityList />
+            <ListTiltle
+              Title="افضل الأطباء"
+              styleProp={{
+                paddingHorizontal: PADDINGS.mdPadding,
+              }}
+            />
+            <TopDoctors />
+          </ScrollView>
+        </View>
+      ) : (
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text>حدث خطأ اثناء الاتصال بالانترنت</Text>
+        </View>
+      )}
     </>
   );
 };

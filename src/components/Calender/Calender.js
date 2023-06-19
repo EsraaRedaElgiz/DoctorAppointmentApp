@@ -6,15 +6,7 @@ import {
   subDays,
 } from 'date-fns';
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  Pressable,
-} from 'react-native';
-import PagerView from 'react-native-pager-view';
+import {StyleSheet, Text, View, ScrollView, Pressable} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {FONTS, COLORS} from '../../constants/Constants';
 import {useDispatch} from 'react-redux';
@@ -34,8 +26,8 @@ const dates = eachWeekOfInterval({
 }, []);
 
 console.log(dates);
-function Calender() {
-  const [chosenDay, setChosenDay] = useState(null);
+function Calender({chosenDay,setChosenDay}) {
+  
   const dispatch = useDispatch();
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false}>

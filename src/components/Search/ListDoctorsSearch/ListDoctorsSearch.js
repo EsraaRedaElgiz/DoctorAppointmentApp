@@ -12,15 +12,10 @@ import {
 import {style} from '../../../styles/Style';
 import {useNavigation} from '@react-navigation/native';
 import {Rating} from 'react-native-stock-star-rating';
-const ListDoctorsSearch = () => {
+const ListDoctorsSearch = ({ArrayFilterd}) => {
   const navigation = useNavigation();
 
-  const sortedArray = DoctorsData.sort(compare);
-  function compare(a, b) {
-    const ARating = a.rating;
-    const BRating = b.rating;
-    return BRating - ARating;
-  }
+ 
 
   return (
     <>
@@ -28,7 +23,7 @@ const ListDoctorsSearch = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{padding: RFValue(2)}}
         style={{marginTop: MARGIN.mdMargin}}
-        data={sortedArray}
+        data={ArrayFilterd}
         renderItem={(itemData, index) => (
           <>
             <Pressable
@@ -96,6 +91,5 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     fontSize: FONTS.h5,
-    fontFamily: FONTS.Amaranth,
   },
 });

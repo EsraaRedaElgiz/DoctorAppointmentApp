@@ -32,13 +32,52 @@ const PaymentCreditCard = ({navigation}) => {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   const {cards, error, isLoading} = globalState.PaymentCardReducer;
+  const {date} = globalState.BookAppointmentReducer;
+
   useEffect(() => {
     dispatch(getPaymentCard());
   }, []);
   const appendSpace = string => {
-    const newString = string.replaceAll(' ', '      ');
+    let newString = '';
+    for (let i = 1; i <= string.length; i++) {
+      if (i % 4 == 0) {
+        newString = string[i] + ' ';
+      }
+    }
     return newString;
   };
+  const getMonthName = monthnum => {
+    if (monthnum == '01') {
+      return 'يناير';
+    } else if (monthnum == '02') {
+      return 'فبراير';
+    } else if (monthnum == '03') {
+      return 'مارس';
+    } else if (monthnum == '04') {
+      return 'ابريل';
+    } else if (monthnum == '05') {
+      return 'مايو';
+    } else if (monthnum == '06') {
+      return 'يونيو';
+    } else if (monthnum == '07') {
+      return 'يوليو';
+    } else if (monthnum == '08') {
+      return 'اغسطس';
+    } else if (monthnum == '09') {
+      return 'سبتمبر';
+    } else if (monthnum == '10') {
+      return 'اكتوبر';
+    } else if (monthnum == '11') {
+      return 'نوفمبر';
+    } else if (monthnum == '12') {
+      return 'ديسمبر';
+    }
+  };
+  console.log('DATE IN => ' + date);
+  const formatDate = `${JSON.stringify(date).slice(9, 10)} ${getMonthName(
+    JSON.stringify(date).slice(6, 8),
+  )} ${JSON.stringify(date).slice(1, 5)}`;
+  //console.log(formatDate);
   return (
     <View
       style={[style.bigContainer, {flex: 1, justifyContent: 'space-between'}]}>
@@ -50,12 +89,12 @@ const PaymentCreditCard = ({navigation}) => {
         }}
       />
       <PaymentCard
-        image={BookArray.image}
-        name={BookArray.name}
+        image={`${BookArray.user_image}`}
+        name={`${BookArray.user_first_name} ${BookArray.user_last_name}`}
         rating={BookArray.rating}
         price={BookArray.price}
-        speciality={BookArray.specialtiy}
-        date={'30\t' + 'ديسمبر' + '\t2020'}
+        speciality={BookArray.speciality_name}
+        date={formatDate}
         time="4:30"
       />
       <ListTiltle
@@ -65,6 +104,7 @@ const PaymentCreditCard = ({navigation}) => {
           navigation.navigate('AddCard');
         }}
       />
+      <View style={{flex:1}}>
       {isLoading ? (
         <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
       ) : error === null ? (
@@ -87,7 +127,8 @@ const PaymentCreditCard = ({navigation}) => {
                 <Visa
                   master
                   name={item.card_holder}
-                  cardNumber={appendSpace(item.card_number)}
+                  // cardNumber={appendSpace(item.card_number)}
+                  cardNumber={item.card_number}
                   date={item.card_exp_date}
                 />
               );
@@ -105,6 +146,8 @@ const PaymentCreditCard = ({navigation}) => {
           <Text>حدث خطأ اثناء الاتصال بالانترنت</Text>
         </View>
       )}
+      </View>
+      
       <GeneralButton
         title="تاكيد"
         style={{marginBottom: MARGIN.mdMargin}}
