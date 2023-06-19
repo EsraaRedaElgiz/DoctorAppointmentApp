@@ -173,6 +173,7 @@ const DoctorProfile = ({navigation}) => {
       <ReviewModal
         visiableAddReview={visiableAddReview}
         setVisiableAddReview={setVisiableAddReview}
+        doctorArray={DoctorArray}
       />
     </>
   );

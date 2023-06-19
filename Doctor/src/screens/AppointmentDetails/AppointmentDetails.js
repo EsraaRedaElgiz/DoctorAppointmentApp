@@ -28,6 +28,7 @@ import { style } from '../../../.././src/styles/Style';
 import { useRoute } from '@react-navigation/native';
 import { getAppointmentDetails, setAppointmentDetails } from '../../Redux/Reducers/AppointmentDetailsSlice';
 import { ActivityIndicator } from 'react-native-paper';
+import { changeStatus } from '../../Redux/Reducers/UpdateAppointmentStatusSlice';
 function AppointmentDetails({ navigation }) {
   // const navigation=useNavigation()
   //const route = useRoute();
@@ -40,16 +41,7 @@ function AppointmentDetails({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   const { appointmentDetails, isLoading } = globalState.AppointmentDetailsReducer
-  const [appointmentDetailsObject, setAppointmentDetailsObject] = useState(/*{
-    name: PatientsArray.name,
-    day: '21',
-    month: 'مارس',
-    year: '2023',
-    time: PatientsArray.time,
-    status: 'م',
-    appointmentStatus: appointmentStatus,
-    histortStatus: 'public',
-  }*/appointmentDetails);
+  const [appointmentDetailsObject, setAppointmentDetailsObject] = useState(appointmentDetails);
   useEffect(() => {
     setGetDay(getDay => {
       return new Date().getDate();
@@ -186,9 +178,17 @@ function AppointmentDetails({ navigation }) {
   const changeAppointmentStatus = () => {
     const obj = { ...appointmentDetailsObject };
     if (obj.appointment_status == "2") {
-      setAppointmentDetailsObject(prev => {
-        return { ...prev, appointment_status: "1" };
-      });
+      dispatch(changeStatus({
+        "appointment_id": appointmentDetailsObject.appointment_id,
+        "appointment_status": 1
+      })).unwrap().then((res) => {
+        if (res == true) {
+          setAppointmentDetailsObject(prev => {
+            return { ...prev, appointment_status: "1" };
+          });
+        }
+      })
+
     }
   };
   return (

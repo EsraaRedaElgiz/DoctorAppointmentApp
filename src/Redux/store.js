@@ -25,6 +25,9 @@ import HistoryPublicOrPrivateReducer from './Reducers/HistoryPublicOrPrivateSlic
 import UpdateUserProfileReducer from './Reducers/UpdateUserProfileSlice';
 import TopDoctorReducer from './Reducers/TopDoctorSlice';
 import BookAppointmentReducer from './Reducers/BookAppointmentSlice';
+import RateDoctorReducer from './Reducers/RateDoctorSlice';
+import GetRateReducer from './Reducers/GetRateSlice';
+import UpdateAppointmentStatusReducer from '../../Doctor/src/Redux/Reducers/UpdateAppointmentStatusSlice';
 
 const store = configureStore({
   reducer: {
@@ -54,6 +57,9 @@ const store = configureStore({
     UpdateUserProfileReducer: UpdateUserProfileReducer,
     TopDoctorReducer:TopDoctorReducer,
     BookAppointmentReducer: BookAppointmentReducer,
+    RateDoctorReducer:RateDoctorReducer,
+    GetRateReducer:GetRateReducer,
+    UpdateAppointmentStatusReducer:UpdateAppointmentStatusReducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
