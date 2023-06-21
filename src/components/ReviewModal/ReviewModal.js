@@ -7,12 +7,15 @@ import {
   RADIUS,
   FONTS,
   ICONS,
+  USER_DATA,
 } from '../../constants/Constants';
 import GeneralButton from '../GeneralButton/GeneralButton';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { RatingInput } from 'react-native-stock-star-rating';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendRate } from '../../Redux/Reducers/RateDoctorSlice';
+import { getRate } from '../../Redux/Reducers/GetRateSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const ReviewModal = props => {
   const globalState = useSelector(state => state);
   const dispatch = useDispatch();
@@ -59,12 +62,17 @@ const ReviewModal = props => {
             <GeneralButton
               title="تم"
               isLoading={isLoading}
-              onPress={() => {
+              onPress={async() => {
                 if (Rating != 0) {
+                  //console.log(doctorArray)
+                  let data = await AsyncStorage.getItem(USER_DATA);
+                  data=data==null ?{}:JSON.parse(data)
+                  //console.log("data=>",data)
                   dispatch(sendRate({
                     "rating": Rating,
+                    "rating_review":ReviewText,
                     "doctor_id": doctorArray.doctor_id,
-                    "patient_id": doctorArray.user_id
+                    "patient_id": data.patient_id
                   })).unwrap().then((res) => {
                     if (res == true) {
                       setVisiableAddReview(false);
@@ -72,6 +80,7 @@ const ReviewModal = props => {
                       setRating(Rating => 0);
                       setReviewText(ReviewText => '')
                       setError(error => '')
+                      dispatch(getRate({'doctor_id':doctorArray.doctor_id}))
                     }
                   })
 

@@ -22,7 +22,7 @@ const DoctorsSearch = ({navigation}) => {
     <>
       <View style={[style.bigContainer, {flex:1,}]}>
         <HeaderNavigation
-          title={SpecialityArray.title}
+          title={SpecialityArray.specialty_name}
           onPress={() => {
             navigation.goBack();
           }}

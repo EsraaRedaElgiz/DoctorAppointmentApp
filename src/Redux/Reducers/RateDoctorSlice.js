@@ -20,32 +20,29 @@ export const sendRate = createAsyncThunk(
                     if (res.status == 200) {
                         if (res.data == "successfully rate doctor") {
                             response = true;
-
-                        } else if (res.data.errors.rate_doctor == "Failed rate doctor") {
-                            Alert.alert("لقد قمت بتقييم هذا الدكتور بالفعل");
-                        } else {
-                        Alert.alert(JSON.stringify(res.data));
+                        }else {
+                            Alert.alert(JSON.stringify(res.data));
+                        }
+                    } else {
+                        Alert.alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
                     }
-                } else {
-                    Alert.alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
-                }
-        })
-    .catch(err => {
-        //console.log(err.message);
-        if (err.message == "Network Error") {
-            Alert.alert(' خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');// right //لو مفيش نت هيدخل هنا
-        } else {
-            Alert.alert(JSON.stringify(err.message))
-
+                })
+                .catch(err => {
+                    if (err.message == "Network Error") {
+                        Alert.alert(' خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');// right //لو مفيش نت هيدخل هنا
+                    } else if(err.response.data.errors[0].same_id=="patient cannot rate the same doctor two times!") {
+                        Alert.alert("لقد قمت بتقييم هذا الدكتور بالفعل");
+                    }else{
+                        Alert.alert(err.response.data)
+                    }
+                });
+            return response;
+        } catch (error) {
+            console.log(rejectWithValue(error.message));
+            Alert.alert(' خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
+            return rejectWithValue(error.message);
         }
-    });
-return response;
-    } catch (error) {
-    console.log(rejectWithValue(error.message));
-    Alert.alert(' خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
-    return rejectWithValue(error.message);
-}
-  },
+    },
 );
 const rateDoctorSlice = createSlice({
     name: 'rateDoctor',

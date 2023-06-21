@@ -19,7 +19,7 @@ export const getTopDoctors = createAsyncThunk(
         .then(res => {
           if (res.status == 200) {
             if (Array.isArray(res.data)) {
-               console.log('arr', res.data);
+               //console.log('arr', res.data);
               dispatch(setTopDoctorsArr(res.data));
             } else {
               console.log(res.data);

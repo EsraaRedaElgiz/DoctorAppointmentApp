@@ -40,7 +40,7 @@ const ListSpecialitySearch = ({SpecialtyFilterd}) => {
               }}>
               <View style={styles.imageConatiner}>
                 <Image
-                  source={itemData.item.img}
+                  source={{uri:itemData.item.specialty_image}}
                   style={
                     itemData.item.id == 8
                       ? styles.alternativeImage
@@ -49,7 +49,7 @@ const ListSpecialitySearch = ({SpecialtyFilterd}) => {
                 />
               </View>
               <View style={{maxHeight: RFValue(20)}}>
-                <Text style={style.textContentBold}>{itemData.item.title}</Text>
+                <Text style={style.textContentBold}>{itemData.item.specialty_name}</Text>
               </View>
             </Pressable>
           </>

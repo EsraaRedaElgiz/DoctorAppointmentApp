@@ -13,7 +13,7 @@ export const getRate = createAsyncThunk(
         try {
             let response = ""
             await Axios({
-                method: 'GET',
+                method: 'POST',
                 url: '/general/ratings.php',
                 data: args,
             })

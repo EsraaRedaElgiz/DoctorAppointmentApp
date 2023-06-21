@@ -1,40 +1,58 @@
-import {StyleSheet, Text, View, FlatList, Image, Pressable} from 'react-native';
+import { StyleSheet, Text, View, FlatList, Image, Pressable, ActivityIndicator } from 'react-native';
 import React from 'react';
-import {SpecialityData} from '../../../utils';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {COLORS, FONTS, MARGIN, RADIUS} from '../../../constants/Constants';
-import {style} from '../../../styles/Style';
-import {useNavigation} from '@react-navigation/native';
+import { SpecialityData } from '../../../utils';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { COLORS, FONTS, MARGIN, RADIUS } from '../../../constants/Constants';
+import { style } from '../../../styles/Style';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSpecialities } from '../../../Redux/Reducers/GetSpecialitiesSlice';
 const SpecialityList = () => {
+  const globalState = useSelector(state => state);
   const navigation = useNavigation();
+  const { specialities, isLoading } = globalState.GetSpecialitiesReducer
+  const dispatch = useDispatch();
   return (
-    <FlatList
-      style={{marginBottom: MARGIN.smMargin, marginLeft: MARGIN.smMargin}}
-      horizontal
-      showsHorizontalScrollIndicator={false}
-      data={SpecialityData}
-      renderItem={(itemData, index) => (
-        <Pressable
-          style={styles.image_Text_Container}
-          onPress={() => {
-            navigation.navigate('DoctorsSearch', {
-              SpecialityArray: itemData.item,
-            });
-          }}>
-          {/* image */}
-          <View style={styles.imageContainer}>
-            <Image
-              source={itemData.item.img}
-              style={styles.imageStyle}
-              resizeMode="center"
-            />
-          </View>
+    <>
+      {isLoading ?
+        <View
+          style={styles.viewForActivityIndicatorstyle}>
+          <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
+        </View> :
+        <FlatList
+          style={{ marginBottom: MARGIN.smMargin, marginLeft: MARGIN.smMargin }}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={specialities.slice(0, 8)}
+          renderItem={(itemData, index) => (
+            <Pressable
+              style={styles.image_Text_Container}
+              onPress={() => {
+                //عايزه لخليه هنا يعمل سيرش جوه التخصص
+                /*dispatch(getSpecialities()).unwrap().then((res) => {
+                //  console.log(res)
+                })*/
+                navigation.navigate('DoctorsSearch', {
+                  SpecialityArray: itemData.item,
+                });
+              }}>
+              {/* image */}
+              <View style={styles.imageContainer}>
+                <Image
+                  source={{ uri: itemData.item.specialty_image }}
+                  style={styles.imageStyle}
+                  resizeMode="center"
+                />
+              </View>
 
-          {/* Specialty Text */}
-          <Text style={style.textSmallContentBold}>{itemData.item.title}</Text>
-        </Pressable>
-      )}
-    />
+              {/* Specialty Text */}
+              <Text style={style.textSmallContentBold}>{itemData.item.specialty_name}</Text>
+            </Pressable>
+          )}
+        />
+      }
+
+    </>
   );
 };
 
@@ -68,5 +86,10 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: FONTS.h6,
     fontWeight: 'bold',
-  },
+  }, viewForActivityIndicatorstyle: {
+    backgroundColor: COLORS.white,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });

@@ -180,7 +180,7 @@ function AppointmentDetails({ navigation }) {
     if (obj.appointment_status == "2") {
       dispatch(changeStatus({
         "appointment_id": appointmentDetailsObject.appointment_id,
-        "appointment_status": 1
+        "appointment_status": "1"
       })).unwrap().then((res) => {
         if (res == true) {
           setAppointmentDetailsObject(prev => {

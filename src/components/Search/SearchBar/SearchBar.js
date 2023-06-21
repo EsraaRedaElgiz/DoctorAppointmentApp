@@ -25,6 +25,7 @@ const SearchBar = props => {
   const changeTextInput = enteredText => {
     setTextInput(enteredText);
     if (sortedArray) {
+      //ده بتاع الدكاتره اللي ف كل تخصص
       setArrayFilterd(
         sortedArray.filter(i =>
           i.name.toLowerCase().includes(enteredText.toLowerCase()),
@@ -33,7 +34,7 @@ const SearchBar = props => {
     } else {
       setSpecialtyFilterd(
         SpecialityData.filter(i =>
-          i.title.toLowerCase().includes(enteredText.toLowerCase()),
+          i.specialty_name.toLowerCase().includes(enteredText.toLowerCase()),
         ),
       );
     }

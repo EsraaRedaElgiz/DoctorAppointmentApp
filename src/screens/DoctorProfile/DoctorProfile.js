@@ -7,9 +7,10 @@ import {
   Pressable,
   FlatList,
   ImageBackground,
+  ActivityIndicator
 } from 'react-native';
-import React, {useState} from 'react';
-import {RFValue} from 'react-native-responsive-fontsize';
+import React, { useState } from 'react';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   COLORS,
   FONTS,
@@ -21,16 +22,19 @@ import {
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MapView from 'react-native-maps';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
-import {style} from '../../styles/Style';
-import {DoctorsData} from '../../utils';
-import {ListTiltle} from '../../components/Home';
+import { style } from '../../styles/Style';
+import { DoctorsData } from '../../utils';
+import { ListTiltle } from '../../components/Home';
 import ReviewModal from '../../components/ReviewModal/ReviewModal';
-import {Rating} from 'react-native-stock-star-rating';
-import {useRoute} from '@react-navigation/native';
+import { Rating } from 'react-native-stock-star-rating';
+import { useRoute } from '@react-navigation/native';
 import HeaderArrowAndWord from '../../components/HeaderArrowAndWord/HeaderArrowAndWord';
-import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
-const DoctorProfile = ({navigation}) => {
+import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+import { useSelector } from 'react-redux';
+const DoctorProfile = ({ navigation }) => {
   const [visiableAddReview, setVisiableAddReview] = useState(false);
+  const globalState = useSelector(state => state);
+  const { isLoading, rates } = globalState.GetRateReducer;
 
   const region = {
     latitude: 30.033333,
@@ -42,14 +46,14 @@ const DoctorProfile = ({navigation}) => {
   const DoctorArray = route.params.DoctorArray;
   return (
     <>
-      <View style={{flex: 1, backgroundColor: COLORS.white}}>
+      <View style={{ flex: 1, backgroundColor: COLORS.white }}>
         <ScrollView
-          style={{backgroundColor: COLORS.white}}
+          style={{ backgroundColor: COLORS.white }}
           showsVerticalScrollIndicator={false}>
           {/* image */}
           <ImageBackground
-            source={{uri: DoctorArray.user_image}}
-            style={{width: '100%', height: RFValue(300)}}>
+            source={{ uri: DoctorArray.user_image }}
+            style={{ width: '100%', height: RFValue(300) }}>
             <HeaderNavigation
               padding={PADDINGS.mdPadding}
               onPress={() => {
@@ -83,16 +87,16 @@ const DoctorProfile = ({navigation}) => {
               </Text>
             </View>
             {/* Location */}
-            <Text style={[style.textTitleBold, {marginTop: MARGIN.mdMargin}]}>
+            <Text style={[style.textTitleBold, { marginTop: MARGIN.mdMargin }]}>
               الموقع
             </Text>
             {/* navigate to map page */}
             <Text
-              style={[style.textContent, {marginVertical: MARGIN.smMargin}]}>
+              style={[style.textContent, { marginVertical: MARGIN.smMargin }]}>
               {DoctorArray.address}
             </Text>
             <Pressable style={styles.PreviewMap}>
-              <MapView initialRegion={region} style={{flex: 1}}></MapView>
+              <MapView initialRegion={region} style={{ flex: 1 }}></MapView>
             </Pressable>
             {/* Review */}
             <ListTiltle
@@ -101,55 +105,65 @@ const DoctorProfile = ({navigation}) => {
               onPress={() => {
                 setVisiableAddReview(true);
               }}
-              styleProp={{height: RFValue(40)}}
+              styleProp={{ height: RFValue(40) }}
             />
             <View
               style={{
                 width: '100%',
                 alignItems: 'flex-start',
               }}>
-              <FlatList
-                contentContainerStyle={{
-                  paddingLeft: RFValue(2),
-                  paddingVertical: RFValue(2),
-                }}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                data={DoctorArray.Review}
-                renderItem={(itemData, index) => {
-                  return (
-                    <>
-                      <View style={styles.reviewCard}>
-                        <View style={styles.img_name_ratingContainer}>
-                          <View style={{flex: 1, marginRight: MARGIN.smMargin}}>
-                            <Text style={style.textSmallContentBold}>
-                              {itemData.item.name}
-                            </Text>
-                            <View style={{flexDirection: 'row-reverse'}}>
-                              <Rating
-                                stars={itemData.item.rating}
-                                maxStars={5}
-                                size={ICONS.xsIcon}
+              {isLoading ?
+                <View style={styles.viewForActivityIndicator}>
+                  <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
+                </View>
+                : rates.length > 0 ?
+                  <FlatList
+                    contentContainerStyle={{
+                      paddingLeft: RFValue(2),
+                      paddingVertical: RFValue(2),
+                    }}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    data={rates}
+                    renderItem={(itemData, index) => {
+                      return (
+                        <>
+                          <View style={styles.reviewCard}>
+                            <View style={styles.img_name_ratingContainer}>
+                              <View style={{ flex: 1, marginRight: MARGIN.smMargin }}>
+                                <Text style={style.textSmallContentBold}>
+                                  {itemData.item.user_first_name}
+                                </Text>
+                                <View style={{ flexDirection: 'row-reverse' }}>
+                                  <Rating
+                                    stars={itemData.item.rating.rating}
+                                    maxStars={5}
+                                    size={ICONS.xsIcon}
+                                  />
+                                </View>
+                              </View>
+                              <Image
+                                source={{ uri: itemData.item.user_image }}
+                                style={styles.imgReview}
                               />
                             </View>
+                            <ScrollView
+                              nestedScrollEnabled={true}
+                              showsVerticalScrollIndicator={false}>
+                              <Text style={style.textSmallContent}>
+                                {itemData.item.rating.rating_review}
+                              </Text>
+                            </ScrollView>
                           </View>
-                          <Image
-                            source={itemData.item.img}
-                            style={styles.imgReview}
-                          />
-                        </View>
-                        <ScrollView
-                          nestedScrollEnabled={true}
-                          showsVerticalScrollIndicator={false}>
-                          <Text style={style.textSmallContent}>
-                            {itemData.item.comment}
-                          </Text>
-                        </ScrollView>
-                      </View>
-                    </>
-                  );
-                }}
-              />
+                        </>
+                      );
+                    }}
+                  /> : 
+                  <View style={styles.viewForActivityIndicator}>
+                    <Text>لا يوجد تقيمات حتي الأن او خطأ اثناء الاتصال بشبكه الانترنت</Text>
+                  </View>
+              }
+
             </View>
           </View>
         </ScrollView>
@@ -176,7 +190,7 @@ const DoctorProfile = ({navigation}) => {
   );
 };
 const Cards = props => {
-  const {data} = props;
+  const { data } = props;
   const icons = [
     {
       id: 1,
@@ -225,7 +239,7 @@ const Cards = props => {
     </>
   );
 };
-export {Cards};
+export { Cards };
 
 export default DoctorProfile;
 
@@ -316,5 +330,10 @@ const styles = StyleSheet.create({
   CommentStyle: {
     width: '100%',
     // maxHeight: RFValue(100),
-  },
+  }, viewForActivityIndicator: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    backgroundColor: COLORS.white
+  }
 });

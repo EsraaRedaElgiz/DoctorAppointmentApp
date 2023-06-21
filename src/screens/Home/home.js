@@ -5,7 +5,7 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import {
   Header,
   CovidCard,
@@ -21,25 +21,30 @@ import {
   USER_TOKEN,
 } from '../../constants/Constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useDispatch, useSelector} from 'react-redux';
-import {getPersonalDetails} from '../../Redux/Reducers/PersonalDetailsSlice';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {getTopDoctors} from '../../Redux/Reducers/TopDoctorSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPersonalDetails } from '../../Redux/Reducers/PersonalDetailsSlice';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { getTopDoctors } from '../../Redux/Reducers/TopDoctorSlice';
+import { getSpecialities } from '../../Redux/Reducers/GetSpecialitiesSlice';
 
-const Home = ({navigation}) => {
+const Home = ({ navigation }) => {
   const globalState = useSelector(state => state);
 
   const dispatch = useDispatch();
-  const {userInfo} = globalState.LoginReducer;
-  const {isLoading, name, image} = globalState.PersonalDetailsReducer;
+  const { userInfo } = globalState.LoginReducer;
+  const { isLoading, name, image } = globalState.PersonalDetailsReducer;
   useEffect(() => {
     //getToken()
     const unsubscribe = navigation.addListener('focus', () => {
       dispatch(getPersonalDetails())
         .unwrap()
-        .then(res => {})
-        .catch(err => {});
+        .then(res => { })
+        .catch(err => { });
+        dispatch(getSpecialities()).unwrap().then((res) => {
+          //console.log(res)
+        })
       dispatch(getTopDoctors());
+      
     });
     return unsubscribe;
   }, [navigation]);
@@ -65,7 +70,7 @@ const Home = ({navigation}) => {
           <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
         </View>
       ) : isLoading == false && name != '' ? (
-        <View style={{backgroundColor: COLORS.white, flex: 1}}>
+        <View style={{ backgroundColor: COLORS.white, flex: 1 }}>
           <Header />
           <ScrollView showsVerticalScrollIndicator={false}>
             <CovidCard />

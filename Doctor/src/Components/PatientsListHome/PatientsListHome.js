@@ -26,10 +26,10 @@ const PatientsListHome = () => {
                 imageUri={itemData.item.imageUri}
                 onPress={() => {
                   //
-                  dispatch(getAppointmentDetails('5')) // action.payload -> slice -> getAppointmentDetails
+                  dispatch(getAppointmentDetails('54')) // action.payload -> slice -> getAppointmentDetails
                     .unwrap()
                     .then(res => {
-                      //instead of 2 i will pass appointment_id
+                      //instead of 54 i will pass appointment_id
                       if (res.appointment_id) {
                         navigation.navigate('AppointmentDetails', {
                           PatientsArray: itemData.item,

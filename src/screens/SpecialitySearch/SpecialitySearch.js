@@ -6,9 +6,12 @@ import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigati
 import {SpecialityData} from '../../utils';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {COLORS} from '../../constants/Constants';
+import { useSelector } from 'react-redux';
 
 const SpecialitySearch = ({navigation}) => {
-  const [SpecialtyFilterd, setSpecialtyFilterd] = useState(SpecialityData);
+  const globalState = useSelector(state => state);
+  const { specialities} = globalState.GetSpecialitiesReducer
+  const [SpecialtyFilterd, setSpecialtyFilterd] = useState(specialities);
   return (
     <>
       <View style={[style.bigContainer,{flex:1}]}>
@@ -23,7 +26,7 @@ const SpecialitySearch = ({navigation}) => {
           placeholder="البحث عن التخصصات"
           SpecialtyFilterd={SpecialtyFilterd}
           setSpecialtyFilterd={setSpecialtyFilterd}
-          SpecialityData={SpecialityData}
+          SpecialityData={specialities}
         />
         <ListSpecialitySearch SpecialtyFilterd={SpecialtyFilterd} />
       </View>

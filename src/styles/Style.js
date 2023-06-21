@@ -101,6 +101,11 @@ const style = StyleSheet.create({
     width: '80%',
     borderRadius: RADIUS.xlRadius,
     marginTop: RFValue(2),
-  },
+  },viewForActivityIndicatorStyle: {
+    backgroundColor: COLORS.white,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
 });
 export {style};

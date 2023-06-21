@@ -28,9 +28,11 @@ export const changeStatus = createAsyncThunk(
           }
         })
         .catch(err => {
-          //console.log(err.message);
           if(err.message=="Network Error"){
             Alert.alert(' خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');// right //لو مفيش نت هيدخل هنا
+          }else if(err.message=="Request failed with status code 500"){
+            Alert.alert('يجب التحديث بقيمه مختلفه عن القيمة السابقة أو لا يحق لهذا الطبيب تحديث حالة هذا الموعد ')
+
           }else{
             Alert.alert(JSON.stringify(err.message))
 
