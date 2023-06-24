@@ -7,14 +7,21 @@ import {
   MARGIN,
   ICONS,
   RADIUS,
+  USER_DATA,
 } from '../../../../src/constants/Constants';
 import {style} from '../../../../src/styles/Style';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import {DoctorsData} from '../../../../src/utils';
 import Images from '../../../../src/constants/Images';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRate } from '../../../../src/Redux/Reducers/GetRateSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const HeaderHomeDoctor = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
+  const globalState = useSelector(state => state);
+  const {  name,image } = globalState.DoctorDetailsReducer
   let date = new Date();
   let day = date.getDate();
   let month = date.toLocaleString('default', {month: 'long'});
@@ -26,13 +33,15 @@ const HeaderHomeDoctor = () => {
           onPress={() => {
             navigation.navigate('DoctorViewProfile');
           }}>
-          <Image source={{uri:'https://img.freepik.com/free-photo/smiling-doctor-with-strethoscope-isolated-grey_651396-974.jpg?w=740&t=st=1678903589~exp=1678904189~hmac=4c4da7bf447127fcedc6c412bfd9c4ef385ae0c8aceeb9d11550b6b8d99eb7ae'}}
+          <Image source={image==""||image==null?{
+            uri:'https://thumbs.dreamstime.com/z/user-icon-trendy-flat-style-isolated-grey-background-user-symbol-user-icon-trendy-flat-style-isolated-grey-background-123663211.jpg'
+          }:{uri:image}}
            style={styles.userImage} />
         </Pressable>
         <View style={styles.textConatiner}>
           <Text style={style.textContent}> مرحبا</Text>
           <Text style={style.textContentBold}>
-            {'د ' + DoctorsData[0].name}
+            {'د ' + name.substring(0, name.indexOf(' '))}
           </Text>
         </View>
       </View>

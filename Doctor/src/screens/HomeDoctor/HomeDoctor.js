@@ -12,12 +12,22 @@ import {
 } from '../../../../src/constants/Constants';
 import {RFValue} from 'react-native-responsive-fontsize';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import { getDoctorDetails } from '../../Redux/Reducers/DoctorDetailsSlice';
 
 const HomeDoctor = ({navigation}) => {
   const dispatch = useDispatch();
   useEffect(() => {
-    getToken();
+    //getToken();
+      const unsubscribe = navigation.addListener('focus', () => {
+        dispatch(getDoctorDetails())
+          .unwrap()
+          .then(res => { })
+          .catch(err => { });
+        
+      });
+      return unsubscribe;
+    
   }, []);
 
   const getToken = async () => {

@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Axios from '../../utils/axios';
+import { setLoggedOut } from './AuthSlice';
 
 const initState = {
     isLoading: false,
     error: null,
-    rates:[]
+    rates: []
 };
 export const getRate = createAsyncThunk(
     'rate/getRate ',
@@ -32,7 +33,7 @@ export const getRate = createAsyncThunk(
                 .catch(err => {
                     console.log(err);
                 });
-                return response;
+            return response;
         } catch (error) {
             console.log(rejectWithValue(error.message));
             return rejectWithValue(error.message);
@@ -44,9 +45,9 @@ const getRateSlice = createSlice({
     initialState: initState,
     reducers: {
         setRateArr: (state, action) => {
-          state.rates = action.payload;
+            state.rates = action.payload;
         },
-      },
+    },
     extraReducers: builder => {
         builder.addCase(getRate.pending, (state, action) => {
             state.isLoading = true;
@@ -58,8 +59,12 @@ const getRateSlice = createSlice({
             builder.addCase(getRate.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
-            })
+            });
+        builder.addCase(setLoggedOut, (state, action) => {
+            state.rates = [];
+        });
+
     },
 });
 export default getRateSlice.reducer;
-export const {setRateArr } = getRateSlice.actions;
+export const { setRateArr } = getRateSlice.actions;

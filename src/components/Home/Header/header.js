@@ -47,7 +47,7 @@ const Header = (props) => {
         <View style={styles.textConatiner}>
           <Text style={style.textContent}> مرحبا</Text>
           {isLoading?<ActivityIndicator size={RFValue(15)} color={COLORS.blue} />:
-          name!=""?<Text style={style.textContentBold}>{name.trim()}</Text>:<Text>اسم المستخدم</Text>
+          name!=""?<Text style={style.textContentBold}>{name.substring(0, name.indexOf(' '))}</Text>:<Text>اسم المستخدم</Text>
           }
           
         </View>

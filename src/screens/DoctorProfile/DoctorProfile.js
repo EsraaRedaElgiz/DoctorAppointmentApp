@@ -9,7 +9,7 @@ import {
   ImageBackground,
   ActivityIndicator
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
 import {
   COLORS,
@@ -52,7 +52,9 @@ const DoctorProfile = ({ navigation }) => {
           showsVerticalScrollIndicator={false}>
           {/* image */}
           <ImageBackground
-            source={{ uri: DoctorArray.user_image }}
+            source={DoctorArray.user_image==""||DoctorArray.user_image==null?
+            { uri: 'https://thumbs.dreamstime.com/z/user-icon-trendy-flat-style-isolated-grey-background-user-symbol-user-icon-trendy-flat-style-isolated-grey-background-123663211.jpg' }:
+            { uri: DoctorArray.user_image }}
             style={{ width: '100%', height: RFValue(300) }}>
             <HeaderNavigation
               padding={PADDINGS.mdPadding}
@@ -93,7 +95,7 @@ const DoctorProfile = ({ navigation }) => {
             {/* navigate to map page */}
             <Text
               style={[style.textContent, { marginVertical: MARGIN.smMargin }]}>
-              {DoctorArray.address}
+              {DoctorArray.clinic.branch_location}
             </Text>
             <Pressable style={styles.PreviewMap}>
               <MapView initialRegion={region} style={{ flex: 1 }}></MapView>
@@ -195,7 +197,7 @@ const Cards = props => {
     {
       id: 1,
       name: 'user-friends',
-      number: data.numberOfPatients, //back
+      number: data.num_of_patients, //back
       text: 'المرضي',
     },
     {
@@ -207,7 +209,7 @@ const Cards = props => {
     {
       id: 3,
       name: 'star',
-      number: data.rating, //back
+      number: data.rating.slice(0,4), //back
       text: 'التقييم',
     },
   ];

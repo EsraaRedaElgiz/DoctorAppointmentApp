@@ -8,9 +8,10 @@ import {
   FlatList,
   Alert,
   ImageBackground,
+  ActivityIndicator
 } from 'react-native';
-import React, {useState} from 'react';
-import {RFValue} from 'react-native-responsive-fontsize';
+import React, { useEffect, useState } from 'react';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 import {
   COLORS,
@@ -19,20 +20,28 @@ import {
   MARGIN,
   PADDINGS,
   RADIUS,
+  USER_DATA,
 } from '../../../../src/constants/Constants';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MapView from 'react-native-maps';
 import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
-import {style} from '../../../../src/styles/Style';
-import {DoctorsData} from '../../../../src/utils';
-import {Rating} from 'react-native-stock-star-rating';
-import {ListTiltle} from '../../../../src/components/Home';
-import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
-import {useNavigation} from '@react-navigation/native';
+import { style } from '../../../../src/styles/Style';
+import { DoctorsData } from '../../../../src/utils';
+import { Rating } from 'react-native-stock-star-rating';
+import { ListTiltle } from '../../../../src/components/Home';
+import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getRate } from '../../../../src/Redux/Reducers/GetRateSlice';
 
 // import {useRoute} from '@react-navigation/native';
-const DoctorViewProfile = ({navigation}) => {
+const DoctorViewProfile = ({ navigation }) => {
   //const navigation = useNavigation();
+  const globalState = useSelector(state => state);
+  const dispatch = useDispatch();
+  const { name, image, doctor_about, doctor_experience, speciality_name, branch_address } = globalState.DoctorDetailsReducer
+  const { isLoading, rates } = globalState.GetRateReducer;
   const region = {
     latitude: 30.033333,
     longitude: 31.233334,
@@ -41,19 +50,30 @@ const DoctorViewProfile = ({navigation}) => {
   };
   //   const route = useRoute();
   //   const DoctorArray = route.params.DoctorArray;
+useEffect(()=>{
+  funToGetRate()
+},[])
+  const funToGetRate =async()=>{
+    let data = await AsyncStorage.getItem(USER_DATA);
+    data=data==null ?{}:JSON.parse(data)
+    dispatch(getRate({ 'doctor_id': data.doctor_id }))
+  }
   return (
     <>
-      <View style={{flex: 1, backgroundColor: COLORS.white}}>
+      <View style={{ flex: 1, backgroundColor: COLORS.white }}>
         <ScrollView
-          style={{backgroundColor: COLORS.white}}
+          style={{ backgroundColor: COLORS.white }}
           showsVerticalScrollIndicator={false}>
           {/* image */}
 
           <ImageBackground
-            source={{
-              uri: 'https://img.freepik.com/free-photo/smiling-doctor-with-strethoscope-isolated-grey_651396-974.jpg?w=740&t=st=1678903589~exp=1678904189~hmac=4c4da7bf447127fcedc6c412bfd9c4ef385ae0c8aceeb9d11550b6b8d99eb7ae',
+            source={image==""||image==null?
+            {
+              uri: 'https://thumbs.dreamstime.com/z/user-icon-trendy-flat-style-isolated-grey-background-user-symbol-user-icon-trendy-flat-style-isolated-grey-background-123663211.jpg' 
+            }:{
+              uri: image,
             }}
-            style={{width: '100%', height: RFValue(300)}}>
+            style={{ width: '100%', height: RFValue(300) }}>
             <HeaderNavigation
               padding={PADDINGS.mdPadding}
               onPress={() => {
@@ -65,7 +85,7 @@ const DoctorViewProfile = ({navigation}) => {
           {/* NameAndSpecialty */}
           <View style={styles.textsContainer}>
             <Text style={style.textTitleBold}>
-              {'د\t' + DoctorsData[0].name}
+              {'د\t' + name}
             </Text>
             <Text
               style={[
@@ -74,7 +94,7 @@ const DoctorViewProfile = ({navigation}) => {
                   color: COLORS.darkGray2,
                 },
               ]}>
-              {DoctorsData[0].specialtiy}
+              {speciality_name}
             </Text>
           </View>
 
@@ -85,71 +105,79 @@ const DoctorViewProfile = ({navigation}) => {
             {/* About */}
             <Text style={style.textTitleBold}>حول</Text>
             <View style={styles.aboutStyleContainer}>
-              <Text style={style.textSmallContent}>{DoctorsData[0].about}</Text>
+              <Text style={style.textSmallContent}>{doctor_about}</Text>
             </View>
             {/* Location */}
-            <Text style={[style.textTitleBold, {marginTop: MARGIN.mdMargin}]}>
+            <Text style={[style.textTitleBold, { marginTop: MARGIN.mdMargin }]}>
               الموقع
             </Text>
             {/* navigate to map page */}
             <Text
-              style={[style.textContent, {marginVertical: MARGIN.smMargin}]}>
-              {DoctorsData[0].address}
+              style={[style.textContent, { marginVertical: MARGIN.smMargin }]}>
+              {branch_address}
             </Text>
             <Pressable style={styles.PreviewMap}>
-              <MapView initialRegion={region} style={{flex: 1}}></MapView>
+              <MapView initialRegion={region} style={{ flex: 1 }}></MapView>
             </Pressable>
 
             {/* Review */}
-            <ListTiltle Title="التقييمات" styleProp={{height: RFValue(40)}} />
+            <ListTiltle Title="التقييمات" styleProp={{ height: RFValue(40) }} />
             <View
               style={{
                 width: '100%',
                 alignItems: 'flex-start',
               }}>
-              <FlatList
-                contentContainerStyle={{
-                  paddingLeft: RFValue(2),
-                  paddingVertical: RFValue(2),
-                }}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                data={DoctorsData[0].Review}
-                renderItem={(itemData, index) => {
-                  return (
-                    <>
-                      <View style={styles.reviewCard}>
-                        <View style={styles.img_name_ratingContainer}>
-                          <View style={{flex: 1, marginRight: MARGIN.smMargin}}>
-                            <Text style={style.textSmallContentBold}>
-                              {itemData.item.name}
-                            </Text>
-                            <View style={{flexDirection: 'row-reverse'}}>
-                              <Rating
-                                stars={itemData.item.rating}
-                                maxStars={5}
-                                size={ICONS.xsIcon}
+              {isLoading ?
+                <View style={styles.viewForActivityIndicator}>
+                  <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
+                </View> : rates.length > 0 ?
+                  <FlatList
+                    contentContainerStyle={{
+                      paddingLeft: RFValue(2),
+                      paddingVertical: RFValue(2),
+                    }}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    data={rates}
+                    renderItem={(itemData, index) => {
+                      return (
+                        <>
+                          <View style={styles.reviewCard}>
+                            <View style={styles.img_name_ratingContainer}>
+                              <View style={{ flex: 1, marginRight: MARGIN.smMargin }}>
+                                <Text style={style.textSmallContentBold}>
+                                  {itemData.item.user_first_name}
+                                </Text>
+                                <View style={{ flexDirection: 'row-reverse' }}>
+                                  <Rating
+                                    stars={itemData.item.rating.rating}
+                                    maxStars={5}
+                                    size={ICONS.xsIcon}
+                                  />
+                                </View>
+                              </View>
+                              <Image
+                                source={{uri:itemData.item.user_image}}
+                                style={styles.imgReview}
                               />
                             </View>
-                          </View>
-                          <Image
-                            source={itemData.item.img}
-                            style={styles.imgReview}
-                          />
-                        </View>
 
-                        <ScrollView
-                          nestedScrollEnabled={true}
-                          showsVerticalScrollIndicator={false}>
-                          <Text style={style.textSmallContent}>
-                            {itemData.item.comment}
-                          </Text>
-                        </ScrollView>
-                      </View>
-                    </>
-                  );
-                }}
-              />
+                            <ScrollView
+                              nestedScrollEnabled={true}
+                              showsVerticalScrollIndicator={false}>
+                              <Text style={style.textSmallContent}>
+                                {itemData.item.rating.rating_review}
+                              </Text>
+                            </ScrollView>
+                          </View>
+                        </>
+                      );
+                    }}
+                  /> : <View style={styles.viewForActivityIndicator}>
+                    <Text>لا يوجد تقيمات حتي الأن</Text>
+                  </View>
+              }
+
             </View>
           </View>
         </ScrollView>
@@ -159,7 +187,9 @@ const DoctorViewProfile = ({navigation}) => {
 };
 export default DoctorViewProfile;
 const CardsDoctor = props => {
-  const {data} = props;
+  const { data } = props;
+  const globalState = useSelector(state => state);
+  const { doctor_experience } = globalState.DoctorDetailsReducer
   const icons = [
     {
       id: 1,
@@ -170,7 +200,7 @@ const CardsDoctor = props => {
     {
       id: 2,
       name: 'medal',
-      number: data.numOfexperience,
+      number: doctor_experience,
       text: 'خبرة',
     },
     {
@@ -208,7 +238,7 @@ const CardsDoctor = props => {
     </>
   );
 };
-export {CardsDoctor};
+export { CardsDoctor };
 
 const styles = StyleSheet.create({
   textsContainer: {
@@ -297,5 +327,10 @@ const styles = StyleSheet.create({
   CommentStyle: {
     width: '100%',
     // maxHeight: RFValue(100),
-  },
+  },viewForActivityIndicator: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    backgroundColor: COLORS.white
+  }
 });
