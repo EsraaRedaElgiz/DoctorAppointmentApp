@@ -24,6 +24,7 @@ export const getPersonalDetails = createAsyncThunk(
         method: 'get',
         url: '/general/profile.php',
       });
+      console.log(response.data)
       return response.data;
     } catch (error) {
       return rejectWithValue(error.message);

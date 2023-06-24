@@ -7,6 +7,7 @@ import {
   PermissionsAndroid,
   Button,
   ActivityIndicator,
+  Alert
 } from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import {useForm, Controller} from 'react-hook-form';
@@ -56,28 +57,31 @@ function EditPersonDetails(props) {
   });
   const onSubmit = data => {
     console.log('data in update user profile' + JSON.stringify(data));
-    dispatch(
-      updateUserProfileAction({
-        first_name: data.name,
-        height: data.height,
-        weight: data.weight,
-        phone: data.phone,
-        blood_type: data.bloodTypePage,
-      }),
-    )
+    const formData = new FormData();
+    formData.append('first_name', data.name);
+    formData.append('height', data.height)
+    formData.append('weight', data.weight)
+    formData.append('phone', data.phone);
+    formData.append('blood_type', data.bloodTypePage)
+
+    dispatch(updateUserProfileAction(formData))
+      .unwrap()
       .then(result => {
         dispatch(getPersonalDetails());
         console.log(
           'result in dispatch updateUserProfileAction ' +
             JSON.stringify(result),
         );
+        navigation.navigate('MedicalID1');
+        reset();
       })
       .catch(err => {
-        console.log(err.message);
-      });
-    reset();
-    dispatch(getPersonalDetails());
-    navigation.navigate('MedicalID1');
+        console.log(err?.response?.data);
+        const errors = err?.response?.data?.errors
+        Alert.alert("Error", errors[0]?.phone);
+      }).finally(() => {
+      })
+    // dispatch(getPersonalDetails());
   };
   useEffect(() => {
     requestCameraPermission();
