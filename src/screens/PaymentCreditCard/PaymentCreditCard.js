@@ -6,9 +6,9 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import PaymentCard from '../../components/Appointment/PaymentCard';
-import {DoctorsData} from '../../utils';
+import { DoctorsData } from '../../utils';
 import {
   PADDINGS,
   RADIUS,
@@ -18,21 +18,23 @@ import {
   COLORS,
 } from '../../constants/Constants';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {ListTiltle} from '../../components/Home';
-import {style} from '../../styles/Style';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { ListTiltle } from '../../components/Home';
+import { style } from '../../styles/Style';
 import Visa from '../../components/Visa/Visa';
-import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
-import {useRoute} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
-import {getPaymentCard} from '../../Redux/Reducers/PaymentCardSlice';
-const PaymentCreditCard = ({navigation}) => {
+import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+import { useRoute } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPaymentCard } from '../../Redux/Reducers/PaymentCardSlice';
+import { bookAppointment } from '../../Redux/Reducers/BookAppointmentSlice';
+const PaymentCreditCard = ({ navigation }) => {
   const route = useRoute();
   const BookArray = route.params.BookArray;
+  const Time = route.params.Time;
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const {cards, error, isLoading} = globalState.PaymentCardReducer;
-  const {date} = globalState.BookAppointmentReducer;
+  const { cards, error, isLoading } = globalState.PaymentCardReducer;
+  const { date,isLoading2 } = globalState.BookAppointmentReducer;
 
   useEffect(() => {
     dispatch(getPaymentCard());
@@ -74,13 +76,16 @@ const PaymentCreditCard = ({navigation}) => {
     }
   };
   console.log('DATE IN => ' + date);
-  const formatDate = `${JSON.stringify(date).slice(9, 10)} ${getMonthName(
+  const formatDate = `${JSON.stringify(date).slice(9, 11)} ${getMonthName(
     JSON.stringify(date).slice(6, 8),
   )} ${JSON.stringify(date).slice(1, 5)}`;
-  //console.log(formatDate);
+  const sendDate = `${JSON.stringify(date).slice(1, 5)}-${JSON.stringify(date).slice(6, 8)
+    }-${JSON.stringify(date).slice(9, 11)}`;
+  console.log(sendDate);
+  console.log(Time.slice(0,5).concat(":00")+" date "+sendDate)
   return (
     <View
-      style={[style.bigContainer, {flex: 1, justifyContent: 'space-between'}]}>
+      style={[style.bigContainer, { flex: 1, justifyContent: 'space-between' }]}>
       <HeaderNavigation
         title="الدفع"
         color={COLORS.darkGray3}
@@ -91,11 +96,11 @@ const PaymentCreditCard = ({navigation}) => {
       <PaymentCard
         image={`${BookArray.user_image}`}
         name={`${BookArray.user_first_name} ${BookArray.user_last_name}`}
-        rating={BookArray.rating}
-        price={BookArray.price}
+        rating={BookArray.rating.slice(0, 3)}
+        price={BookArray.clinic.booking_price}
         speciality={BookArray.speciality_name}
         date={formatDate}
-        time="4:30"
+        time={Time}
       />
       <ListTiltle
         Title="اختر البطاقة"
@@ -104,55 +109,65 @@ const PaymentCreditCard = ({navigation}) => {
           navigation.navigate('AddCard');
         }}
       />
-      <View style={{flex:1}}>
-      {isLoading ? (
-        <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
-      ) : error === null ? (
-        cards.length === 0 ? (
+      <View style={{ flex: 1 }}>
+        {isLoading ? (
+          <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
+        ) : error === null ? (
+          cards.length === 0 ? (
+            <View
+              style={{
+                height: '100%',
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text>لا يوجد بطاقة حتي الأن</Text>
+            </View>
+          ) : (
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={cards}
+              renderItem={({ item }) => {
+                return (
+                  <Visa
+                    master
+                    name={item.card_holder}
+                    // cardNumber={appendSpace(item.card_number)}
+                    cardNumber={item.card_number}
+                    date={item.card_exp_date}
+                  />
+                );
+              }}
+            />
+          )
+        ) : (
           <View
             style={{
-              height: '100%',
+              height: '60%',
               width: '100%',
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Text>لا يوجد بطاقة حتي الأن</Text>
+            <Text>حدث خطأ اثناء الاتصال بالانترنت</Text>
           </View>
-        ) : (
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            data={cards}
-            renderItem={({item}) => {
-              return (
-                <Visa
-                  master
-                  name={item.card_holder}
-                  // cardNumber={appendSpace(item.card_number)}
-                  cardNumber={item.card_number}
-                  date={item.card_exp_date}
-                />
-              );
-            }}
-          />
-        )
-      ) : (
-        <View
-          style={{
-            height: '60%',
-            width: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Text>حدث خطأ اثناء الاتصال بالانترنت</Text>
-        </View>
-      )}
+        )}
       </View>
-      
+
       <GeneralButton
         title="تاكيد"
-        style={{marginBottom: MARGIN.mdMargin}}
+        style={{ marginBottom: MARGIN.mdMargin }}
+        isLoading={isLoading2}
         onPress={() => {
-          navigation.navigate('CompletedAppointment');
+          console.log(Time.slice(0,5)+" date "+sendDate)
+          dispatch(bookAppointment({
+            "doctor_id": BookArray.doctor_id,
+            "date": sendDate,
+            "time": Time.slice(0, 5).concat(":00")
+          })).unwrap().then((res) => {
+            if (res == true) {
+              navigation.navigate('CompletedAppointment')
+            }
+          });
         }}
       />
     </View>
