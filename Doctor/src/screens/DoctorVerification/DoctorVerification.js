@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
-import {Text, View, StatusBar, ScrollView} from 'react-native';
+import {Text, View, StatusBar, ScrollView,Alert} from 'react-native';
 import styles from './DoctorVerificationStyles';
 import {COLORS, PADDINGS} from '../../../../src/constants/Constants';
 import {RFValue} from 'react-native-responsive-fontsize';
 import HeaderArrowAndWord from '../../../../src/components/HeaderArrowAndWord/HeaderArrowAndWord';
 import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
 import Entypo from 'react-native-vector-icons/Entypo';
-
 import {
   CodeField,
   Cursor,
@@ -20,6 +19,7 @@ import {HeaderNavigation} from '../../../../src/components/headerNavigation/Head
 function DoctorVerification({navigation}) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
+  const { otp } = globalState.SendEmailReducer
   const [value, setValue] = useState(globalState.VertificationCodeReducer.code);
   const ref = useBlurOnFulfill({value, cellCount: 4});
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -54,8 +54,12 @@ function DoctorVerification({navigation}) {
        
       }
       dispatch(insertData(data))*/
-    reset();
-    navigation.navigate('DoctorResetPassword');
+    if (data.code == otp) {
+      reset()
+      navigation.navigate('DoctorResetPassword');
+    } else if (data.code != otp) {
+      Alert.alert("رمز التحقق غير صحيح")
+    }
   };
   return (
     <View style={styles.container}>

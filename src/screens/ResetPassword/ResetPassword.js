@@ -10,12 +10,16 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   setPassword,
   setConfirmPassword,
+  newPassword,
 } from '../../Redux/Reducers/ResetPasswordSlice';
 import { useForm, Controller } from 'react-hook-form';
 import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+import { setEmailToSendVerificationCode, setOtp, setUserId } from '../../Redux/Reducers/SendEmailSlice';
 function ResetPassword({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
+  const { emailToSendVerificationCode, userId ,otp} = globalState.SendEmailReducer
+  const {isLoading}=globalState.ResetPasswordReducer
   const [secured_pass_first, set_secured_pass_first] = useState(true);
   const [secured_pass_second, set_secured_pass_second] = useState(true);
   const {
@@ -26,23 +30,32 @@ function ResetPassword({ navigation }) {
     reset
   } = useForm({
     defaultValues: {
-      password:"",
-      confirmPassword:"",
+      password: "",
+      confirmPassword: "",
     },
   });
   const onSubmit = data => {
-     //console.log(data);
-    /*const data = {
-    password: data.password,
-    confirmPassword:data.confirmPassword ,
-     
+    //console.log(data);
+    const sendData = {
+      "id": userId,
+      "email": emailToSendVerificationCode,
+      "new_password": data.password,
+
+
     }
-    dispatch(insertData(data))*/
-    reset()
-    navigation.navigate('LogIn');
-    
+    dispatch(newPassword(sendData)).unwrap().then((res) => {
+      if (res == true) {
+        reset()
+        navigation.navigate('LogIn');
+        dispatch(setUserId(''))
+        dispatch(setOtp(''))
+        dispatch(setEmailToSendVerificationCode(''))
+      }
+    });
+
+
   };
- 
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.blue} />
@@ -53,7 +66,7 @@ function ResetPassword({ navigation }) {
         onPress={() => {
           reset()
           navigation.navigate('VertificationCode');
-          
+
         }}
       />
       <ScrollView
@@ -124,7 +137,7 @@ function ResetPassword({ navigation }) {
                       <TextInput.Icon
                         icon={secured_pass_second ? 'eye-off' : 'eye'}
                         iconColor={COLORS.darkGray}
-                        onPress={()=>set_secured_pass_second(secured_pass_second=>{return !secured_pass_second})}
+                        onPress={() => set_secured_pass_second(secured_pass_second => { return !secured_pass_second })}
                       />
                     }
                     bordercolor={errors.confirmPassword ? '#f00' : COLORS.gray}
@@ -149,7 +162,7 @@ function ResetPassword({ navigation }) {
         </View>
       </ScrollView>
       <View style={styles.buttonContainerStyle}>
-        <GeneralButton title="حفظ" onPress={handleSubmit(onSubmit)} />
+        <GeneralButton title="حفظ" onPress={handleSubmit(onSubmit)} isLoading={isLoading} />
       </View>
     </View>
   );

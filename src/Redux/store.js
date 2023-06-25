@@ -2,7 +2,6 @@ import SignUpReducer from './Reducers/SignUpSlice';
 import ResetPasswordReducer from './Reducers/ResetPasswordSlice';
 import NewPasswordReducer from './Reducers/NewPasswordSlice';
 import VertificationCodeReducer from './Reducers/VertificationCodeSlice';
-import ForgetPasswordReducer from './Reducers/SendEmailSlice';
 import LoginReducer from './Reducers/LoginSlice';
 import MedicalSheetReducer from './Reducers/MedicalSheetSlice';
 import IntroSliderReducer from './Reducers/IntroSliderSlice';
@@ -28,6 +27,7 @@ import BookAppointmentReducer from './Reducers/BookAppointmentSlice';
 import RateDoctorReducer from './Reducers/RateDoctorSlice';
 import GetRateReducer from './Reducers/GetRateSlice';
 import UpdateAppointmentStatusReducer from '../../Doctor/src/Redux/Reducers/UpdateAppointmentStatusSlice';
+import SendEmailReducer from './Reducers/SendEmailSlice';
 
 const store = configureStore({
   reducer: {
@@ -35,7 +35,6 @@ const store = configureStore({
     ResetPasswordReducer: ResetPasswordReducer,
     NewPasswordReducer: NewPasswordReducer,
     VertificationCodeReducer: VertificationCodeReducer,
-    ForgetPasswordReducer: ForgetPasswordReducer,
     LoginReducer: LoginReducer,
     MedicalSheetReducer: MedicalSheetReducer,
     IntroSliderReducer: IntroSliderReducer,
@@ -59,7 +58,8 @@ const store = configureStore({
     BookAppointmentReducer: BookAppointmentReducer,
     RateDoctorReducer:RateDoctorReducer,
     GetRateReducer:GetRateReducer,
-    UpdateAppointmentStatusReducer:UpdateAppointmentStatusReducer
+    UpdateAppointmentStatusReducer:UpdateAppointmentStatusReducer,
+    SendEmailReducer:SendEmailReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

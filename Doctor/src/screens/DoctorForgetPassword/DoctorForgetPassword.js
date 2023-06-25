@@ -5,12 +5,13 @@ import {COLORS, PADDINGS} from '../../../../src/constants/Constants';
 import Reusabletextinput from '../../../../src/components/AppTextinput/AppTextinput';
 import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
 import {useSelector, useDispatch} from 'react-redux';
-import {setEmailToSendVerificationCode} from '../../../../src/Redux/Reducers/SendEmailSlice';
+import {sendEmail, setEmailToSendVerificationCode} from '../../../../src/Redux/Reducers/SendEmailSlice';
 import {useForm, Controller} from 'react-hook-form';
 import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
 function DoctorForgetPassword({navigation}) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
+  const{isLoading}=globalState.SendEmailReducer
   const {
     control,
     handleSubmit,
@@ -23,13 +24,17 @@ function DoctorForgetPassword({navigation}) {
   });
   const onSubmit = data => {
     //console.log(JSON.stringify(data));
-    /*const data = {
-      email: data.email,
-       
+   
+    const sendData = {
+      'email': data.email,
+    }
+    dispatch(sendEmail(sendData)).unwrap().then((res) => {
+      if (res == true) {
+        dispatch(setEmailToSendVerificationCode(data.email));
+        reset();
+        navigation.navigate('DoctorVerification');
       }
-      dispatch(insertData(data))*/
-    reset();
-    navigation.navigate('DoctorVerification');
+    });
   };
 
   return (
@@ -95,6 +100,7 @@ function DoctorForgetPassword({navigation}) {
           title="ارسال"
           style={styles.buttonStyle}
           onPress={handleSubmit(onSubmit)}
+          isLoading={isLoading}
         />
       </View>
     </View>

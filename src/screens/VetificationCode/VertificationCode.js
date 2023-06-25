@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StatusBar, ScrollView } from 'react-native';
+import { Text, View, StatusBar, ScrollView, Alert } from 'react-native';
 import styles from './styles';
 import { COLORS, PADDINGS } from '../../constants/Constants';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -19,6 +19,7 @@ import { HeaderNavigation } from '../../components/headerNavigation/HeaderNaviga
 function VertificationCode({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
+  const { otp } = globalState.SendEmailReducer
   const [value, setValue] = useState(globalState.VertificationCodeReducer.code);
   const ref = useBlurOnFulfill({ value, cellCount: 4 });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -53,8 +54,13 @@ function VertificationCode({ navigation }) {
        
       }
       dispatch(insertData(data))*/
-    reset()
-    navigation.navigate('ResetPassword');
+    if (data.code == otp) {
+      reset()
+      navigation.navigate('ResetPassword');
+    } else if (data.code != otp) {
+      Alert.alert("رمز التحقق غير صحيح")
+    }
+
   };
   return (
     <View style={styles.container}>
@@ -130,7 +136,7 @@ function VertificationCode({ navigation }) {
                   ? 'يجب ادخال رمز التأكيد'
                   : errors.code?.type === 'minLength'
                     ? 'يجب ادخال الارقام المرسله بالكامل'
-                    : errors.code?.type === 'validate'?'يجب ادخال رقم':''}
+                    : errors.code?.type === 'validate' ? 'يجب ادخال رقم' : ''}
               </Text>
             </View>
           </View>

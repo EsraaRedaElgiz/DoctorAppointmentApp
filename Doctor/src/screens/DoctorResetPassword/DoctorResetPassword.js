@@ -8,9 +8,13 @@ import {TextInput} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {useForm, Controller} from 'react-hook-form';
 import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
+import { setEmailToSendVerificationCode, setOtp, setUserId } from '../../../../src/Redux/Reducers/SendEmailSlice';
+import { newPassword } from '../../../../src/Redux/Reducers/ResetPasswordSlice';
 function DoctorResetPassword({navigation}) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
+  const { emailToSendVerificationCode, userId ,otp} = globalState.SendEmailReducer
+  const {isLoading}=globalState.ResetPasswordReducer
   const [secured_pass_first, set_secured_pass_first] = useState(true);
   const [secured_pass_second, set_secured_pass_second] = useState(true);
   const {
@@ -33,8 +37,20 @@ function DoctorResetPassword({navigation}) {
      
     }
     dispatch(insertData(data))*/
-    reset();
-    navigation.navigate('DoctorLogIn');
+    const sendData = {
+      "id": userId,
+      "email": emailToSendVerificationCode,
+      "new_password": data.password,
+    }
+    dispatch(newPassword(sendData)).unwrap().then((res) => {
+      if (res == true) {
+        reset()
+        navigation.navigate('DoctorLogIn');
+        dispatch(setUserId(''))
+        dispatch(setOtp(''))
+        dispatch(setEmailToSendVerificationCode(''))
+      }
+    });
   };
 
   return (
@@ -149,7 +165,7 @@ function DoctorResetPassword({navigation}) {
         </View>
       </ScrollView>
       <View style={styles.buttonContainerStyle}>
-        <GeneralButton title="حفظ" onPress={handleSubmit(onSubmit)} />
+        <GeneralButton title="حفظ" onPress={handleSubmit(onSubmit)} isLoading={isLoading} />
       </View>
     </View>
   );

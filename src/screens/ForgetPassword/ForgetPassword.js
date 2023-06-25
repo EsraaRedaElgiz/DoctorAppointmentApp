@@ -1,21 +1,22 @@
 import React from 'react';
-import {Text, View, Image, StatusBar, ScrollView} from 'react-native';
+import { Text, View, Image, StatusBar, ScrollView } from 'react-native';
 import styles from './styles';
-import {COLORS, PADDINGS} from '../../constants/Constants';
+import { COLORS, PADDINGS } from '../../constants/Constants';
 import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
-import {useSelector, useDispatch} from 'react-redux';
-import {setEmailToSendVerificationCode} from '../../Redux/Reducers/SendEmailSlice';
-import {useForm, Controller} from 'react-hook-form';
-import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
-function ForgetPassword({navigation}) {
+import { useSelector, useDispatch } from 'react-redux';
+import { sendEmail, setEmailToSendVerificationCode } from '../../Redux/Reducers/SendEmailSlice';
+import { useForm, Controller } from 'react-hook-form';
+import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+function ForgetPassword({ navigation }) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
+  const{isLoading}=globalState.SendEmailReducer
   const {
     control,
     handleSubmit,
     reset,
-    formState: {errors},
+    formState: { errors },
   } = useForm({
     defaultValues: {
       email: '',
@@ -23,13 +24,17 @@ function ForgetPassword({navigation}) {
   });
   const onSubmit = data => {
     //console.log(JSON.stringify(data));
-    /*const data = {
-      email: data.email,
-       
+    const sendData = {
+      'email': data.email,
+    }
+    dispatch(sendEmail(sendData)).unwrap().then((res) => {
+      if (res == true) {
+        dispatch(setEmailToSendVerificationCode(data.email));
+        reset();
+        navigation.navigate('VertificationCode');
       }
-      dispatch(insertData(data))*/
-    reset();
-    navigation.navigate('VertificationCode');
+    });
+
   };
 
   return (
@@ -68,7 +73,7 @@ function ForgetPassword({navigation}) {
                   required: true,
                   pattern: /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/,
                 }}
-                render={({field: {onChange, onBlur, value}}) => (
+                render={({ field: { onChange, onBlur, value } }) => (
                   <Reusabletextinput
                     placeholder="عنوان البريد الالكتروني/رقم الهاتف"
                     bordercolor={errors.email ? '#f00' : COLORS.gray}
@@ -83,8 +88,8 @@ function ForgetPassword({navigation}) {
                 {errors.email?.type === 'required'
                   ? 'يجب ادخال عنوان البريد الالكتروني لارسال رمز التأكيد'
                   : errors.email?.type === 'pattern'
-                  ? 'يجب ادخال عنوان بريد الكتروني صحيح'
-                  : ''}
+                    ? 'يجب ادخال عنوان بريد الكتروني صحيح'
+                    : ''}
               </Text>
             </View>
           </View>
@@ -95,6 +100,7 @@ function ForgetPassword({navigation}) {
           title="ارسال"
           style={styles.buttonStyle}
           onPress={handleSubmit(onSubmit)}
+          isLoading={isLoading}
         />
       </View>
     </View>
