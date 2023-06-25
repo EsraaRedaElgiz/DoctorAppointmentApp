@@ -6,7 +6,7 @@ import {
   Alert,
   Pressable,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import {
   FONTS,
@@ -15,19 +15,19 @@ import {
   RADIUS,
   COLORS,
 } from '../../constants/Constants';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { ListTiltle } from '../../components/Home';
-import { style } from '../../styles/Style';
-import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
-import { Checkbox } from 'react-native-paper';
-import { useRoute } from '@react-navigation/native';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {ListTiltle} from '../../components/Home';
+import {style} from '../../styles/Style';
+import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
+import {Checkbox} from 'react-native-paper';
+import {useRoute} from '@react-navigation/native';
 import Calender from '../../components/Calender/Calender';
 import moment from 'moment';
-import { useDispatch, useSelector } from 'react-redux';
-import { bookAppointment } from '../../Redux/Reducers/BookAppointmentSlice';
-const BookAppointment = ({ navigation }) => {
+import {useDispatch, useSelector} from 'react-redux';
+import {bookAppointment} from '../../Redux/Reducers/BookAppointmentSlice';
+const BookAppointment = ({navigation}) => {
   const globalState = useSelector(state => state);
-  const { isLoading2 } = globalState.BookAppointmentReducer;
+  const {isLoading2} = globalState.BookAppointmentReducer;
   const route = useRoute();
   const dispatch = useDispatch();
   const DoctorArray = route.params.DoctorArray;
@@ -64,12 +64,18 @@ const BookAppointment = ({ navigation }) => {
     setcheckedCerdit(true);
     setCheckCash(false);
   };
-  const sendDate = `${JSON.stringify(chosenDay).slice(1, 5)}-${JSON.stringify(chosenDay).slice(6, 8)
-    }-${JSON.stringify(chosenDay).slice(9, 11)}`;
-    console.log(JSON.stringify(chosenTime).slice(1, 6).concat(":00"))
-  console.log( "date" + sendDate + "time" + JSON.stringify(chosenTime).slice(1, 6).concat(":00"))
+  const sendDate = `${JSON.stringify(chosenDay).slice(1, 5)}-${JSON.stringify(
+    chosenDay,
+  ).slice(6, 8)}-${JSON.stringify(chosenDay).slice(9, 11)}`;
+  console.log(JSON.stringify(chosenTime).slice(1, 6).concat(':00'));
+  console.log(
+    'date' +
+      sendDate +
+      'time' +
+      JSON.stringify(chosenTime).slice(1, 6).concat(':00'),
+  );
   return (
-    <View style={{ backgroundColor: COLORS.white, flex: 1 }}>
+    <View style={{backgroundColor: COLORS.white, flex: 1}}>
       <HeaderNavigation
         title="حجز الميعاد"
         color={COLORS.darkGray3}
@@ -80,7 +86,7 @@ const BookAppointment = ({ navigation }) => {
       />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: PADDINGS.smPadding }}>
+        contentContainerStyle={{paddingHorizontal: PADDINGS.smPadding}}>
         <ListTiltle Title="التاريخ" />
 
         <Calender chosenDay={chosenDay} setChosenDay={setChosenDay} />
@@ -117,7 +123,7 @@ const BookAppointment = ({ navigation }) => {
               onPress={cashFun}
               color={COLORS.blue}
             />
-            <Text style={[style.textContentBold, { fontSize: RFValue(14) }]}>
+            <Text style={[style.textContentBold, {fontSize: RFValue(14)}]}>
               نقدى
             </Text>
           </View>
@@ -129,7 +135,7 @@ const BookAppointment = ({ navigation }) => {
               onPress={creditFun}
               color={COLORS.blue}
             />
-            <Text style={[style.textContentBold, { fontSize: RFValue(14) }]}>
+            <Text style={[style.textContentBold, {fontSize: RFValue(14)}]}>
               بطاقة
             </Text>
           </View>
@@ -144,25 +150,34 @@ const BookAppointment = ({ navigation }) => {
         }}
         onPress={() => {
           (checkedCash || checkedCerdit) && chosenTime && chosenDay
-            ? /*navigation.navigate(
-                checkedCash ? 'PaymentCash' : 'PaymentCreditCard',
-                {BookArray: DoctorArray,Time:chosenTime,Date:chosenDay},
-              )*/
-            checkedCash ? (dispatch(bookAppointment({
-              "doctor_id": DoctorArray.doctor_id,
-              "date": sendDate,
-              "time": JSON.stringify(chosenTime).slice(1, 6).concat(":00")
-            })).unwrap().then((res) => {
-              if (res) {
-                navigation.navigate('PaymentCash',{ BookArray: DoctorArray, Time: chosenTime, Date: chosenDay })
-              }
-            })) :
-              (navigation.navigate('PaymentCreditCard',{ BookArray: DoctorArray, Time: chosenTime, Date: chosenDay }))
+            ? checkedCash
+              ? dispatch(
+                  bookAppointment({
+                    doctor_id: DoctorArray.doctor_id,
+                    date: sendDate,
+                    time: JSON.stringify(chosenTime).slice(1, 6).concat(':00'),
+                  }),
+                )
+                  .unwrap()
+                  .then(res => {
+                    if (res) {
+                      navigation.navigate('PaymentCash', {
+                        BookArray: DoctorArray,
+                        Time: chosenTime,
+                        Date: chosenDay,
+                      });
+                    }
+                  })
+              : navigation.navigate('PaymentCreditCard', {
+                  BookArray: DoctorArray,
+                  Time: chosenTime,
+                  Date: chosenDay,
+                })
             : Alert.alert('تحذير', 'من فضلك ادخل جميع البيانات ', [
-              {
-                text: 'OK',
-              },
-            ]);
+                {
+                  text: 'OK',
+                },
+              ]);
         }}
       />
     </View>
