@@ -12,26 +12,13 @@ import {RFValue} from 'react-native-responsive-fontsize';
 function Appointment({navigation}) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const {isLoading, appointments,error} = globalState.AppointmentReducer;
+  const {isLoading, appointments, error} = globalState.AppointmentReducer;
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       dispatch(getAppointments());
     });
-
     return unsubscribe;
   }, [navigation]);
-
-  /*const appointments = [
-    {
-      doctorName: "سامي علي",
-      doctorSpeciality: "الطب العام والداخلي",
-      day: "4",
-      month: "سبتمبر",
-      year: "2023",
-      time: "5:30",
-      status: "م"
-    },
-  ]*/
 
   const getMonthName = monthnum => {
     if (monthnum == '01') {
@@ -91,16 +78,27 @@ function Appointment({navigation}) {
       />
       {isLoading ? (
         <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
-      ) : error==null ?(
-      appointments.length > 0 ? (
-        <FlatList
-          keyExtractor={keyextractor}
-          data={appointments}
-          renderItem={renderitems}
-          style={styles.flatListStyle}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.flatListContentContainerStyle}
-        />
+      ) : error == null ? (
+        appointments.length > 0 ? (
+          <FlatList
+            keyExtractor={keyextractor}
+            data={appointments}
+            renderItem={renderitems}
+            style={styles.flatListStyle}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.flatListContentContainerStyle}
+          />
+        ) : (
+          <View
+            style={{
+              height: '100%',
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Text>لا يوجد مواعيد حتي الأن</Text>
+          </View>
+        )
       ) : (
         <View
           style={{
@@ -109,20 +107,9 @@ function Appointment({navigation}) {
             alignItems: 'center',
             justifyContent: 'center',
           }}>
-          <Text>لا يوجد مواعيد حتي الأن</Text>
-        </View>
-      )):(
-        <View  
-        style={{
-          height: '100%',
-          width: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
           <Text>حدث خطأ اثناء الاتصال بالانترنت</Text>
         </View>
-      )
-    }
+      )}
     </View>
   );
 }
