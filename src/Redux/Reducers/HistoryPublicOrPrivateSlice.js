@@ -21,6 +21,7 @@ export const historyStatus = createAsyncThunk(
         data: args,
       })
         .then(res => {
+          console.log(res?.data);
           if (res.status == 200) {
             if (res.data.success) {
               AsyncStorage.setItem(
@@ -40,7 +41,7 @@ export const historyStatus = createAsyncThunk(
           }
         })
         .catch(err => {
-          //console.log(err.message);
+          console.log(err?.response?.data);
           if(err.message=="Request failed with status code 500"){
             ToastAndroid.show(
               "حدث خطأ يرجي اعاده المحاوله مره أخري",

@@ -7,6 +7,7 @@ import {
   PermissionsAndroid,
   Button,
   ActivityIndicator,
+  Alert
 } from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import {useForm, Controller} from 'react-hook-form';
@@ -31,11 +32,11 @@ import {getPersonalDetails} from '../../Redux/Reducers/PersonalDetailsSlice';
 function EditPersonDetails(props) {
   const globalState = useSelector(state => state);
   const dispatch = useDispatch();
-  const {name, age, height, weight, bloodType, gender, phone} =
+  const {name, age, height, weight, bloodType, gender, phone, image} =
     globalState.PersonalDetailsReducer;
   const {navigation} = props;
   const [visible, setVisible] = useState(false);
-  const [photo_uri, setphoto_uri] = useState();
+  const [photo_uri, setphoto_uri] = useState({uri: image});
   const [bloodTypePage, setBloodType] = useState('نوع الدم');
   const {
     control,
@@ -56,28 +57,40 @@ function EditPersonDetails(props) {
   });
   const onSubmit = data => {
     console.log('data in update user profile' + JSON.stringify(data));
-    dispatch(
-      updateUserProfileAction({
-        first_name: data.name,
-        height: data.height,
-        weight: data.weight,
-        phone: data.phone,
-        blood_type: data.bloodTypePage,
-      }),
-    )
+    const formData = new FormData();
+    formData.append('first_name', data.name);
+    formData.append('height', data.height)
+    formData.append('weight', data.weight)
+    // formData.append('phone', data.phone);
+    formData.append('blood_type', data.bloodTypePage)
+    formData.append('image', photo_uri ? {
+      name: photo_uri?.fileName,
+      uri: photo_uri?.uri,
+      type: photo_uri?.type
+    } : JSON.stringify({
+      name: photo_uri?.fileName,
+      uri: photo_uri?.uri,
+      type: photo_uri?.type
+    }))
+
+    dispatch(updateUserProfileAction(formData))
+      .unwrap()
       .then(result => {
         dispatch(getPersonalDetails());
         console.log(
           'result in dispatch updateUserProfileAction ' +
-            JSON.stringify(result),
+            JSON.stringify(result?.data),
         );
+        navigation.navigate('MedicalID1');
+        reset();
       })
       .catch(err => {
-        console.log(err.message);
-      });
-    reset();
-    dispatch(getPersonalDetails());
-    navigation.navigate('MedicalID1');
+        console.log(err?.response?.data);
+        const errors = err?.response?.data?.errors
+        Alert.alert("Error", errors[0]?.phone);
+      }).finally(() => {
+      })
+    // dispatch(getPersonalDetails());
   };
   useEffect(() => {
     requestCameraPermission();
@@ -99,7 +112,8 @@ function EditPersonDetails(props) {
         console.log('User tapped custom button: ', res.customButton);
         alert(res.customButton);
       } else {
-        setphoto_uri(photo_uri => res.assets[0].uri);
+        setphoto_uri(photo_uri => res.assets[0]);
+        console.log(res.assets[0])
       }
     });
   };
@@ -120,7 +134,8 @@ function EditPersonDetails(props) {
         console.log('User tapped custom button: ', res.customButton);
         alert(res.customButton);
       } else {
-        setphoto_uri(photo_uri => res.assets[0].uri);
+        setphoto_uri(photo_uri => res.assets[0]);
+        console.log(res.assets[0])
         //upload_img(res.assets[0].base64)
       }
     });
@@ -155,7 +170,7 @@ function EditPersonDetails(props) {
           iconOnImage
           iconBgColor
           onPressPen={() => refRBSheet.current.open()}
-          imageUri={photo_uri}
+          imageUri={photo_uri?.uri}
         />
         <Controller
           name="name"
