@@ -227,7 +227,7 @@ function AppointmentDetails({ navigation }) {
               <View>
                 <View>
                   <Text style={styles.patientTextStyle}>
-                    {appointmentDetailsObject.patient.user_first_name}
+                    {appointmentDetailsObject.patient.user_first_name.trim()}
                   </Text>
                 </View>
                 <View>

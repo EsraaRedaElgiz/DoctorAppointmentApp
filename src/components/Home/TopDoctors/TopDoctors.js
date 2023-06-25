@@ -63,7 +63,7 @@ const TopDoctors = () => {
                   {'طبيب ' + itemData.item.speciality_name}{' '}
                 </Text>
                 {/* Rating */}
-                <Rating stars={5} maxStars={5} size={ICONS.smIcon} />
+                <Rating stars={itemData.item.rating} maxStars={5} size={ICONS.smIcon} />
               </View>
             </Pressable>
           )}

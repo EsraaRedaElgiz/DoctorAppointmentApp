@@ -209,7 +209,7 @@ const Cards = props => {
     {
       id: 3,
       name: 'star',
-      number: data.rating.slice(0,4), //back
+      number: data.rating.slice(0,3), //back
       text: 'التقييم',
     },
   ];
