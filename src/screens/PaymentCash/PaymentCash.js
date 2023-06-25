@@ -16,11 +16,13 @@ import {style} from '../../styles/Style';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 import {useRoute} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
+import { bookAppointment } from '../../Redux/Reducers/BookAppointmentSlice';
 const PaymentCash = ({navigation}) => {
   const globalState = useSelector(state => state);
   const route = useRoute();
   const BookArray = route.params.BookArray;
-  const {date} = globalState.BookAppointmentReducer;
+  const Time = route.params.Time;
+  const {date,isLoading2} = globalState.BookAppointmentReducer;
   const getMonthName = monthnum => {
     if (monthnum == '01') {
       return 'يناير';
@@ -48,7 +50,7 @@ const PaymentCash = ({navigation}) => {
       return 'ديسمبر';
     }
   };
-  const formatDate = `${JSON.stringify(date).slice(9, 10)} ${getMonthName(
+  const formatDate = `${JSON.stringify(date).slice(9, 11)} ${getMonthName(
     JSON.stringify(date).slice(6, 8),
   )} ${JSON.stringify(date).slice(1, 5)}`;
   return (
@@ -69,11 +71,11 @@ const PaymentCash = ({navigation}) => {
           <PaymentCard
             image={BookArray.user_image}
             name={BookArray.user_first_name}
-            rating={BookArray.rating}
-            price={BookArray.price}
+            rating={BookArray.rating.slice(0,3)}
+            price={BookArray.clinic.booking_price}
             speciality={BookArray.speciality_name}
             date={formatDate}
-            time="4:30"
+            time={Time}
           />
           <View style={styles.textContainer}>
             <FontAwesome name="exclamation-triangle" size={ICONS.lgIcon} />

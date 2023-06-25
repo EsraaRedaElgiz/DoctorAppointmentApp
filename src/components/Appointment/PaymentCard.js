@@ -88,7 +88,7 @@ const PaymentCard = props => {
             }}>
             <Ionicons name="time-outline" size={ICONS.smIcon} />
             <Text style={style.textSmallContentBold}>
-              {time} {''} مساء
+              {time} {''} 
             </Text>
           </View>
         </View>
