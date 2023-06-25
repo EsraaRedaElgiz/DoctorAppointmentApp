@@ -21,12 +21,17 @@ import {DoctorsData} from '../../utils';
 import {Stars} from '../Search';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Images from '../../constants/Images';
 const PaymentCard = props => {
   const {image, name, rating, price, speciality, date, time} = props;
   return (
     <Pressable style={style.CardContainer}>
       <View style={style.imageContainerStyle}>
-        <Image source={{uri: image}} style={style.imageCard} />
+        {image == null || image == '' ? (
+          <Image source={Images.doctorDefult} style={style.imageCard} />
+        ) : (
+          <Image source={{uri: image}} style={style.imageCard} />
+        )}
       </View>
       <View style={style.textsCardConatiner}>
         <View style={styles.threeSubContainer}>

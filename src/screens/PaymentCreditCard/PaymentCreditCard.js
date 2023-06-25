@@ -94,7 +94,7 @@ const PaymentCreditCard = ({ navigation }) => {
         }}
       />
       <PaymentCard
-        image={`${BookArray.user_image}`}
+        image={BookArray.user_image}
         name={`${BookArray.user_first_name} ${BookArray.user_last_name}`}
         rating={BookArray.rating.slice(0, 3)}
         price={BookArray.clinic.booking_price}

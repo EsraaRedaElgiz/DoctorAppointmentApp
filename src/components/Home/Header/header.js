@@ -1,5 +1,13 @@
-import {StyleSheet, Text, View, Image, Pressable,ActivityIndicator,Alert} from 'react-native';
-import React,{useEffect} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Pressable,
+  ActivityIndicator,
+  Alert,
+} from 'react-native';
+import React, {useEffect} from 'react';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {
   COLORS,
@@ -13,16 +21,15 @@ import Images from '../../../constants/Images';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {style} from '../../../styles/Style';
 import {useNavigation} from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const Header = (props) => {
+const Header = props => {
   const navigation = useNavigation();
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const { isLoading,name,image } = globalState.PersonalDetailsReducer
-  
-  
+  const {isLoading, name, image} = globalState.PersonalDetailsReducer;
+
   return (
     <View style={styles.headerContainer}>
       <View style={styles.image_userNameContainer}>
@@ -30,26 +37,41 @@ const Header = (props) => {
           onPress={() => {
             navigation.navigate('MedicalID1');
           }}>
-          {image!=""?<Image
-          source={{
-            uri: image,
-          }}
-          style={styles.userImage}
-        />:<View style={[styles.userImage,{backgroundColor:COLORS.gray,alignItems:'center',justifyContent:'center'}]}>
-          <Ionicons
-              name="person-sharp"
-              size={RFValue(35)}
-              color={COLORS.darkGray}
+          {image != '' ? (
+            <Image
+              source={{
+                uri: image,
+              }}
+              style={styles.userImage}
             />
-          </View>}
-          
+          ) : (
+            <View
+              style={[
+                styles.userImage,
+                {
+                  backgroundColor: COLORS.gray,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                },
+              ]}>
+              <Image
+                source={Images.userDefault}
+                style={styles.userImage}
+              />
+            </View>
+          )}
         </Pressable>
         <View style={styles.textConatiner}>
           <Text style={style.textContent}> مرحبا</Text>
-          {isLoading?<ActivityIndicator size={RFValue(15)} color={COLORS.blue} />:
-          name!=""?<Text style={style.textContentBold}>{name.substring(0, name.indexOf(' '))}</Text>:<Text>اسم المستخدم</Text>
-          }
-          
+          {isLoading ? (
+            <ActivityIndicator size={RFValue(15)} color={COLORS.blue} />
+          ) : name != '' ? (
+            <Text style={style.textContentBold}>
+              {name.substring(0, name.indexOf(' '))}
+            </Text>
+          ) : (
+            <Text>اسم المستخدم</Text>
+          )}
         </View>
       </View>
 
