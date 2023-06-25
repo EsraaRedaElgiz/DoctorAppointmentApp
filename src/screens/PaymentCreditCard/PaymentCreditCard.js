@@ -26,6 +26,7 @@ import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigati
 import {useRoute} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getPaymentCard} from '../../Redux/Reducers/PaymentCardSlice';
+import Images from '../../constants/Images';
 const PaymentCreditCard = ({navigation}) => {
   const route = useRoute();
   const BookArray = route.params.BookArray;
@@ -89,7 +90,7 @@ const PaymentCreditCard = ({navigation}) => {
         }}
       />
       <PaymentCard
-        image={`${BookArray.user_image}`}
+        image={BookArray.user_image}
         name={`${BookArray.user_first_name} ${BookArray.user_last_name}`}
         rating={BookArray.rating}
         price={BookArray.price}
@@ -104,50 +105,50 @@ const PaymentCreditCard = ({navigation}) => {
           navigation.navigate('AddCard');
         }}
       />
-      <View style={{flex:1}}>
-      {isLoading ? (
-        <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
-      ) : error === null ? (
-        cards.length === 0 ? (
+      <View style={{flex: 1}}>
+        {isLoading ? (
+          <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
+        ) : error === null ? (
+          cards.length === 0 ? (
+            <View
+              style={{
+                height: '100%',
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text>لا يوجد بطاقة حتي الأن</Text>
+            </View>
+          ) : (
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={cards}
+              renderItem={({item}) => {
+                return (
+                  <Visa
+                    master
+                    name={item.card_holder}
+                    // cardNumber={appendSpace(item.card_number)}
+                    cardNumber={item.card_number}
+                    date={item.card_exp_date}
+                  />
+                );
+              }}
+            />
+          )
+        ) : (
           <View
             style={{
-              height: '100%',
+              height: '60%',
               width: '100%',
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Text>لا يوجد بطاقة حتي الأن</Text>
+            <Text>حدث خطأ اثناء الاتصال بالانترنت</Text>
           </View>
-        ) : (
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            data={cards}
-            renderItem={({item}) => {
-              return (
-                <Visa
-                  master
-                  name={item.card_holder}
-                  // cardNumber={appendSpace(item.card_number)}
-                  cardNumber={item.card_number}
-                  date={item.card_exp_date}
-                />
-              );
-            }}
-          />
-        )
-      ) : (
-        <View
-          style={{
-            height: '60%',
-            width: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-          <Text>حدث خطأ اثناء الاتصال بالانترنت</Text>
-        </View>
-      )}
+        )}
       </View>
-      
+
       <GeneralButton
         title="تاكيد"
         style={{marginBottom: MARGIN.mdMargin}}

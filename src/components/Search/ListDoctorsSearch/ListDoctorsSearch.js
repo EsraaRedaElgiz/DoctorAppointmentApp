@@ -12,6 +12,7 @@ import {
 import {style} from '../../../styles/Style';
 import {useNavigation} from '@react-navigation/native';
 import {Rating} from 'react-native-stock-star-rating';
+import Images from '../../../constants/Images';
 const ListDoctorsSearch = ({ArrayFilterd}) => {
   const navigation = useNavigation();
 
@@ -35,7 +36,12 @@ const ListDoctorsSearch = ({ArrayFilterd}) => {
                 });
               }}>
               <View style={style.imageContainerStyle}>
-                <Image source={itemData.item.image} style={style.imageCard} />
+                {itemData.item.image==null ||itemData.item.image==""?(
+                  <Image source={Images.doctorDefult} style={style.imageCard} />
+                ):(
+                  <Image source={itemData.item.image} style={style.imageCard} />
+                )}
+              
               </View>
               <View style={style.textsCardConatiner}>
                 <Text

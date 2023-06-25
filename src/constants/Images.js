@@ -1,6 +1,7 @@
 // User Profile
 const userImage = require('../assets/Images/user.jpg');
-
+const doctorDefult=require('../assets/Images/DoctorDefaultt.png')
+const userDefault=require('../assets/Images/userDefault.png')
 // Specialtiy
 const heartImage = require('../assets/Images/heart.png');
 const earImage = require('../assets/Images/ear.png');
@@ -42,5 +43,7 @@ export default {
   doctor5,
   doctor10,
   doctorOrPatient,
-  googleImage
+  googleImage,
+  doctorDefult,
+  userDefault
 };
