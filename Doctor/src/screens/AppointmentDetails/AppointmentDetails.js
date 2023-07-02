@@ -42,6 +42,7 @@ function AppointmentDetails({ navigation }) {
   const globalState = useSelector(state => state);
   const { appointmentDetails, isLoading } = globalState.AppointmentDetailsReducer
   const [appointmentDetailsObject, setAppointmentDetailsObject] = useState(appointmentDetails);
+  const {historyArr}=globalState.PatientHistoryReducer
   useEffect(() => {
     setGetDay(getDay => {
       return new Date().getDate();
@@ -158,19 +159,18 @@ function AppointmentDetails({ navigation }) {
 
   keyextractor = (item, index) => index.toString();
   const renderitems = ({ item, index }) => {
-    const { doctorName, doctorSpeciality, day, month, year } = item;
+    const { doctorName, doctorSpeciality, day, month, year,doctor,appointment_date } = item;
     return (
       <AppointmentAndHistoryComponent
-        doctorName={doctorName}
-        doctorSpeciality={doctorSpeciality}
+        doctorName={"احمد سامي"}//الاسم مش مكتوب ف الاوبجكت
+        doctorSpeciality={"باطنه"}//مش مكتوب
         dateShow={true}
-        day={day}
-        month={month}
-        year={year}
+        day={appointment_date.substring(8, 10)}
+        month={getMonthNameBack(appointment_date.substring(5, 7)).trim()}
+        year={appointment_date.substring(0, 4)}
         style={styles.afterEachCardMargin}
         onPress={() => {
           navigation.navigate('Prescription');
-          // console.log("ll")
         }}
       />
     );
@@ -314,40 +314,65 @@ function AppointmentDetails({ navigation }) {
       <View style={styles.historyTextViewStyle}>
         <Text style={style.textContentBold}>التاريخ</Text>
       </View>
-      {appointmentDetailsObject.histortStatus === 'public' ? (
+      {appointmentDetailsObject.patient.private_history === "0" ? (
         appointmentDetailsObject.appointment_status === "1" &&
           (appointmentDetailsObject.appointment_date.substring(8, 10)[0] === "0" ?
             JSON.parse(appointmentDetailsObject.appointment_date.substring(9, 10)) :
-            JSON.parse(appointmentDetailsObject.appointment_date.substring(8, 10))) === getDay &&
-          getMonthNameBack(appointmentDetailsObject.appointment_date.substring(5, 7)).trim() === getMonth &&
-          JSON.parse(appointmentDetailsObject.appointment_date.substring(0, 4)) === getYear ? (
+            JSON.parse(appointmentDetailsObject.appointment_date.substring(8, 10))) == getDay &&
+          getMonthNameBack(appointmentDetailsObject.appointment_date.substring(5, 7)).trim() == getMonth &&
+          JSON.parse(appointmentDetailsObject.appointment_date.substring(0, 4)) == getYear ? (
           <>
+            {/*  هنا لو كان اراي الهيستوري فاضي يبقي هيظهر كلام */}
+            {historyArr.length > 0 ?
+              <>
+                <FlatList
+                  keyExtractor={keyextractor}
+                  data={historyArr}
+                  renderItem={renderitems}
+                  style={styles.flatListStyle}
+                  showsVerticalScrollIndicator={false}
+                  contentContainerStyle={styles.flatListContentContainerStyle}
+                />
+                <View style={styles.buttonViewContainer}>
+                  <GeneralButton
+                    title="اضافة روشته"
+                    onPress={() => {
+                      navigation.navigate('DoctorPrescription');
+                    }}
+                  />
+                </View>
+              </>
+              :
+              <View style={styles.viewForLockAndButtonStyle}>
+                <View style={styles.viewForLockAndTextStyle}>
+                  <Text>لا يوجد تاريخ مرضي حتي الأن</Text>
+                </View>
+                <View >
+                  <GeneralButton
+                    title="اضافة روشته"
+                    onPress={() => {
+                      navigation.navigate('DoctorPrescription');
+                    }}
+                  />
+                </View>
+              </View>
+            }
+          </>
+        ) : (
+          historyArr.length > 0 ?
             <FlatList
               keyExtractor={keyextractor}
-              data={history}
+              data={historyArr}
               renderItem={renderitems}
               style={styles.flatListStyle}
               showsVerticalScrollIndicator={false}
               contentContainerStyle={styles.flatListContentContainerStyle}
-            />
-            <View style={styles.buttonViewContainer}>
-              <GeneralButton
-                title="اضافة روشته"
-                onPress={() => {
-                  navigation.navigate('DoctorPrescription');
-                }}
-              />
+            /> :
+            <View style={styles.viewForLockAndButtonStyle}>
+              <View style={styles.viewForLockAndTextStyle}>
+                <Text>لا يوجد تاريخ مرضي حتي الأن</Text>
+              </View>
             </View>
-          </>
-        ) : (
-          <FlatList
-            keyExtractor={keyextractor}
-            data={history}
-            renderItem={renderitems}
-            style={styles.flatListStyle}
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.flatListContentContainerStyle}
-          />
         )
       ) : appointmentDetailsObject.appointment_status === "1" &&
         (appointmentDetailsObject.appointment_date.substring(8, 10)[0] === "0" ?

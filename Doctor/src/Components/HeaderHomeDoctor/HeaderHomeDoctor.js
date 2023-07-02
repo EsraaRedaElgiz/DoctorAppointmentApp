@@ -41,7 +41,7 @@ const HeaderHomeDoctor = () => {
         <View style={styles.textConatiner}>
           <Text style={style.textContent}> مرحبا</Text>
           <Text style={style.textContentBold}>
-            {'د ' + name.substring(0, name.indexOf(' '))}
+            {'د ' + name.trim().substring(0, name.indexOf(' '))}
           </Text>
         </View>
       </View>

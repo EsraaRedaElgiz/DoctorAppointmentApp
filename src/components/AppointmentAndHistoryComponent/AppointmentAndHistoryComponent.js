@@ -35,7 +35,7 @@ function AppointmentAndHistoryComponent(props) {
       disabled={disabled}>
       <View style={styles.innerContainer}>
         <View style={styles.imageContainer}>
-          {doctorImageUri != '' ? (
+          {doctorImageUri != ''&&doctorImageUri!=null ? (
             <Image source={{uri: doctorImageUri}} style={styles.imageStyle} />
           ) : (
             <Image source={Images.doctorDefult} style={styles.imageStyle} />
