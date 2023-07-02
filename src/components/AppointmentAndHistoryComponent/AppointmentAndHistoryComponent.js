@@ -1,6 +1,6 @@
 import React from 'react';
-import {Text, View, TouchableOpacity, Image, StyleSheet} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   RADIUS,
   FONTS,
@@ -25,7 +25,7 @@ function AppointmentAndHistoryComponent(props) {
     status,
     onPress,
     disabled,
-    doctorImageUri,
+    doctorImageUri
   } = props;
 
   return (
@@ -141,13 +141,13 @@ const styles = StyleSheet.create({
     fontSize: FONTS.h5,
     fontFamily: FONTS.Amaranth,
     color: COLORS.darkGray3,
-    textAlign: 'left',
+    textAlign: 'left'
   },
   specialityTextStyle: {
     fontSize: FONTS.h6,
     color: COLORS.darkGray2,
     fontFamily: FONTS.Amaranth,
-    textAlign: 'left',
+    textAlign: 'left'
   },
   timaAndDateContainer: {
     flexDirection: 'row',
