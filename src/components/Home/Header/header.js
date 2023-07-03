@@ -67,7 +67,7 @@ const Header = props => {
             <ActivityIndicator size={RFValue(15)} color={COLORS.blue} />
           ) : name != '' ? (
             <Text style={style.textContentBold}>
-              {name.substring(0, name.indexOf(' '))}
+              {name.trim().substring(0, name.indexOf(' '))}
             </Text>
           ) : (
             <Text>اسم المستخدم</Text>

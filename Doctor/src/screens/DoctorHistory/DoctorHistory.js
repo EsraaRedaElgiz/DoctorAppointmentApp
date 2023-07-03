@@ -72,18 +72,13 @@ function DoctorHistory({navigation}) {
                   time={history[0].appointment_time.slice(0, 5)}
                   imageUri={history[0].patient.user_image}
                   onPress={() => {
-                    dispatch(getAppointmentDetails('2'))
+                    //console.log(item)
+                    dispatch(getAppointmentDetails(item.item.appointment_id))
                       .unwrap()
                       .then(res => {
-                        //instead of 2 i will pass appointment_id
                         if (res.appointment_id) {
                           navigation.navigate(
-                            'AppointmentDetails' /* {
-                            PatientsArray: itemData.item,
-                            appointmentStatus: itemData.item.done
-                              ? 'مكتمل'
-                              : 'ملغى',
-                          }*/,
+                            'AppointmentDetails',
                           );
                         } else {
                           Alert.alert(

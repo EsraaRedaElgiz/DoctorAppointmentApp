@@ -19,6 +19,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getAppointmentDetails} from '../../Redux/Reducers/AppointmentDetailsSlice';
 import {getDoctorAppointments} from '../../Redux/Reducers/DoctorAppointmentSlice';
 import {RFValue} from 'react-native-responsive-fontsize';
+import { getPatientHistory } from '../../Redux/Reducers/PatientHistorySlice';
 
 function DoctorAppointments({navigation}) {
   const dispatch = useDispatch();
@@ -77,28 +78,23 @@ function DoctorAppointments({navigation}) {
           showsVerticalScrollIndicator={false}
           data={appointments}
           renderItem={({item, index}) => {
-            console.log(item.patient.user_first_name);
-            console.log(item.appointment_time);
+            //console.log(item.patient.user_first_name);
+            //console.log(item.appointment_time);
             return (
               <>
                 <PersonAppointmentCard
                   confirmed={item.appointment_status === 2 ? false : true}
-                  name={item.patient.user_first_name}
-                  time={item.appointment_time}
-                  imageUri={item.user_image}
+                  name={item.patient.user_first_name.trim()}
+                  time={item.appointment_time.slice(0,5)}
+                  imageUri={item.patient.user_image}
                   onPress={() => {
-                    dispatch(getAppointmentDetails('2'))
+                    dispatch(getPatientHistory(JSON.parse(item.patient.patient_id)))
+                    dispatch(getAppointmentDetails(item.appointment_id))
                       .unwrap()
                       .then(res => {
-                        //instead of 2 i will pass appointment_id
                         if (res.appointment_id) {
                           navigation.navigate(
-                            'AppointmentDetails' /*{
-                            PatientsArray: itemData.item,
-                            appointmentStatus: itemData.item.confirmed
-                              ? 'تم التأكيد'
-                              : 'معلق',
-                          }*/,
+                            'AppointmentDetails' ,
                           );
                         } else {
                           Alert.alert(

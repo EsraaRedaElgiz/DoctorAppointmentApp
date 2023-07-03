@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   View,
   FlatList,
@@ -8,21 +8,21 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
-import {COLORS, PADDINGS, USER_HISTORY_STATUS} from '../../constants/Constants';
+import { COLORS, PADDINGS, USER_DATA, USER_HISTORY_STATUS } from '../../constants/Constants';
 import styles from './styles';
 import HeaderArrowAndWord from '../../components/HeaderArrowAndWord/HeaderArrowAndWord';
 import AppointmentAndHistoryComponent from '../../components/AppointmentAndHistoryComponent/AppointmentAndHistoryComponent';
-import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {getHistory} from '../../Redux/Reducers/HistorySlice';
-import {historyStatus} from '../../Redux/Reducers/HistoryPublicOrPrivateSlice';
+import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { getHistory } from '../../Redux/Reducers/HistorySlice';
+import { historyStatus } from '../../Redux/Reducers/HistoryPublicOrPrivateSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-function History({navigation}) {
+function History({ navigation }) {
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const {isLoading, history, error} = globalState.HistoryReducer;
-  const {isLoad} = globalState.HistoryPublicOrPrivateReducer;
+  const { isLoading, history, error } = globalState.HistoryReducer;
+  const { isLoad } = globalState.HistoryPublicOrPrivateReducer;
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -34,9 +34,10 @@ function History({navigation}) {
 
   const getHistoryStatus = async () => {
     const value = await AsyncStorage.getItem(USER_HISTORY_STATUS);
-    if (JSON.parse(value) == 1) {
+    const data = JSON.parse(await AsyncStorage.getItem(USER_DATA))
+    if (data.private_history == 1) {
       setVisible(visible => false);
-    } else if (JSON.parse(value) == 0) {
+    } else if (data.private_history == 0) {
       setVisible(visible => true);
     }
   };
@@ -68,8 +69,8 @@ function History({navigation}) {
     }
   };
   keyextractor = (item, index) => index.toString();
-  const renderitems = ({item, index}) => {
-    const {doctor, appointment_date} = item;
+  const renderitems = ({ item, index }) => {
+    const { doctor, appointment_date } = item;
     return (
       <AppointmentAndHistoryComponent
         doctorName={doctor.user_first_name}
@@ -95,12 +96,16 @@ function History({navigation}) {
       ToastAndroid.SHORT,
     );
   };
-  const changeStatusButton = () => {
+  const changeStatusButton =  () => {
     if (visible == true) {
-      dispatch(historyStatus({private: 1}))
+      dispatch(historyStatus({ private: 1 }))
         .unwrap()
-        .then(res => {
+        .then(async (res) => {
           if (res == true) {
+            let data = JSON.parse(await AsyncStorage.getItem(USER_DATA))
+            data = { ...data, private_history:1 }
+            AsyncStorage.setItem(USER_DATA, JSON.stringify(data))
+            //console.log("val",await AsyncStorage.getItem(USER_DATA))
             setVisible(visible => {
               return !visible;
             });
@@ -111,10 +116,14 @@ function History({navigation}) {
           console.log(err.message);
         });
     } else if (visible == false) {
-      dispatch(historyStatus({private: 0}))
+      dispatch(historyStatus({ private: 0 }))
         .unwrap()
-        .then(res => {
+        .then(async(res) => {
           if (res == true) {
+            let data = JSON.parse(await AsyncStorage.getItem(USER_DATA))
+            data = { ...data, private_history:0 }
+            AsyncStorage.setItem(USER_DATA, JSON.stringify(data))
+            //console.log("val",await AsyncStorage.getItem(USER_DATA))
             setVisible(visible => {
               return !visible;
             });
