@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Alert} from 'react-native';
 import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
 import {style} from '../../../../src/styles/Style';
 import styles from './DoctorFilterAppointmentStyles';
@@ -9,16 +9,22 @@ import {COLORS} from '../../../../src/constants/Constants';
 import {CheckBox} from 'react-native-elements';
 import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
 import {RFValue} from 'react-native-responsive-fontsize';
+import {useDispatch, useSelector} from 'react-redux';
+import {getDoctorAppointments} from '../../Redux/Reducers/DoctorAppointmentSlice';
 function DoctorFilterAppointment({navigation}) {
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [date, setDate] = useState('');
   const [dateError, setDateError] = useState('');
   const [checked, setChecked] = useState(true);
+  const dispatch = useDispatch();
+  const globalState = useSelector(state => state);
+  const {} = globalState.DoctorAppointmentReducer;
   const onDateSelected = (event, value) => {
     setDatePickerVisible(false);
     setDate(JSON.stringify(value).substring(1, 11));
     setDateError(dateError => '');
   };
+
   return (
     <View style={styles.container}>
       <HeaderNavigation
@@ -74,7 +80,12 @@ function DoctorFilterAppointment({navigation}) {
         <GeneralButton
           title="تم"
           onPress={() => {
-            navigation.goBack();
+            if (date == '') {
+              Alert.alert('select date first');
+            } else {
+              dispatch(getDoctorAppointments({date: date}));
+              navigation.goBack();
+            }
           }}
         />
       </View>
