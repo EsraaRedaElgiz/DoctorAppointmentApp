@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import {ListDoctorsSearch, SearchBar} from '../../components/Search';
 import {style} from '../../styles/Style';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
@@ -7,10 +7,14 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {useRoute} from '@react-navigation/native';
 import {COLORS} from '../../constants/Constants';
 import {DoctorsData} from '../../utils';
+import { useSelector } from 'react-redux';
 const DoctorsSearch = ({navigation}) => {
+  
+  const globalState = useSelector(state => state);
+  const{specialityDoctors}=globalState.SpecialitySearchReducer
   const route = useRoute();
   const SpecialityArray = route.params.SpecialityArray;
-  const sortedArray = DoctorsData.sort(compare);
+  const sortedArray = specialityDoctors//.sort(compare);
   function compare(a, b) {
     const ARating = a.rating;
     const BRating = b.rating;
@@ -18,6 +22,7 @@ const DoctorsSearch = ({navigation}) => {
   }
 
   const [ArrayFilterd, setArrayFilterd] = useState(sortedArray);
+  //console.log("Arrayfilterd",ArrayFilterd)
   return (
     <>
       <View style={[style.bigContainer, {flex:1,}]}>

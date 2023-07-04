@@ -159,10 +159,11 @@ function AppointmentDetails({ navigation }) {
 
   keyextractor = (item, index) => index.toString();
   const renderitems = ({ item, index }) => {
-    const { doctorName, doctorSpeciality, day, month, year,doctor,appointment_date } = item;
+    const { doctorName, doctorSpeciality, day, month, year,doctor,appointment_date,user } = item;
     return (
       <AppointmentAndHistoryComponent
-        doctorName={"احمد سامي"}//الاسم مش مكتوب ف الاوبجكت
+        doctorImageUri={user.user_image}
+        doctorName={user.user_first_name}
         doctorSpeciality={"باطنه"}//مش مكتوب
         dateShow={true}
         day={appointment_date.substring(8, 10)}

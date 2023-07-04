@@ -33,16 +33,21 @@ import {Rating} from 'react-native-stock-star-rating';
 import {useRoute} from '@react-navigation/native';
 import HeaderArrowAndWord from '../../components/HeaderArrowAndWord/HeaderArrowAndWord';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import Images from '../../constants/Images';
+import { getRate } from '../../Redux/Reducers/GetRateSlice';
 const DoctorProfile = ({navigation}) => {
   const [visiableAddReview, setVisiableAddReview] = useState(false);
   const [visiableMap, setvisiableMap] = useState(false);
   const globalState = useSelector(state => state);
+  const dispatch=useDispatch();
   const {isLoading, rates} = globalState.GetRateReducer;
 
   const route = useRoute();
   const DoctorArray = route.params.DoctorArray;
+  useEffect(()=>{
+    dispatch(getRate({ 'doctor_id': DoctorArray.doctor_id }))
+  },[])
   const openMap = (latitude, longitude) => {
     Linking.openURL(
       `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
@@ -174,8 +179,10 @@ const DoctorProfile = ({navigation}) => {
                                 />
                               </View>
                             </View>
-                            {itemData.item.user_image ? (
+                            {itemData.item.user_image != null &&
+                            itemData.item.user_image != '' ? (
                               <Image
+                                //source={Images.userDefault}
                                 source={{uri: itemData.item.user_image}}
                                 style={styles.imgReview}
                                 resizeMode="center"
@@ -203,7 +210,7 @@ const DoctorProfile = ({navigation}) => {
               ) : (
                 <View style={styles.viewForActivityIndicator}>
                   <Text>
-                    لا يوجد تقيمات حتي الأن او خطأ اثناء الاتصال بشبكه الانترنت
+                  لا يوجد تقيمات حتي الأن 
                   </Text>
                 </View>
               )}
@@ -238,7 +245,7 @@ const Cards = props => {
     {
       id: 1,
       name: 'user-friends',
-      number: data.num_of_patients, //back
+      number: data.num_of_patients, 
       text: 'المرضي',
     },
     {
@@ -250,7 +257,7 @@ const Cards = props => {
     {
       id: 3,
       name: 'star',
-      number: data.rating.slice(0, 3), //back
+      number: data.rating!=0?data.rating.slice(0, 3):data.rating, 
       text: 'التقييم',
     },
   ];

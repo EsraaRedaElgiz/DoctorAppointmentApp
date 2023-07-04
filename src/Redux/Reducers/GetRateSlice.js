@@ -24,18 +24,21 @@ export const getRate = createAsyncThunk(
                             response = res.data
                             dispatch(setRateArr(res.data))
                         } else {
-                            console.log(res.data);
+                            //console.log(res.data);
+                            dispatch(setRateArr([]))
                         }
                     } else {
                         alert('حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا');
                     }
                 })
                 .catch(err => {
-                    console.log(err);
+                   // console.log(err);
+                   dispatch(setRateArr([]))
                 });
             return response;
         } catch (error) {
-            console.log(rejectWithValue(error.message));
+            //console.log(rejectWithValue(error.message));
+            dispatch(setRateArr([]))
             return rejectWithValue(error.message);
         }
     },

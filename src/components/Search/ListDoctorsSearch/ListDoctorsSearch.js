@@ -36,10 +36,10 @@ const ListDoctorsSearch = ({ArrayFilterd}) => {
                 });
               }}>
               <View style={style.imageContainerStyle}>
-                {itemData.item.image==null ||itemData.item.image==""?(
+                {itemData.item.user_image==null ||itemData.item.user_image==""?(
                   <Image source={Images.doctorDefult} style={style.imageCard} />
                 ):(
-                  <Image source={itemData.item.image} style={style.imageCard} />
+                  <Image source={{uri:itemData.item.user_image}} style={style.imageCard} />
                 )}
               
               </View>
@@ -47,12 +47,13 @@ const ListDoctorsSearch = ({ArrayFilterd}) => {
                 <Text
                   style={[
                     style.textContentBold,
-                    {color: COLORS.darkGray3, fontWeight: 'normal'},
+                    {color: COLORS.darkGray3, fontWeight: 'normal',textAlign:'left'},
                   ]}>
-                  {itemData.item.name.trim()}{' '}
+                  {itemData.item.user_first_name.trim()}{' '}
                 </Text>
-                <Text style={[style.textContent, {color: COLORS.darkGray2}]}>
-                  {itemData.item.price+"\tجنيه"} 
+                <Text style={[style.textContent, {color: COLORS.darkGray2,textAlign:'left'}]}>
+                  {itemData.item.clinic+"\tجنيه"} 
+                  {/*{itemData.item.clinic.booking_price+"\tجنيه"} *//* لما عدي يشيل يوسف هحط دي واشيل السطر اللي قوفه*/ }
                 </Text>
                 <Rating
                   stars={itemData.item.rating}

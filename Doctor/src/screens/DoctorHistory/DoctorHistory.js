@@ -63,6 +63,7 @@ function DoctorHistory({navigation}) {
         <FlatList
           showsVerticalScrollIndicator={false}
           data={history}
+          keyExtractor={index => index}
           renderItem={(item, index) => {
             return (
               <>
@@ -77,9 +78,7 @@ function DoctorHistory({navigation}) {
                       .unwrap()
                       .then(res => {
                         if (res.appointment_id) {
-                          navigation.navigate(
-                            'AppointmentDetails',
-                          );
+                          navigation.navigate('AppointmentDetails');
                         } else {
                           Alert.alert(
                             'حدث خطأ اثناء الاتصال بالخادم لعرض تفاصيل الموعد من فضلك حاول مجددا ',

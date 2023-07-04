@@ -40,7 +40,7 @@ const DoctorViewProfile = ({ navigation }) => {
   //const navigation = useNavigation();
   const globalState = useSelector(state => state);
   const dispatch = useDispatch();
-  const { name, image, doctor_about, doctor_experience, speciality_name, branch_address } = globalState.DoctorDetailsReducer
+  const { name, image, doctor_about,speciality_name, branch_address } = globalState.DoctorDetailsReducer
   const { isLoading, rates } = globalState.GetRateReducer;
   const region = {
     latitude: 30.033333,
@@ -189,12 +189,12 @@ export default DoctorViewProfile;
 const CardsDoctor = props => {
   const { data } = props;
   const globalState = useSelector(state => state);
-  const { doctor_experience } = globalState.DoctorDetailsReducer
+  const { doctor_experience,numOfPatients,numOfRating } = globalState.DoctorDetailsReducer
   const icons = [
     {
       id: 1,
       name: 'user-friends',
-      number: data.numberOfPatients,
+      number: numOfPatients,
       text: 'المرضي',
     },
     {
@@ -206,7 +206,7 @@ const CardsDoctor = props => {
     {
       id: 3,
       name: 'star',
-      number: data.rating,
+      number: numOfRating!=0?numOfRating.slice(0,3):numOfRating,
       text: 'التقييم',
     },
   ];

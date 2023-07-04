@@ -7,7 +7,7 @@ import {
   PermissionsAndroid,
   Button,
   ActivityIndicator,
-  Alert
+  Alert,
 } from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import {useForm, Controller} from 'react-hook-form';
@@ -34,6 +34,7 @@ function EditPersonDetails(props) {
   const dispatch = useDispatch();
   const {name, age, height, weight, bloodType, gender, phone, image} =
     globalState.PersonalDetailsReducer;
+  const {isLoading} = globalState.UpdateUserProfileReducer;
   const {navigation} = props;
   const [visible, setVisible] = useState(false);
   const [photo_uri, setphoto_uri] = useState({uri: image});
@@ -59,19 +60,24 @@ function EditPersonDetails(props) {
     console.log('data in update user profile' + JSON.stringify(data));
     const formData = new FormData();
     formData.append('first_name', data.name);
-    formData.append('height', data.height)
-    formData.append('weight', data.weight)
+    formData.append('height', data.height);
+    formData.append('weight', data.weight);
     // formData.append('phone', data.phone);
-    formData.append('blood_type', data.bloodTypePage)
-    formData.append('image', photo_uri ? {
-      name: photo_uri?.fileName,
-      uri: photo_uri?.uri,
-      type: photo_uri?.type
-    } : JSON.stringify({
-      name: photo_uri?.fileName,
-      uri: photo_uri?.uri,
-      type: photo_uri?.type
-    }))
+    formData.append('blood_type', data.bloodTypePage);
+    formData.append(
+      'image',
+      photo_uri
+        ? {
+            name: photo_uri?.fileName,
+            uri: photo_uri?.uri,
+            type: photo_uri?.type,
+          }
+        : JSON.stringify({
+            name: photo_uri?.fileName,
+            uri: photo_uri?.uri,
+            type: photo_uri?.type,
+          }),
+    );
 
     dispatch(updateUserProfileAction(formData))
       .unwrap()
@@ -86,10 +92,10 @@ function EditPersonDetails(props) {
       })
       .catch(err => {
         console.log(err?.response?.data);
-        const errors = err?.response?.data?.errors
-        Alert.alert("Error", errors[0]?.phone);
-      }).finally(() => {
+        const errors = err?.response?.data?.errors;
+        Alert.alert('Error', errors[0]?.phone);
       })
+      .finally(() => {});
     // dispatch(getPersonalDetails());
   };
   useEffect(() => {
@@ -113,7 +119,7 @@ function EditPersonDetails(props) {
         alert(res.customButton);
       } else {
         setphoto_uri(photo_uri => res.assets[0]);
-        console.log(res.assets[0])
+        console.log(res.assets[0]);
       }
     });
   };
@@ -135,7 +141,7 @@ function EditPersonDetails(props) {
         alert(res.customButton);
       } else {
         setphoto_uri(photo_uri => res.assets[0]);
-        console.log(res.assets[0])
+        console.log(res.assets[0]);
         //upload_img(res.assets[0].base64)
       }
     });
@@ -156,6 +162,7 @@ function EditPersonDetails(props) {
       <HeaderNavigation
         title="المعلومات الشخصية"
         text
+        isLoading={isLoading}
         btn={'تم'}
         padding={PADDINGS.mdPadding}
         color={COLORS.darkGray3}
