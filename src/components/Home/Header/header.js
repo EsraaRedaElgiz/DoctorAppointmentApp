@@ -25,6 +25,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Header = props => {
+  let curHr = new Date().getHours();
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
@@ -37,13 +38,8 @@ const Header = props => {
           onPress={() => {
             navigation.navigate('MedicalID1');
           }}>
-          {image != '' ? (
-            <Image
-              source={{
-                uri: image,
-              }}
-              style={styles.userImage}
-            />
+          {image ? (
+            <Image source={{uri: image}} style={styles.userImage} />
           ) : (
             <View
               style={[
@@ -54,23 +50,25 @@ const Header = props => {
                   justifyContent: 'center',
                 },
               ]}>
-              <Image
-                source={Images.userDefault}
-                style={styles.userImage}
-              />
+              <Image source={Images.userDefault} style={styles.userImage} />
             </View>
           )}
         </Pressable>
         <View style={styles.textConatiner}>
-          <Text style={style.textContent}> مرحبا</Text>
+          <Text style={style.textContent}>
+            {' '}
+            {curHr < 12 ? 'صباح الخير' : 'مساء الخير'}
+          </Text>
           {isLoading ? (
             <ActivityIndicator size={RFValue(15)} color={COLORS.blue} />
           ) : name != '' ? (
-            <Text style={style.textContentBold}>
+            <Text style={[style.textContentBold, {textAlign: 'left'}]}>
               {name.trim().substring(0, name.indexOf(' '))}
             </Text>
           ) : (
-            <Text>اسم المستخدم</Text>
+            <Text style={[style.textContentBold, {textAlign: 'left'}]}>
+              اسم المستخدم
+            </Text>
           )}
         </View>
       </View>

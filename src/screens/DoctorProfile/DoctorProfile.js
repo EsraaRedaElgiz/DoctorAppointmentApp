@@ -8,6 +8,8 @@ import {
   FlatList,
   ImageBackground,
   ActivityIndicator,
+  Modal,
+  Button,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -20,7 +22,7 @@ import {
   RADIUS,
 } from '../../constants/Constants';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import MapView from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import {style} from '../../styles/Style';
 import {DoctorsData} from '../../utils';
@@ -34,17 +36,14 @@ import {useSelector} from 'react-redux';
 import Images from '../../constants/Images';
 const DoctorProfile = ({navigation}) => {
   const [visiableAddReview, setVisiableAddReview] = useState(false);
+  const [visiableMap, setvisiableMap] = useState(false);
   const globalState = useSelector(state => state);
   const {isLoading, rates} = globalState.GetRateReducer;
 
-  const region = {
-    latitude: 30.033333,
-    longitude: 31.233334,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  };
   const route = useRoute();
   const DoctorArray = route.params.DoctorArray;
+  console.log(DoctorArray);
+  console.log( DoctorArray.branch_id)
   return (
     <>
       <View style={{flex: 1, backgroundColor: COLORS.white}}>
@@ -52,9 +51,9 @@ const DoctorProfile = ({navigation}) => {
           style={{backgroundColor: COLORS.white}}
           showsVerticalScrollIndicator={false}>
           {/* image */}
-          {DoctorArray.user_image == null || DoctorArray.user_image == '' ? (
+          {DoctorArray.user_image ? (
             <ImageBackground
-              source={Images.doctorDefult}
+              source={{uri: DoctorArray.user_image}}
               style={{width: '100%', height: RFValue(300)}}>
               <HeaderNavigation
                 padding={PADDINGS.mdPadding}
@@ -65,7 +64,7 @@ const DoctorProfile = ({navigation}) => {
             </ImageBackground>
           ) : (
             <ImageBackground
-              source={{uri: DoctorArray.user_image}}
+              source={Images.doctorDefult}
               style={{width: '100%', height: RFValue(300)}}>
               <HeaderNavigation
                 padding={PADDINGS.mdPadding}
@@ -110,9 +109,19 @@ const DoctorProfile = ({navigation}) => {
               style={[style.textContent, {marginVertical: MARGIN.smMargin}]}>
               {DoctorArray.clinic.branch_location}
             </Text>
-            <Pressable style={styles.PreviewMap}>
-              <MapView initialRegion={region} style={{flex: 1}}></MapView>
+
+            <Pressable
+              style={styles.PreviewMap}
+              onPress={() => {
+                setvisiableMap(true);
+              }}>
+              <ImageBackground
+                source={Images.mapImage}
+                style={{
+                  flex: 1,
+                }}></ImageBackground>
             </Pressable>
+
             {/* Review */}
             <ListTiltle
               Title="التقييمات"
@@ -158,16 +167,15 @@ const DoctorProfile = ({navigation}) => {
                                 />
                               </View>
                             </View>
-                            {itemData.item.user_image == null ||
-                            itemData.item.user_image == '' ? (
+                            {itemData.item.user_image ? (
                               <Image
-                                source={Images.userDefault}
+                                source={{uri: itemData.item.user_image}}
                                 style={styles.imgReview}
                                 resizeMode="center"
                               />
                             ) : (
                               <Image
-                                source={{uri: itemData.item.user_image}}
+                                source={Images.userDefault}
                                 style={styles.imgReview}
                                 resizeMode="center"
                               />
@@ -212,6 +220,11 @@ const DoctorProfile = ({navigation}) => {
       <ReviewModal
         visiableAddReview={visiableAddReview}
         setVisiableAddReview={setVisiableAddReview}
+        doctorArray={DoctorArray}
+      />
+      <MapModal
+        visiableMap={visiableMap}
+        setvisiableMap={setvisiableMap}
         doctorArray={DoctorArray}
       />
     </>
@@ -269,6 +282,36 @@ const Cards = props => {
 };
 export {Cards};
 
+const MapModal = ({visiableMap, setvisiableMap, doctorArray}) => {
+  // console.log(doctorArray.longitude);
+  const region = {
+    latitude: 30.033333,
+    longitude: 31.233334,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  };
+  return (
+    <>
+      <Modal
+        visible={visiableMap}
+        onRequestClose={() => {
+          setvisiableMap(false);
+        }}>
+        <MapView initialRegion={region} style={{flex: 1}}>
+          <Marker
+            coordinate={{
+              longitude: region.longitude,
+              latitude: region.latitude,
+            }}
+            pinColor={'red'}
+            draggable
+          />
+        </MapView>
+      </Modal>
+    </>
+  );
+};
+export {MapModal};
 export default DoctorProfile;
 
 const styles = StyleSheet.create({

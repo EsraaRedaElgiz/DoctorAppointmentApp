@@ -2,6 +2,7 @@
 const userImage = require('../assets/Images/user.jpg');
 const doctorDefult=require('../assets/Images/DoctorDefaultt.png')
 const userDefault=require('../assets/Images/userDefault.png')
+const mapImage=require('../assets/Images/MapPreview.jpg')
 // Specialtiy
 const heartImage = require('../assets/Images/heart.png');
 const earImage = require('../assets/Images/ear.png');
@@ -45,5 +46,6 @@ export default {
   doctorOrPatient,
   googleImage,
   doctorDefult,
-  userDefault
+  userDefault,
+  mapImage
 };
