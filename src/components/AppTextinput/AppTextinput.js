@@ -6,7 +6,7 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {COLORS, FONTS, RADIUS} from '../../constants/Constants';
 
 function Reusabletextinput(props) {
-  const {style, placeholder, bordercolor, ...rest} = props;
+  const {style, placeholder, bordercolor,edit, ...rest} = props;
   return (
     <View style={styles.container}>
       <TextInput
@@ -19,6 +19,7 @@ function Reusabletextinput(props) {
         activeOutlineColor={COLORS.gray}
         outlineStyle={[styles.outlinestyle, {borderColor: bordercolor}]}
         textColor={COLORS.darkGray3}
+        editable={edit}
       />
     </View>
   );

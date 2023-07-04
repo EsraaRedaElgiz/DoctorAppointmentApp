@@ -101,7 +101,9 @@ const HomeDoctor = ({navigation}) => {
             </View>
           ) : appointmentForToday.length == 0 ? (
             <View style={styles.activityIndicatorView}>
-              <Text>Not appointment exist for today !</Text>
+              <Text style={style.textSmallContentBold}>
+                لا توجد حجوزات اليوم !
+              </Text>
             </View>
           ) : (
             <PatientsListHome data={appointmentForToday} />

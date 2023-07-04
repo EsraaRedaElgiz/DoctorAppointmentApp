@@ -14,14 +14,14 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import {DoctorsData} from '../../../../src/utils';
 import Images from '../../../../src/constants/Images';
-import { useDispatch, useSelector } from 'react-redux';
-import { getRate } from '../../../../src/Redux/Reducers/GetRateSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {getRate} from '../../../../src/Redux/Reducers/GetRateSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const HeaderHomeDoctor = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const globalState = useSelector(state => state);
-  const {  name,image } = globalState.DoctorDetailsReducer
+  const {name, image} = globalState.DoctorDetailsReducer;
   let date = new Date();
   let day = date.getDate();
   let month = date.toLocaleString('default', {month: 'long'});
@@ -33,10 +33,19 @@ const HeaderHomeDoctor = () => {
           onPress={() => {
             navigation.navigate('DoctorViewProfile');
           }}>
-          <Image source={image==""||image==null?{
-            uri:'https://thumbs.dreamstime.com/z/user-icon-trendy-flat-style-isolated-grey-background-user-symbol-user-icon-trendy-flat-style-isolated-grey-background-123663211.jpg'
-          }:{uri:image}}
-           style={styles.userImage} />
+          {image ? (
+            <Image
+              source={{uri: image}}
+              style={styles.userImage}
+              resizeMode="center"
+            />
+          ) : (
+            <Image
+              source={Images.doctorDefult}
+              style={styles.userImage}
+              resizeMode="center"
+            />
+          )}
         </Pressable>
         <View style={styles.textConatiner}>
           <Text style={style.textContent}> مرحبا</Text>

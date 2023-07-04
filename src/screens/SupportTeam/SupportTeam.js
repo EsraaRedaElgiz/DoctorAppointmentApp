@@ -19,7 +19,7 @@ import {Alert} from 'react-native/Libraries/Alert/Alert';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 function SupportTeam(props) {
   const navigation = useNavigation();
-  const contact = '+0201026669167'; // support phone
+  const contact = '+2001150355305'; // support phone
   const {
     reset,
     handleSubmit,
@@ -73,7 +73,11 @@ function SupportTeam(props) {
           <Text style={styles.callText}>او اتصل بنا</Text>
           <View style={styles.line} />
         </View>
-        <TouchableOpacity style={styles.callView}>
+        <TouchableOpacity style={styles.callView}
+        onPress={()=>{
+          Linking.openURL(`tel:${contact}`)
+        }}
+        >
           <Ionicons name="call" size={ICONS.xxlIcon} color={COLORS.blue} />
         </TouchableOpacity>
       </ScrollView>

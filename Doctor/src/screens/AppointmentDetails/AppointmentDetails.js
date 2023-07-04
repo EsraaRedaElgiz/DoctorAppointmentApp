@@ -29,6 +29,7 @@ import { useRoute } from '@react-navigation/native';
 import { getAppointmentDetails, setAppointmentDetails } from '../../Redux/Reducers/AppointmentDetailsSlice';
 import { ActivityIndicator } from 'react-native-paper';
 import { changeStatus } from '../../Redux/Reducers/UpdateAppointmentStatusSlice';
+import Images from '../../../../src/constants/Images';
 function AppointmentDetails({ navigation }) {
   // const navigation=useNavigation()
   //const route = useRoute();
@@ -213,14 +214,15 @@ function AppointmentDetails({ navigation }) {
           <>
             <View style={styles.imageAndTextViewStyle}>
               <View style={styles.viewImageStyle}>
-                {appointmentDetailsObject.patient.user_image == null || appointmentDetailsObject.patient.user_image == "" ?
-                  <Image
-                    style={[styles.imageStyle, { width: RFValue(70) }]}
-                    source={require("../../assets/Images/userImage.jpg")}
-                  /> :
+                {appointmentDetailsObject.patient.user_image ?
                   <Image
                     style={styles.imageStyle}
                     source={{ uri: appointmentDetailsObject.patient.user_image }}
+                  
+                  /> :
+                  <Image
+                    style={styles.imageStyle}
+                    source={Images.userDefault}
                   />
                 }
 

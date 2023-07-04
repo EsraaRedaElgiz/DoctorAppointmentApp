@@ -18,7 +18,7 @@ import {useNavigation} from '@react-navigation/native';
 import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
 function DoctorSupportTeam({navigation}) {
   // const navigation = useNavigation();
-  const contact = '+0201026669167'; // support phone
+  const contact = '+2001150355305'; // support phone
   const {
     reset,
     handleSubmit,
@@ -72,7 +72,11 @@ function DoctorSupportTeam({navigation}) {
           <Text style={styles.callText}>او اتصل بنا</Text>
           <View style={styles.line} />
         </View>
-        <TouchableOpacity style={styles.callView}>
+        <TouchableOpacity style={styles.callView}
+        onPress={()=>{
+          Linking.openURL(`tel:${contact}`)
+        }}
+        >
           <Ionicons name="call" size={ICONS.xxlIcon} color={COLORS.blue} />
         </TouchableOpacity>
       </ScrollView>
