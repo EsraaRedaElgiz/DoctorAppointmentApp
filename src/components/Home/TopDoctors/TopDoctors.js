@@ -50,7 +50,7 @@ const TopDoctors = () => {
               }}>
               {/* ImageOnCards */}
               <View style={style.imageContainerStyle}>
-                {itemData.item.user_image != null ? (
+                {itemData.item.user_image ? (
                   <Image
                     source={{uri: itemData.item.user_image}}
                     style={style.imageCard}

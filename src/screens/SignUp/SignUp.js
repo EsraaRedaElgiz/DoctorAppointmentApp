@@ -5,6 +5,7 @@ import {
   StatusBar,
   TouchableOpacity,
   ScrollView,
+  Linking,
 } from 'react-native';
 import styles from './style';
 import {COLORS, IS_DOCTOR, PADDINGS} from '../../constants/Constants';
@@ -279,7 +280,12 @@ function SignUp({navigation}) {
                     بتسجيل الدخول فانك توافق علي
                   </Text>
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    Linking.openURL(
+                      'https://sites.google.com/view/doclinicterms/',
+                    );
+                  }}>
                   <Text style={styles.bluetextstyle}> شروط الاستخدام</Text>
                 </TouchableOpacity>
               </View>
@@ -287,7 +293,12 @@ function SignUp({navigation}) {
                 <View>
                   <Text style={styles.textAfterTextinputsStyle}>و</Text>
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    Linking.openURL(
+                      'https://sites.google.com/view/doclinicapp/',
+                    );
+                  }}>
                   <Text style={styles.bluetextstyle}> سياسه الخصوصية</Text>
                 </TouchableOpacity>
               </View>

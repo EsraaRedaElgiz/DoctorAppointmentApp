@@ -7,6 +7,7 @@ import { MARGIN, COLORS, FONTS, ICONS } from '../../constants/Constants';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { style } from '../../styles/Style';
+import Images from '../../constants/Images';
 
 function ProfileImage(props) {
   const {
@@ -29,7 +30,7 @@ function ProfileImage(props) {
                   ? [styles.imageProfileStyle, { marginBottom: MARGIN.smMargin }]
                   : [styles.imageProfileStyle]
               }
-              source={require('../../assets/Images/profile.png')}
+              source={Images.userDefault}
             />
             <TouchableOpacity
               onPress={onPressPen}
@@ -53,7 +54,7 @@ function ProfileImage(props) {
                 ? [styles.imageProfileStyle, { marginBottom: MARGIN.smMargin }]
                 : [styles.imageProfileStyle]
             }
-            source={require('../../assets/Images/profile.png')}
+            source={Images.userDefault}
           />
         )
       ) : iconOnImage ? (
@@ -74,11 +75,10 @@ function ProfileImage(props) {
                 style={styles.imageProfileStyle}
               />
             ) : (
-              <Ionicons
-                name="person-sharp"
-                size={RFValue(60)}
-                color={COLORS.darkGray}
-              />
+              <Image
+              source={Images.userDefault}
+              style={styles.imageProfileStyle}
+            />
             )}
           </View>
           <TouchableOpacity
@@ -113,10 +113,9 @@ function ProfileImage(props) {
               style={styles.imageProfileStyle}
             />
           ) : (
-            <Ionicons
-              name="person-sharp"
-              size={RFValue(60)}
-              color={COLORS.darkGray}
+            <Image
+              source={Images.userDefault}
+              style={styles.imageProfileStyle}
             />
           )}
         </View>
@@ -176,7 +175,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   viewFalseSelectedImage: {
-    backgroundColor: COLORS.gray,
+    backgroundColor: COLORS.lightGray3,
     alignItems: 'center',
     justifyContent: 'center',
   },
