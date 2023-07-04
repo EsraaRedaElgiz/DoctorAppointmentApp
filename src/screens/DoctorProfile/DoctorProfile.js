@@ -8,6 +8,9 @@ import {
   FlatList,
   ImageBackground,
   ActivityIndicator,
+  Modal,
+  Button,
+  Linking,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -20,7 +23,7 @@ import {
   RADIUS,
 } from '../../constants/Constants';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import MapView from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import {style} from '../../styles/Style';
 import {DoctorsData} from '../../utils';
@@ -35,21 +38,21 @@ import Images from '../../constants/Images';
 import { getRate } from '../../Redux/Reducers/GetRateSlice';
 const DoctorProfile = ({navigation}) => {
   const [visiableAddReview, setVisiableAddReview] = useState(false);
+  const [visiableMap, setvisiableMap] = useState(false);
   const globalState = useSelector(state => state);
   const dispatch=useDispatch();
   const {isLoading, rates} = globalState.GetRateReducer;
 
-  const region = {
-    latitude: 30.033333,
-    longitude: 31.233334,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  };
   const route = useRoute();
   const DoctorArray = route.params.DoctorArray;
   useEffect(()=>{
     dispatch(getRate({ 'doctor_id': DoctorArray.doctor_id }))
   },[])
+  const openMap = (latitude, longitude) => {
+    Linking.openURL(
+      `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
+    );
+  };
   return (
     <>
       <View style={{flex: 1, backgroundColor: COLORS.white}}>
@@ -57,9 +60,9 @@ const DoctorProfile = ({navigation}) => {
           style={{backgroundColor: COLORS.white}}
           showsVerticalScrollIndicator={false}>
           {/* image */}
-          {DoctorArray.user_image == null || DoctorArray.user_image == '' ? (
+          {DoctorArray.user_image ? (
             <ImageBackground
-              source={Images.doctorDefult}
+              source={{uri: DoctorArray.user_image}}
               style={{width: '100%', height: RFValue(300)}}>
               <HeaderNavigation
                 padding={PADDINGS.mdPadding}
@@ -70,7 +73,7 @@ const DoctorProfile = ({navigation}) => {
             </ImageBackground>
           ) : (
             <ImageBackground
-              source={{uri: DoctorArray.user_image}}
+              source={Images.doctorDefult}
               style={{width: '100%', height: RFValue(300)}}>
               <HeaderNavigation
                 padding={PADDINGS.mdPadding}
@@ -115,9 +118,22 @@ const DoctorProfile = ({navigation}) => {
               style={[style.textContent, {marginVertical: MARGIN.smMargin}]}>
               {DoctorArray.clinic.branch_location}
             </Text>
-            <Pressable style={styles.PreviewMap}>
-              <MapView initialRegion={region} style={{flex: 1}}></MapView>
+
+            <Pressable
+              style={styles.PreviewMap}
+              onPress={() => {
+                openMap(
+                  DoctorArray.clinic.latitude,
+                  DoctorArray.clinic.longitude,
+                );
+              }}>
+              <ImageBackground
+                source={Images.mapImage}
+                style={{
+                  flex: 1,
+                }}></ImageBackground>
             </Pressable>
+
             {/* Review */}
             <ListTiltle
               Title="التقييمات"

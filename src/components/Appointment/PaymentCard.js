@@ -27,10 +27,10 @@ const PaymentCard = props => {
   return (
     <Pressable style={style.CardContainer}>
       <View style={style.imageContainerStyle}>
-        {image == null || image == '' ? (
-          <Image source={Images.doctorDefult} style={style.imageCard} />
-        ) : (
+        {image ? (
           <Image source={{uri: image}} style={style.imageCard} />
+        ) : (
+          <Image source={Images.doctorDefult} style={style.imageCard} />
         )}
       </View>
       <View style={style.textsCardConatiner}>
@@ -88,7 +88,7 @@ const PaymentCard = props => {
             }}>
             <Ionicons name="time-outline" size={ICONS.smIcon} />
             <Text style={style.textSmallContentBold}>
-              {time} {''} 
+              {time} {''}
             </Text>
           </View>
         </View>

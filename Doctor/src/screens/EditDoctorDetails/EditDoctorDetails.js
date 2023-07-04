@@ -52,6 +52,8 @@ export default function EditDoctorDetails({navigation}) {
     start_time,
     end_time,
     session_time,
+    latitude,
+    longitude,
     isLoading,
     success,
     error,
@@ -236,7 +238,7 @@ export default function EditDoctorDetails({navigation}) {
             iconOnImage={true}
             iconBgColor
             onPressPen={() => refRBSheet.current.open()}
-            imageUri={photo_uri}
+            imageUri={image}
           />
         </View>
         <Controller
@@ -397,7 +399,11 @@ export default function EditDoctorDetails({navigation}) {
               <>
                 <Reusabletextinput
                   placeholder="الموقع"
-                  value={value}
+                  value={
+                    latitude != null && longitude != null
+                      ? 'الموقع محدد'
+                      : value
+                  }
                   onChangeText={onChange}
                   onBlur={onBlur}
                   onTouchStart={() => setModalVisible(true)}
@@ -632,7 +638,7 @@ export default function EditDoctorDetails({navigation}) {
             refRBSheet.current.close();
           }}
           style={styles.eachOptionInBottonTab}>
-          <Text style={styles.optionTextStyle}>التقاط صوره</Text>
+          <Text style={styles.optionTextStyle}>التقاط صورة</Text>
         </TouchableOpacity>
         <View style={styles.line} />
         <TouchableOpacity
@@ -641,7 +647,7 @@ export default function EditDoctorDetails({navigation}) {
             selectFromGallery();
           }}
           style={styles.eachOptionInBottonTab}>
-          <Text style={styles.optionTextStyle}>اختيار صوره</Text>
+          <Text style={styles.optionTextStyle}>اختيار صورة</Text>
         </TouchableOpacity>
         <View style={styles.line} />
         <TouchableOpacity

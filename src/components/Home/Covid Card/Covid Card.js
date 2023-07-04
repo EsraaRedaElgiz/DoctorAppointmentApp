@@ -2,12 +2,7 @@ import {StyleSheet, Text, View, Pressable, Linking} from 'react-native';
 import React from 'react';
 import {RFValue} from 'react-native-responsive-fontsize';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {
-  COLORS,
-  MARGIN,
-  RADIUS,
-  PADDINGS,
-} from '../../../constants/Constants';
+import {COLORS, MARGIN, RADIUS, PADDINGS} from '../../../constants/Constants';
 import {style} from '../../../styles/Style';
 const CovidCard = () => {
   return (

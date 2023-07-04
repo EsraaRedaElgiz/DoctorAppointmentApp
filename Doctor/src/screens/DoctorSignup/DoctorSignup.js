@@ -1,40 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
   StatusBar,
   TouchableOpacity,
   ScrollView,
+  Linking,
 } from 'react-native';
 import styles from './DoctorSignupStyles';
-import { COLORS, IS_DOCTOR, PADDINGS } from '../../../../src/constants/Constants';
+import {COLORS, IS_DOCTOR, PADDINGS} from '../../../../src/constants/Constants';
 import Reusabletextinput from '../../../../src/components/AppTextinput/AppTextinput';
-import { TextInput } from 'react-native-paper';
+import {TextInput} from 'react-native-paper';
 import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
-import { useSelector, useDispatch } from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   setName,
   setPhoneNum,
   setEmail,
   setPassword,
-  setSuccess
+  setSuccess,
 } from '../../Redux/Reducers/DoctorSignUpSlice';
-import { useForm, Controller } from 'react-hook-form';
-import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
+import {useForm, Controller} from 'react-hook-form';
+import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
 //import { insertData } from "../../Redux/Reducers/SignUpSlice";
-import { setIsDoctor } from '../../../../src/Redux/Reducers/AuthSlice';
+import {setIsDoctor} from '../../../../src/Redux/Reducers/AuthSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-function DoctorSignup({ navigation }) {
+function DoctorSignup({navigation}) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   useEffect(() => {
-    dispatch(setSuccess(false))
-    getDoc()
-  }, [])
-  const getDoc = async ()=> {
+    dispatch(setSuccess(false));
+    getDoc();
+  }, []);
+  const getDoc = async () => {
     const doc = await AsyncStorage.getItem(IS_DOCTOR);
     console.log('doc => ', doc);
-  }
+  };
   const [secured_pass_first, set_secured_pass_first] = useState(true);
   const [secured_pass_second, set_secured_pass_second] = useState(true);
 
@@ -42,7 +43,7 @@ function DoctorSignup({ navigation }) {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: {errors},
     watch,
   } = useForm({
     defaultValues: {
@@ -65,10 +66,10 @@ function DoctorSignup({ navigation }) {
        }
        dispatch(insertData(data))
        */
-    dispatch(setName(data.name))
-    dispatch(setPhoneNum(data.phoneNum))
-    dispatch(setEmail(data.email))
-    dispatch(setPassword(data.password))
+    dispatch(setName(data.name));
+    dispatch(setPhoneNum(data.phoneNum));
+    dispatch(setEmail(data.email));
+    dispatch(setPassword(data.password));
     navigation.navigate('CompleteInformation');
     reset();
   };
@@ -87,7 +88,7 @@ function DoctorSignup({ navigation }) {
           onPress={() => {
             reset();
             navigation.navigate('DoctorOrPatient');
-            dispatch(setIsDoctor(false))
+            dispatch(setIsDoctor(false));
           }}
         />
         <View style={styles.container}>
@@ -114,7 +115,7 @@ function DoctorSignup({ navigation }) {
                     minLength: 2,
                     maxLength: 30,
                   }}
-                  render={({ field: { onChange, onBlur, value } }) => (
+                  render={({field: {onChange, onBlur, value}}) => (
                     <Reusabletextinput
                       placeholder="الاسم"
                       bordercolor={errors.name ? COLORS.red : COLORS.gray}
@@ -129,10 +130,10 @@ function DoctorSignup({ navigation }) {
                   {errors.name?.type === 'required'
                     ? 'يجب ادخال الاسم'
                     : errors.name?.type === 'minLength'
-                      ? 'الاسم يجب ان لا يقل عن حرفين'
-                      : errors.name?.type === 'maxLength'
-                        ? 'الاسم يجب ان لا يزيد عن 30 حرف'
-                        : ''}
+                    ? 'الاسم يجب ان لا يقل عن حرفين'
+                    : errors.name?.type === 'maxLength'
+                    ? 'الاسم يجب ان لا يزيد عن 30 حرف'
+                    : ''}
                 </Text>
               </View>
               <View style={styles.eachtextinputmargin}>
@@ -143,7 +144,7 @@ function DoctorSignup({ navigation }) {
                     pattern:
                       /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{5,6}$/im,
                   }}
-                  render={({ field: { onChange, onBlur, value } }) => (
+                  render={({field: {onChange, onBlur, value}}) => (
                     <Reusabletextinput
                       placeholder="رقم الهاتف"
                       keyboardType="phone-pad"
@@ -159,8 +160,8 @@ function DoctorSignup({ navigation }) {
                   {errors.phoneNum?.type === 'required'
                     ? 'يجب ادخال رقم الهاتف'
                     : errors.phoneNum?.type === 'pattern'
-                      ? 'يجب ادخال رقم هاتف صحيح'
-                      : ''}
+                    ? 'يجب ادخال رقم هاتف صحيح'
+                    : ''}
                 </Text>
               </View>
               <View style={styles.eachtextinputmargin}>
@@ -170,7 +171,7 @@ function DoctorSignup({ navigation }) {
                     required: true,
                     pattern: /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/,
                   }}
-                  render={({ field: { onChange, onBlur, value } }) => (
+                  render={({field: {onChange, onBlur, value}}) => (
                     <Reusabletextinput
                       placeholder="عنوان البريد الالكتروني"
                       keyboardType="email-address"
@@ -186,8 +187,8 @@ function DoctorSignup({ navigation }) {
                   {errors.email?.type === 'required'
                     ? 'يجب ادخال عنوان البريد الالكتروني'
                     : errors.email?.type === 'pattern'
-                      ? 'يجب ادخال عنوان بريد الكتروني صحيح'
-                      : ''}
+                    ? 'يجب ادخال عنوان بريد الكتروني صحيح'
+                    : ''}
                 </Text>
               </View>
               <View style={styles.eachtextinputmargin}>
@@ -199,7 +200,7 @@ function DoctorSignup({ navigation }) {
                       /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
                     maxLength: 20,
                   }}
-                  render={({ field: { onChange, onBlur, value } }) => (
+                  render={({field: {onChange, onBlur, value}}) => (
                     <Reusabletextinput
                       placeholder="كلمه المرور"
                       right={
@@ -226,10 +227,10 @@ function DoctorSignup({ navigation }) {
                   {errors.password?.type === 'required'
                     ? 'يجب ادخال كلمة المرور'
                     : errors.password?.type === 'pattern'
-                      ? 'كلمه المرور يجب لا تقل عن 8 ارقام وحرف كبير وحرف صغير وعلامه مميزه'
-                      : errors.password?.type === 'maxLength'
-                        ? 'كلمة المرور يجب ان لا تزيد عن 20 حرف ورقم'
-                        : ''}
+                    ? 'كلمه المرور يجب لا تقل عن 8 ارقام وحرف كبير وحرف صغير وعلامه مميزه'
+                    : errors.password?.type === 'maxLength'
+                    ? 'كلمة المرور يجب ان لا تزيد عن 20 حرف ورقم'
+                    : ''}
                 </Text>
               </View>
               <View style={styles.eachtextinputmargin}>
@@ -243,7 +244,7 @@ function DoctorSignup({ navigation }) {
                       }
                     },
                   }}
-                  render={({ field: { onChange, onBlur, value } }) => (
+                  render={({field: {onChange, onBlur, value}}) => (
                     <Reusabletextinput
                       placeholder="تأكيد كلمه المرور"
                       right={
@@ -272,8 +273,8 @@ function DoctorSignup({ navigation }) {
                   {errors.confirmPassword?.type === 'required'
                     ? 'يجب ادخال تأكيد كلمة المرور'
                     : errors.confirmPassword?.type === 'validate'
-                      ? 'كلمة المرور غير متطابقه'
-                      : ''}
+                    ? 'كلمة المرور غير متطابقه'
+                    : ''}
                 </Text>
               </View>
               <View style={styles.viewForfirstTextAfterTextinputs}>
@@ -282,7 +283,12 @@ function DoctorSignup({ navigation }) {
                     بتسجيل الدخول فانك توافق علي
                   </Text>
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    Linking.openURL(
+                      'https://sites.google.com/view/doclinicterms/',
+                    );
+                  }}>
                   <Text style={styles.bluetextstyle}> شروط الاستخدام</Text>
                 </TouchableOpacity>
               </View>
@@ -290,7 +296,12 @@ function DoctorSignup({ navigation }) {
                 <View>
                   <Text style={styles.textAfterTextinputsStyle}>و</Text>
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    Linking.openURL(
+                      'https://sites.google.com/view/doclinicapp/',
+                    );
+                  }}>
                   <Text style={styles.bluetextstyle}> سياسه الخصوصية</Text>
                 </TouchableOpacity>
               </View>
