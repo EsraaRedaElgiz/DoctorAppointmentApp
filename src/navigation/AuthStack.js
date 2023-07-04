@@ -10,6 +10,7 @@ import ResetPassword from '../screens/ResetPassword/ResetPassword';
 import MedicalSheet from '../screens/MedicalSheet/MedicalSheet';
 import Splash from '../screens/Intro/Splash/Splash';
 import LoginWithG from '../utils/LoginWithG';
+import {ConditionsAndTerms, PrivacyPolicy} from '../screens';
 const Stack = createNativeStackNavigator();
 const AuthStack = () => {
   return (
@@ -27,6 +28,20 @@ const AuthStack = () => {
       <Stack.Screen name="VertificationCode" component={VertificationCode} />
       <Stack.Screen name="ResetPassword" component={ResetPassword} />
       <Stack.Screen name="MedicalSheet" component={MedicalSheet} />
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicy}
+        options={{
+          headerShown: true,
+          title: 'سياسة الخصوصيه',
+          headerShadowVisible: false,
+        }}
+      />
+      <Stack.Screen name="ConditionsAndTerms" component={ConditionsAndTerms}  options={{
+          headerShown: true,
+          title: 'شروط الإستخدام',
+          headerShadowVisible: false,
+        }} />
     </Stack.Navigator>
   );
 };

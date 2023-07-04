@@ -50,13 +50,9 @@ function DoctorProfileTabs({navigation}) {
                     : idx == 3
                     ? navigation.navigate('DoctorSupportTeam')
                     : idx == 4
-                    ? Linking.openURL(
-                        'https://sites.google.com/view/doclinicapp/',
-                      )
+                    ? navigation.navigate('PrivacyPolicy')
                     : idx == 5
-                    ? Linking.openURL(
-                        'https://sites.google.com/view/doclinicterms/',
-                      )
+                    ?  navigation.navigate('ConditionsAndTerms')
                     : idx == 6
                     ? dispatch(setLoggedOut())
                     : null;

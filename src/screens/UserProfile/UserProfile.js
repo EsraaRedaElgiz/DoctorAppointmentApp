@@ -53,13 +53,9 @@ function UserProfile(props) {
                     : idx == 4
                     ? navigation.navigate('SupportTeam')
                     : idx == 5
-                    ? Linking.openURL(
-                        'https://sites.google.com/view/doclinicapp/',
-                      )
+                    ? navigation.navigate('PrivacyPolicy')
                     : idx == 6
-                    ? Linking.openURL(
-                        'https://sites.google.com/view/doclinicterms/',
-                      )
+                    ? navigation.navigate('ConditionsAndTerms')
                     : idx == 7
                     ? dispatch(setLoggedOut())
                     : null;

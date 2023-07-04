@@ -6,6 +6,8 @@ import PaymentCash from './PaymentCash/PaymentCash';
 import PaymentCreditCard from './PaymentCreditCard/PaymentCreditCard';
 import CompletedAppointment from './CompletedAppointment/CompletedAppointment';
 import BookAppointment from './Book Appointment/BookAppointment';
+import PrivacyPolicy from './PrivacyPolicy/PrivacyPolicy';
+import ConditionsAndTerms from './ConditionsAndTerms/ConditionsAndTerms';
 export {
   Home,
   SpecialitySearch,
@@ -15,4 +17,6 @@ export {
   PaymentCreditCard,
   CompletedAppointment,
   BookAppointment,
+  PrivacyPolicy,
+  ConditionsAndTerms,
 };
