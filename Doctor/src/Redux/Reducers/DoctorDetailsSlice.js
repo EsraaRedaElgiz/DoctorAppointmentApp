@@ -47,8 +47,8 @@ const doctorDetailsSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(getDoctorDetails.pending, (state, action) => {
       state.isLoading = true;
-      console.log('state in pending ', state);
-      console.log('action.payload in pending ', action.payload);
+      // console.log('state in pending ', state);
+      // console.log('action.payload in pending ', action.payload);
     }),
       builder.addCase(getDoctorDetails.fulfilled, (state, action) => {
         state.isLoading = false;
@@ -97,13 +97,13 @@ const doctorDetailsSlice = createSlice({
         "session_time": "20:00:00"
     }
         */
-        console.log('state : ', state);
-        console.log('action.payload in fulfilled : ', action.payload);
+        // console.log('state : ', state);
+        // console.log('action.payload in fulfilled : ', action.payload);
       }),
       builder.addCase(getDoctorDetails.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-        console.log('Error ', state.error);
+        // console.log('Error ', state.error);
       });
   },
 });

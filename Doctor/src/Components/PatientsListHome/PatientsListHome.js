@@ -7,7 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import {getAppointmentDetails} from '../../Redux/Reducers/AppointmentDetailsSlice';
 import {useDispatch} from 'react-redux';
 
-const PatientsListHome = () => {
+const PatientsListHome = ({data}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   return (
@@ -20,10 +20,13 @@ const PatientsListHome = () => {
           return (
             <>
               <PersonAppointmentCard
-                name={itemData.item.name.trim()}
-                time={itemData.item.time}
-                confirmed={itemData.item.confirmed}
-                imageUri={itemData.item.imageUri}
+                name={data[0].patient.user_first_name.trim()}
+                // name={itemData.item.name.trim()}
+                time={data[0].appointment_time}
+                // time={itemData.item.time}
+                confirmed={data[0].appointment_status}
+                // confirmed={itemData.item.confirmed}
+                imageUri={data[0].patient.user_image}
                 onPress={() => {
                   //
                   dispatch(getAppointmentDetails('54')) // action.payload -> slice -> getAppointmentDetails

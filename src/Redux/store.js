@@ -28,7 +28,9 @@ import RateDoctorReducer from './Reducers/RateDoctorSlice';
 import GetRateReducer from './Reducers/GetRateSlice';
 import UpdateAppointmentStatusReducer from '../../Doctor/src/Redux/Reducers/UpdateAppointmentStatusSlice';
 import SendEmailReducer from './Reducers/SendEmailSlice';
-import  PatientHistoryReducer  from '../../Doctor/src/Redux/Reducers/PatientHistorySlice';
+import DoctorHomeReducer from '../../Doctor/src/Redux/Reducers/DoctorHomeSlice';
+
+import PatientHistoryReducer from '../../Doctor/src/Redux/Reducers/PatientHistorySlice';
 const store = configureStore({
   reducer: {
     SignUpReducer: SignUpReducer,
@@ -54,13 +56,17 @@ const store = configureStore({
     DoctorDetailsReducer: DoctorDetailsReducer,
     HistoryPublicOrPrivateReducer: HistoryPublicOrPrivateReducer,
     UpdateUserProfileReducer: UpdateUserProfileReducer,
-    TopDoctorReducer:TopDoctorReducer,
+    TopDoctorReducer: TopDoctorReducer,
     BookAppointmentReducer: BookAppointmentReducer,
-    RateDoctorReducer:RateDoctorReducer,
-    GetRateReducer:GetRateReducer,
-    UpdateAppointmentStatusReducer:UpdateAppointmentStatusReducer,
-    SendEmailReducer:SendEmailReducer,
-    PatientHistoryReducer:PatientHistoryReducer
+    GetRateReducer: GetRateReducer,
+    UpdateAppointmentStatusReducer: UpdateAppointmentStatusReducer,
+    SendEmailReducer: SendEmailReducer,
+    DoctorHomeReducer: DoctorHomeReducer,
+    RateDoctorReducer: RateDoctorReducer,
+    GetRateReducer: GetRateReducer,
+    UpdateAppointmentStatusReducer: UpdateAppointmentStatusReducer,
+    SendEmailReducer: SendEmailReducer,
+    PatientHistoryReducer: PatientHistoryReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

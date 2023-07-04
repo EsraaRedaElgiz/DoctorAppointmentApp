@@ -17,13 +17,14 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getAppointmentDetails} from '../../Redux/Reducers/AppointmentDetailsSlice';
 import {getDoctorHistory} from '../../Redux/Reducers/DoctorHistorySlice';
 import {RFValue} from 'react-native-responsive-fontsize';
-import { Alert } from 'react-native';
+import {Alert} from 'react-native';
 
 function DoctorHistory({navigation}) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   const {isLoading, history} = globalState.DoctorHistoryReducer;
   useEffect(() => {
+    console.log('History = ' + JSON.stringify(history));
     dispatch(getDoctorHistory({filter: 'history'}));
   }, []);
   let date = new Date();
@@ -66,14 +67,10 @@ function DoctorHistory({navigation}) {
             return (
               <>
                 <PersonHistoryCard
-                  done={true}
-                  ///name={item.patient.user_first_name.trim()}
-                  // time={itemData.item.time}
-                  /// imageUri={item.user_image}
-                  // done={itemData.item.done}
-                  // name={itemData.item.name.trim()}
-                  // time={itemData.item.time}
-                  // imageUri={itemData.item.imageUri}
+                  name={history[0].patient.user_first_name}
+                  done={history[0].appointment_status}
+                  time={history[0].appointment_time.slice(0, 5)}
+                  imageUri={history[0].patient.user_image}
                   onPress={() => {
                     //console.log(item)
                     dispatch(getAppointmentDetails(item.item.appointment_id))
