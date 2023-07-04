@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   Modal,
   Button,
+  Linking,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -42,8 +43,11 @@ const DoctorProfile = ({navigation}) => {
 
   const route = useRoute();
   const DoctorArray = route.params.DoctorArray;
-  console.log(DoctorArray);
-  console.log( DoctorArray.branch_id)
+  const openMap = (latitude, longitude) => {
+    Linking.openURL(
+      `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
+    );
+  };
   return (
     <>
       <View style={{flex: 1, backgroundColor: COLORS.white}}>
@@ -113,7 +117,10 @@ const DoctorProfile = ({navigation}) => {
             <Pressable
               style={styles.PreviewMap}
               onPress={() => {
-                setvisiableMap(true);
+                openMap(
+                  DoctorArray.clinic.latitude,
+                  DoctorArray.clinic.longitude,
+                );
               }}>
               <ImageBackground
                 source={Images.mapImage}
@@ -222,11 +229,6 @@ const DoctorProfile = ({navigation}) => {
         setVisiableAddReview={setVisiableAddReview}
         doctorArray={DoctorArray}
       />
-      <MapModal
-        visiableMap={visiableMap}
-        setvisiableMap={setvisiableMap}
-        doctorArray={DoctorArray}
-      />
     </>
   );
 };
@@ -282,36 +284,6 @@ const Cards = props => {
 };
 export {Cards};
 
-const MapModal = ({visiableMap, setvisiableMap, doctorArray}) => {
-  // console.log(doctorArray.longitude);
-  const region = {
-    latitude: 30.033333,
-    longitude: 31.233334,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  };
-  return (
-    <>
-      <Modal
-        visible={visiableMap}
-        onRequestClose={() => {
-          setvisiableMap(false);
-        }}>
-        <MapView initialRegion={region} style={{flex: 1}}>
-          <Marker
-            coordinate={{
-              longitude: region.longitude,
-              latitude: region.latitude,
-            }}
-            pinColor={'red'}
-            draggable
-          />
-        </MapView>
-      </Modal>
-    </>
-  );
-};
-export {MapModal};
 export default DoctorProfile;
 
 const styles = StyleSheet.create({
