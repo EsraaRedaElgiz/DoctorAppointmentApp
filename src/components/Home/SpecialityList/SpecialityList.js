@@ -7,6 +7,7 @@ import { style } from '../../../styles/Style';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpecialities } from '../../../Redux/Reducers/GetSpecialitiesSlice';
+import { getSpecialityDoctors } from '../../../Redux/Reducers/SpecialitySearchSlice';
 const SpecialityList = () => {
   const globalState = useSelector(state => state);
   const navigation = useNavigation();
@@ -29,12 +30,14 @@ const SpecialityList = () => {
               style={styles.image_Text_Container}
               onPress={() => {
                 //عايزه لخليه هنا يعمل سيرش جوه التخصص
-                /*dispatch(getSpecialities()).unwrap().then((res) => {
-                //  console.log(res)
-                })*/
-                navigation.navigate('DoctorsSearch', {
-                  SpecialityArray: itemData.item,
-                });
+                dispatch(getSpecialityDoctors(JSON.parse(itemData.item.specialty_id))).unwrap().then((res) => {
+                  if(res==true){
+                    navigation.navigate('DoctorsSearch', {
+                      SpecialityArray: itemData.item,
+                    });
+                  }
+                })
+                
               }}>
               {/* image */}
               <View style={styles.imageContainer}>

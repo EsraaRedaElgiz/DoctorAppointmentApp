@@ -28,7 +28,7 @@ const SearchBar = props => {
       //ده بتاع الدكاتره اللي ف كل تخصص
       setArrayFilterd(
         sortedArray.filter(i =>
-          i.name.toLowerCase().includes(enteredText.toLowerCase()),
+          i.user_first_name.toLowerCase().includes(enteredText.toLowerCase()),
         ),
       );
     } else {

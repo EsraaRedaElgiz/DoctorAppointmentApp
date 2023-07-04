@@ -20,6 +20,8 @@ const initialState = {
   start_time: null,
   end_time: null,
   session_time: null,
+  numOfPatients:'',
+  numOfRating:'',
   isLoading: true,
   success: false,
   error: null,
@@ -71,6 +73,9 @@ const doctorDetailsSlice = createSlice({
         state.start_time = action.payload.clinic.start_time;
         state.end_time = action.payload.clinic.end_time;
         state.session_time = action.payload.clinic.session_time;
+        state.numOfPatients=action.payload.num_of_patients;
+        state.numOfRating=action.payload.rating;
+
         /*
         "doctor": {
         "doctor_id": "23",
@@ -97,8 +102,8 @@ const doctorDetailsSlice = createSlice({
         "session_time": "20:00:00"
     }
         */
-        console.log('state : ', state);
-        console.log('action.payload in fulfilled : ', action.payload);
+        //console.log('state : ', state);
+       // console.log('action.payload in fulfilled : ', action.payload);
       }),
       builder.addCase(getDoctorDetails.rejected, (state, action) => {
         state.isLoading = false;

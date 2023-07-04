@@ -36,14 +36,13 @@ function Payment(props) {
         }}
       />
       <View
-        style={{flex: 1}}
-        contentContainerStyle={{
-          paddingHorizontal: PADDINGS.mdPadding,
-        }}>
+        style={{flex: 1,paddingHorizontal: PADDINGS.mdPadding}}
+        >
         {isLoading ? (
           <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
         ) : (
           <FlatList
+          showsVerticalScrollIndicator={false}
             data={cards}
             renderItem={({item}) => {
               return (

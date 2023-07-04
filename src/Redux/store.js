@@ -29,6 +29,7 @@ import GetRateReducer from './Reducers/GetRateSlice';
 import UpdateAppointmentStatusReducer from '../../Doctor/src/Redux/Reducers/UpdateAppointmentStatusSlice';
 import SendEmailReducer from './Reducers/SendEmailSlice';
 import  PatientHistoryReducer  from '../../Doctor/src/Redux/Reducers/PatientHistorySlice';
+import SpecialitySearchReducer from './Reducers/SpecialitySearchSlice';
 const store = configureStore({
   reducer: {
     SignUpReducer: SignUpReducer,
@@ -60,7 +61,8 @@ const store = configureStore({
     GetRateReducer:GetRateReducer,
     UpdateAppointmentStatusReducer:UpdateAppointmentStatusReducer,
     SendEmailReducer:SendEmailReducer,
-    PatientHistoryReducer:PatientHistoryReducer
+    PatientHistoryReducer:PatientHistoryReducer,
+    SpecialitySearchReducer:SpecialitySearchReducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

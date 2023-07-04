@@ -12,8 +12,11 @@ import {SpecialityData} from '../../../utils';
 import {style} from '../../../styles/Style';
 import SearchBar from '../SearchBar/SearchBar';
 import {useNavigation} from '@react-navigation/native';
+import { getSpecialityDoctors } from '../../../Redux/Reducers/SpecialitySearchSlice';
+import { useDispatch } from 'react-redux';
 const ListSpecialitySearch = ({SpecialtyFilterd}) => {
   const navigation = useNavigation();
+  const dispatch=useDispatch();
   return (
     <>
     
@@ -34,9 +37,13 @@ const ListSpecialitySearch = ({SpecialtyFilterd}) => {
             <Pressable
               style={styles.container}
               onPress={() => {
-                navigation.navigate('DoctorsSearch', {
-                  SpecialityArray: itemData.item,
-                });
+                dispatch(getSpecialityDoctors(JSON.parse(itemData.item.specialty_id))).unwrap().then((res) => {
+                  if(res==true){
+                    navigation.navigate('DoctorsSearch', {
+                      SpecialityArray: itemData.item,
+                    });
+                  }
+                })
               }}>
               <View style={styles.imageConatiner}>
                 <Image
