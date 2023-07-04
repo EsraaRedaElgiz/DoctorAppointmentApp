@@ -63,9 +63,6 @@ const store = configureStore({
     SendEmailReducer: SendEmailReducer,
     DoctorHomeReducer: DoctorHomeReducer,
     RateDoctorReducer: RateDoctorReducer,
-    GetRateReducer: GetRateReducer,
-    UpdateAppointmentStatusReducer: UpdateAppointmentStatusReducer,
-    SendEmailReducer: SendEmailReducer,
     PatientHistoryReducer: PatientHistoryReducer,
   },
   middleware: getDefaultMiddleware =>

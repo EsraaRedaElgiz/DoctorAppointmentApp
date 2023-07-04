@@ -20,6 +20,8 @@ const initialState = {
   start_time: null,
   end_time: null,
   session_time: null,
+  latitude: null,
+  longitude: null,
   isLoading: true,
   success: false,
   error: null,
@@ -71,6 +73,8 @@ const doctorDetailsSlice = createSlice({
         state.start_time = action.payload.clinic.start_time;
         state.end_time = action.payload.clinic.end_time;
         state.session_time = action.payload.clinic.session_time;
+        state.latitude = action.payload.latitude;
+        state.longitude = action.payload.longitude;
         /*
         "doctor": {
         "doctor_id": "23",
