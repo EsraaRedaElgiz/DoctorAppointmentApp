@@ -19,7 +19,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getAppointmentDetails} from '../../Redux/Reducers/AppointmentDetailsSlice';
 import {getDoctorAppointments} from '../../Redux/Reducers/DoctorAppointmentSlice';
 import {RFValue} from 'react-native-responsive-fontsize';
-import { getPatientHistory } from '../../Redux/Reducers/PatientHistorySlice';
+import {getPatientHistory} from '../../Redux/Reducers/PatientHistorySlice';
 
 function DoctorAppointments({navigation}) {
   const dispatch = useDispatch();
@@ -69,6 +69,7 @@ function DoctorAppointments({navigation}) {
         <Calender />
       </View>
       <View style={styles.line} />
+
       {isLoading ? (
         <View style={styles.activityIndicatorViewStyle}>
           <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
@@ -85,17 +86,17 @@ function DoctorAppointments({navigation}) {
                 <PersonAppointmentCard
                   confirmed={item.appointment_status === 2 ? false : true}
                   name={item.patient.user_first_name.trim()}
-                  time={item.appointment_time.slice(0,5)}
+                  time={item.appointment_time.slice(0, 5)}
                   imageUri={item.patient.user_image}
                   onPress={() => {
-                    dispatch(getPatientHistory(JSON.parse(item.patient.patient_id)))
+                    dispatch(
+                      getPatientHistory(JSON.parse(item.patient.patient_id)),
+                    );
                     dispatch(getAppointmentDetails(item.appointment_id))
                       .unwrap()
                       .then(res => {
                         if (res.appointment_id) {
-                          navigation.navigate(
-                            'AppointmentDetails' ,
-                          );
+                          navigation.navigate('AppointmentDetails');
                         } else {
                           Alert.alert(
                             'حدث خطأ اثناء الاتصال بالخادم لعرض تفاصيل الموعد من فضلك حاول مجددا ',
