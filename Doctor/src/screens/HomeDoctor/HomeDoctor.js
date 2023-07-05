@@ -69,7 +69,7 @@ const HomeDoctor = ({navigation}) => {
       dispatch(getDoctorDetails())
         .unwrap()
         .then(res => {
-          dispatch(getDoctorAppointmentToday({date: '2023-03-18', status: 1}));
+          dispatch(getDoctorAppointmentToday({date: sendData, status: 1}));
         })
         .catch(err => {});
     });
