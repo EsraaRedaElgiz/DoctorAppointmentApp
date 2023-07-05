@@ -56,7 +56,6 @@ const Header = props => {
         </Pressable>
         <View style={styles.textConatiner}>
           <Text style={style.textContent}>
-            {' '}
             {curHr < 12 ? 'صباح الخير' : 'مساء الخير'}
           </Text>
           {isLoading ? (

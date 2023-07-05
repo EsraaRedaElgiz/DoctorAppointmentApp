@@ -37,9 +37,10 @@ const BookAppointment = ({navigation}) => {
   const [chosenDay, setChosenDay] = useState(null);
   //session time
   const [timeSlots, setTimeSlots] = useState([]);
+  console.log("totalappointment",(timeSlots.length)-1) //الرقم اللي هيطلع من هنا هيتحط في الهوم دكتور
   const craeteTimeSlots = (fromTime, ToTime) => {
-    let startTime = moment(fromTime, 'hh:mm A');
-    let endTime = moment(ToTime, 'hh:mm A');
+    let startTime = moment(fromTime, 'hh:mm');
+    let endTime = moment(ToTime, 'hh:mm');
 
     if (endTime.isBefore(startTime)) {
       endTime.add(1, 'day');
@@ -47,14 +48,25 @@ const BookAppointment = ({navigation}) => {
 
     let arr = [];
     while (startTime <= endTime) {
-      arr.push(new moment(startTime).format('hh:mm A'));
-      startTime.add(30, 'minute'); //30 this number of session
+      arr.push(new moment(startTime).format('hh:mm'));
+      startTime.add(30, 'minute'); 
     }
 
     return arr;
   };
+  //
+  function convertH2M(timeInHour){
+
+    var timeParts = timeInHour.split(":");
+
+    return Number(timeParts[0]) * 60 + Number(timeParts[1]);
+
+  }
+  var timeInMinutes = convertH2M("01:30");//session time
+  console.log("test",timeInMinutes); //الناتج ده هحطه مكتن ال 30 اللي في 51 سطر
+  //
   useEffect(() => {
-    setTimeSlots(craeteTimeSlots('08:00 AM', '8:00 PM')); // 08:00 start time ,9:00 end time
+    setTimeSlots(craeteTimeSlots('08:00', '20:00')); // 08:00 start time ,9:00 end time هحط هنا البدليه والنهايه من الباك
   }, []);
   const cashFun = () => {
     setCheckCash(true);

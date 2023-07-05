@@ -76,9 +76,9 @@ export default function EditDoctorDetails({navigation}) {
       About: doctor_about,
       Workdays: branch_working_days,
       price: booking_price,
-      start: start_time,
-      end: end_time,
-      section: session_time,
+      start: start_time.slice(0,5),
+      end: end_time.slice(0,5),
+      section: session_time.slice(0,5),
     },
   });
   const region = {

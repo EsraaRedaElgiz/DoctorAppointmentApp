@@ -39,8 +39,16 @@ function DoctorAppointments({navigation}) {
   let month = date.toLocaleString('default', {month: 'long'});
   let year = date.getFullYear();
   useEffect(() => {
-    dispatch(getDoctorAppointments({filter: 'upcoming'}));
-  }, []);
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(getDoctorAppointments({filter: 'upcoming'}))
+        .unwrap()
+        .then(res => {
+        })
+        .catch(err => { });
+       
+    });
+    return unsubscribe;
+  }, [navigation]);
   return (
     <View style={styles.container}>
       <HeaderNavigation
@@ -84,7 +92,7 @@ function DoctorAppointments({navigation}) {
             return (
               <>
                 <PersonAppointmentCard
-                  confirmed={item.appointment_status === 2 ? false : true}
+                  confirmed={item.appointment_status == 2 ? false : true}
                   name={item.patient.user_first_name.trim()}
                   time={item.appointment_time.slice(0, 5)}
                   imageUri={item.patient.user_image}

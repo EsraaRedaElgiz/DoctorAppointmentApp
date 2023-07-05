@@ -5,31 +5,35 @@ import PersonAppointmentCard from '../../../../src/components/PersonAppointmentC
 import {RFValue} from 'react-native-responsive-fontsize';
 import {useNavigation} from '@react-navigation/native';
 import {getAppointmentDetails} from '../../Redux/Reducers/AppointmentDetailsSlice';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import { getPatientHistory } from '../../Redux/Reducers/PatientHistorySlice';
 
 const PatientsListHome = ({data}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const globalState=useSelector(state=>state);
+  const { appointmentForToday} = globalState.DoctorHomeReducer;
   return (
     <View>
       <FlatList
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingHorizontal: RFValue(1)}}
-        data={PatientsData} // data from database
+        data={appointmentForToday} 
         renderItem={(itemData, index) => {
           return (
+          
             <>
               <PersonAppointmentCard
-                name={data[0].patient.user_first_name.trim()}
-                // name={itemData.item.name.trim()}
-                time={data[0].appointment_time}
-                // time={itemData.item.time}
-                confirmed={data[0].appointment_status}
-                // confirmed={itemData.item.confirmed}
-                imageUri={data[0].patient.user_image}
+                name={itemData.item.patient.user_first_name.trim()}
+                time={itemData.item.appointment_time.slice(0,5)}
+                confirmed={itemData.item.appointment_status}
+                imageUri={itemData.item.patient.user_image}
                 onPress={() => {
                   //
-                  dispatch(getAppointmentDetails('54')) // action.payload -> slice -> getAppointmentDetails
+                  dispatch(
+                    getPatientHistory(JSON.parse(itemData.item.patient.patient_id)),
+                  );
+                  dispatch(getAppointmentDetails(itemData.item.appointment_id)) // action.payload -> slice -> getAppointmentDetails
                     .unwrap()
                     .then(res => {
                       //instead of 54 i will pass appointment_id

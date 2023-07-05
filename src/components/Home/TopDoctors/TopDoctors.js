@@ -24,7 +24,7 @@ const TopDoctors = () => {
   const dispatch = useDispatch();
   const {topDoctors, isLoading} = globalState.TopDoctorReducer;
   // TO SHOW JUST 5 RATING
-  const filterArray = DoctorsData.filter(el => el.rating == 5);
+  const filterArray = topDoctors.filter(el => el.rating == 5);
   return (
     <>
       {isLoading ? (
@@ -38,7 +38,7 @@ const TopDoctors = () => {
             paddingHorizontal: PADDINGS.mdPadding,
           }}
           keyExtractor={(item, index) => index}
-          data={topDoctors}
+          data={filterArray}
           renderItem={(itemData, index) => (
             <Pressable
               style={style.CardContainer}
