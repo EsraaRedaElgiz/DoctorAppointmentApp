@@ -32,6 +32,7 @@ import {style} from '../../../../src/styles/Style';
 import {CheckBox} from 'react-native-elements';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {useSelector, useDispatch} from 'react-redux';
+import {getDoctorDetails} from '../../Redux/Reducers/DoctorDetailsSlice';
 export default function EditDoctorDetails({navigation}) {
   const globalState = useSelector(state => state);
   const dispatch = useDispatch();
@@ -120,8 +121,22 @@ export default function EditDoctorDetails({navigation}) {
     formData.append('end_time', data.end);
     formData.append('session_time', data.section);
     console.log(data);
-    dispatch(formData);
-    navigation.goBack();
+    dispatch(formData)
+      .unwrap()
+      .then(result => {
+        dispatch(getDoctorDetails());
+        console.log(
+          'result in dispatch updateUserProfileAction ' +
+            JSON.stringify(result?.data),
+        );
+        navigation.goBack();
+        reset();
+      })
+      .catch(err => {
+        console.log(err?.response?.data);
+        const errors = err?.response?.data?.errors;
+      })
+      .finally(() => {});
   };
   const [photo_uri, setphoto_uri] = useState('');
   const Specialization = ['اسنان', 'باطنة', 'صدر', 'عيون'];
