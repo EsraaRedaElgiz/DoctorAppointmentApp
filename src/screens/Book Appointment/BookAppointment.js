@@ -67,13 +67,13 @@ const BookAppointment = ({navigation}) => {
   const sendDate = `${JSON.stringify(chosenDay).slice(1, 5)}-${JSON.stringify(
     chosenDay,
   ).slice(6, 8)}-${JSON.stringify(chosenDay).slice(9, 11)}`;
-  console.log(JSON.stringify(chosenTime).slice(1, 6).concat(':00'));
-  console.log(
-    'date' +
-      sendDate +
-      'time' +
-      JSON.stringify(chosenTime).slice(1, 6).concat(':00'),
-  );
+  // console.log(JSON.stringify(chosenTime).slice(1, 6).concat(':00'));
+  // console.log(
+  //   'date' +
+  //     sendDate +
+  //     'time' +
+  //     JSON.stringify(chosenTime).slice(1, 6).concat(':00'),
+  // );
   return (
     <View style={{backgroundColor: COLORS.white, flex: 1}}>
       <HeaderNavigation
