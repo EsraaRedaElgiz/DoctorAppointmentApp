@@ -52,7 +52,7 @@ const BookAppointmentSlice = createSlice({
   reducers: {
     setDate: (state, action) => {
       state.date = action.payload.date;
-      console.log('DATE => ' + state.date);
+      console.log('DATE IN GLOBAL STATE => ' + state.date);
     },
     setTime: (state, action) => {
       state.time = action.payload.time;

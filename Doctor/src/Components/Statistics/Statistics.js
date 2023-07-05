@@ -23,7 +23,6 @@ const Statistics = (props) => {
   const { todayAppointmentes } = props
   const { start_time, end_time, session_time } = globalState.DoctorDetailsReducer
   const [timeSlots, setTimeSlots] = useState([]);
-  console.log("totalappointment",(timeSlots.length)-1) //الرقم اللي هيطلع من هنا هيتحط في الهوم دكتور
   const craeteTimeSlots = (fromTime, ToTime) => {
     let startTime = moment(fromTime, 'hh:mm');
     let endTime = moment(ToTime, 'hh:mm');
