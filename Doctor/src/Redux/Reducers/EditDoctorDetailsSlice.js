@@ -1,6 +1,6 @@
 import {Alert} from 'react-native';
 import Axios from '../../../../src/utils/axios';
-const {createSlice} = require('@reduxjs/toolkit');
+const {createSlice, createAsyncThunk} = require('@reduxjs/toolkit');
 
 const initialState = {
   isLoading: null,
@@ -30,16 +30,16 @@ const EditDoctorDetailsSlice = createSlice({
   name: 'EditDoctorDetailsSlice',
   initialState,
   extraReducers: builder => {
-    builder.addCase(getDoctorHistory.pending, (state, action) => {
+    builder.addCase(EditDoctorDetailAction.pending, (state, action) => {
       state.isLoading = true;
       console.log('Pending');
     }),
-      builder.addCase(getDoctorHistory.fulfilled, (state, action) => {
+      builder.addCase(EditDoctorDetailAction.fulfilled, (state, action) => {
         state.isLoading = false;
         state.success = true;
         console.log('fulfilled');
       }),
-      builder.addCase(getDoctorHistory.rejected, (state, action) => {
+      builder.addCase(EditDoctorDetailAction.rejected, (state, action) => {
         state.isLoading = false;
         state.error = true;
         console.log('rejected');
