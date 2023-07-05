@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from 'react';
+import React, {useEffect, Fragment} from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,9 +7,9 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import { HeaderHomeDoctor, Statistics } from '../../Components';
-import { style } from '../../../../src/styles/Style';
-import { ListTiltle } from '../../../../src/components/Home';
+import {HeaderHomeDoctor, Statistics} from '../../Components';
+import {style} from '../../../../src/styles/Style';
+import {ListTiltle} from '../../../../src/components/Home';
 import PatientsListHome from '../../Components/PatientsListHome/PatientsListHome';
 import {
   PADDINGS,
@@ -17,20 +17,20 @@ import {
   USER_TOKEN,
   USER_DATA,
 } from '../../../../src/constants/Constants';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {RFValue} from 'react-native-responsive-fontsize';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDispatch, useSelector } from 'react-redux';
-import { getDoctorDetails } from '../../Redux/Reducers/DoctorDetailsSlice';
-import { getDoctorAppointmentToday } from '../../Redux/Reducers/DoctorHomeSlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {getDoctorDetails} from '../../Redux/Reducers/DoctorDetailsSlice';
+import {getDoctorAppointmentToday} from '../../Redux/Reducers/DoctorHomeSlice';
 
-const HomeDoctor = ({ navigation }) => {
+const HomeDoctor = ({navigation}) => {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const { isLoading, appointmentForToday } = globalState.DoctorHomeReducer;
-  const { name, image, isLoading2 } = globalState.DoctorDetailsReducer
+  const {isLoading, appointmentForToday} = globalState.DoctorHomeReducer;
+  const {name, image, isLoading2} = globalState.DoctorDetailsReducer;
   let date = new Date();
   let day = date.getDate();
-  let month = date.toLocaleString('default', { month: 'long' });
+  let month = date.toLocaleString('default', {month: 'long'});
   let year = date.getFullYear();
 
   const getMonthName = month => {
@@ -70,10 +70,9 @@ const HomeDoctor = ({ navigation }) => {
       dispatch(getDoctorDetails())
         .unwrap()
         .then(res => {
-           dispatch(getDoctorAppointmentToday({ date: sendData, status: 1 }));
+          dispatch(getDoctorAppointmentToday({date: sendData, status: 1}));
         })
-        .catch(err => { });
-       
+        .catch(err => {});
     });
     return unsubscribe;
   }, [navigation]);
@@ -86,7 +85,7 @@ const HomeDoctor = ({ navigation }) => {
   };
   return (
     <Fragment>
-      {isLoading2 == true||isLoading==true ?
+      {isLoading2 == true || isLoading == true ? (
         <View
           style={{
             backgroundColor: COLORS.white,
@@ -95,48 +94,45 @@ const HomeDoctor = ({ navigation }) => {
             justifyContent: 'center',
           }}>
           <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
-        </View> : isLoading2 == false&&name!=""&&isLoading==false?
-        (
-          <>
-            <HeaderHomeDoctor />
-            <View style={styles.container}>
-              <ScrollView showsVerticalScrollIndicator={false}>
-                <Statistics todayAppointmentes={appointmentForToday}/>
-                <ListTiltle
-                  Title="مواعيد اليوم"
-                  seeAll="اضافة"
-                  onPress={() => {
-                    navigation.navigate('AddAppointmentBySecretary');
-                  }}
-                />
-                {isLoading ? (
-                  <View style={styles.activityIndicatorView}>
-                    <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
-                  </View>
-                ) : appointmentForToday.length == 0 ? (
-                  <View style={styles.activityIndicatorView}>
-                    <Text>لا يوجد مواعيد اليوم</Text>
-                  </View>
-                ) : (
-                  <PatientsListHome data={appointmentForToday} />
-                )}
-              </ScrollView>
-            </View>
-          </>) : (
-            <View
-              style={{
-                backgroundColor: COLORS.white,
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Text>حدث خطأ اثناء الاتصال بالانترنت</Text>
-            </View>
-          )
-
-      }
-
-
+        </View>
+      ) : isLoading2 == false && name != '' && isLoading == false ? (
+        <>
+          <HeaderHomeDoctor />
+          <View style={styles.container}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Statistics todayAppointmentes={appointmentForToday} />
+              <ListTiltle
+                Title="مواعيد اليوم"
+                seeAll="اضافة"
+                onPress={() => {
+                  navigation.navigate('AddAppointmentBySecretary');
+                }}
+              />
+              {isLoading ? (
+                <View style={styles.activityIndicatorView}>
+                  <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
+                </View>
+              ) : appointmentForToday.length == 0 ? (
+                <View style={styles.activityIndicatorView}>
+                  <Text>لا يوجد مواعيد اليوم</Text>
+                </View>
+              ) : (
+                <PatientsListHome data={appointmentForToday} />
+              )}
+            </ScrollView>
+          </View>
+        </>
+      ) : (
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text>حدث خطأ اثناء الاتصال بالانترنت</Text>
+        </View>
+      )}
     </Fragment>
   );
 };
