@@ -33,15 +33,12 @@ const DoctorHomeSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(getDoctorAppointmentToday.pending, (state, action) => {
       state.isLoading = true;
-      console.log('getDoctorAppointmentToday pending = ' + action.payload);
+      //console.log('getDoctorAppointmentToday pending = ' + action.payload);
     }),
       builder.addCase(getDoctorAppointmentToday.fulfilled, (state, action) => {
         state.isLoading = false;
         state.appointmentForToday = action.payload;
-        console.log(
-          'getDoctorAppointmentToday fulfilled = ' +
-            JSON.stringify(action.payload),
-        );
+        //console.log('getDoctorAppointmentToday fulfilled = ' +JSON.stringify(action.payload),);
       }),
       builder.addCase(getDoctorAppointmentToday.rejected, (state, action) => {
         state.isLoading = false;

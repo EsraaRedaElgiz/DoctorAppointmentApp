@@ -51,7 +51,7 @@ const DoctorViewProfile = ({navigation}) => {
     latitude,
     longitude,
   } = globalState.DoctorDetailsReducer;
-  console.log(longitude);
+  //console.log(longitude);
   const {isLoading, rates} = globalState.GetRateReducer;
   useEffect(() => {
     funToGetRate();
