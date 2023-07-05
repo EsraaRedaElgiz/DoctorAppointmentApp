@@ -33,6 +33,7 @@ import {CheckBox} from 'react-native-elements';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import {useSelector, useDispatch} from 'react-redux';
 import {getDoctorDetails} from '../../Redux/Reducers/DoctorDetailsSlice';
+import {EditDoctorDetailAction} from '../../Redux/Reducers/EditDoctorDetailsSlice';
 export default function EditDoctorDetails({navigation}) {
   const globalState = useSelector(state => state);
   const dispatch = useDispatch();
@@ -94,25 +95,25 @@ export default function EditDoctorDetails({navigation}) {
 
   const [long, setLong] = useState(0);
   const [lat, setLat] = useState(0);
-
+  const [photo_uri, setphoto_uri] = useState({uri: image});
   const onSubmit = data => {
     const formData = new FormData();
     formData.append('first_name', data.name);
     formData.append('email', data.email);
-    // formData.append(
-    //   'image',
-    //   photo_uri
-    //     ? {
-    //         name: photo_uri?.fileName,
-    //         uri: photo_uri?.uri,
-    //         type: photo_uri?.type,
-    //       }
-    //     : JSON.stringify({
-    //         name: photo_uri?.fileName,
-    //         uri: photo_uri?.uri,
-    //         type: photo_uri?.type,
-    //       }),
-    // );
+    formData.append(
+      'image',
+      photo_uri
+        ? {
+            name: photo_uri?.fileName,
+            uri: photo_uri?.uri,
+            type: photo_uri?.type,
+          }
+        : JSON.stringify({
+            name: photo_uri?.fileName,
+            uri: photo_uri?.uri,
+            type: photo_uri?.type,
+          }),
+    );
     formData.append('doctor_about', data.About);
     formData.append('doctor_experience', data.exp);
     formData.append('branch_location', data.Location);
@@ -121,7 +122,7 @@ export default function EditDoctorDetails({navigation}) {
     formData.append('end_time', data.end);
     formData.append('session_time', data.section);
     console.log(data);
-    dispatch(formData)
+    dispatch(EditDoctorDetailAction(formData))
       .unwrap()
       .then(result => {
         dispatch(getDoctorDetails());
@@ -138,7 +139,6 @@ export default function EditDoctorDetails({navigation}) {
       })
       .finally(() => {});
   };
-  const [photo_uri, setphoto_uri] = useState('');
   const Specialization = ['اسنان', 'باطنة', 'صدر', 'عيون'];
   const [modalVisible, setModalVisible] = useState(false);
   const [modal_Visible_wokdays, setmodal_Visible_wokdays] = useState(false);
@@ -178,7 +178,7 @@ export default function EditDoctorDetails({navigation}) {
         console.log('User tapped custom button: ', res.customButton);
         alert(res.customButton);
       } else {
-        setphoto_uri(photo_uri => res.assets[0].uri);
+        setphoto_uri(photo_uri => res.assets[0]);
       }
     });
   };
@@ -199,7 +199,7 @@ export default function EditDoctorDetails({navigation}) {
         console.log('User tapped custom button: ', res.customButton);
         alert(res.customButton);
       } else {
-        setphoto_uri(photo_uri => res.assets[0].uri);
+        setphoto_uri(photo_uri => res.assets[0]);
         //upload_img(res.assets[0].base64)
       }
     });

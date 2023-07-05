@@ -16,7 +16,10 @@ export const EditDoctorDetailAction = createAsyncThunk(
       let response = await Axios({
         method: 'POST',
         url: '/doctor/update_profile.php',
-        params: data,
+        data: data,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
       return response.data;
     } catch (error) {
