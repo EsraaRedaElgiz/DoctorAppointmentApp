@@ -27,6 +27,7 @@ const HomeDoctor = ({navigation}) => {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   const {isLoading, appointmentForToday} = globalState.DoctorHomeReducer;
+  const {name, image, isLoading2} = globalState.DoctorDetailsReducer;
   let date = new Date();
   let day = date.getDate();
   let month = date.toLocaleString('default', {month: 'long'});
@@ -74,7 +75,7 @@ const HomeDoctor = ({navigation}) => {
         .catch(err => {});
     });
     return unsubscribe;
-  }, []);
+  }, [navigation]);
 
   const getToken = async () => {
     const token = await AsyncStorage.getItem(USER_TOKEN);
@@ -84,32 +85,54 @@ const HomeDoctor = ({navigation}) => {
   };
   return (
     <Fragment>
-      <HeaderHomeDoctor />
-      <View style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <Statistics />
-          <ListTiltle
-            Title="مواعيد اليوم"
-            seeAll="اضافة"
-            onPress={() => {
-              navigation.navigate('AddAppointmentBySecretary');
-            }}
-          />
-          {isLoading ? (
-            <View style={styles.activityIndicatorView}>
-              <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
-            </View>
-          ) : appointmentForToday.length == 0 ? (
-            <View style={styles.activityIndicatorView}>
-              <Text style={style.textSmallContentBold}>
-                لا توجد حجوزات اليوم !
-              </Text>
-            </View>
-          ) : (
-            <PatientsListHome data={appointmentForToday} />
-          )}
-        </ScrollView>
-      </View>
+      {isLoading2 == true || isLoading == true ? (
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
+        </View>
+      ) : isLoading2 == false && name != '' && isLoading == false ? (
+        <>
+          <HeaderHomeDoctor />
+          <View style={styles.container}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <Statistics todayAppointmentes={appointmentForToday} />
+              <ListTiltle
+                Title="مواعيد اليوم"
+                seeAll="اضافة"
+                onPress={() => {
+                  navigation.navigate('AddAppointmentBySecretary');
+                }}
+              />
+              {isLoading ? (
+                <View style={styles.activityIndicatorView}>
+                  <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
+                </View>
+              ) : appointmentForToday.length == 0 ? (
+                <View style={styles.activityIndicatorView}>
+                  <Text>لا يوجد مواعيد اليوم</Text>
+                </View>
+              ) : (
+                <PatientsListHome data={appointmentForToday} />
+              )}
+            </ScrollView>
+          </View>
+        </>
+      ) : (
+        <View
+          style={{
+            backgroundColor: COLORS.white,
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text>حدث خطأ اثناء الاتصال بالانترنت</Text>
+        </View>
+      )}
     </Fragment>
   );
 };

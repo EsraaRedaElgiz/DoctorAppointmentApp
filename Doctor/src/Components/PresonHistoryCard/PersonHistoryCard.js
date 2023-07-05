@@ -34,15 +34,15 @@ const PersonHistoryCard = props => {
           <Text
             style={[
               styles.confirmPendingText,
-              {color: done ? COLORS.green : COLORS.red},
+              {color: done==1 ? COLORS.green : COLORS.red},
             ]}>
-            {done ? ' مكتمل' : 'ملغى'}
+            {done==1 ? ' مكتمل' : 'ملغى'}
           </Text>
         </View>
         <View
           style={[
             styles.verticalLine,
-            {backgroundColor: done ? COLORS.green : COLORS.red},
+            {backgroundColor: done==1 ? COLORS.green : COLORS.red},
           ]}
         />
       </View>

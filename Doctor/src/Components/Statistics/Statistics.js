@@ -1,8 +1,8 @@
-import {StyleSheet, Text, View, Pressable, Alert} from 'react-native';
-import React, {useState} from 'react';
-import {style} from '../../../../src/styles/Style';
-import {ListTiltle} from '../../../../src/components/Home';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { StyleSheet, Text, View, Pressable, Alert } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { style } from '../../../../src/styles/Style';
+import { ListTiltle } from '../../../../src/components/Home';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {
   COLORS,
   ICONS,
@@ -11,11 +11,44 @@ import {
 } from '../../../../src/constants/Constants';
 import CircularProgress from 'react-native-circular-progress-indicator';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {useNavigation} from '@react-navigation/native';
-const Statistics = () => {
+import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import moment from 'moment';
+
+const Statistics = (props) => {
   const navigation = useNavigation();
+  const globalState = useSelector(state => state)
   const ActiveColor = '#2f73fc';
   const [StatisticsValue, setStatisticsValue] = useState(50);
+  const { todayAppointmentes } = props
+  const { start_time, end_time, session_time } = globalState.DoctorDetailsReducer
+  const [timeSlots, setTimeSlots] = useState([]);
+  console.log("totalappointment",(timeSlots.length)-1) //الرقم اللي هيطلع من هنا هيتحط في الهوم دكتور
+  const craeteTimeSlots = (fromTime, ToTime) => {
+    let startTime = moment(fromTime, 'hh:mm');
+    let endTime = moment(ToTime, 'hh:mm');
+
+    if (endTime.isBefore(startTime)) {
+      endTime.add(1, 'day');
+    }
+    function convertH2M(timeInHour){
+
+      var timeParts = timeInHour.split(":");
+  
+      return Number(timeParts[0]) * 60 + Number(timeParts[1]);
+  
+    }
+    let arr = [];
+    while (startTime <= endTime) {
+      arr.push(new moment(startTime).format('hh:mm'));
+      startTime.add(convertH2M(session_time.slice(0,5)), 'minute'); 
+    }
+
+    return arr;
+  };
+  useEffect(()=>{
+    setTimeSlots(craeteTimeSlots(start_time.slice(0,5), end_time.slice(0,5)))
+  },[])
   return (
     <>
       <ListTiltle Title="احصائيات اليوم" />
@@ -28,7 +61,7 @@ const Statistics = () => {
         <View style={styles.circle_Text_Container}>
           <View style={styles.circleContainer}>
             <CircularProgress
-              value={StatisticsValue}
+              value={((todayAppointmentes.length)/((timeSlots.length)-1))*100}
               radius={RFValue(55)}
               duration={2000}
               maxValue={100}
@@ -39,12 +72,12 @@ const Statistics = () => {
             />
           </View>
           <View>
-            <View style={{alignItems: 'flex-start'}}>
-              <Text style={[style.textTitleBold, {color: COLORS.blue}]}>
+            <View style={{ alignItems: 'flex-start' }}>
+              <Text style={[style.textTitleBold, { color: COLORS.blue }]}>
                 مواعيد اليوم
               </Text>
-              <Text style={[style.textTitleBold, {color: COLORS.blue}]}>
-                12/24
+              <Text style={[style.textTitleBold, { color: COLORS.blue }]}>
+                {todayAppointmentes.length}/{(timeSlots.length)-1}
               </Text>
             </View>
           </View>

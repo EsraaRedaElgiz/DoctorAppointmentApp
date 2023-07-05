@@ -24,7 +24,7 @@ const initialState = {
   numOfRating:'',
   latitude: null,
   longitude: null,
-  isLoading: true,
+  isLoading2: true,
   success: false,
   error: null,
 };
@@ -50,12 +50,12 @@ const doctorDetailsSlice = createSlice({
   initialState,
   extraReducers: builder => {
     builder.addCase(getDoctorDetails.pending, (state, action) => {
-      state.isLoading = true;
+      state.isLoading2 = true;
       // console.log('state in pending ', state);
       // console.log('action.payload in pending ', action.payload);
     }),
       builder.addCase(getDoctorDetails.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isLoading2 = false;
         state.success = true;
         state.name = action.payload.user_first_name;
         state.email = action.payload.user_email;
@@ -110,7 +110,7 @@ const doctorDetailsSlice = createSlice({
        // console.log('action.payload in fulfilled : ', action.payload);
       }),
       builder.addCase(getDoctorDetails.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isLoading2 = false;
         state.error = action.payload;
         // console.log('Error ', state.error);
       });

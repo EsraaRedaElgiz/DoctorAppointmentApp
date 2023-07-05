@@ -31,9 +31,10 @@ import {Controller, useForm} from 'react-hook-form';
 import {style} from '../../../../src/styles/Style';
 import {CheckBox} from 'react-native-elements';
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 export default function EditDoctorDetails({navigation}) {
   const globalState = useSelector(state => state);
+  const dispatch = useDispatch();
   const {
     name,
     email,
@@ -77,9 +78,9 @@ export default function EditDoctorDetails({navigation}) {
       About: doctor_about,
       Workdays: branch_working_days,
       price: booking_price,
-      start: start_time,
-      end: end_time,
-      section: session_time,
+      start: start_time.slice(0, 5),
+      end: end_time.slice(0, 5),
+      section: session_time.slice(0, 5),
     },
   });
   const region = {
@@ -94,7 +95,32 @@ export default function EditDoctorDetails({navigation}) {
   const [lat, setLat] = useState(0);
 
   const onSubmit = data => {
+    const formData = new FormData();
+    formData.append('first_name', data.name);
+    formData.append('email', data.email);
+    // formData.append(
+    //   'image',
+    //   photo_uri
+    //     ? {
+    //         name: photo_uri?.fileName,
+    //         uri: photo_uri?.uri,
+    //         type: photo_uri?.type,
+    //       }
+    //     : JSON.stringify({
+    //         name: photo_uri?.fileName,
+    //         uri: photo_uri?.uri,
+    //         type: photo_uri?.type,
+    //       }),
+    // );
+    formData.append('doctor_about', data.About);
+    formData.append('doctor_experience', data.exp);
+    formData.append('branch_location', data.Location);
+    formData.append('booking_price', data.price);
+    formData.append('start_time', data.start);
+    formData.append('end_time', data.end);
+    formData.append('session_time', data.section);
     console.log(data);
+    dispatch(formData);
     navigation.goBack();
   };
   const [photo_uri, setphoto_uri] = useState('');
@@ -389,11 +415,11 @@ export default function EditDoctorDetails({navigation}) {
             />
           </View>
         </View>
-        <Pressable style={styles.bottominputview}
-        onPress={()=>{
-          setModalVisible(true)
-        }}
-        >
+        <Pressable
+          style={styles.bottominputview}
+          onPress={() => {
+            setModalVisible(true);
+          }}>
           <Controller
             control={control}
             name="Location"
@@ -414,7 +440,6 @@ export default function EditDoctorDetails({navigation}) {
                   // onTouchStart={() => setModalVisible(true)}
                   bordercolor={errors.Location ? '#f00' : COLORS.gray}
                   edit={false}
-                  
                 />
                 <Text style={{color: 'red', alignSelf: 'flex-start'}}>
                   {errors.Location?.type === 'required'
