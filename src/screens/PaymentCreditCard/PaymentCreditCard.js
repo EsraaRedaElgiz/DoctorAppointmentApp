@@ -5,10 +5,11 @@ import {
   StyleSheet,
   Text,
   View,
+  Alert,
 } from 'react-native';
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import PaymentCard from '../../components/Appointment/PaymentCard';
-import { DoctorsData } from '../../utils';
+import {DoctorsData} from '../../utils';
 import {
   PADDINGS,
   RADIUS,
@@ -18,23 +19,23 @@ import {
   COLORS,
 } from '../../constants/Constants';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { ListTiltle } from '../../components/Home';
-import { style } from '../../styles/Style';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {ListTiltle} from '../../components/Home';
+import {style} from '../../styles/Style';
 import Visa from '../../components/Visa/Visa';
-import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
-import { useRoute } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { getPaymentCard } from '../../Redux/Reducers/PaymentCardSlice';
-import { bookAppointment } from '../../Redux/Reducers/BookAppointmentSlice';
-const PaymentCreditCard = ({ navigation }) => {
+import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
+import {useRoute} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {getPaymentCard} from '../../Redux/Reducers/PaymentCardSlice';
+import {bookAppointment} from '../../Redux/Reducers/BookAppointmentSlice';
+const PaymentCreditCard = ({navigation}) => {
   const route = useRoute();
   const BookArray = route.params.BookArray;
   const Time = route.params.Time;
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const { cards, error, isLoading } = globalState.PaymentCardReducer;
-  const { date,isLoading2 } = globalState.BookAppointmentReducer;
+  const {cards, error, isLoading} = globalState.PaymentCardReducer;
+  const {date, isLoading2} = globalState.BookAppointmentReducer;
 
   useEffect(() => {
     dispatch(getPaymentCard());
@@ -79,13 +80,22 @@ const PaymentCreditCard = ({ navigation }) => {
   const formatDate = `${JSON.stringify(date).slice(9, 11)} ${getMonthName(
     JSON.stringify(date).slice(6, 8),
   )} ${JSON.stringify(date).slice(1, 5)}`;
-  const sendDate = `${JSON.stringify(date).slice(1, 5)}-${JSON.stringify(date).slice(6, 8)
-    }-${JSON.stringify(date).slice(9, 11)}`;
-  console.log(sendDate);
-  console.log(Time.slice(0,5).concat(":00")+" date "+sendDate)
+  const sendDate = `${JSON.stringify(date).slice(1, 5)}-${JSON.stringify(
+    date,
+  ).slice(6, 8)}-${JSON.stringify(date).slice(9, 11)}`;
+  // console.log(sendDate);
+  // console.log(Time.slice(0, 5).concat(':00') + ' date ' + sendDate);
+
+  //select VISA
+  const [selectItem, setSelectItem] = useState(0);
+  const selectHandler = index => {
+    setSelectItem(index);
+    // console.log(selectItem);
+  };
+
   return (
     <View
-      style={[style.bigContainer, { flex: 1, justifyContent: 'space-between' }]}>
+      style={[style.bigContainer, {flex: 1, justifyContent: 'space-between'}]}>
       <HeaderNavigation
         title="الدفع"
         color={COLORS.darkGray3}
@@ -109,7 +119,7 @@ const PaymentCreditCard = ({ navigation }) => {
           navigation.navigate('AddCard');
         }}
       />
-      <View style={{ flex: 1 }}>
+      <View style={{flex: 1}}>
         {isLoading ? (
           <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
         ) : error === null ? (
@@ -127,7 +137,7 @@ const PaymentCreditCard = ({ navigation }) => {
             <FlatList
               showsVerticalScrollIndicator={false}
               data={cards}
-              renderItem={({ item }) => {
+              renderItem={({item, index}) => {
                 return (
                   <Visa
                     master
@@ -135,6 +145,11 @@ const PaymentCreditCard = ({ navigation }) => {
                     // cardNumber={appendSpace(item.card_number)}
                     cardNumber={item.card_number}
                     date={item.card_exp_date}
+                    onPress={() => {
+                      selectHandler(index);
+                    }}
+                    borderColor={index === selectItem ? COLORS.blue : null}
+                    borderWidth={index === selectItem ? RFValue(3) : null}
                   />
                 );
               }}
@@ -155,19 +170,26 @@ const PaymentCreditCard = ({ navigation }) => {
 
       <GeneralButton
         title="تاكيد"
-        style={{ marginBottom: MARGIN.mdMargin }}
+        style={{marginBottom: MARGIN.mdMargin}}
         isLoading={isLoading2}
         onPress={() => {
-          console.log(Time.slice(0,5)+" date "+sendDate)
-          dispatch(bookAppointment({
-            "doctor_id": BookArray.doctor_id,
-            "date": sendDate,
-            "time": Time.slice(0, 5).concat(":00")
-          })).unwrap().then((res) => {
-            if (res == true) {
-              navigation.navigate('CompletedAppointment')
-            }
-          });
+          // console.log(Time.slice(0, 5) + ' date ' + sendDate);
+          dispatch(
+            bookAppointment({
+              doctor_id: BookArray.doctor_id,
+              date: sendDate,
+              time: Time.slice(0, 5).concat(':00'),
+            }),
+          )
+            .unwrap()
+            .then(res => {
+              if (res == true) {
+                navigation.navigate('CompletedAppointment');
+              } else {
+                Alert.alert('المعاد محجوز سابقا من فضلك اختر معاد اخر');
+              }
+              //
+            });
         }}
       />
     </View>

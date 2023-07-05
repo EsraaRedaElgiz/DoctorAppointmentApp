@@ -285,9 +285,7 @@ function DoctorSignup({navigation}) {
                 </View>
                 <TouchableOpacity
                   onPress={() => {
-                    Linking.openURL(
-                      'https://sites.google.com/view/doclinicterms/',
-                    );
+                    navigation.navigate("ConditionsAndTerms")
                   }}>
                   <Text style={styles.bluetextstyle}> شروط الاستخدام</Text>
                 </TouchableOpacity>
@@ -298,9 +296,7 @@ function DoctorSignup({navigation}) {
                 </View>
                 <TouchableOpacity
                   onPress={() => {
-                    Linking.openURL(
-                      'https://sites.google.com/view/doclinicapp/',
-                    );
+                    navigation.navigate("PrivacyPolicy")
                   }}>
                   <Text style={styles.bluetextstyle}> سياسه الخصوصية</Text>
                 </TouchableOpacity>

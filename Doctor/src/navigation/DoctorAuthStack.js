@@ -8,6 +8,7 @@ import DoctorResetPassword from '../screens/DoctorResetPassword/DoctorResetPassw
 import Compeleteinformation from '../screens/Compeleteinformation/Compeleteinformation';
 import LoginWithG from '../../../src/utils/LoginWithG';
 import DoctorOrPatient from '../../../src/screens/Intro/DoctorOrPatient/DoctorOrPatient';
+import {ConditionsAndTerms, PrivacyPolicy} from '../../../src/screens';
 
 const Stack = createNativeStackNavigator();
 const DoctorAuthStack = () => {
@@ -25,10 +26,31 @@ const DoctorAuthStack = () => {
         component={DoctorForgetPassword}
       />
       <Stack.Screen name="DoctorVerification" component={DoctorVerification} />
-      <Stack.Screen name="DoctorResetPassword" component={DoctorResetPassword} />
+      <Stack.Screen
+        name="DoctorResetPassword"
+        component={DoctorResetPassword}
+      />
       <Stack.Screen
         name="CompleteInformation"
         component={Compeleteinformation}
+      />
+      <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicy}
+        options={{
+          headerShown: true,
+          title: 'سياسة الخصوصيه',
+          headerShadowVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="ConditionsAndTerms"
+        component={ConditionsAndTerms}
+        options={{
+          headerShown: true,
+          title: 'شروط الإستخدام',
+          headerShadowVisible: false,
+        }}
       />
     </Stack.Navigator>
   );

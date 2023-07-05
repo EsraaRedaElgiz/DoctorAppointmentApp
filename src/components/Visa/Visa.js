@@ -13,7 +13,17 @@ import {COLORS, FONTS} from '../../constants/Constants';
 const {width, height} = Dimensions.get('window');
 
 function Visa(props) {
-  const {visa, master, name, cardNumber, date, ...rest} = props;
+  const {
+    visa,
+    master,
+    name,
+    cardNumber,
+    date,
+    onPress,
+    borderWidth,
+    borderColor,
+    ...rest
+  } = props;
   const visaType = visa
     ? require('../../assets/Images/visa.jpg')
     : master
@@ -21,7 +31,14 @@ function Visa(props) {
     : require('../../assets/Images/visa.jpg');
   const colors = ['#0085E4', '#00AAF2', '#00C8DE', '#00DFB3'];
   return (
-    <TouchableOpacity style={styles.visa} activeOpacity={0.6} {...rest}>
+    <TouchableOpacity
+      style={[
+        styles.visa,
+        {borderWidth: borderWidth, borderColor: borderColor},
+      ]}
+      activeOpacity={0.6}
+      {...rest}
+      onPress={onPress}>
       <View>
         <Image
           resizeMode="contain"

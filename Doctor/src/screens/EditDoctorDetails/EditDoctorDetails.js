@@ -7,6 +7,7 @@ import {
   StatusBar,
   Modal,
   Dimensions,
+  Pressable,
 } from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import {
@@ -388,7 +389,11 @@ export default function EditDoctorDetails({navigation}) {
             />
           </View>
         </View>
-        <View style={styles.bottominputview}>
+        <Pressable style={styles.bottominputview}
+        onPress={()=>{
+          setModalVisible(true)
+        }}
+        >
           <Controller
             control={control}
             name="Location"
@@ -406,8 +411,10 @@ export default function EditDoctorDetails({navigation}) {
                   }
                   onChangeText={onChange}
                   onBlur={onBlur}
-                  onTouchStart={() => setModalVisible(true)}
+                  // onTouchStart={() => setModalVisible(true)}
                   bordercolor={errors.Location ? '#f00' : COLORS.gray}
+                  edit={false}
+                  
                 />
                 <Text style={{color: 'red', alignSelf: 'flex-start'}}>
                   {errors.Location?.type === 'required'
@@ -417,7 +424,7 @@ export default function EditDoctorDetails({navigation}) {
               </>
             )}
           />
-        </View>
+        </Pressable>
         <View style={styles.bottominputview}>
           <Controller
             control={control}

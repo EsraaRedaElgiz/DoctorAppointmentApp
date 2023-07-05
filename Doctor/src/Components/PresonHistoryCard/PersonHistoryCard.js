@@ -3,6 +3,7 @@ import React from 'react';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {COLORS, FONTS, MARGIN} from '../../../../src/constants/Constants';
 import LinearGradient from 'react-native-linear-gradient';
+import Images from '../../../../src/constants/Images';
 const PersonHistoryCard = props => {
   const {name, done, time, imageUri, onPress} = props;
   return (
@@ -13,14 +14,15 @@ const PersonHistoryCard = props => {
           style={styles.section1}
         />
         <View style={styles.section2}>
-          <Image
-            style={styles.image}
-            source={{
-              uri: imageUri
-                ? imageUri
-                : 'https://thumbs.dreamstime.com/z/user-icon-trendy-flat-style-isolated-grey-background-user-symbol-user-icon-trendy-flat-style-isolated-grey-background-123663211.jpg',
-            }}
-          />
+          {imageUri ? (
+            <Image style={styles.image} source={{uri: imageUri}} />
+          ) : (
+            <Image
+              style={styles.image}
+              source={Images.userDefault}
+            />
+          )}
+
           <View style={[styles.timeView, {alignItems: 'flex-start'}]}>
             <Text style={styles.name}>{name ? name : 'عبدالرحمن عياد'}</Text>
             <Text style={styles.time}>{time}</Text>

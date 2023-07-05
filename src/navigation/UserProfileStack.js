@@ -10,6 +10,7 @@ import AddCard from '../screens/AddCard/AddCard';
 import MedicalID1 from '../screens/MedicalID1/MedicalID1';
 import EditPersonDetails from '../screens/EditPersonDetails/EditPersonDetails';
 import Prescription from '../screens/Prescription/Prescription';
+import { ConditionsAndTerms, PrivacyPolicy } from '../screens';
 const Stack = createNativeStackNavigator();
 const UserProfileStack = () => {
   return (
@@ -27,6 +28,20 @@ const UserProfileStack = () => {
         <Stack.Screen name="Payment" component={Payment} />
         <Stack.Screen name="AddCard" component={AddCard} />
         <Stack.Screen name="Prescription" component={Prescription} />
+        <Stack.Screen
+        name="PrivacyPolicy"
+        component={PrivacyPolicy}
+        options={{
+          headerShown: true,
+          title: 'سياسة الخصوصيه',
+          headerShadowVisible: false,
+        }}
+      />
+      <Stack.Screen name="ConditionsAndTerms" component={ConditionsAndTerms}  options={{
+          headerShown: true,
+          title: 'شروط الإستخدام',
+          headerShadowVisible: false,
+        }} />
       </Stack.Navigator>
     </>
   );

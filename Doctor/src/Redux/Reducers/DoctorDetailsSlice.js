@@ -78,8 +78,8 @@ const doctorDetailsSlice = createSlice({
         state.numOfPatients=action.payload.num_of_patients;
         state.numOfRating=action.payload.rating;
 
-        state.latitude = action.payload.latitude;
-        state.longitude = action.payload.longitude;
+        state.latitude = action.payload.clinic.latitude;
+        state.longitude = action.payload.clinic.longitude;
         /*
         "doctor": {
         "doctor_id": "23",
