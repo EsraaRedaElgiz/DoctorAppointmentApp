@@ -32,6 +32,7 @@ import PatientHistoryReducer from '../../Doctor/src/Redux/Reducers/PatientHistor
 import SpecialitySearchReducer from './Reducers/SpecialitySearchSlice';
 import DoctorHomeReducer from '../../Doctor/src/Redux/Reducers/DoctorHomeSlice';
 import EditDoctorDetailsReducer from '../../Doctor/src/Redux/Reducers/EditDoctorDetailsSlice';
+import AddDiagnosticsReducer from '../../Doctor/src/Redux/Reducers/AddDiagnosticsSlice';
 const store = configureStore({
   reducer: {
     SignUpReducer: SignUpReducer,
@@ -67,6 +68,7 @@ const store = configureStore({
     SpecialitySearchReducer: SpecialitySearchReducer,
     DoctorHomeReducer: DoctorHomeReducer,
     EditDoctorDetailsReducer: EditDoctorDetailsReducer,
+    AddDiagnosticsReducer: AddDiagnosticsReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
