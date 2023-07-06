@@ -66,7 +66,7 @@ function DoctorHistory({navigation}) {
         </View>
       ) : history.length == 0 ? (
         <View style={styles.activityIndicatorViewStyle}>
-          <Text>لا يوجد حجوزات سابقة</Text>
+          <Text>لا يوجد حجوزات سابقة في هذا اليوم</Text>
         </View>
       ) : (
         <FlatList
