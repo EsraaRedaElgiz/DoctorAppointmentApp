@@ -25,14 +25,10 @@ function DoctorHistory({navigation}) {
   const globalState = useSelector(state => state);
   const {isLoading, history} = globalState.DoctorHistoryReducer;
   useEffect(() => {
-    console.log('History = ' + JSON.stringify(history));
-    const unsubscribe = navigation.addListener('focus', () => {
-      dispatch(getDoctorHistory({filter: 'history'}))
-        .unwrap()
-        .then(res => {})
-        .catch(err => {});
-    });
-    return unsubscribe;
+    dispatch(getDoctorHistory({filter: 'history'}))
+      .unwrap()
+      .then(res => {})
+      .catch(err => {});
   }, []);
   console.log(history);
   let date = new Date();
