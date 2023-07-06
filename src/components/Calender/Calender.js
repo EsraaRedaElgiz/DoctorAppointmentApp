@@ -11,6 +11,8 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {FONTS, COLORS} from '../../constants/Constants';
 import {useDispatch} from 'react-redux';
 import {setDate, setTime} from '../../Redux/Reducers/BookAppointmentSlice';
+import {getDoctorAppointments} from '../../../Doctor/src/Redux/Reducers/DoctorAppointmentSlice';
+import {getDoctorHistory} from '../../../Doctor/src/Redux/Reducers/DoctorHistorySlice';
 
 // to show all weeks in month 4 week
 const dates = eachWeekOfInterval({
@@ -26,8 +28,7 @@ const dates = eachWeekOfInterval({
 }, []);
 
 console.log(dates);
-function Calender({chosenDay,setChosenDay}) {
-  
+function Calender({chosenDay, setChosenDay, onPress}) {
   const dispatch = useDispatch();
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -37,12 +38,24 @@ function Calender({chosenDay,setChosenDay}) {
             <View key={index} style={styles.calenderView}>
               {week.map((day, idx) => {
                 const dayName = format(day, 'eee');
+                const sendDateFormat = JSON.stringify(day).slice(1, 11);
                 return (
                   <>
                     <Pressable
                       onPress={() => {
                         setChosenDay(day);
                         dispatch(setDate({date: day}));
+                        dispatch(
+                          getDoctorAppointments({
+                            date: sendDateFormat,
+                          }),
+                          dispatch(getDoctorHistory({date: sendDateFormat})),
+                        )
+                          .unwrap()
+                          .then(res => {
+                            console.log('Ress ', res);
+                          })
+                          .catch(error => console.log('errror -< ', error));
                       }}
                       key={idx}
                       style={[

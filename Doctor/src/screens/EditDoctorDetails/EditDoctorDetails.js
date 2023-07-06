@@ -115,10 +115,10 @@ export default function EditDoctorDetails({navigation}) {
             type: photo_data?.type,
           }),
     );
-    formData.append('booking_price', data.price);
-    formData.append('start_time', data.start + ':00');
-    formData.append('end_time', data.end + ':00');
-    formData.append('session_time', data.section + ':00');
+    // formData.append('booking_price', data.price);
+    // formData.append('start_time', data.start + ':00');
+    // formData.append('end_time', data.end + ':00');
+    // formData.append('session_time', data.section + ':00');
     // console.log('Data in Edit Doctor -> ', data);
     // console.log(
     //   'Start and End in Edit Doctor -> ',

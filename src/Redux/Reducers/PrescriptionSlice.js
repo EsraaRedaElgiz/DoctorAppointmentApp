@@ -10,14 +10,15 @@ const initialState = {
 
 export const getPrescription = createAsyncThunk(
   'prescription/getPrescription',
-  async (_, thunkAPI) => {
+  async (args, thunkAPI) => {
     const {rejectWithValue} = thunkAPI;
     try {
       const response = await Axios({
         method: 'GET',
-        url: '/general/appointment_details.php?appointment_id=2',
+        url: '/general/appointment_details.php',
+        params: args,
       });
-      return response.da;
+      return response.data;
     } catch (error) {
       console.log(error);
       return rejectWithValue.message;
@@ -31,14 +32,19 @@ const prescriptionSlice = createSlice({
   extraReducers: builder => {
     builder.addCase(getPrescription.pending, (state, action) => {
       state.isLoading = true;
+      console.log('getPrescription pending');
     });
     builder.addCase(getPrescription.fulfilled, (state, action) => {
+      console.log('getPrescription fulfilled');
+      console.log('fulfilled -id- ', action.payload);
+      // console.log('fulfilled -id- ', action.payload.diagnosis.diagnosis);
       state.isLoading = false;
       state.success = true;
-      state.diagnosis = action.payload.diagnosis;
-      state.diagnosisTreatment = action.payload.diagnosis_treatment;
+      state.diagnosis = action.payload.diagnosis.diagnosis;
+      state.diagnosisTreatment = action.payload.diagnosis.diagnosis_treatment;
     });
     builder.addCase(getPrescription.rejected, (state, action) => {
+      console.log('getPrescription rejected');
       state.isLoading = false;
       state.error = true;
     });
