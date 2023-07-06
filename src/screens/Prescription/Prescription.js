@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, Fragment} from 'react';
 import {
   View,
   Text,
@@ -34,30 +34,29 @@ import {style} from '../../styles/Style';
 import {useSelector, useDispatch} from 'react-redux';
 import {getPrescription} from '../../Redux/Reducers/PrescriptionSlice';
 
-function Prescription({navigation}) {
+function Prescription({navigation, route}) {
+  const {appointment_id} = route.params;
   const globalState = useSelector(state => state);
+  const {diagnosis, diagnosisTreatment} = globalState.PrescriptionReducer;
   const dispatch = useDispatch();
   const [photo_uri, setphoto_uri] = useState(null);
   const [analysis_uri, set_analysis_uri] = useState(null);
   const [rumor_uri, set_rumor_uri] = useState(null);
   const [imageIndex, setImageIndex] = useState(null);
   const [head, setHead] = useState(['الدواء', 'المدة', 'ملاحظات']);
-  // const [data, setData] = useState([
-  //   ['lorim', 'يومان', 'مرة'],
-  //   ['hello', 'يوم', '3 مرات'],
-  //   ['Hiii', 'يومان', 'مرة'],
-  //   ['tmam', 'يومان', 'مرة'],
-  // ]);
   const [visible, setVisible] = useState(false);
-  const treatments = globalState.PrescriptionReducer.diagnosisTreatment.map(
-    (el, idx) => el.treatment,
-  );
-  const times = globalState.PrescriptionReducer.diagnosisTreatment.map(
-    (el, idx) => el.dose_per_day,
-  );
-  const notes = globalState.PrescriptionReducer.diagnosisTreatment.map(
-    (el, idx) => el.notes,
-  );
+
+  useEffect(() => {
+    console.log('appointment_id in Prescription ', appointment_id);
+    dispatch(getPrescription({appointment_id: appointment_id}))
+      .unwrap()
+      .then(res => console.log('Response ', res))
+      .catch(error => console.log('Error because diagnosis not Exits ', error));
+  }, [appointment_id]);
+
+  const treatments = diagnosisTreatment.map((el, idx) => el.treatment);
+  const times = diagnosisTreatment.map((el, idx) => el.dose_per_day);
+  const notes = diagnosisTreatment.map((el, idx) => el.notes);
 
   const row1 = [treatments[0], times[0], notes[0]];
   const row2 = [treatments[1], times[1], notes[1]];
@@ -65,11 +64,6 @@ function Prescription({navigation}) {
 
   const data = [row1, row2, row3];
 
-  useEffect(() => {
-    dispatch(getPrescription());
-    console.log(globalState.PrescriptionReducer.diagnosis);
-    console.log(globalState.PrescriptionReducer.diagnosisTreatment);
-  }, []);
   useEffect(() => {
     requestCameraPermission();
   }, []);
@@ -95,7 +89,6 @@ function Prescription({navigation}) {
         } else {
           set_rumor_uri(photo_uri => res.assets[0].uri);
         }
-        // setphoto_uri(photo_uri => res.assets[0].uri);
       }
     });
   };
@@ -121,8 +114,6 @@ function Prescription({navigation}) {
         } else {
           set_rumor_uri(photo_uri => res.assets[0].uri);
         }
-        //setphoto_uri(photo_uri => res.assets[0].uri);
-        //upload_img(res.assets[0].base64)
       }
     });
   };
@@ -140,28 +131,41 @@ function Prescription({navigation}) {
         <Text style={style.textContentBold}>التشخيص</Text>
         <View style={styles.diagnosisView}>
           <Text style={[style.textContent, styles.diagnosisText]}>
-            {globalState.PrescriptionReducer.diagnosis}
+            {diagnosis ? diagnosis : 'المريض بحالة جيدة'}
           </Text>
         </View>
         <Text style={style.textContentBold}>العلاج</Text>
-        <View style={{marginVertical: MARGIN.mdMargin}}>
-          <Table borderStyle={{borderWidth: 1}}>
-            <Row
-              data={head}
-              flexArr={[1, 1, 1]}
-              style={styles.head}
-              textStyle={[styles.text, style.textSmallContentBold]}
-            />
-            <TableWrapper style={styles.wrapper}>
-              <Rows
-                data={data}
-                flexArr={[1, 1, 1]}
-                style={styles.row}
-                textStyle={styles.text}
-              />
-            </TableWrapper>
-          </Table>
-        </View>
+        {diagnosisTreatment.length ? (
+          <Fragment>
+            <View style={{marginVertical: MARGIN.mdMargin}}>
+              <Table borderStyle={{borderWidth: 1}}>
+                <Row
+                  data={head}
+                  flexArr={[1, 1, 1]}
+                  style={styles.head}
+                  textStyle={[styles.text, style.textSmallContentBold]}
+                />
+                <TableWrapper style={styles.wrapper}>
+                  <Rows
+                    data={data}
+                    flexArr={[1, 1, 1]}
+                    style={styles.row}
+                    textStyle={styles.text}
+                  />
+                </TableWrapper>
+              </Table>
+            </View>
+          </Fragment>
+        ) : (
+          <Text
+            style={[
+              style.textContent,
+              styles.diagnosisText,
+              {marginVertical: MARGIN.mdMargin},
+            ]}>
+            لا يوجد علاج
+          </Text>
+        )}
         <Text style={style.textContentBold}>التحاليل</Text>
         <View style={styles.analysis}>
           <View style={[styles.rowTableStyle, {backgroundColor: COLORS.white}]}>
