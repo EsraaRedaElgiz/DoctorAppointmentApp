@@ -1,4 +1,4 @@
-import React, {useEffect,useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -42,10 +42,8 @@ function DoctorAppointments({navigation}) {
     const unsubscribe = navigation.addListener('focus', () => {
       dispatch(getDoctorAppointments({filter: 'upcoming'}))
         .unwrap()
-        .then(res => {
-        })
-        .catch(err => { });
-       
+        .then(res => {})
+        .catch(err => {});
     });
     return unsubscribe;
   }, [navigation]);
@@ -75,13 +73,22 @@ function DoctorAppointments({navigation}) {
         </Pressable>
       </View>
       <View style={styles.calenderView}>
-        <Calender chosenDay={chosenDay} setChosenDay={setChosenDay}/>
+        <Calender
+          chosenDay={chosenDay}
+          setChosenDay={setChosenDay}
+          // onPress={() => {
+          //   console.log('chosenDay -> ', chosenDay);
+          // }}
+        />
       </View>
       <View style={styles.line} />
-
       {isLoading ? (
         <View style={styles.activityIndicatorViewStyle}>
           <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
+        </View>
+      ) : appointments.length == 0 ? (
+        <View style={styles.activityIndicatorViewStyle}>
+          <Text>لا يوجد حجوزات في هذا اليوم</Text>
         </View>
       ) : (
         <FlatList
