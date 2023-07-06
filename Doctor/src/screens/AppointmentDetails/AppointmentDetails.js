@@ -48,12 +48,13 @@ function AppointmentDetails({navigation}) {
   const [appointmentDetailsObject, setAppointmentDetailsObject] =
     useState(appointmentDetails);
   const {historyArr} = globalState.PatientHistoryReducer;
+  const historyFilter=historyArr.filter(el=>el.diagnostics)
   useEffect(() => {
     setGetDay(getDay => {
       return new Date().getDate();
     });
 
-    console.log('appoin', appointmentDetails);
+    //console.log('appoin', appointmentDetails);
     //console.log(getDay)
     getMonthName(new Date().getMonth());
     //console.log(getMonth)
@@ -187,7 +188,7 @@ function AppointmentDetails({navigation}) {
         year={appointment_date.substring(0, 4)}
         style={styles.afterEachCardMargin}
         onPress={() => {
-          navigation.navigate('Prescription');
+          navigation.navigate('Prescription',{appointment_id:item.appointment_id});
         }}
       />
     );
@@ -372,11 +373,11 @@ function AppointmentDetails({navigation}) {
           getYear ? (
           <>
             {/*  هنا لو كان اراي الهيستوري فاضي يبقي هيظهر كلام */}
-            {historyArr.length > 0 ? (
+            {historyFilter.length > 0 ? (
               <>
                 <FlatList
                   keyExtractor={keyextractor}
-                  data={historyArr}
+                  data={historyFilter}
                   renderItem={renderitems}
                   style={styles.flatListStyle}
                   showsVerticalScrollIndicator={false}
@@ -407,10 +408,10 @@ function AppointmentDetails({navigation}) {
               </View>
             )}
           </>
-        ) : historyArr.length > 0 ? (
+        ) : historyFilter.length > 0 ? (
           <FlatList
             keyExtractor={keyextractor}
-            data={historyArr}
+            data={historyFilter}
             renderItem={renderitems}
             style={styles.flatListStyle}
             showsVerticalScrollIndicator={false}
