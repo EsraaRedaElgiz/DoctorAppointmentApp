@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
+import React, {useState, useEffect} from 'react';
+import {View, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {RFValue} from 'react-native-responsive-fontsize';
 import Icon from 'react-native-vector-icons/AntDesign';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import { MARGIN, COLORS, FONTS, ICONS } from '../../constants/Constants';
+import {MARGIN, COLORS, FONTS, ICONS} from '../../constants/Constants';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { style } from '../../styles/Style';
+import {style} from '../../styles/Style';
 import Images from '../../constants/Images';
 
 function ProfileImage(props) {
@@ -27,7 +27,7 @@ function ProfileImage(props) {
             <Image
               style={
                 nameAfterImage
-                  ? [styles.imageProfileStyle, { marginBottom: MARGIN.smMargin }]
+                  ? [styles.imageProfileStyle, {marginBottom: MARGIN.smMargin}]
                   : [styles.imageProfileStyle]
               }
               source={Images.userDefault}
@@ -51,7 +51,7 @@ function ProfileImage(props) {
           <Image
             style={
               nameAfterImage
-                ? [styles.imageProfileStyle, { marginBottom: MARGIN.smMargin }]
+                ? [styles.imageProfileStyle, {marginBottom: MARGIN.smMargin}]
                 : [styles.imageProfileStyle]
             }
             source={Images.userDefault}
@@ -63,22 +63,22 @@ function ProfileImage(props) {
             style={
               nameAfterImage
                 ? [
-                  styles.imageProfileStyle,
-                  styles.viewFalseSelectedImage,
-                  { marginBottom: MARGIN.xsMargin },
-                ]
+                    styles.imageProfileStyle,
+                    styles.viewFalseSelectedImage,
+                    {marginBottom: MARGIN.xsMargin},
+                  ]
                 : [styles.imageProfileStyle, styles.viewFalseSelectedImage]
             }>
             {imageUri ? (
               <Image
-                source={{ uri: imageUri }}
+                source={{uri: imageUri}}
                 style={styles.imageProfileStyle}
               />
             ) : (
               <Image
-              source={Images.userDefault}
-              style={styles.imageProfileStyle}
-            />
+                source={Images.userDefault}
+                style={styles.imageProfileStyle}
+              />
             )}
           </View>
           <TouchableOpacity
@@ -101,17 +101,18 @@ function ProfileImage(props) {
           style={
             nameAfterImage
               ? [
-                styles.imageProfileStyle,
-                styles.viewFalseSelectedImage,
-                { marginBottom: MARGIN.smMargin },
-              ]
-              : [styles.imageProfileStyle, styles.viewFalseSelectedImage]
+                  styles.imageProfileStyle,
+                  styles.viewFalseSelectedImage,
+                  {marginBottom: MARGIN.smMargin},
+                ]
+              : [
+                  styles.imageProfileStyle,
+                  styles.viewFalseSelectedImage,
+                  {marginBottom: MARGIN.smMargin},
+                ]
           }>
           {imageUri ? (
-            <Image
-              source={{ uri: imageUri }}
-              style={styles.imageProfileStyle}
-            />
+            <Image source={{uri: imageUri}} style={styles.imageProfileStyle} />
           ) : (
             <Image
               source={Images.userDefault}
@@ -123,7 +124,7 @@ function ProfileImage(props) {
       {nameAfterImage ? (
         <View
           style={
-            iconName ? styles.iconNameView : { marginBottom: MARGIN.mdMargin }
+            iconName ? styles.iconNameView : {marginBottom: MARGIN.mdMargin}
           }>
           <Text style={style.textContentBold}>{nameAfterImage}</Text>
           {iconName ? (

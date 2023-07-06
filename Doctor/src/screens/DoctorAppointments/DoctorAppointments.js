@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect,useState} from 'react';
 import {
   View,
   Text,
@@ -49,6 +49,7 @@ function DoctorAppointments({navigation}) {
     });
     return unsubscribe;
   }, [navigation]);
+  const [chosenDay, setChosenDay] = useState(null);
   return (
     <View style={styles.container}>
       <HeaderNavigation
@@ -74,7 +75,7 @@ function DoctorAppointments({navigation}) {
         </Pressable>
       </View>
       <View style={styles.calenderView}>
-        <Calender />
+        <Calender chosenDay={chosenDay} setChosenDay={setChosenDay}/>
       </View>
       <View style={styles.line} />
 

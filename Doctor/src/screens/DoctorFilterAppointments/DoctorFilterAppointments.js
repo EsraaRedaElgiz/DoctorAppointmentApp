@@ -83,7 +83,9 @@ function DoctorFilterAppointment({navigation}) {
             if (date == '') {
               Alert.alert('select date first');
             } else {
-              dispatch(getDoctorAppointments({date: date}));
+              dispatch(
+                getDoctorAppointments({date: date, status: checked ? 1 : 2}),
+              );
               navigation.goBack();
             }
           }}

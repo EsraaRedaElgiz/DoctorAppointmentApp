@@ -63,7 +63,7 @@ function EditPersonDetails(props) {
     formData.append('height', data.height);
     formData.append('weight', data.weight);
     // formData.append('phone', data.phone);
-    formData.append('blood_type', data.bloodTypePage);
+    // formData.append('blood_type', data.bloodTypePage);
     formData.append(
       'image',
       photo_uri
@@ -141,7 +141,7 @@ function EditPersonDetails(props) {
         alert(res.customButton);
       } else {
         setphoto_uri(photo_uri => res.assets[0]);
-        console.log(res.assets[0]);
+        console.log('launch', res.assets[0]);
         //upload_img(res.assets[0].base64)
       }
     });
@@ -209,7 +209,14 @@ function EditPersonDetails(props) {
           render={({field: {onChange, onBlur, value}}) => {
             return (
               <DropDown
-                defaultValue={bloodType}
+                defaultValue={
+                  bloodType == 'A+'
+                    ? bloodTypeList[0]
+                    : bloodType == 'B+'
+                    ? bloodTypeList[1]
+                    : genderPage[2]
+                }
+                // defaultValue={bloodType}
                 data={bloodTypeList}
                 placeholder="فصيلة الدم"
                 borderColor={errors.bloodType ? '#f00' : COLORS.gray}

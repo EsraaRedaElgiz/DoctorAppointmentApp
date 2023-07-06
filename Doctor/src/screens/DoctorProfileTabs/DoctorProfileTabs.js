@@ -20,41 +20,45 @@ function DoctorProfileTabs({navigation}) {
   useEffect(() => {
     dispatch(getDoctorDetails());
   }, []);
+
+  console.log("qvhwvi",isLoading)
   return (
     <GeneralPage>
       <View style={styles.container}>
         {isLoading ? (
           <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
         ) : (
-          <ProfileImage nameAfterImage={name} imageUri={image} />
+          <>
+            <ProfileImage nameAfterImage={name} imageUri={image} />
+            {DoctorProfileData.map((el, idx) => {
+              return (
+                <View key={idx} style={styles.userProfileButtonView}>
+                  <UserProfileButton
+                    title={el.title}
+                    iconName={el.icon}
+                    onPress={() => {
+                      idx == 0
+                        ? navigation.navigate('DoctorViewProfile')
+                        : idx == 1
+                        ? navigation.navigate('EditDoctorDetails')
+                        : idx == 2
+                        ? navigation.navigate('DoctorNewPassword')
+                        : idx == 3
+                        ? navigation.navigate('DoctorSupportTeam')
+                        : idx == 4
+                        ? navigation.navigate('PrivacyPolicy')
+                        : idx == 5
+                        ? navigation.navigate('ConditionsAndTerms')
+                        : idx == 6
+                        ? dispatch(setLoggedOut())
+                        : null;
+                    }}
+                  />
+                </View>
+              );
+            })}
+          </>
         )}
-        {DoctorProfileData.map((el, idx) => {
-          return (
-            <View key={idx} style={styles.userProfileButtonView}>
-              <UserProfileButton
-                title={el.title}
-                iconName={el.icon}
-                onPress={() => {
-                  idx == 0
-                    ? navigation.navigate('DoctorViewProfile')
-                    : idx == 1
-                    ? navigation.navigate('EditDoctorDetails')
-                    : idx == 2
-                    ? navigation.navigate('DoctorNewPassword')
-                    : idx == 3
-                    ? navigation.navigate('DoctorSupportTeam')
-                    : idx == 4
-                    ? navigation.navigate('PrivacyPolicy')
-                    : idx == 5
-                    ? navigation.navigate('ConditionsAndTerms')
-                    : idx == 6
-                    ? dispatch(setLoggedOut())
-                    : null;
-                }}
-              />
-            </View>
-          );
-        })}
       </View>
     </GeneralPage>
   );

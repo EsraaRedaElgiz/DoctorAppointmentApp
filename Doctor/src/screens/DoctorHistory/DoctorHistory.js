@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect,useState} from 'react';
 import {
   View,
   Text,
@@ -8,38 +8,38 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import styles from './DoctorHistoryStyles';
-import { HeaderNavigation } from '../../../../src/components/headerNavigation/HeaderNavigation';
-import { COLORS, PADDINGS } from '../../../../src/constants/Constants';
+import {HeaderNavigation} from '../../../../src/components/headerNavigation/HeaderNavigation';
+import {COLORS, PADDINGS} from '../../../../src/constants/Constants';
 import Calender from '../../../../src/components/Calender/Calender';
-import { PatientsData } from '../../../../src/utils';
+import {PatientsData} from '../../../../src/utils';
 import PersonHistoryCard from '../../Components/PresonHistoryCard/PersonHistoryCard';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAppointmentDetails } from '../../Redux/Reducers/AppointmentDetailsSlice';
-import { getDoctorHistory } from '../../Redux/Reducers/DoctorHistorySlice';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { Alert } from 'react-native';
-import { getPatientHistory } from '../../Redux/Reducers/PatientHistorySlice';
+import {useDispatch, useSelector} from 'react-redux';
+import {getAppointmentDetails} from '../../Redux/Reducers/AppointmentDetailsSlice';
+import {getDoctorHistory} from '../../Redux/Reducers/DoctorHistorySlice';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {Alert} from 'react-native';
+import {getPatientHistory} from '../../Redux/Reducers/PatientHistorySlice';
 
-function DoctorHistory({ navigation }) {
+function DoctorHistory({navigation}) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const { isLoading, history } = globalState.DoctorHistoryReducer;
+  const {isLoading, history} = globalState.DoctorHistoryReducer;
   useEffect(() => {
     console.log('History = ' + JSON.stringify(history));
     const unsubscribe = navigation.addListener('focus', () => {
-      dispatch(getDoctorHistory({ filter: 'history' }))
+      dispatch(getDoctorHistory({filter: 'history'}))
         .unwrap()
-        .then(res => {
-        })
-        .catch(err => { });
-
+        .then(res => {})
+        .catch(err => {});
     });
     return unsubscribe;
   }, []);
+  console.log(history);
   let date = new Date();
   let day = date.getDate();
-  let month = date.toLocaleString('default', { month: 'long' });
+  let month = date.toLocaleString('default', {month: 'long'});
   let year = date.getFullYear();
+  const [chosenDay, setChosenDay] = useState(null);
   return (
     <View style={styles.container}>
       <HeaderNavigation
@@ -57,7 +57,7 @@ function DoctorHistory({ navigation }) {
         <Text style={styles.dateText}> {day + '\t' + month + '\t' + year}</Text>
       </View>
       <View style={styles.calenderView}>
-        <Calender />
+        <Calender chosenDay={chosenDay} setChosenDay={setChosenDay} />
       </View>
       <View style={styles.line} />
       {isLoading ? (
@@ -72,7 +72,6 @@ function DoctorHistory({ navigation }) {
         <FlatList
           showsVerticalScrollIndicator={false}
           data={history}
-          keyExtractor={index => index}
           renderItem={(item, index) => {
             return (
               <>
@@ -84,7 +83,9 @@ function DoctorHistory({ navigation }) {
                   onPress={() => {
                     //console.log(item)
                     dispatch(
-                      getPatientHistory(JSON.parse(item.item.patient.patient_id)),
+                      getPatientHistory(
+                        JSON.parse(item.item.patient.patient_id),
+                      ),
                     );
                     dispatch(getAppointmentDetails(item.item.appointment_id))
                       .unwrap()

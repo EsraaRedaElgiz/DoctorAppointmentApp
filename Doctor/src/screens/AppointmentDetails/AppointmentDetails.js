@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import {
   View,
   StatusBar,
@@ -20,17 +20,20 @@ import styles from './styles';
 import AppointmentAndHistoryComponent from '../../../.././src/components/AppointmentAndHistoryComponent/AppointmentAndHistoryComponent';
 import GeneralButton from '../../../.././src/components/GeneralButton/GeneralButton';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {RFValue} from 'react-native-responsive-fontsize';
 import Dialog from 'react-native-dialog';
-import { HeaderNavigation } from '../../../.././src/components/headerNavigation/HeaderNavigation';
-import { style } from '../../../.././src/styles/Style';
+import {HeaderNavigation} from '../../../.././src/components/headerNavigation/HeaderNavigation';
+import {style} from '../../../.././src/styles/Style';
 // import { useNavigation } from '@react-navigation/native';
-import { useRoute } from '@react-navigation/native';
-import { getAppointmentDetails, setAppointmentDetails } from '../../Redux/Reducers/AppointmentDetailsSlice';
-import { ActivityIndicator } from 'react-native-paper';
-import { changeStatus } from '../../Redux/Reducers/UpdateAppointmentStatusSlice';
+import {useRoute} from '@react-navigation/native';
+import {
+  getAppointmentDetails,
+  setAppointmentDetails,
+} from '../../Redux/Reducers/AppointmentDetailsSlice';
+import {ActivityIndicator} from 'react-native-paper';
+import {changeStatus} from '../../Redux/Reducers/UpdateAppointmentStatusSlice';
 import Images from '../../../../src/constants/Images';
-function AppointmentDetails({ navigation }) {
+function AppointmentDetails({navigation}) {
   // const navigation=useNavigation()
   //const route = useRoute();
   //const PatientsArray = route.params.PatientsArray;
@@ -41,13 +44,16 @@ function AppointmentDetails({ navigation }) {
   const [getYear, setGetYear] = useState('');
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const { appointmentDetails, isLoading } = globalState.AppointmentDetailsReducer
-  const [appointmentDetailsObject, setAppointmentDetailsObject] = useState(appointmentDetails);
-  const {historyArr}=globalState.PatientHistoryReducer
+  const {appointmentDetails, isLoading} = globalState.AppointmentDetailsReducer;
+  const [appointmentDetailsObject, setAppointmentDetailsObject] =
+    useState(appointmentDetails);
+  const {historyArr} = globalState.PatientHistoryReducer;
   useEffect(() => {
     setGetDay(getDay => {
       return new Date().getDate();
     });
+
+    console.log('appoin', appointmentDetails);
     //console.log(getDay)
     getMonthName(new Date().getMonth());
     //console.log(getMonth)
@@ -159,13 +165,22 @@ function AppointmentDetails({ navigation }) {
   ];
 
   keyextractor = (item, index) => index.toString();
-  const renderitems = ({ item, index }) => {
-    const { doctorName, doctorSpeciality, day, month, year,doctor,appointment_date,user } = item;
+  const renderitems = ({item, index}) => {
+    const {
+      doctorName,
+      doctorSpeciality,
+      day,
+      month,
+      year,
+      doctor,
+      appointment_date,
+      user,
+    } = item;
     return (
       <AppointmentAndHistoryComponent
         doctorImageUri={user.user_image}
         doctorName={user.user_first_name}
-        doctorSpeciality={"باطنه"}//مش مكتوب
+        doctorSpeciality={'باطنه'} //مش مكتوب
         dateShow={true}
         day={appointment_date.substring(8, 10)}
         month={getMonthNameBack(appointment_date.substring(5, 7)).trim()}
@@ -178,19 +193,22 @@ function AppointmentDetails({ navigation }) {
     );
   };
   const changeAppointmentStatus = () => {
-    const obj = { ...appointmentDetailsObject };
-    if (obj.appointment_status == "2") {
-      dispatch(changeStatus({
-        "appointment_id": appointmentDetailsObject.appointment_id,
-        "appointment_status": "1"
-      })).unwrap().then((res) => {
-        if (res == true) {
-          setAppointmentDetailsObject(prev => {
-            return { ...prev, appointment_status: "1" };
-          });
-        }
-      })
-
+    const obj = {...appointmentDetailsObject};
+    if (obj.appointment_status == '2') {
+      dispatch(
+        changeStatus({
+          appointment_id: appointmentDetailsObject.appointment_id,
+          appointment_status: '1',
+        }),
+      )
+        .unwrap()
+        .then(res => {
+          if (res == true) {
+            setAppointmentDetailsObject(prev => {
+              return {...prev, appointment_status: '1'};
+            });
+          }
+        });
     }
   };
   return (
@@ -205,27 +223,32 @@ function AppointmentDetails({ navigation }) {
         }}
       />
       <View style={styles.appointmentDetailsContainer}>
-        {isLoading ? <View style={styles.activityIndicatorContainerStyle}>
-          <Text> <ActivityIndicator size={RFValue(30)} color={COLORS.blue} /> </Text></View> : !appointmentDetails.appointment_id ?
+        {isLoading ? (
+          <View style={styles.activityIndicatorContainerStyle}>
+            <Text>
+              {' '}
+              <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />{' '}
+            </Text>
+          </View>
+        ) : !appointmentDetails.appointment_id ? (
           <View style={styles.activityIndicatorContainerStyle}>
             <Text>حدث خطأ اثناء الاتصال بالخادم من فضلك حاول مجددا</Text>
           </View>
-          :
+        ) : (
           <>
             <View style={styles.imageAndTextViewStyle}>
               <View style={styles.viewImageStyle}>
-                {appointmentDetailsObject.patient.user_image ?
+                {appointmentDetailsObject.patient.user_image ? (
                   <Image
                     style={styles.imageStyle}
-                    source={{ uri: appointmentDetailsObject.patient.user_image }}
-                  
-                  /> :
+                    source={{uri: appointmentDetailsObject.patient.user_image}}
+                  />
+                ) : (
                   <Image
                     style={styles.imageStyle}
                     source={Images.userDefault}
                   />
-                }
-
+                )}
               </View>
               <View>
                 <View>
@@ -235,9 +258,17 @@ function AppointmentDetails({ navigation }) {
                 </View>
                 <View>
                   <Text style={styles.historyAndTimeTextStyle}>
-                    {appointmentDetailsObject.appointment_date.substring(8, 10) +
+                    {appointmentDetailsObject.appointment_date.substring(
+                      8,
+                      10,
+                    ) +
                       ' ' +
-                      getMonthNameBack(appointmentDetailsObject.appointment_date.substring(5, 7)).trim() +
+                      getMonthNameBack(
+                        appointmentDetailsObject.appointment_date.substring(
+                          5,
+                          7,
+                        ),
+                      ).trim() +
                       ' ' +
                       appointmentDetailsObject.appointment_date.substring(0, 4)}
                   </Text>
@@ -245,7 +276,10 @@ function AppointmentDetails({ navigation }) {
                 <View>
                   <Text style={styles.historyAndTimeTextStyle}>
                     {
-                      appointmentDetailsObject.appointment_time.substring(0, 5) /*+
+                      appointmentDetailsObject.appointment_time.substring(
+                        0,
+                        5,
+                      ) /*+
                   ' ' +
                   appointmentDetailsObject.status*/
                     }
@@ -257,15 +291,17 @@ function AppointmentDetails({ navigation }) {
               <TouchableOpacity
                 style={[
                   styles.buttonStyle,
-                  { backgroundColor: 'rgba(47, 115, 252,0.1)' },
+                  {backgroundColor: 'rgba(47, 115, 252,0.1)'},
                 ]}
                 onPress={() => {
-                  navigation.navigate('UserDetails', /*{
+                  navigation.navigate(
+                    'UserDetails' /*{
                     photo: PatientsArray.imageUri,
                     name: PatientsArray.name,
-                  }*/);
+                  }*/,
+                  );
                 }}>
-                <Text style={[styles.patientTextStyle, { color: COLORS.blue }]}>
+                <Text style={[styles.patientTextStyle, {color: COLORS.blue}]}>
                   التفاصيل
                 </Text>
               </TouchableOpacity>
@@ -274,21 +310,21 @@ function AppointmentDetails({ navigation }) {
                   styles.buttonStyle,
                   {
                     borderColor:
-                      appointmentDetailsObject.appointment_status === "1" ||
-                        appointmentDetailsObject.appointment_status === 'مكتمل'
+                      appointmentDetailsObject.appointment_status === '1' ||
+                      appointmentDetailsObject.appointment_status === 'مكتمل'
                         ? COLORS.green
                         : COLORS.red,
                     backgroundColor:
-                      appointmentDetailsObject.appointment_status === "1" ||
-                        appointmentDetailsObject.appointment_status === 'مكتمل'
+                      appointmentDetailsObject.appointment_status === '1' ||
+                      appointmentDetailsObject.appointment_status === 'مكتمل'
                         ? 'rgba(174, 210, 96,0.1)'
                         : 'rgba(255, 0, 0,0.1)',
                   },
                 ]}
                 disabled={
-                  appointmentDetailsObject.appointment_status === "0" ||
+                  appointmentDetailsObject.appointment_status === '0' ||
                   appointmentDetailsObject.appointment_status === 'مكتمل' ||
-                  appointmentDetailsObject.appointment_status === "1"
+                  appointmentDetailsObject.appointment_status === '1'
                 }
                 onPress={() => {
                   setDialogVisible(dialogVisible => true);
@@ -298,35 +334,45 @@ function AppointmentDetails({ navigation }) {
                     styles.patientTextStyle,
                     {
                       color:
-                        appointmentDetailsObject.appointment_status === "1"
-                          ||
-                          appointmentDetailsObject.appointment_status === 'مكتمل'
+                        appointmentDetailsObject.appointment_status === '1' ||
+                        appointmentDetailsObject.appointment_status === 'مكتمل'
                           ? COLORS.green
                           : COLORS.red,
                     },
                   ]}>
-                  {appointmentDetailsObject.appointment_status === "0" ? "ملغي" : appointmentDetailsObject.appointment_status === "2" ? "معلق" :
-                    appointmentDetailsObject.appointment_status === "1" ? "تم التأكيد" : ""
-                  }
+                  {appointmentDetailsObject.appointment_status === '0'
+                    ? 'ملغي'
+                    : appointmentDetailsObject.appointment_status === '2'
+                    ? 'معلق'
+                    : appointmentDetailsObject.appointment_status === '1'
+                    ? 'تم التأكيد'
+                    : ''}
                 </Text>
               </TouchableOpacity>
             </View>
           </>
-        }
+        )}
       </View>
       <View style={styles.historyTextViewStyle}>
         <Text style={style.textContentBold}>التاريخ</Text>
       </View>
-      {appointmentDetailsObject.patient.private_history === "0" ? (
-        appointmentDetailsObject.appointment_status === "1" &&
-          (appointmentDetailsObject.appointment_date.substring(8, 10)[0] === "0" ?
-            JSON.parse(appointmentDetailsObject.appointment_date.substring(9, 10)) :
-            JSON.parse(appointmentDetailsObject.appointment_date.substring(8, 10))) == getDay &&
-          getMonthNameBack(appointmentDetailsObject.appointment_date.substring(5, 7)).trim() == getMonth &&
-          JSON.parse(appointmentDetailsObject.appointment_date.substring(0, 4)) == getYear ? (
+      {appointmentDetailsObject.patient.private_history === '0' ? (
+        appointmentDetailsObject.appointment_status === '1' &&
+        (appointmentDetailsObject.appointment_date.substring(8, 10)[0] === '0'
+          ? JSON.parse(
+              appointmentDetailsObject.appointment_date.substring(9, 10),
+            )
+          : JSON.parse(
+              appointmentDetailsObject.appointment_date.substring(8, 10),
+            )) == getDay &&
+        getMonthNameBack(
+          appointmentDetailsObject.appointment_date.substring(5, 7),
+        ).trim() == getMonth &&
+        JSON.parse(appointmentDetailsObject.appointment_date.substring(0, 4)) ==
+          getYear ? (
           <>
             {/*  هنا لو كان اراي الهيستوري فاضي يبقي هيظهر كلام */}
-            {historyArr.length > 0 ?
+            {historyArr.length > 0 ? (
               <>
                 <FlatList
                   keyExtractor={keyextractor}
@@ -345,12 +391,12 @@ function AppointmentDetails({ navigation }) {
                   />
                 </View>
               </>
-              :
+            ) : (
               <View style={styles.viewForLockAndButtonStyle}>
                 <View style={styles.viewForLockAndTextStyle}>
                   <Text>لا يوجد تاريخ مرضي حتي الأن</Text>
                 </View>
-                <View >
+                <View>
                   <GeneralButton
                     title="اضافة روشته"
                     onPress={() => {
@@ -359,30 +405,38 @@ function AppointmentDetails({ navigation }) {
                   />
                 </View>
               </View>
-            }
+            )}
           </>
+        ) : historyArr.length > 0 ? (
+          <FlatList
+            keyExtractor={keyextractor}
+            data={historyArr}
+            renderItem={renderitems}
+            style={styles.flatListStyle}
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.flatListContentContainerStyle}
+          />
         ) : (
-          historyArr.length > 0 ?
-            <FlatList
-              keyExtractor={keyextractor}
-              data={historyArr}
-              renderItem={renderitems}
-              style={styles.flatListStyle}
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={styles.flatListContentContainerStyle}
-            /> :
-            <View style={styles.viewForLockAndButtonStyle}>
-              <View style={styles.viewForLockAndTextStyle}>
-                <Text>لا يوجد تاريخ مرضي حتي الأن</Text>
-              </View>
+          <View style={styles.viewForLockAndButtonStyle}>
+            <View style={styles.viewForLockAndTextStyle}>
+              <Text>لا يوجد تاريخ مرضي حتي الأن</Text>
             </View>
+          </View>
         )
-      ) : appointmentDetailsObject.appointment_status === "1" &&
-        (appointmentDetailsObject.appointment_date.substring(8, 10)[0] === "0" ?
-          JSON.parse(appointmentDetailsObject.appointment_date.substring(9, 10)) :
-          JSON.parse(appointmentDetailsObject.appointment_date.substring(8, 10))) === getDay &&
-        getMonthNameBack(appointmentDetailsObject.appointment_date.substring(5, 7)).trim() === getMonth &&
-        JSON.parse(appointmentDetailsObject.appointment_date.substring(0, 4)) === getYear ? (
+      ) : appointmentDetailsObject.appointment_status === '1' &&
+        (appointmentDetailsObject.appointment_date.substring(8, 10)[0] === '0'
+          ? JSON.parse(
+              appointmentDetailsObject.appointment_date.substring(9, 10),
+            )
+          : JSON.parse(
+              appointmentDetailsObject.appointment_date.substring(8, 10),
+            )) === getDay &&
+        getMonthNameBack(
+          appointmentDetailsObject.appointment_date.substring(5, 7),
+        ).trim() === getMonth &&
+        JSON.parse(
+          appointmentDetailsObject.appointment_date.substring(0, 4),
+        ) === getYear ? (
         <View style={styles.viewForLockAndButtonStyle}>
           <View style={styles.viewForLockAndTextStyle}>
             <View>

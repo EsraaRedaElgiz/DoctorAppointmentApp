@@ -45,7 +45,7 @@ const Header = props => {
               style={[
                 styles.userImage,
                 {
-                  backgroundColor: COLORS.gray,
+                  backgroundColor: COLORS.lightGray3,
                   alignItems: 'center',
                   justifyContent: 'center',
                 },
@@ -110,13 +110,13 @@ const styles = StyleSheet.create({
     width: RFValue(60),
     height: RFValue(60),
     borderRadius: RADIUS.xlRadius,
-    marginRight: MARGIN.smMargin,
   },
   textConatiner: {
     Width: RFValue(50),
     height: RFValue(50),
     justifyContent: 'space-around',
     paddingVertical: PADDINGS.xsPadding,
+    marginLeft: MARGIN.smMargin,
   },
 
   searchIconStyle: {

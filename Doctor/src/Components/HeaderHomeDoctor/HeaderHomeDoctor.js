@@ -18,6 +18,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {getRate} from '../../../../src/Redux/Reducers/GetRateSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const HeaderHomeDoctor = () => {
+  let curHr = new Date().getHours();
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const globalState = useSelector(state => state);
@@ -48,9 +49,11 @@ const HeaderHomeDoctor = () => {
           )}
         </Pressable>
         <View style={styles.textConatiner}>
-          <Text style={style.textContent}> مرحبا</Text>
-          <Text style={style.textContentBold}>
-            {'د ' + name.trim().substring(0, name.indexOf(' '))}
+          <Text style={style.textContent}>
+            {curHr < 12 ? 'صباح الخير' : 'مساء الخير'}
+          </Text>
+          <Text style={[style.textContentBold, {textAlign: 'left'}]}>
+            {name.trim().substring(0, name.indexOf(' '))}
           </Text>
         </View>
       </View>
