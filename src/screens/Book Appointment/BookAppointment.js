@@ -27,7 +27,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {bookAppointment} from '../../Redux/Reducers/BookAppointmentSlice';
 const BookAppointment = ({navigation}) => {
   const globalState = useSelector(state => state);
-  const {isLoading2} = globalState.BookAppointmentReducer;
+  const {isLoading2,date} = globalState.BookAppointmentReducer;
   const route = useRoute();
   const dispatch = useDispatch();
   const DoctorArray = route.params.DoctorArray;
@@ -35,9 +35,7 @@ const BookAppointment = ({navigation}) => {
   const [checkedCerdit, setcheckedCerdit] = useState(false);
   const [chosenTime, setChosenTime] = useState(null);
   const [chosenDay, setChosenDay] = useState(null);
-  //session time
   const [timeSlots, setTimeSlots] = useState([]);
-  console.log("totalappointment",(timeSlots.length)-1) //الرقم اللي هيطلع من هنا هيتحط في الهوم دكتور
   const craeteTimeSlots = (fromTime, ToTime) => {
     let startTime = moment(fromTime, 'hh:mm');
     let endTime = moment(ToTime, 'hh:mm');
@@ -45,28 +43,27 @@ const BookAppointment = ({navigation}) => {
     if (endTime.isBefore(startTime)) {
       endTime.add(1, 'day');
     }
+    function convertH2M(timeInHour){
+
+      var timeParts = timeInHour.split(":");
+  
+      return Number(timeParts[0]) * 60 + Number(timeParts[1]);
+  
+    }
 
     let arr = [];
     while (startTime <= endTime) {
       arr.push(new moment(startTime).format('hh:mm'));
-      startTime.add(30, 'minute'); 
+      startTime.add(convertH2M(DoctorArray.clinic.session_time.slice(0,5)), 'minute'); 
     }
 
     return arr;
   };
-  //
-  function convertH2M(timeInHour){
-
-    var timeParts = timeInHour.split(":");
-
-    return Number(timeParts[0]) * 60 + Number(timeParts[1]);
-
-  }
-  var timeInMinutes = convertH2M("01:30");//session time
-  console.log("test",timeInMinutes); //الناتج ده هحطه مكتن ال 30 اللي في 51 سطر
-  //
   useEffect(() => {
-    setTimeSlots(craeteTimeSlots('08:00', '20:00')); // 08:00 start time ,9:00 end time هحط هنا البدليه والنهايه من الباك
+    const availableTime=craeteTimeSlots(DoctorArray.clinic.start_time.slice(0,5), DoctorArray.clinic.end_time.slice(0,5))
+    //console.log(availableTime.slice(0,(availableTime.length)-1))
+    setTimeSlots(timeSlots=>availableTime.slice(0,availableTime.length-1)); 
+    
   }, []);
   const cashFun = () => {
     setCheckCash(true);

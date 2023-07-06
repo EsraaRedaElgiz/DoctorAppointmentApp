@@ -180,7 +180,7 @@ function AppointmentDetails({navigation}) {
       <AppointmentAndHistoryComponent
         doctorImageUri={user.user_image}
         doctorName={user.user_first_name}
-        doctorSpeciality={'باطنه'} //مش مكتوب
+        doctorSpeciality={doctor.speciality_name}
         dateShow={true}
         day={appointment_date.substring(8, 10)}
         month={getMonthNameBack(appointment_date.substring(5, 7)).trim()}

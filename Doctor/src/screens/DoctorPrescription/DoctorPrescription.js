@@ -33,6 +33,7 @@ const {height} = Dimensions.get('window');
 import {style} from '../../../../src/styles/Style';
 import GeneralTextInput from '../../../../src/components/GeneralTextInput/GeneralTextInput';
 import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
+import {useDispatch} from 'react-redux';
 
 function DoctorPrescription({navigation}) {
   const [photo_uri, setphoto_uri] = useState(null);
@@ -47,10 +48,13 @@ function DoctorPrescription({navigation}) {
     ['tmam', 'يومان', 'مرة'],
   ]);
   const [visible, setVisible] = useState(false);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     requestCameraPermission();
   }, []);
+  const onPressHandler = () => {
+    // appointment_id
+  };
   const refRBSheet = useRef();
   const selectFromGallery = () => {
     let options = {
@@ -266,7 +270,7 @@ function DoctorPrescription({navigation}) {
         </TouchableOpacity>
       </RBSheet>
       <View style={styles.buttonView}>
-        <GeneralButton title="تم" />
+        <GeneralButton title="تم" onPress={() => onPressHandler()} />
       </View>
     </GeneralPage>
   );
