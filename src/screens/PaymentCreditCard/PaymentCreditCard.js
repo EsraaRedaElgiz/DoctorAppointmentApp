@@ -17,6 +17,7 @@ import {
   FONTS,
   ICONS,
   COLORS,
+  USER_DATA,
 } from '../../constants/Constants';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -28,6 +29,7 @@ import {useRoute} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {getPaymentCard} from '../../Redux/Reducers/PaymentCardSlice';
 import {bookAppointment} from '../../Redux/Reducers/BookAppointmentSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const PaymentCreditCard = ({navigation}) => {
   const route = useRoute();
   const BookArray = route.params.BookArray;
@@ -36,9 +38,14 @@ const PaymentCreditCard = ({navigation}) => {
   const globalState = useSelector(state => state);
   const {cards, error, isLoading} = globalState.PaymentCardReducer;
   const {date, isLoading2} = globalState.BookAppointmentReducer;
-
+  const getData = async () => {
+    let data = await AsyncStorage.getItem(USER_DATA);
+    data = JSON.parse(data).user_id;
+    dispatch(getPaymentCard(data));
+    // console.log(data);
+  };
   useEffect(() => {
-    dispatch(getPaymentCard());
+    getData();
   }, []);
   const appendSpace = string => {
     let newString = '';

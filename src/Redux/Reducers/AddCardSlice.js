@@ -22,7 +22,7 @@ export const AddCardAction = createAsyncThunk(
         url: '/patient/insert_cards.php',
         data: cartData,
       });
-      dispatch(getPaymentCard());
+      // dispatch(getPaymentCard());
       console.log(response.data);
       return response.data;
     } catch (error) {

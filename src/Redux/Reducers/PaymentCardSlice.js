@@ -22,7 +22,7 @@ const initialState = {
 
 export const getPaymentCard = createAsyncThunk(
   'paymentCard/getPaymentCard',
-  async (_, thunkAPI) => {
+  async (args, thunkAPI) => {
     const {rejectWithValue} = thunkAPI;
     try {
       // let data = await AsyncStorage.getItem(USER_DATA);
@@ -31,7 +31,7 @@ export const getPaymentCard = createAsyncThunk(
       // console.log(data)
       const response = await Axios({
         method: 'get',
-        url: `/patient/payment_cards.php?user_id=108`,
+        url: `/patient/payment_cards.php?user_id=${args}`,
       });
 
       console.log(response.data);
