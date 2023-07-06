@@ -28,7 +28,8 @@ function History({navigation}) {
   const globalState = useSelector(state => state);
   const {isLoading, history, error} = globalState.HistoryReducer;
   const {isLoad} = globalState.HistoryPublicOrPrivateReducer;
-
+  const historyFilter=history.filter(el=>el.diagnosis)
+  //console.log(history)
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
       getHistoryStatus();
@@ -163,10 +164,10 @@ function History({navigation}) {
       {isLoading ? (
         <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
       ) : error == null ? (
-        history.length > 0 ? (
+        historyFilter.length > 0 ? (
           <FlatList
             keyExtractor={keyextractor}
-            data={history}
+            data={historyFilter}
             renderItem={renderitems}
             style={styles.flatListStyle}
             showsVerticalScrollIndicator={false}
