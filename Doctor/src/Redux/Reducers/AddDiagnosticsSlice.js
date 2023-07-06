@@ -18,6 +18,7 @@ export const AddDiagonisticsAction = createAsyncThunk(
         url: '/doctor/insert_diagnostics.php',
         data: data,
       });
+      console.log('res-> ', response.data);
       return response.data;
     } catch (error) {
       Alert.alert('Error');
@@ -26,7 +27,7 @@ export const AddDiagonisticsAction = createAsyncThunk(
   },
 );
 
-const EditDoctorDetailsSlice = createSlice({
+const AddDiagnosticsSlice = createSlice({
   name: 'AddDiagonistics',
   initialState,
   extraReducers: builder => {
@@ -47,4 +48,4 @@ const EditDoctorDetailsSlice = createSlice({
   },
 });
 
-export default EditDoctorDetailsSlice.reducer;
+export default AddDiagnosticsSlice.reducer;

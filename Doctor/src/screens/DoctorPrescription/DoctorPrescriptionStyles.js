@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f6f8fa',
   },
   row: {
-    height: RFValue(28),
+    minHeight: RFValue(40),
   },
   text: {
     textAlign: 'center',
