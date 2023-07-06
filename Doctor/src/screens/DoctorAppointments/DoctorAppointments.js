@@ -39,14 +39,12 @@ function DoctorAppointments({navigation}) {
   let month = date.toLocaleString('default', {month: 'long'});
   let year = date.getFullYear();
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      dispatch(getDoctorAppointments({filter: 'upcoming'}))
-        .unwrap()
-        .then(res => {})
-        .catch(err => {});
-    });
-    return unsubscribe;
-  }, [navigation]);
+    dispatch(getDoctorAppointments({filter: 'upcoming'}))
+      .unwrap()
+      .then(res => {})
+      .catch(err => {});
+  }, []);
+
   const [chosenDay, setChosenDay] = useState(null);
   return (
     <View style={styles.container}>

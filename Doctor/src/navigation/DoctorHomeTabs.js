@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text,View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import DoctorHomeStack from './DoctorHomeStack';
 import DoctorAppointmentStack from './AppointmentStack';
@@ -8,10 +8,14 @@ import DoctorProfileStack from './DoctorProfileStack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {COLORS, FONTS, ICONS} from '../../../src/constants/Constants';
 import {style} from '../../../src/styles/Style';
+import {useDispatch} from 'react-redux';
+import {getDoctorAppointments} from '../Redux/Reducers/DoctorAppointmentSlice';
+import {getDoctorHistory} from '../Redux/Reducers/DoctorHistorySlice';
 
 const Tab = createBottomTabNavigator();
 
 const DoctorHomeTabs = () => {
+  const dispatch = useDispatch();
   return (
     <>
       <Tab.Navigator
@@ -40,7 +44,7 @@ const DoctorHomeTabs = () => {
             tabBarStyle: {
               backgroundColor: COLORS.white,
             },
-            tabBarVisibilityAnimationConfig:true,
+            tabBarVisibilityAnimationConfig: true,
             tabBarIcon: ({focused}) => (
               <Ionicons
                 name={
@@ -68,8 +72,24 @@ const DoctorHomeTabs = () => {
           };
         }}>
         <Tab.Screen name="Home" component={DoctorHomeStack} />
-        <Tab.Screen name="Appointment" component={DoctorAppointmentStack} />
-        <Tab.Screen name="History" component={DoctorHistoryStack} />
+        <Tab.Screen
+          name="Appointment"
+          component={DoctorAppointmentStack}
+          listeners={{
+            tabPress: () => {
+              dispatch(getDoctorAppointments({filter: 'upcoming'}));
+            },
+          }}
+        />
+        <Tab.Screen
+          name="History"
+          component={DoctorHistoryStack}
+          listeners={{
+            tabPress: () => {
+              dispatch(getDoctorHistory({filter: 'history'}));
+            },
+          }}
+        />
         <Tab.Screen name="Profile" component={DoctorProfileStack} />
       </Tab.Navigator>
     </>

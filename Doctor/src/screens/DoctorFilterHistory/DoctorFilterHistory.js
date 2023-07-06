@@ -10,6 +10,7 @@ import {CheckBox} from 'react-native-elements';
 import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
 import {useDispatch, useSelector} from 'react-redux';
 import {getDoctorAppointments} from '../../Redux/Reducers/DoctorAppointmentSlice';
+import {getDoctorHistory} from '../../Redux/Reducers/DoctorHistorySlice';
 function DoctorFilterHistory({navigation}) {
   const [datePickerVisible, setDatePickerVisible] = useState(false);
   const [date, setDate] = useState('');
@@ -81,7 +82,7 @@ function DoctorFilterHistory({navigation}) {
             if (date == '') {
               Alert.alert('select date first');
             } else {
-              dispatch(getDoctorAppointments({date: date}));
+              dispatch(getDoctorHistory({date: date, status: checked ? 1 : 2}));
               navigation.goBack();
             }
           }}
