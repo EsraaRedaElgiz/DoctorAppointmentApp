@@ -13,6 +13,11 @@ const styles = StyleSheet.create({
     padding: PADDINGS.mdPadding,
     paddingVertical: PADDINGS.xlPadding,
   },
+  activityIndicatorStyle: {
+    marginTop: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   scrollStyle: {
     flex: 1,
   },
