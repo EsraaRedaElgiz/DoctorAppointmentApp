@@ -38,7 +38,7 @@ import GeneralButton from '../../../../src/components/GeneralButton/GeneralButto
 import {useDispatch, useSelector} from 'react-redux';
 import {AddDiagonisticsAction} from '../../Redux/Reducers/AddDiagnosticsSlice';
 
-function DoctorPrescription({navigation}) {
+function DoctorPrescription({navigation, route}) {
   const [photo_uri, setphoto_uri] = useState(null);
   const [analysis_uri, set_analysis_uri] = useState(null);
   const [rumor_uri, set_rumor_uri] = useState(null);
@@ -54,6 +54,7 @@ function DoctorPrescription({navigation}) {
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
   const {isLoading} = globalState.AddDiagnosticsReducer;
+  const appointment_id = route?.params?.appointment_id;
   useEffect(() => {
     requestCameraPermission();
   }, []);
@@ -62,7 +63,8 @@ function DoctorPrescription({navigation}) {
     dispatch(
       AddDiagonisticsAction({
         diagnosis: diagnosis,
-        diagnosis_treatment: newArray,
+        diagnosis_treatment: JSON.stringify(newArray),
+        appointment_id: appointment_id,
       }),
     );
   };

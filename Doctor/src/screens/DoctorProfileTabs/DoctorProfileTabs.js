@@ -20,8 +20,6 @@ function DoctorProfileTabs({navigation}) {
   useEffect(() => {
     dispatch(getDoctorDetails());
   }, []);
-
-  console.log('isLoading in Doctor Tabs', isLoading);
   return (
     <GeneralPage>
       <View style={styles.container}>

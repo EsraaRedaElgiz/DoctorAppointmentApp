@@ -48,7 +48,7 @@ function AppointmentDetails({navigation}) {
   const [appointmentDetailsObject, setAppointmentDetailsObject] =
     useState(appointmentDetails);
   const {historyArr} = globalState.PatientHistoryReducer;
-  const historyFilter=historyArr.filter(el=>el.diagnostics)
+  const historyFilter = historyArr.filter(el => el.diagnostics);
   useEffect(() => {
     setGetDay(getDay => {
       return new Date().getDate();
@@ -188,7 +188,9 @@ function AppointmentDetails({navigation}) {
         year={appointment_date.substring(0, 4)}
         style={styles.afterEachCardMargin}
         onPress={() => {
-          navigation.navigate('Prescription',{appointment_id:item.appointment_id});
+          navigation.navigate('Prescription', {
+            appointment_id: item.appointment_id,
+          });
         }}
       />
     );
@@ -387,7 +389,9 @@ function AppointmentDetails({navigation}) {
                   <GeneralButton
                     title="اضافة روشته"
                     onPress={() => {
-                      navigation.navigate('DoctorPrescription');
+                      navigation.navigate('DoctorPrescription', {
+                        appointment_id: appointmentDetailsObject.appointment_id,
+                      });
                     }}
                   />
                 </View>
@@ -401,7 +405,9 @@ function AppointmentDetails({navigation}) {
                   <GeneralButton
                     title="اضافة روشته"
                     onPress={() => {
-                      navigation.navigate('DoctorPrescription');
+                      navigation.navigate('DoctorPrescription', {
+                        appointment_id: appointmentDetailsObject.appointment_id,
+                      });
                     }}
                   />
                 </View>
@@ -451,12 +457,13 @@ function AppointmentDetails({navigation}) {
               <Text style={styles.privateTextStyle}>هذا التاريخ خاص</Text>
             </View>
           </View>
-
           <View>
             <GeneralButton
               title="اضافة روشته"
               onPress={() => {
-                navigation.navigate('DoctorPrescription');
+                navigation.navigate('DoctorPrescription', {
+                  appointment_id: appointmentDetailsObject.appointment_id,
+                });
               }}
             />
           </View>
