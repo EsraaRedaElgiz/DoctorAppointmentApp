@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Modal,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import GeneralPage from '../../components/GeneralPage/GeneralPage';
 import {
@@ -37,7 +38,8 @@ import {getPrescription} from '../../Redux/Reducers/PrescriptionSlice';
 function Prescription({navigation, route}) {
   const {appointment_id} = route.params;
   const globalState = useSelector(state => state);
-  const {diagnosis, diagnosisTreatment} = globalState.PrescriptionReducer;
+  const {diagnosis, diagnosisTreatment, isLoading} =
+    globalState.PrescriptionReducer;
   const dispatch = useDispatch();
   const [photo_uri, setphoto_uri] = useState(null);
   const [analysis_uri, set_analysis_uri] = useState(null);
@@ -127,85 +129,93 @@ function Prescription({navigation, route}) {
         }}
         padding={PADDINGS.mdPadding}
       />
-      <View style={styles.container}>
-        <Text style={style.textContentBold}>التشخيص</Text>
-        <View style={styles.diagnosisView}>
-          <Text style={[style.textContent, styles.diagnosisText]}>
-            {diagnosis ? diagnosis : 'المريض بحالة جيدة'}
-          </Text>
+      {isLoading ? (
+        <View style={styles.ActivityIndicatorStyleView}>
+          <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
         </View>
-        <Text style={style.textContentBold}>العلاج</Text>
-        {diagnosisTreatment.length ? (
-          <Fragment>
-            <View style={{marginVertical: MARGIN.mdMargin}}>
-              <Table borderStyle={{borderWidth: 1}}>
-                <Row
-                  data={head}
-                  flexArr={[1, 1, 1]}
-                  style={styles.head}
-                  textStyle={[styles.text, style.textSmallContentBold]}
-                />
-                <TableWrapper style={styles.wrapper}>
-                  <Rows
-                    data={data}
+      ) : (
+        <View style={styles.container}>
+          <Text style={style.textContentBold}>التشخيص</Text>
+          <View style={styles.diagnosisView}>
+            <Text style={[style.textContent, styles.diagnosisText]}>
+              {diagnosis ? diagnosis : 'المريض بحالة جيدة'}
+            </Text>
+          </View>
+          <Text style={style.textContentBold}>العلاج</Text>
+          {diagnosisTreatment.length ? (
+            <Fragment>
+              <View style={{marginVertical: MARGIN.mdMargin}}>
+                <Table borderStyle={{borderWidth: 1}}>
+                  <Row
+                    data={head}
                     flexArr={[1, 1, 1]}
-                    style={styles.row}
-                    textStyle={styles.text}
+                    style={styles.head}
+                    textStyle={[styles.text, style.textSmallContentBold]}
                   />
-                </TableWrapper>
-              </Table>
+                  <TableWrapper style={styles.wrapper}>
+                    <Rows
+                      data={data}
+                      flexArr={[1, 1, 1]}
+                      style={styles.row}
+                      textStyle={styles.text}
+                    />
+                  </TableWrapper>
+                </Table>
+              </View>
+            </Fragment>
+          ) : (
+            <Text
+              style={[
+                style.textContent,
+                styles.diagnosisText,
+                {marginVertical: MARGIN.mdMargin},
+              ]}>
+              لا يوجد علاج
+            </Text>
+          )}
+          <Text style={style.textContentBold}>التحاليل</Text>
+          <View style={styles.analysis}>
+            <View
+              style={[styles.rowTableStyle, {backgroundColor: COLORS.white}]}>
+              <Text style={styles.analysisText}>تحاليل</Text>
+              <TouchableOpacity
+                onPress={() => {
+                  if (analysis_uri === null) {
+                    setImageIndex(0);
+                    refRBSheet.current.open();
+                  } else {
+                    setImageIndex(0);
+                    setVisible(true);
+                  }
+                }}
+                style={styles.openButton}>
+                <Text style={styles.openText}>
+                  {analysis_uri === null ? 'اضافة' : 'افتح'}
+                </Text>
+              </TouchableOpacity>
             </View>
-          </Fragment>
-        ) : (
-          <Text
-            style={[
-              style.textContent,
-              styles.diagnosisText,
-              {marginVertical: MARGIN.mdMargin},
-            ]}>
-            لا يوجد علاج
-          </Text>
-        )}
-        <Text style={style.textContentBold}>التحاليل</Text>
-        <View style={styles.analysis}>
-          <View style={[styles.rowTableStyle, {backgroundColor: COLORS.white}]}>
-            <Text style={styles.analysisText}>تحاليل</Text>
-            <TouchableOpacity
-              onPress={() => {
-                if (analysis_uri === null) {
-                  setImageIndex(0);
-                  refRBSheet.current.open();
-                } else {
-                  setImageIndex(0);
-                  setVisible(true);
-                }
-              }}
-              style={styles.openButton}>
-              <Text style={styles.openText}>
-                {analysis_uri === null ? 'اضافة' : 'افتح'}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.rowTableStyle}>
-            <Text style={styles.analysisText}>اشاعات</Text>
-            <TouchableOpacity
-              style={styles.openButton}
-              onPress={() => {
-                if (rumor_uri === null) {
-                  setImageIndex(1);
-                  refRBSheet.current.open();
-                } else {
-                  setImageIndex(1);
-                  setVisible(true);
-                }
-              }}>
-              <Text style={styles.openText}>
-                {rumor_uri === null ? 'اضافة' : 'افتح'}
-              </Text>
-            </TouchableOpacity>
+            <View style={styles.rowTableStyle}>
+              <Text style={styles.analysisText}>اشاعات</Text>
+              <TouchableOpacity
+                style={styles.openButton}
+                onPress={() => {
+                  if (rumor_uri === null) {
+                    setImageIndex(1);
+                    refRBSheet.current.open();
+                  } else {
+                    setImageIndex(1);
+                    setVisible(true);
+                  }
+                }}>
+                <Text style={styles.openText}>
+                  {rumor_uri === null ? 'اضافة' : 'افتح'}
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
+      )}
+
       {/* MODAL analysis */}
       <Modal
         transparent
