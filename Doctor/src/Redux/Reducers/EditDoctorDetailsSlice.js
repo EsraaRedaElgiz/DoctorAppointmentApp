@@ -23,7 +23,7 @@ export const EditDoctorDetailAction = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      Alert.alert('Error');
+      Alert.alert('Error', error);
       return rejectWithValue(error.message);
     }
   },

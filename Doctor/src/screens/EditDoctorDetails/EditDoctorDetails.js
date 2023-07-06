@@ -58,10 +58,10 @@ export default function EditDoctorDetails({navigation}) {
     session_time,
     latitude,
     longitude,
-    isLoading,
     success,
     error,
   } = globalState.DoctorDetailsReducer;
+  const {isLoading} = globalState.EditDoctorDetailsReducer;
 
   const {
     control,
@@ -95,33 +95,42 @@ export default function EditDoctorDetails({navigation}) {
 
   const [long, setLong] = useState(0);
   const [lat, setLat] = useState(0);
-  const [photo_uri, setphoto_uri] = useState({uri: image});
+  const [photo_uri, setPhoto_uri] = useState(null);
+  const [photo_data, setPhoto_data] = useState({uri: image});
   const onSubmit = data => {
     const formData = new FormData();
     formData.append('first_name', data.name);
-    formData.append('email', data.email);
+    formData.append('doctor_experience', data.exp);
     formData.append(
       'image',
-      photo_uri
+      photo_data
         ? {
-            name: photo_uri?.fileName,
-            uri: photo_uri?.uri,
-            type: photo_uri?.type,
+            name: photo_data?.fileName,
+            uri: photo_data?.uri,
+            type: photo_data?.type,
           }
         : JSON.stringify({
-            name: photo_uri?.fileName,
-            uri: photo_uri?.uri,
-            type: photo_uri?.type,
+            name: photo_data?.fileName,
+            uri: photo_data?.uri,
+            type: photo_data?.type,
           }),
     );
-    formData.append('doctor_about', data.About);
-    formData.append('doctor_experience', data.exp);
-    formData.append('branch_location', data.Location);
     formData.append('booking_price', data.price);
-    formData.append('start_time', data.start);
-    formData.append('end_time', data.end);
-    formData.append('session_time', data.section);
-    console.log(data);
+    formData.append('start_time', data.start + ':00');
+    formData.append('end_time', data.end + ':00');
+    formData.append('session_time', data.section + ':00');
+    // console.log('Data in Edit Doctor -> ', data);
+    // console.log(
+    //   'Start and End in Edit Doctor -> ',
+    //   'start_time',
+    //   data.start + ':00',
+    //   ' ',
+    //   'end_time',
+    //   data.end + ':00',
+    //   ' ',
+    //   'session_time',
+    //   data.section + ':00',
+    // );
     dispatch(EditDoctorDetailAction(formData))
       .unwrap()
       .then(result => {
@@ -134,7 +143,7 @@ export default function EditDoctorDetails({navigation}) {
         reset();
       })
       .catch(err => {
-        console.log(err?.response?.data);
+        console.log('Error in Catch -> ', err?.response?.data);
         const errors = err?.response?.data?.errors;
       })
       .finally(() => {});
@@ -178,7 +187,8 @@ export default function EditDoctorDetails({navigation}) {
         console.log('User tapped custom button: ', res.customButton);
         alert(res.customButton);
       } else {
-        setphoto_uri(photo_uri => res.assets[0]);
+        setPhoto_uri(photo_uri => res.assets[0].uri);
+        setPhoto_data(photo_uri => res.assets[0]);
       }
     });
   };
@@ -199,7 +209,8 @@ export default function EditDoctorDetails({navigation}) {
         console.log('User tapped custom button: ', res.customButton);
         alert(res.customButton);
       } else {
-        setphoto_uri(photo_uri => res.assets[0]);
+        setPhoto_uri(photo_uri => res.assets[0].uri);
+        setPhoto_data(photo_uri => res.assets[0]);
         //upload_img(res.assets[0].base64)
       }
     });
@@ -243,21 +254,21 @@ export default function EditDoctorDetails({navigation}) {
   };
   const onTimeSelected = (event, value) => {
     setmodal_Visible_start_time(false);
-    console.log(JSON.stringify(value + '').substring(16, 22));
+    // console.log(JSON.stringify(value + '').substring(16, 22));
     setValue('start', JSON.stringify(value + '').substring(16, 22), {
       shouldValidate: true,
     });
   };
   const onTimeSelected_endtime = (event, value) => {
     setmodal_Visible_end_time(false);
-    console.log(JSON.stringify(value + '').substring(16, 22));
+    // console.log(JSON.stringify(value + '').substring(16, 22));
     setValue('end', JSON.stringify(value + '').substring(16, 22), {
       shouldValidate: true,
     });
   };
   const onTimeSelected_sectiontime = (event, value) => {
     setmodal_Visible_section_time(false);
-    console.log(JSON.stringify(value + '').substring(16, 22));
+    // console.log(JSON.stringify(value + '').substring(16, 22));
     setValue('section', JSON.stringify(value + '').substring(16, 22), {
       shouldValidate: true,
     });
@@ -280,7 +291,7 @@ export default function EditDoctorDetails({navigation}) {
             iconOnImage={true}
             iconBgColor
             onPressPen={() => refRBSheet.current.open()}
-            imageUri={image}
+            imageUri={photo_uri == null ? image : photo_uri}
           />
         </View>
         <Controller
@@ -666,7 +677,11 @@ export default function EditDoctorDetails({navigation}) {
         </View>
       </ScrollView>
       <View style={styles.buttonViewStyle}>
-        <GeneralButton title="تأكيد" onPress={handleSubmit(onSubmit)} />
+        <GeneralButton
+          title="تأكيد"
+          isLoading={isLoading}
+          onPress={handleSubmit(onSubmit)}
+        />
       </View>
       <RBSheet
         ref={refRBSheet}
