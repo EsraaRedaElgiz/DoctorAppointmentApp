@@ -8,7 +8,9 @@ import Images from '../../constants/Images';
 function PersonAppointmentCard(props) {
   const {name, pending, confirmed, time, imageUri, onPress} = props;
   return (
-    <Pressable style={styles.container} onPress={onPress}>
+    <Pressable
+      style={({pressed}) => [styles.container, pressed && {opacity: 0.8}]}
+      onPress={onPress}>
       <View style={styles.wrap1}>
         <LinearGradient
           colors={[COLORS.blue, COLORS.lightBlue]}
@@ -18,10 +20,7 @@ function PersonAppointmentCard(props) {
           {imageUri ? (
             <Image style={styles.image} source={{uri: imageUri}} />
           ) : (
-            <Image
-              style={styles.image}
-              source={Images.userDefault}
-            />
+            <Image style={styles.image} source={Images.userDefault} />
           )}
 
           <View style={[styles.timeView, {alignItems: 'flex-start'}]}>

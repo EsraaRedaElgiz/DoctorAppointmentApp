@@ -20,13 +20,13 @@ function DoctorProfileTabs({navigation}) {
   useEffect(() => {
     dispatch(getDoctorDetails());
   }, []);
-
-  console.log("qvhwvi",isLoading)
   return (
     <GeneralPage>
       <View style={styles.container}>
-        {isLoading ? (
-          <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
+        {!name ? (
+          <View style={styles.activityIndicatorStyle}>
+            <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
+          </View>
         ) : (
           <>
             <ProfileImage nameAfterImage={name} imageUri={image} />

@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   Modal,
   Image,
+  TextInput,
+  Alert,
 } from 'react-native';
 import {
   Table,
@@ -33,27 +35,38 @@ const {height} = Dimensions.get('window');
 import {style} from '../../../../src/styles/Style';
 import GeneralTextInput from '../../../../src/components/GeneralTextInput/GeneralTextInput';
 import GeneralButton from '../../../../src/components/GeneralButton/GeneralButton';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {AddDiagonisticsAction} from '../../Redux/Reducers/AddDiagnosticsSlice';
 
-function DoctorPrescription({navigation}) {
+function DoctorPrescription({navigation, route}) {
   const [photo_uri, setphoto_uri] = useState(null);
   const [analysis_uri, set_analysis_uri] = useState(null);
   const [rumor_uri, set_rumor_uri] = useState(null);
   const [imageIndex, setImageIndex] = useState(null);
   const [head, setHead] = useState(['الدواء', 'المدة', 'ملاحظات']);
-  const [data, setData] = useState([
-    ['lorim', 'يومان', 'مرة'],
-    ['hello', 'يوم', '3 مرات'],
-    ['Hiii', 'يومان', 'مرة'],
-    ['tmam', 'يومان', 'مرة'],
-  ]);
+  const [data, setData] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [inputVal1, setInputVal1] = useState(null);
+  const [inputVal2, setInputVal2] = useState(null);
+  const [inputVal3, setInputVal3] = useState(null);
+  const [diagnosis, setDiagnosis] = useState(null);
+  const [newArray, setNewArray] = useState([]);
   const dispatch = useDispatch();
+  const globalState = useSelector(state => state);
+  const {isLoading} = globalState.AddDiagnosticsReducer;
+  const appointment_id = route?.params?.appointment_id;
   useEffect(() => {
     requestCameraPermission();
   }, []);
   const onPressHandler = () => {
     // appointment_id
+    dispatch(
+      AddDiagonisticsAction({
+        diagnosis: diagnosis,
+        diagnosis_treatment: JSON.stringify(newArray),
+        appointment_id: appointment_id,
+      }),
+    );
   };
   const refRBSheet = useRef();
   const selectFromGallery = () => {
@@ -108,6 +121,64 @@ function DoctorPrescription({navigation}) {
       }
     });
   };
+  const input1 = (
+    <TextInput
+      onChangeText={value => {
+        setInputVal1(value);
+      }}
+      multiline={true}
+      style={{
+        width: '100%',
+        padding: RFValue(2),
+        maxHeight: RFValue(55),
+        textAlign: 'center',
+      }}
+    />
+  );
+  const input2 = (
+    <TextInput
+      onChangeText={value => {
+        setInputVal2(value);
+      }}
+      multiline={true}
+      style={{
+        width: '100%',
+        padding: RFValue(2),
+        maxHeight: RFValue(55),
+        textAlign: 'center',
+      }}
+    />
+  );
+  const input3 = (
+    <TextInput
+      onChangeText={value => {
+        setInputVal3(value);
+      }}
+      multiline={true}
+      style={{
+        width: '100%',
+        padding: RFValue(2),
+        maxHeight: RFValue(55),
+        textAlign: 'center',
+      }}
+    />
+  );
+  const addTreatmentHandler = () => {
+    if (input1 && input2) {
+      let newArr = [input1, input2, input3];
+      setData([...data, newArr]);
+      //push array of textInput
+      if (inputVal1 !== null || inputVal2 !== null) {
+        newArray.push([inputVal1, inputVal2, inputVal3]);
+        setInputVal1(null);
+        setInputVal2(null);
+        setInputVal3(null);
+      }
+      console.log(newArray);
+    } else {
+      Alert.alert('Must Enter Treatment and number of Times');
+    }
+  };
   return (
     <GeneralPage>
       <HeaderNavigation
@@ -121,11 +192,19 @@ function DoctorPrescription({navigation}) {
       <View style={styles.container}>
         <Text style={style.textContentBold}>التشخيص</Text>
         <View style={styles.diagnosisView}>
-          <GeneralTextInput placeholder="اكتب التشخيص" multiline />
+          <GeneralTextInput
+            onChangeText={value => {
+              setDiagnosis(value);
+            }}
+            placeholder="اكتب التشخيص"
+            multiline
+          />
         </View>
         <View style={styles.analysisAndDiagnosis}>
           <Text style={style.textContentBold}>العلاج</Text>
-          <TouchableOpacity style={styles.plusIconView}>
+          <TouchableOpacity
+            onPress={() => addTreatmentHandler()}
+            style={styles.plusIconView}>
             <Icon name="plus" style={styles.icon} />
           </TouchableOpacity>
         </View>
@@ -270,7 +349,11 @@ function DoctorPrescription({navigation}) {
         </TouchableOpacity>
       </RBSheet>
       <View style={styles.buttonView}>
-        <GeneralButton title="تم" onPress={() => onPressHandler()} />
+        <GeneralButton
+          isLoading={isLoading}
+          title="تم"
+          onPress={() => onPressHandler()}
+        />
       </View>
     </GeneralPage>
   );

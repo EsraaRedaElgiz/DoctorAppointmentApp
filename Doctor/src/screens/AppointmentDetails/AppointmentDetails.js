@@ -462,12 +462,13 @@ function AppointmentDetails({ navigation }) {
               <Text style={styles.privateTextStyle}>هذا التاريخ خاص</Text>
             </View>
           </View>
-
           <View>
             <GeneralButton
               title="اضافة روشته"
               onPress={() => {
-                navigation.navigate('DoctorPrescription');
+                navigation.navigate('DoctorPrescription', {
+                  appointment_id: appointmentDetailsObject.appointment_id,
+                });
               }}
             />
           </View>
