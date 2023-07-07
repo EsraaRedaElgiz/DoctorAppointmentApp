@@ -73,9 +73,74 @@ const BookAppointment = ({navigation}) => {
     setcheckedCerdit(true);
     setCheckCash(false);
   };
-  const sendDate = `${JSON.stringify(chosenDay).slice(1, 5)}-${JSON.stringify(
-    chosenDay,
-  ).slice(6, 8)}-${JSON.stringify(chosenDay).slice(9, 11)}`;
+  const getMonthName = monthnum => {
+    if (monthnum == '01') {
+      return 'يناير';
+    } else if (monthnum == '02') {
+      return 'فبراير';
+    } else if (monthnum == '03') {
+      return 'مارس';
+    } else if (monthnum == '04') {
+      return 'ابريل';
+    } else if (monthnum == '05') {
+      return 'مايو';
+    } else if (monthnum == '06') {
+      return 'يونيو';
+    } else if (monthnum == '07') {
+      return 'يوليو';
+    } else if (monthnum == '08') {
+      return 'اغسطس';
+    } else if (monthnum == '09') {
+      return 'سبتمبر';
+    } else if (monthnum == '10') {
+      return 'اكتوبر';
+    } else if (monthnum == '11') {
+      return 'نوفمبر';
+    } else if (monthnum == '12') {
+      return 'ديسمبر';
+    }
+  };
+  const addDay = () => {
+    if (JSON.stringify(date).slice(9, 11) == "28" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "فبراير") {
+      return "1"
+    } else if ((JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "ابريل") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+        JSON.stringify(date).slice(6, 8)) == "يونيو") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+          JSON.stringify(date).slice(6, 8)) == "اغسطس") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+            JSON.stringify(date).slice(6, 8)) == "اكتوبر")) {
+      return "1"
+    } else {
+      return JSON.stringify(date).slice(9, 11) * 1 + 1
+    }
+  }
+  const month = () => {
+    if (JSON.stringify(date).slice(9, 11) == "28" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "فبراير") {
+      return "03"
+    } else if ((JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "ابريل")) {
+        return "05"
+
+    } else if (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "يونيو") {
+        return "07"
+
+    } else if (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "اغسطس") {
+        return "09"
+
+    } else if (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "اكتوبر") {
+        return "11"
+
+    } else {
+      return JSON.stringify(
+        date,
+      ).slice(6, 8)
+    }
+  }
+  const sendDate = `${JSON.stringify(data).slice(1, 5)}-${month()}-${addDay()}`;
   // console.log(JSON.stringify(chosenTime).slice(1, 6).concat(':00'));
   // console.log(
   //   'date' +
@@ -83,6 +148,7 @@ const BookAppointment = ({navigation}) => {
   //     'time' +
   //     JSON.stringify(chosenTime).slice(1, 6).concat(':00'),
   // );
+  //console.log("lll",sendDate)
   return (
     <View style={{backgroundColor: COLORS.white, flex: 1}}>
       <HeaderNavigation

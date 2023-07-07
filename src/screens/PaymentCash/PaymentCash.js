@@ -50,9 +50,48 @@ const PaymentCash = ({navigation}) => {
       return 'ديسمبر';
     }
   };
-  const formatDate = `${JSON.stringify(date).slice(9, 11)} ${getMonthName(
-    JSON.stringify(date).slice(6, 8),
-  )} ${JSON.stringify(date).slice(1, 5)}`;
+  const addDay = () => {
+    if (JSON.stringify(date).slice(9, 11) == "28" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "فبراير") {
+      return "1"
+    } else if ((JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "ابريل") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+        JSON.stringify(date).slice(6, 8)) == "يونيو") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+          JSON.stringify(date).slice(6, 8)) == "اغسطس") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+            JSON.stringify(date).slice(6, 8)) == "اكتوبر")) {
+      return "1"
+    } else {
+      return JSON.stringify(date).slice(9, 11) * 1 + 1
+    }
+  }
+  const month = () => {
+    if (JSON.stringify(date).slice(9, 11) == "28" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "فبراير") {
+      return "03"
+    } else if ((JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "ابريل")) {
+        return "05"
+
+    } else if (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "يونيو") {
+        return "07"
+
+    } else if (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "اغسطس") {
+        return "09"
+
+    } else if (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "اكتوبر") {
+        return "11"
+
+    } else {
+      return JSON.stringify(
+        date,
+      ).slice(6, 8)
+    }
+  }
+  const formatDate = `${addDay()} ${getMonthName(
+    month()  )} ${JSON.stringify(date).slice(1, 5)}`;
   return (
     <>
       <View
@@ -71,7 +110,7 @@ const PaymentCash = ({navigation}) => {
           <PaymentCard
             image={BookArray.user_image}
             name={BookArray.user_first_name}
-            rating={BookArray.rating.slice(0,3)}
+            rating={BookArray.rating!=0?BookArray.rating.slice(0,3):BookArray.rating}
             price={BookArray.clinic.booking_price}
             speciality={BookArray.speciality_name}
             date={formatDate}

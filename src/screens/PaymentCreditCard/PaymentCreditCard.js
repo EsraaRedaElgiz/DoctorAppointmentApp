@@ -83,7 +83,7 @@ const PaymentCreditCard = ({ navigation }) => {
       return 'ديسمبر';
     }
   };
-  console.log('DATE IN => ' + date);
+  //console.log('DATE IN => ' + date);
   const addDay = () => {
     if (JSON.stringify(date).slice(9, 11) == "28" && getMonthName(
       JSON.stringify(date).slice(6, 8)) == "فبراير") {
@@ -150,7 +150,7 @@ const PaymentCreditCard = ({ navigation }) => {
       <PaymentCard
         image={BookArray.user_image}
         name={`${BookArray.user_first_name}`}
-        rating={BookArray.rating.slice(0, 3)}
+        rating={BookArray.rating!=0?BookArray.rating.slice(0, 3):BookArray.rating}
         price={BookArray.clinic.booking_price}
         speciality={BookArray.speciality_name}
         date={formatDate}
@@ -167,17 +167,8 @@ const PaymentCreditCard = ({ navigation }) => {
         {isLoading ? (
           <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
         ) : error === null ? (
-          cards.length === 0 ? (
-            <View
-              style={{
-                height: '100%',
-                width: '100%',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Text>لا يوجد بطاقة حتي الأن</Text>
-            </View>
-          ) : (
+          Array.isArray(cards) &&cards.length>0? 
+          (
             <FlatList
               showsVerticalScrollIndicator={false}
               data={cards}
@@ -198,7 +189,18 @@ const PaymentCreditCard = ({ navigation }) => {
                 );
               }}
             />
-          )
+          ):
+          (
+            <View
+              style={{
+                height: '100%',
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text>لا يوجد بطاقة دفع حتي الأن</Text>
+            </View>
+          )  
         ) : (
           <View
             style={{

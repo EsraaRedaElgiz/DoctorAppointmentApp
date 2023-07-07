@@ -62,7 +62,7 @@ const Header = props => {
             <ActivityIndicator size={RFValue(15)} color={COLORS.blue} />
           ) : name != '' ? (
             <Text style={[style.textContentBold, {textAlign: 'left'}]}>
-              {name.trim().substring(0, name.indexOf(' '))}
+              {name.trim().substring(0, name.indexOf(' '))==""?name.trim():name.trim().substring(0, name.indexOf(' '))}
             </Text>
           ) : (
             <Text style={[style.textContentBold, {textAlign: 'left'}]}>

@@ -42,14 +42,12 @@ function Payment(props) {
           navigation.navigate('UserProfile');
         }}
       />
-      <View
-        style={{flex: 1,paddingHorizontal: PADDINGS.mdPadding}}
-        >
+      <View style={{flex: 1, paddingHorizontal: PADDINGS.mdPadding}}>
         {isLoading ? (
           <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
-        ) : (
+        ) : Array.isArray(cards) &&cards.length>0? (
           <FlatList
-          showsVerticalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
             data={cards}
             renderItem={({item}) => {
               return (
@@ -62,6 +60,11 @@ function Payment(props) {
               );
             }}
           />
+        ) : (
+          <View
+            style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <Text>لا يوجد بطاقة دفع حتي الأن</Text>
+          </View>
         )}
       </View>
       <View style={styles.buttonView}>

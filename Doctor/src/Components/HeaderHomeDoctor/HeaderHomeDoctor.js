@@ -53,7 +53,7 @@ const HeaderHomeDoctor = () => {
             {curHr < 12 ? 'صباح الخير' : 'مساء الخير'}
           </Text>
           <Text style={[style.textContentBold, {textAlign: 'left'}]}>
-            {name.trim().substring(0, name.indexOf(' '))}
+            {name.trim().substring(0, name.indexOf(' '))==""?name.trim():name.trim().substring(0, name.indexOf(' '))}
           </Text>
         </View>
       </View>

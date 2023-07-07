@@ -116,7 +116,7 @@ const DoctorProfile = ({navigation}) => {
             {/* navigate to map page */}
             <Text
               style={[style.textContent, {marginVertical: MARGIN.smMargin}]}>
-              {DoctorArray.clinic.branch_location}
+              {DoctorArray.clinic.branch_address}
             </Text>
 
             <Pressable
