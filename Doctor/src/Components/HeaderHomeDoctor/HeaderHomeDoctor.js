@@ -38,7 +38,7 @@ const HeaderHomeDoctor = () => {
             <Image
               source={{uri: image}}
               style={styles.userImage}
-              resizeMode="center"
+              resizeMode="cover"
             />
           ) : (
             <Image
