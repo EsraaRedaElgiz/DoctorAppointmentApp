@@ -32,7 +32,7 @@ const PatientsListHome = ({data}) => {
                   //
                   dispatch(
                     getPatientHistory(JSON.parse(itemData.item.patient.patient_id)),
-                  );
+                  ).unwrap().then(()=>{}).catch((err)=>{});
                   dispatch(getAppointmentDetails(itemData.item.appointment_id)) // action.payload -> slice -> getAppointmentDetails
                     .unwrap()
                     .then(res => {
@@ -49,7 +49,7 @@ const PatientsListHome = ({data}) => {
                           'حدث خطأ اثناء الاتصال بالخادم لعرض تفاصيل الموعد من فضلك حاول مجددا ',
                         );
                       }
-                    });
+                    }).catch(()=>{});
                 }}
               />
             </>

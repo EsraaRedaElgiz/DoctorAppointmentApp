@@ -105,7 +105,7 @@ function DoctorAppointments({navigation}) {
                   onPress={() => {
                     dispatch(
                       getPatientHistory(JSON.parse(item.patient.patient_id)),
-                    );
+                    ).unwrap().then(()=>{}).catch((err)=>{});
                     dispatch(getAppointmentDetails(item.appointment_id))
                       .unwrap()
                       .then(res => {

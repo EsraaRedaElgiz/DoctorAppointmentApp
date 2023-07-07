@@ -7,9 +7,9 @@ import {
   View,
   Alert,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import PaymentCard from '../../components/Appointment/PaymentCard';
-import {DoctorsData} from '../../utils';
+import { DoctorsData } from '../../utils';
 import {
   PADDINGS,
   RADIUS,
@@ -20,24 +20,24 @@ import {
   USER_DATA,
 } from '../../constants/Constants';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {ListTiltle} from '../../components/Home';
-import {style} from '../../styles/Style';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { ListTiltle } from '../../components/Home';
+import { style } from '../../styles/Style';
 import Visa from '../../components/Visa/Visa';
-import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
-import {useRoute} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
-import {getPaymentCard} from '../../Redux/Reducers/PaymentCardSlice';
-import {bookAppointment} from '../../Redux/Reducers/BookAppointmentSlice';
+import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
+import { useRoute } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPaymentCard } from '../../Redux/Reducers/PaymentCardSlice';
+import { bookAppointment } from '../../Redux/Reducers/BookAppointmentSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const PaymentCreditCard = ({navigation}) => {
+const PaymentCreditCard = ({ navigation }) => {
   const route = useRoute();
   const BookArray = route.params.BookArray;
   const Time = route.params.Time;
   const dispatch = useDispatch();
   const globalState = useSelector(state => state);
-  const {cards, error, isLoading} = globalState.PaymentCardReducer;
-  const {date, isLoading2} = globalState.BookAppointmentReducer;
+  const { cards, error, isLoading } = globalState.PaymentCardReducer;
+  const { date, isLoading2 } = globalState.BookAppointmentReducer;
   const getData = async () => {
     let data = await AsyncStorage.getItem(USER_DATA);
     data = JSON.parse(data).user_id;
@@ -84,15 +84,52 @@ const PaymentCreditCard = ({navigation}) => {
     }
   };
   console.log('DATE IN => ' + date);
-  const formatDate = `${JSON.stringify(date).slice(9, 11)} ${getMonthName(
-    JSON.stringify(date).slice(6, 8),
-  )} ${JSON.stringify(date).slice(1, 5)}`;
-  const sendDate = `${JSON.stringify(date).slice(1, 5)}-${JSON.stringify(
-    date,
-  ).slice(6, 8)}-${JSON.stringify(date).slice(9, 11)}`;
-  // console.log(sendDate);
-  // console.log(Time.slice(0, 5).concat(':00') + ' date ' + sendDate);
+  const addDay = () => {
+    if (JSON.stringify(date).slice(9, 11) == "28" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "فبراير") {
+      return "1"
+    } else if ((JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "ابريل") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+        JSON.stringify(date).slice(6, 8)) == "يونيو") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+          JSON.stringify(date).slice(6, 8)) == "اغسطس") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+            JSON.stringify(date).slice(6, 8)) == "اكتوبر")) {
+      return "1"
+    } else {
+      return JSON.stringify(date).slice(9, 11) * 1 + 1
+    }
+  }
+  const month = () => {
+    if (JSON.stringify(date).slice(9, 11) == "28" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "فبراير") {
+      return "03"
+    } else if ((JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "ابريل")) {
+        return "05"
 
+    } else if (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "يونيو") {
+        return "07"
+
+    } else if (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "اغسطس") {
+        return "09"
+
+    } else if (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+      JSON.stringify(date).slice(6, 8)) == "اكتوبر") {
+        return "11"
+
+    } else {
+      return JSON.stringify(
+        date,
+      ).slice(6, 8)
+    }
+  }
+  const formatDate = `${addDay()} ${getMonthName(
+    month(),
+  )} ${JSON.stringify(date).slice(1, 5)}`;
+  const sendDate = `${JSON.stringify(date).slice(1, 5)}-${month()}-${addDay()}`;
+   //console.log("s",sendDate);
+  // console.log(Time.slice(0, 5).concat(':00') + ' date ' + sendDate);
   //select VISA
   const [selectItem, setSelectItem] = useState(0);
   const selectHandler = index => {
@@ -102,7 +139,7 @@ const PaymentCreditCard = ({navigation}) => {
 
   return (
     <View
-      style={[style.bigContainer, {flex: 1, justifyContent: 'space-between'}]}>
+      style={[style.bigContainer, { flex: 1, justifyContent: 'space-between' }]}>
       <HeaderNavigation
         title="الدفع"
         color={COLORS.darkGray3}
@@ -126,7 +163,7 @@ const PaymentCreditCard = ({navigation}) => {
           navigation.navigate('AddCard');
         }}
       />
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         {isLoading ? (
           <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
         ) : error === null ? (
@@ -144,7 +181,7 @@ const PaymentCreditCard = ({navigation}) => {
             <FlatList
               showsVerticalScrollIndicator={false}
               data={cards}
-              renderItem={({item, index}) => {
+              renderItem={({ item, index }) => {
                 return (
                   <Visa
                     master
@@ -177,7 +214,7 @@ const PaymentCreditCard = ({navigation}) => {
 
       <GeneralButton
         title="تاكيد"
-        style={{marginBottom: MARGIN.mdMargin}}
+        style={{ marginBottom: MARGIN.mdMargin }}
         isLoading={isLoading2}
         onPress={() => {
           // console.log(Time.slice(0, 5) + ' date ' + sendDate);

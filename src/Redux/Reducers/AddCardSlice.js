@@ -26,8 +26,8 @@ export const AddCardAction = createAsyncThunk(
       console.log(response.data);
       return response.data;
     } catch (error) {
-      console.log('Axios ' + error);
-      return rejectWithValue(error.message);
+      console.log('Axios ' + error.response.data);
+      return rejectWithValue(error);
     }
   },
 );

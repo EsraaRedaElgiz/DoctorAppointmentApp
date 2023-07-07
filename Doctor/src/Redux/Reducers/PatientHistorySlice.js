@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import Axios from '../../../../src/utils/axios';
 
 const initState = {
-    isLoading: false,
+    isLoading2: false,
     error: null,
     historyArr: []
 };
@@ -55,14 +55,14 @@ const getPatientHistorySlice = createSlice({
     },
     extraReducers: builder => {
         builder.addCase(getPatientHistory.pending, (state, action) => {
-            state.isLoading = true;
+            state.isLoading2 = true;
             state.error = null;
         }),
             builder.addCase(getPatientHistory.fulfilled, (state, action) => {
-                state.isLoading = false;
+                state.isLoading2 = false;
             }),
             builder.addCase(getPatientHistory.rejected, (state, action) => {
-                state.isLoading = false;
+                state.isLoading2 = false;
                 state.error = action.payload;
                 dispatch(setHistoryArr([]))
 

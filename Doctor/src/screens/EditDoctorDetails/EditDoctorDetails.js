@@ -75,7 +75,7 @@ export default function EditDoctorDetails({navigation}) {
       email: email,
       spealization: speciality_name,
       exp: doctor_experience,
-      Location: '',
+      Location: `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
       Adressdescription: branch_address,
       About: doctor_about,
       Workdays: branch_working_days,
@@ -101,36 +101,26 @@ export default function EditDoctorDetails({navigation}) {
     const formData = new FormData();
     formData.append('first_name', data.name);
     formData.append('doctor_experience', data.exp);
-    formData.append(
-      'image',
-      photo_data
-        ? {
-            name: photo_data?.fileName,
-            uri: photo_data?.uri,
-            type: photo_data?.type,
-          }
-        : JSON.stringify({
-            name: photo_data?.fileName,
-            uri: photo_data?.uri,
-            type: photo_data?.type,
-          }),
-    );
-    // formData.append('booking_price', data.price);
-    // formData.append('start_time', data.start + ':00');
-    // formData.append('end_time', data.end + ':00');
-    // formData.append('session_time', data.section + ':00');
-    // console.log('Data in Edit Doctor -> ', data);
-    // console.log(
-    //   'Start and End in Edit Doctor -> ',
-    //   'start_time',
-    //   data.start + ':00',
-    //   ' ',
-    //   'end_time',
-    //   data.end + ':00',
-    //   ' ',
-    //   'session_time',
-    //   data.section + ':00',
-    // );
+    if(data.phoneNum!=phone){
+      formData.append('phone', data.phoneNum);
+    } 
+    if(photo_uri?.fileName&&photo_uri?.type&&photo_uri?.uri){
+      formData.append(
+        'image',
+          {
+              name: photo_uri?.fileName,
+              uri: photo_uri?.uri,
+              type: photo_uri?.type,
+            }
+      );
+    }
+     formData.append('booking_price', data.price);
+     formData.append('start_time',data.start.trim());
+    formData.append('end_time',data.end.trim());
+    formData.append('session_time',data.section.trim());
+    formData.append('latitude',lat)
+    formData.append('longitude',long)
+    console.log('Data in Edit Doctor -> ', formData);
     dispatch(EditDoctorDetailAction(formData))
       .unwrap()
       .then(result => {
@@ -457,9 +447,7 @@ export default function EditDoctorDetails({navigation}) {
                 <Reusabletextinput
                   placeholder="الموقع"
                   value={
-                    latitude != null && longitude != null
-                      ? 'الموقع محدد'
-                      : value
+                    latitude!=""&& longitude!=""?"الموقع محدد":value
                   }
                   onChangeText={onChange}
                   onBlur={onBlur}

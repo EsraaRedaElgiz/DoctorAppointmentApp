@@ -6,7 +6,7 @@ import Reusabletextinput from '../../components/AppTextinput/AppTextinput';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
 import GeneralPage from '../../components/GeneralPage/GeneralPage';
 import VisaTypeCard from '../../components/VisaTypeCard/VisaTypeCard';
-import {COLORS, FONTS, PADDINGS} from '../../constants/Constants';
+import {COLORS, FONTS, PADDINGS, USER_DATA} from '../../constants/Constants';
 import styles from './AddCardStyle';
 import {useSelector, useDispatch} from 'react-redux';
 const {width, height} = Dimensions.get('window');
@@ -14,6 +14,8 @@ import {useNavigation} from '@react-navigation/native';
 import {HeaderNavigation} from '../../components/headerNavigation/HeaderNavigation';
 import {style} from '../../styles/Style';
 import {AddCardAction} from '../../Redux/Reducers/AddCardSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getPaymentCard } from '../../Redux/Reducers/PaymentCardSlice';
 
 function AddCard(props) {
   const globalState = useSelector(state => state);
@@ -31,7 +33,7 @@ function AddCard(props) {
       card_number: data.cardNumber,
       card_exp_date: data.date,
     };
-    console.log(cardData);
+    //console.log("cardData",cardData);
     // send data like this exactly
     /*
     {
@@ -42,14 +44,17 @@ function AddCard(props) {
     */
     dispatch(AddCardAction(cardData))
       .unwrap()
-      .then(() => {
+      .then(async() => {
         if (cardData.card_holder !== null) {
           navigation.goBack();
           reset();
+          let data = await AsyncStorage.getItem(USER_DATA);
+          data = JSON.parse(data).user_id;
+          dispatch(getPaymentCard(data))
         }
       })
       .catch(error => {
-        console.log('error nav ' + error);
+        console.log('error nav ' + error.response.data);
       });
   };
   const [payment, setPayment] = useState([

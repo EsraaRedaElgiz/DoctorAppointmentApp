@@ -8,11 +8,12 @@ import {
 import React, {useState} from 'react';
 import {StyleSheet, Text, View, ScrollView, Pressable} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
-import {FONTS, COLORS} from '../../constants/Constants';
+import {FONTS, COLORS, USER_DATA} from '../../constants/Constants';
 import {useDispatch} from 'react-redux';
 import {setDate, setTime} from '../../Redux/Reducers/BookAppointmentSlice';
 import {getDoctorAppointments} from '../../../Doctor/src/Redux/Reducers/DoctorAppointmentSlice';
 import {getDoctorHistory} from '../../../Doctor/src/Redux/Reducers/DoctorHistorySlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // to show all weeks in month 4 week
 const dates = eachWeekOfInterval({
@@ -42,9 +43,11 @@ function Calender({chosenDay, setChosenDay, onPress}) {
                 return (
                   <>
                     <Pressable
-                      onPress={() => {
+                      onPress={async() => {
+                        console.log("sendDateFormat",sendDateFormat)
                         setChosenDay(day);
                         dispatch(setDate({date: day}));
+                        JSON.parse(await AsyncStorage.getItem(USER_DATA)).type_id==1?
                         dispatch(
                           getDoctorAppointments({
                             date: sendDateFormat,
@@ -55,7 +58,7 @@ function Calender({chosenDay, setChosenDay, onPress}) {
                           .then(res => {
                             console.log('Ress ', res);
                           })
-                          .catch(error => console.log('errror -< ', error));
+                          .catch(error => console.log('errror -< ', error)):null;
                       }}
                       key={idx}
                       style={[

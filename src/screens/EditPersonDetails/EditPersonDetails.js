@@ -62,22 +62,21 @@ function EditPersonDetails(props) {
     formData.append('first_name', data.name);
     formData.append('height', data.height);
     formData.append('weight', data.weight);
-    // formData.append('phone', data.phone);
-    // formData.append('blood_type', data.bloodTypePage);
-    formData.append(
-      'image',
-      photo_uri
-        ? {
-            name: photo_uri?.fileName,
-            uri: photo_uri?.uri,
-            type: photo_uri?.type,
-          }
-        : JSON.stringify({
-            name: photo_uri?.fileName,
-            uri: photo_uri?.uri,
-            type: photo_uri?.type,
-          }),
-    );
+    if(data.phone!=phone){
+      formData.append('phone', data.phone);
+    } 
+    formData.append('blood_type', data.bloodTypePage);
+    if(photo_uri?.fileName&&photo_uri?.type&&photo_uri?.uri){
+      formData.append(
+        'image',
+          {
+              name: photo_uri?.fileName,
+              uri: photo_uri?.uri,
+              type: photo_uri?.type,
+            }
+      );
+    }
+
 
     dispatch(updateUserProfileAction(formData))
       .unwrap()

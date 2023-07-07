@@ -82,7 +82,7 @@ function DoctorHistory({navigation}) {
                       getPatientHistory(
                         JSON.parse(item.item.patient.patient_id),
                       ),
-                    );
+                    ).unwrap().then(()=>{}).catch((err)=>{});
                     dispatch(getAppointmentDetails(item.item.appointment_id))
                       .unwrap()
                       .then(res => {
