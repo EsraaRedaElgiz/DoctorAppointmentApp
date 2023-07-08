@@ -5,6 +5,7 @@ import {
   View,
   Alert,
   Pressable,
+  FlatList,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import GeneralButton from '../../components/GeneralButton/GeneralButton';
@@ -27,7 +28,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {bookAppointment} from '../../Redux/Reducers/BookAppointmentSlice';
 const BookAppointment = ({navigation}) => {
   const globalState = useSelector(state => state);
-  const {isLoading2,date} = globalState.BookAppointmentReducer;
+  const {isLoading2, date} = globalState.BookAppointmentReducer;
   const route = useRoute();
   const dispatch = useDispatch();
   const DoctorArray = route.params.DoctorArray;
@@ -43,27 +44,30 @@ const BookAppointment = ({navigation}) => {
     if (endTime.isBefore(startTime)) {
       endTime.add(1, 'day');
     }
-    function convertH2M(timeInHour){
+    function convertH2M(timeInHour) {
+      var timeParts = timeInHour.split(':');
 
-      var timeParts = timeInHour.split(":");
-  
       return Number(timeParts[0]) * 60 + Number(timeParts[1]);
-  
     }
 
     let arr = [];
     while (startTime <= endTime) {
       arr.push(new moment(startTime).format('hh:mm'));
-      startTime.add(convertH2M(DoctorArray.clinic.session_time.slice(0,5)), 'minute'); 
+      startTime.add(
+        convertH2M(DoctorArray.clinic.session_time.slice(0, 5)),
+        'minute',
+      );
     }
 
     return arr;
   };
   useEffect(() => {
-    const availableTime=craeteTimeSlots(DoctorArray.clinic.start_time.slice(0,5), DoctorArray.clinic.end_time.slice(0,5))
+    const availableTime = craeteTimeSlots(
+      DoctorArray.clinic.start_time.slice(0, 5),
+      DoctorArray.clinic.end_time.slice(0, 5),
+    );
     //console.log(availableTime.slice(0,(availableTime.length)-1))
-    setTimeSlots(timeSlots=>availableTime.slice(0,availableTime.length-1)); 
-    
+    setTimeSlots(timeSlots => availableTime.slice(0, availableTime.length - 1));
   }, []);
   const cashFun = () => {
     setCheckCash(true);
@@ -101,46 +105,59 @@ const BookAppointment = ({navigation}) => {
     }
   };
   const addDay = () => {
-    if (JSON.stringify(date).slice(9, 11) == "28" && getMonthName(
-      JSON.stringify(date).slice(6, 8)) == "فبراير") {
-      return "1"
-    } else if ((JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
-      JSON.stringify(date).slice(6, 8)) == "ابريل") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
-        JSON.stringify(date).slice(6, 8)) == "يونيو") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
-          JSON.stringify(date).slice(6, 8)) == "اغسطس") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
-            JSON.stringify(date).slice(6, 8)) == "اكتوبر")) {
-      return "1"
+    if (
+      JSON.stringify(date).slice(9, 11) == '28' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'فبراير'
+    ) {
+      return '1';
+    } else if (
+      (JSON.stringify(date).slice(9, 11) == '30' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'ابريل') ||
+      (JSON.stringify(date).slice(9, 11) == '30' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'يونيو') ||
+      (JSON.stringify(date).slice(9, 11) == '30' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'اغسطس') ||
+      (JSON.stringify(date).slice(9, 11) == '30' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'اكتوبر')
+    ) {
+      return '1';
     } else {
-      return JSON.stringify(date).slice(9, 11) * 1 + 1
+      return JSON.stringify(date).slice(9, 11) * 1 + 1;
     }
-  }
+  };
   const month = () => {
-    if (JSON.stringify(date).slice(9, 11) == "28" && getMonthName(
-      JSON.stringify(date).slice(6, 8)) == "فبراير") {
-      return "03"
-    } else if ((JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
-      JSON.stringify(date).slice(6, 8)) == "ابريل")) {
-        return "05"
-
-    } else if (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
-      JSON.stringify(date).slice(6, 8)) == "يونيو") {
-        return "07"
-
-    } else if (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
-      JSON.stringify(date).slice(6, 8)) == "اغسطس") {
-        return "09"
-
-    } else if (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
-      JSON.stringify(date).slice(6, 8)) == "اكتوبر") {
-        return "11"
-
+    if (
+      JSON.stringify(date).slice(9, 11) == '28' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'فبراير'
+    ) {
+      return '03';
+    } else if (
+      JSON.stringify(date).slice(9, 11) == '30' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'ابريل'
+    ) {
+      return '05';
+    } else if (
+      JSON.stringify(date).slice(9, 11) == '30' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'يونيو'
+    ) {
+      return '07';
+    } else if (
+      JSON.stringify(date).slice(9, 11) == '30' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'اغسطس'
+    ) {
+      return '09';
+    } else if (
+      JSON.stringify(date).slice(9, 11) == '30' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'اكتوبر'
+    ) {
+      return '11';
     } else {
-      return JSON.stringify(
-        date,
-      ).slice(6, 8)
+      return JSON.stringify(date).slice(6, 8);
     }
-  }
-  const sendDate = `${JSON.stringify(date).slice(1, 5)}-${month()}-${JSON.parse(addDay())<10?`0${addDay()}`:`${addDay()}`}`;
+  };
+  const sendDate = `${JSON.stringify(date).slice(1, 5)}-${month()}-${
+    JSON.parse(addDay()) < 10 ? `0${addDay()}` : `${addDay()}`
+  }`;
   // console.log(JSON.stringify(chosenTime).slice(1, 6).concat(':00'));
   // console.log(
   //   'date' +
@@ -168,8 +185,10 @@ const BookAppointment = ({navigation}) => {
         {/* FlatList Times */}
         <ScrollView>
           <View style={styles.flatListTimesContainer}>
-            {timeSlots.map((item, index) => {
-              return (
+            <FlatList
+            numColumns={3}
+              data={timeSlots}
+              renderItem={({item, index}) => (
                 <>
                   <Pressable
                     style={[
@@ -185,8 +204,13 @@ const BookAppointment = ({navigation}) => {
                     <Text style={styles.timeTextStyle}>{item}</Text>
                   </Pressable>
                 </>
+              )}
+            />
+            {/* {timeSlots.map((item, index) => {
+              return (
+                
               );
-            })}
+            })} */}
           </View>
         </ScrollView>
         <ListTiltle Title="طريقة الدفع" />
@@ -302,7 +326,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   timeContainer: {
-    width: RFValue(92),
+    width: "30%",
     height: RFValue(35),
     borderRadius: RADIUS.smRadius,
     flexDirection: 'row',
