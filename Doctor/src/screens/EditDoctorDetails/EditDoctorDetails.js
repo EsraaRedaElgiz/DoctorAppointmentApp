@@ -36,6 +36,7 @@ import {getDoctorDetails} from '../../Redux/Reducers/DoctorDetailsSlice';
 import {EditDoctorDetailAction} from '../../Redux/Reducers/EditDoctorDetailsSlice';
 export default function EditDoctorDetails({navigation}) {
   const globalState = useSelector(state => state);
+  const[daysBack,setDaysBack]=useState('')
   const dispatch = useDispatch();
   const {
     name,
@@ -62,7 +63,10 @@ export default function EditDoctorDetails({navigation}) {
     error,
   } = globalState.DoctorDetailsReducer;
   const {isLoading} = globalState.EditDoctorDetailsReducer;
-
+  ///
+  let daysText=branch_working_days.map(el=>el.day)
+  daysText = daysText.join(' , ');
+  //
   const {
     control,
     handleSubmit,
@@ -78,7 +82,7 @@ export default function EditDoctorDetails({navigation}) {
       Location: `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
       Adressdescription: branch_address,
       About: doctor_about,
-      Workdays: branch_working_days,
+      Workdays: daysText,
       price: booking_price,
       start: start_time.slice(0, 5),
       end: end_time.slice(0, 5),
@@ -92,7 +96,6 @@ export default function EditDoctorDetails({navigation}) {
     longitudeDelta: 0.0421,
   };
   const mapRef = useRef();
-
   const [long, setLong] = useState(0);
   const [lat, setLat] = useState(0);
   const [photo_uri, setPhoto_uri] = useState(null);
@@ -118,8 +121,21 @@ export default function EditDoctorDetails({navigation}) {
      formData.append('start_time',data.start.trim());
     formData.append('end_time',data.end.trim());
     formData.append('session_time',data.section.trim());
-    formData.append('latitude',lat)
-    formData.append('longitude',long)
+    formData.append('branch_address',data.Adressdescription)
+    formData.append('doctor_about',data.About)
+    if(lat!=0&&long!=0){
+      formData.append('latitude',lat)
+      formData.append('longitude',long)
+    }
+    console.log("lat",lat)
+    let arr = Days.filter(day => day.isChecked == true)
+    let daysarr = []
+    for (let i = 0; i < arr.length; i++) {
+      daysarr.push({ day: arr[i].txt, enabled: true })
+    }
+    if(daysarr.length > 0) {
+      formData.append("branch_working_days", /*data.Workdays*/JSON.stringify(daysarr))
+    } 
     console.log('Data in Edit Doctor -> ', formData);
     dispatch(EditDoctorDetailAction(formData))
       .unwrap()
@@ -218,7 +234,6 @@ export default function EditDoctorDetails({navigation}) {
 
   const GetSelect = () => {
     let checkedDays = Days.filter(day => day.isChecked == true);
-    // alert(JSON.stringify(checkedDays))
     let daysText = checkedDays.map(item => item.txt);
     daysText = daysText.join(' , ');
 
@@ -447,7 +462,7 @@ export default function EditDoctorDetails({navigation}) {
                 <Reusabletextinput
                   placeholder="الموقع"
                   value={
-                    latitude!=""&& longitude!=""?"الموقع محدد":value
+                    value
                   }
                   onChangeText={onChange}
                   onBlur={onBlur}

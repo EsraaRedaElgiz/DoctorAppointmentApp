@@ -1,16 +1,25 @@
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {style} from '../../styles/Style';
-import {PADDINGS} from '../../constants/Constants';
+import {COLORS, PADDINGS} from '../../constants/Constants';
+import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
 
-const PrivacyPolicy = () => {
+const PrivacyPolicy = ({navigation}) => {
   return (
-    <ScrollView>
+    
       <View
         style={[
           style.bigContainer,
-          {paddingTop: PADDINGS.mdPadding, paddingBottom: PADDINGS.lgPadding},
+          {paddingBottom: PADDINGS.lgPadding},
         ]}>
+          <HeaderNavigation
+        title="سياسة الخصوصيه"
+        color={COLORS.darkGray3}
+        onPress={() => {
+          navigation.goBack();
+        }}
+      />
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={style.textContent}>
           قام فريق DOCLIN ببناء تطبيق DOCLIN كتطبيق مجاني. يتم توفير هذه الخدمة
           من قبل فريق DOCLIN بدون تكلفة وهي مخصصة للاستخدام كما هي. تُستخدم هذه
@@ -69,8 +78,9 @@ const PrivacyPolicy = () => {
           الخصوصية الخاصة بي ، فلا تتردد في الاتصال بي على
           doctorapp047@gmail.com.
         </Text>
+        </ScrollView>
+
       </View>
-    </ScrollView>
   );
 };
 

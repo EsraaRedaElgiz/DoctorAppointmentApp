@@ -1,16 +1,25 @@
 import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import React from 'react';
 import {style} from '../../styles/Style';
-import {PADDINGS} from '../../constants/Constants';
+import {COLORS, PADDINGS} from '../../constants/Constants';
+import { HeaderNavigation } from '../../components/headerNavigation/HeaderNavigation';
 
-const ConditionsAndTerms = () => {
+const ConditionsAndTerms = ({navigation}) => {
   return (
-    <ScrollView>
+    
       <View
         style={[
           style.bigContainer,
-          {paddingTop: PADDINGS.mdPadding, paddingBottom: PADDINGS.lgPadding},
+          { paddingBottom: PADDINGS.lgPadding},
         ]}>
+          <HeaderNavigation
+        title="الشروط والأحكام"
+        color={COLORS.darkGray3}
+        onPress={() => {
+          navigation.goBack();
+        }}
+      />
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Text style={style.textContent} >
           من خلال تنزيل التطبيق أو استخدامه ، ستنطبق هذه الشروط تلقائيًا عليك –
           ، لذا يجب عليك التأكد من قراءتها بعناية قبل استخدام التطبيق. لا يُسمح
@@ -71,8 +80,8 @@ const ConditionsAndTerms = () => {
           لديك أي أسئلة أو اقتراحات حول الشروط والأحكام الخاصة بي ، فلا تتردد في
           الاتصال بي على doctorapp047@gmail.com.
         </Text>
+        </ScrollView>
       </View>
-    </ScrollView>
   );
 };
 

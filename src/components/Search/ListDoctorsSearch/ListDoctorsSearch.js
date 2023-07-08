@@ -52,8 +52,7 @@ const ListDoctorsSearch = ({ArrayFilterd}) => {
                   {itemData.item.user_first_name.trim()}{' '}
                 </Text>
                 <Text style={[style.textContent, {color: COLORS.darkGray2,textAlign:'left'}]}>
-                  {itemData.item.clinic+"\tجنيه"} 
-                  {/*{itemData.item.clinic.booking_price+"\tجنيه"} *//* لما عدي يشيل يوسف هحط دي واشيل السطر اللي قوفه*/ }
+                  {itemData.item.clinic.booking_price+"\tجنيه"} 
                 </Text>
                 <Rating
                   stars={itemData.item.rating}

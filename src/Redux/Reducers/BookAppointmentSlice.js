@@ -24,6 +24,9 @@ export const bookAppointment = createAsyncThunk(
             if (res.data.status==true) {
               console.log(res.data)
               response=true
+            }else if(res.data.errors[0].date=="Date or time are not valid, please send date and time greater than now"){
+
+              Alert.alert("هذا الموعد محجوز من فضلك قم باختيار موعد آخر")
             }else {
               Alert.alert(JSON.stringify(res.data))
             }

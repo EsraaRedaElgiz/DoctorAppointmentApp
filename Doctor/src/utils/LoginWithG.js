@@ -51,7 +51,7 @@ function LoginWithG() {
       await GoogleSignin.revokeAccess();
       await auth().signOut();
       console.log('Sign out Success:::');
-      setloggedIn(false);
+      setLoggedIn(false);
       setUserData({});
     } catch (error) {
       console.log(error);

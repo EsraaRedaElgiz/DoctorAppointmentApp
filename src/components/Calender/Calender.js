@@ -14,7 +14,6 @@ import {setDate, setTime} from '../../Redux/Reducers/BookAppointmentSlice';
 import {getDoctorAppointments} from '../../../Doctor/src/Redux/Reducers/DoctorAppointmentSlice';
 import {getDoctorHistory} from '../../../Doctor/src/Redux/Reducers/DoctorHistorySlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 // to show all weeks in month 4 week
 const dates = eachWeekOfInterval({
   start: subDays(new Date(), 7), //time of weeks before today
@@ -27,8 +26,74 @@ const dates = eachWeekOfInterval({
   acc.push(allDays);
   return acc;
 }, []);
+//console.log(dates);
+const getMonthName = monthnum => {
+  if (monthnum == '01') {
+    return 'يناير';
+  } else if (monthnum == '02') {
+    return 'فبراير';
+  } else if (monthnum == '03') {
+    return 'مارس';
+  } else if (monthnum == '04') {
+    return 'ابريل';
+  } else if (monthnum == '05') {
+    return 'مايو';
+  } else if (monthnum == '06') {
+    return 'يونيو';
+  } else if (monthnum == '07') {
+    return 'يوليو';
+  } else if (monthnum == '08') {
+    return 'اغسطس';
+  } else if (monthnum == '09') {
+    return 'سبتمبر';
+  } else if (monthnum == '10') {
+    return 'اكتوبر';
+  } else if (monthnum == '11') {
+    return 'نوفمبر';
+  } else if (monthnum == '12') {
+    return 'ديسمبر';
+  }
+};
+const addDay = (dayVar) => {
+  if (JSON.stringify(dayVar).slice(9, 11) == "28" && getMonthName(
+    JSON.stringify(dayVar).slice(6, 8)) == "فبراير") {
+    return "1"
+  } else if ((JSON.stringify(dayVar).slice(9, 11) == "30" && getMonthName(
+    JSON.stringify(dayVar).slice(6, 8)) == "ابريل") || (JSON.stringify(dayVar).slice(9, 11) == "30" && getMonthName(
+      JSON.stringify(dayVar).slice(6, 8)) == "يونيو") || (JSON.stringify(dayVar).slice(9, 11) == "30" && getMonthName(
+        JSON.stringify(dayVar).slice(6, 8)) == "اغسطس") || (JSON.stringify(dayVar).slice(9, 11) == "30" && getMonthName(
+          JSON.stringify(dayVar).slice(6, 8)) == "اكتوبر")) {
+    return "1"
+  } else {
+    return JSON.stringify(dayVar).slice(9, 11) * 1 + 1
+  }
+}
+const month = (dayVar) => {
+  if (JSON.stringify(dayVar).slice(9, 11) == "28" && getMonthName(
+    JSON.stringify(dayVar).slice(6, 8)) == "فبراير") {
+    return "03"
+  } else if ((JSON.stringify(dayVar).slice(9, 11) == "30" && getMonthName(
+    JSON.stringify(dayVar).slice(6, 8)) == "ابريل")) {
+      return "05"
 
-console.log(dates);
+  } else if (JSON.stringify(dayVar).slice(9, 11) == "30" && getMonthName(
+    JSON.stringify(dayVar).slice(6, 8)) == "يونيو") {
+      return "07"
+
+  } else if (JSON.stringify(dayVar).slice(9, 11) == "30" && getMonthName(
+    JSON.stringify(dayVar).slice(6, 8)) == "اغسطس") {
+      return "09"
+
+  } else if (JSON.stringify(dayVar).slice(9, 11) == "30" && getMonthName(
+    JSON.stringify(dayVar).slice(6, 8)) == "اكتوبر") {
+      return "11"
+
+  } else {
+    return JSON.stringify(
+      dayVar,
+    ).slice(6, 8)
+  }
+}
 function Calender({chosenDay, setChosenDay, onPress}) {
   const dispatch = useDispatch();
   return (
@@ -39,20 +104,20 @@ function Calender({chosenDay, setChosenDay, onPress}) {
             <View key={index} style={styles.calenderView}>
               {week.map((day, idx) => {
                 const dayName = format(day, 'eee');
-                const sendDateFormat = JSON.stringify(day).slice(1, 11);
                 return (
                   <>
                     <Pressable
                       onPress={async() => {
-                        console.log("sendDateFormat",sendDateFormat)
+                        const sendDate=`${JSON.stringify(day).slice(1, 5)}-${month(day)}-${JSON.parse(addDay(day))<10?`0${addDay(day)}`:`${addDay(day)}`}`
+                        console.log("test",sendDate)
                         setChosenDay(day);
                         dispatch(setDate({date: day}));
                         JSON.parse(await AsyncStorage.getItem(USER_DATA)).type_id==1?
                         dispatch(
                           getDoctorAppointments({
-                            date: sendDateFormat,
+                            date: sendDate,
                           }),
-                          dispatch(getDoctorHistory({date: sendDateFormat})),
+                          dispatch(getDoctorHistory({date: sendDate})),
                         )
                           .unwrap()
                           .then(res => {

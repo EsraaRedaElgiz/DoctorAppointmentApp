@@ -217,7 +217,7 @@ function LogIn({ navigation }) {
                 <View style={styles.lineviewstyle}></View>
               </View>
               <View style={styles.viewfortwoboxesstyle}>
-                <LoginWithG />
+                {/*<LoginWithG />*/}
               </View>
             </View>
             <View>

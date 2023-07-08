@@ -82,7 +82,7 @@ function DoctorFilterHistory({navigation}) {
             if (date == '') {
               Alert.alert('select date first');
             } else {
-              dispatch(getDoctorHistory({date: date, status: checked ? 1 : 2}));
+              dispatch(getDoctorHistory({date: date, status: checked ? 1 : 0}));
               navigation.goBack();
             }
           }}

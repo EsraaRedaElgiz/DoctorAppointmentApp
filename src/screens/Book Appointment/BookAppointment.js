@@ -140,7 +140,7 @@ const BookAppointment = ({navigation}) => {
       ).slice(6, 8)
     }
   }
-  const sendDate = `${JSON.stringify(data).slice(1, 5)}-${month()}-${addDay()}`;
+  const sendDate = `${JSON.stringify(date).slice(1, 5)}-${month()}-${JSON.parse(addDay())<10?`0${addDay()}`:`${addDay()}`}`;
   // console.log(JSON.stringify(chosenTime).slice(1, 6).concat(':00'));
   // console.log(
   //   'date' +

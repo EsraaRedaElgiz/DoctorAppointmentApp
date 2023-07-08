@@ -31,17 +31,8 @@ const AuthStack = () => {
       <Stack.Screen
         name="PrivacyPolicy"
         component={PrivacyPolicy}
-        options={{
-          headerShown: true,
-          title: 'سياسة الخصوصيه',
-          headerShadowVisible: false,
-        }}
       />
-      <Stack.Screen name="ConditionsAndTerms" component={ConditionsAndTerms}  options={{
-          headerShown: true,
-          title: 'شروط الإستخدام',
-          headerShadowVisible: false,
-        }} />
+      <Stack.Screen name="ConditionsAndTerms" component={ConditionsAndTerms}   />
     </Stack.Navigator>
   );
 };

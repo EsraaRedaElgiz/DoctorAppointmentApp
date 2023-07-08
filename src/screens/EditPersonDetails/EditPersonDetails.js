@@ -47,7 +47,7 @@ function EditPersonDetails(props) {
     formState: {errors},
   } = useForm({
     defaultValues: {
-      name: name,
+      name: name.trim(),
       bloodType: `${bloodType}`,
       weight: `${weight}`,
       height: `${height}`,
@@ -76,6 +76,7 @@ function EditPersonDetails(props) {
             }
       );
     }
+    formData.append('age',data.age);
 
 
     dispatch(updateUserProfileAction(formData))
@@ -153,7 +154,7 @@ function EditPersonDetails(props) {
     setBloodType(type);
   };
 
-  const bloodTypeList = ['A+', 'B+', 'C+'];
+  const bloodTypeList = ['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'];
   const genderPage = ['ذكر', 'انثي'];
 
   return (
@@ -211,9 +212,21 @@ function EditPersonDetails(props) {
                 defaultValue={
                   bloodType == 'A+'
                     ? bloodTypeList[0]
-                    : bloodType == 'B+'
+                    : bloodType == 'A-'
                     ? bloodTypeList[1]
-                    : genderPage[2]
+                    : bloodType == 'B+'?
+                    bloodTypeList[2]:
+                    bloodType == 'B-'?
+                    bloodTypeList[3]:
+                    bloodType=='O+'?
+                    bloodTypeList[4]:
+                    bloodType=='O-'?
+                    bloodTypeList[5]:
+                    bloodType=='AB+'?
+                    bloodTypeList[6]:
+                    bloodType=='AB-'?
+                    bloodTypeList[7]:
+                    bloodType
                 }
                 // defaultValue={bloodType}
                 data={bloodTypeList}

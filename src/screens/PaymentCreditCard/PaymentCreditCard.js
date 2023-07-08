@@ -127,7 +127,7 @@ const PaymentCreditCard = ({ navigation }) => {
   const formatDate = `${addDay()} ${getMonthName(
     month(),
   )} ${JSON.stringify(date).slice(1, 5)}`;
-  const sendDate = `${JSON.stringify(date).slice(1, 5)}-${month()}-${addDay()}`;
+  const sendDate = `${JSON.stringify(date).slice(1, 5)}-${month()}-${JSON.parse(addDay())<10?`0${addDay()}`:`${addDay()}`}`;
    //console.log("s",sendDate);
   // console.log(Time.slice(0, 5).concat(':00') + ' date ' + sendDate);
   //select VISA
@@ -136,6 +136,7 @@ const PaymentCreditCard = ({ navigation }) => {
     setSelectItem(index);
     // console.log(selectItem);
   };
+  //console.log("lllt",sendDate)
 
   return (
     <View
@@ -231,9 +232,7 @@ const PaymentCreditCard = ({ navigation }) => {
             .then(res => {
               if (res == true) {
                 navigation.navigate('CompletedAppointment');
-              } else {
-                Alert.alert('المعاد محجوز سابقا من فضلك اختر معاد اخر');
-              }
+              } 
               //
             });
         }}
