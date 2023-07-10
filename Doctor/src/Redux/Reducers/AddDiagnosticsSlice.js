@@ -1,5 +1,6 @@
 import {Alert} from 'react-native';
 import Axios from '../../../../src/utils/axios';
+import {err} from 'react-native-svg/lib/typescript/xml';
 const {createSlice, createAsyncThunk} = require('@reduxjs/toolkit');
 
 const initialState = {
@@ -13,6 +14,7 @@ export const AddDiagonisticsAction = createAsyncThunk(
   async (data, thunkAPI) => {
     const {rejectWithValue} = thunkAPI;
     try {
+      console.log('dataaaaaaaaaaaaaaaaaaa-> ', data);
       let response = await Axios({
         method: 'POST',
         url: '/doctor/insert_diagnostics.php',
@@ -21,7 +23,8 @@ export const AddDiagonisticsAction = createAsyncThunk(
       console.log('res-> ', response.data);
       return response.data;
     } catch (error) {
-      Alert.alert('Error');
+      Alert.alert('Error' + JSON.stringify(error.response.data));
+      console.log(error.response.data);
       return rejectWithValue(error.message);
     }
   },
