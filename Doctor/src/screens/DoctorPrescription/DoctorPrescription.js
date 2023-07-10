@@ -66,7 +66,11 @@ function DoctorPrescription({navigation, route}) {
         diagnosis_treatment: JSON.stringify(newArray),
         appointment_id: appointment_id,
       }),
-    );
+    )
+      .unwrap()
+      .then(res => {
+        Alert.alert('تم اضافة الروشتة بنجاح');
+      });
   };
   const refRBSheet = useRef();
   const selectFromGallery = () => {
@@ -330,17 +334,6 @@ function DoctorPrescription({navigation, route}) {
           style={styles.eachOptionInBottonTab}>
           <Text style={styles.optionTextStyle}>اختيار صورة</Text>
         </TouchableOpacity>
-        {/* <View style={styles.line} /> */}
-        {/* <TouchableOpacity
-          onPress={() => {
-            refRBSheet.current.close();
-            setphoto_uri(photo_uri => '');
-          }}
-          style={styles.eachOptionInBottonTab}>
-          <Text style={[styles.optionTextStyle, {color: COLORS.red}]}>
-            مسح الصورة
-          </Text>
-        </TouchableOpacity> */}
         <View style={styles.line} />
         <TouchableOpacity
           onPress={() => refRBSheet.current.close()}
