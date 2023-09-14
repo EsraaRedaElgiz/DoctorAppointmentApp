@@ -85,14 +85,32 @@ const PaymentCreditCard = ({ navigation }) => {
   };
   //console.log('DATE IN => ' + date);
   const addDay = () => {
-    if (JSON.stringify(date).slice(9, 11) == "28" && getMonthName(
-      JSON.stringify(date).slice(6, 8)) == "فبراير") {
+    if (JSON.stringify(date).slice(9, 11) == "28" &&
+     getMonthName(JSON.stringify(date).slice(6, 8)) == "فبراير") {
       return "1"
-    } else if ((JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
-      JSON.stringify(date).slice(6, 8)) == "ابريل") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
-        JSON.stringify(date).slice(6, 8)) == "يونيو") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
-          JSON.stringify(date).slice(6, 8)) == "اغسطس") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
-            JSON.stringify(date).slice(6, 8)) == "اكتوبر")) {
+    } else if ((JSON.stringify(date).slice(9, 11) == "30" &&
+     getMonthName(JSON.stringify(date).slice(6, 8)) == "ابريل") ||
+      (JSON.stringify(date).slice(9, 11) == "30" &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == "يونيو") ||
+      (JSON.stringify(date).slice(9, 11) == "31" &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == "اغسطس") ||
+      (JSON.stringify(date).slice(9, 11) == "31" &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == "اكتوبر") ||
+      (JSON.stringify(date).slice(9, 11) == '31' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'يناير') ||
+      (JSON.stringify(date).slice(9, 11) == '31' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'مارس') ||
+      (JSON.stringify(date).slice(9, 11) == '31' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'مايو') ||
+      (JSON.stringify(date).slice(9, 11) == '31' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'يوليو')||
+      (JSON.stringify(date).slice(9, 11) == '30' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'سبتمبر') ||
+      (JSON.stringify(date).slice(9, 11) == '30' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'نوفمبر') ||
+      (JSON.stringify(date).slice(9, 11) == '31' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'ديسمبر')
+    ) {
       return "1"
     } else {
       return JSON.stringify(date).slice(9, 11) * 1 + 1
@@ -104,20 +122,55 @@ const PaymentCreditCard = ({ navigation }) => {
       return "03"
     } else if ((JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
       JSON.stringify(date).slice(6, 8)) == "ابريل")) {
-        return "05"
+      return "05"
 
     } else if (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
       JSON.stringify(date).slice(6, 8)) == "يونيو") {
-        return "07"
+      return "07"
 
-    } else if (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+    } else if (JSON.stringify(date).slice(9, 11) == "31" && getMonthName(
       JSON.stringify(date).slice(6, 8)) == "اغسطس") {
-        return "09"
+      return "09"
 
-    } else if (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+    } else if (JSON.stringify(date).slice(9, 11) == "31" && getMonthName(
       JSON.stringify(date).slice(6, 8)) == "اكتوبر") {
-        return "11"
+      return "11"
 
+    }else if (
+      JSON.stringify(date).slice(9, 11) == '31' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'يناير'
+    ) {
+      return '02';
+    } else if (
+      JSON.stringify(date).slice(9, 11) == '31' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'مارس'
+    ) {
+      return '04';
+    }else if (
+      JSON.stringify(date).slice(9, 11) == '31' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'مايو'
+    ) {
+      return '06';
+    }else if (
+      JSON.stringify(date).slice(9, 11) == '31' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'يوليو'
+    ) {
+      return '08';
+    }else if (
+      JSON.stringify(date).slice(9, 11) == '30' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'سبتمبر'
+    ) {
+      return '10';
+    }else if (
+      JSON.stringify(date).slice(9, 11) == '30' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'نوفمبر'
+    ) {
+      return '12';
+    }else if (
+      JSON.stringify(date).slice(9, 11) == '31' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'ديسمبر'
+    ) {
+      return '01';
     } else {
       return JSON.stringify(
         date,
@@ -127,8 +180,8 @@ const PaymentCreditCard = ({ navigation }) => {
   const formatDate = `${addDay()} ${getMonthName(
     month(),
   )} ${JSON.stringify(date).slice(1, 5)}`;
-  const sendDate = `${JSON.stringify(date).slice(1, 5)}-${month()}-${JSON.parse(addDay())<10?`0${addDay()}`:`${addDay()}`}`;
-   //console.log("s",sendDate);
+  const sendDate = `${JSON.stringify(date).slice(1, 5)}-${month()}-${JSON.parse(addDay()) < 10 ? `0${addDay()}` : `${addDay()}`}`;
+  //console.log("s",sendDate);
   // console.log(Time.slice(0, 5).concat(':00') + ' date ' + sendDate);
   //select VISA
   const [selectItem, setSelectItem] = useState(0);
@@ -151,7 +204,7 @@ const PaymentCreditCard = ({ navigation }) => {
       <PaymentCard
         image={BookArray.user_image}
         name={`${BookArray.user_first_name}`}
-        rating={BookArray.rating!=0?BookArray.rating.slice(0, 3):BookArray.rating}
+        rating={BookArray.rating != 0 ? BookArray.rating.slice(0, 3) : BookArray.rating}
         price={BookArray.clinic.booking_price}
         speciality={BookArray.speciality_name}
         date={formatDate}
@@ -168,40 +221,40 @@ const PaymentCreditCard = ({ navigation }) => {
         {isLoading ? (
           <ActivityIndicator size={RFValue(30)} color={COLORS.blue} />
         ) : error === null ? (
-          Array.isArray(cards) &&cards.length>0? 
-          (
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              data={cards}
-              renderItem={({ item, index }) => {
-                return (
-                  <Visa
-                    master
-                    name={item.card_holder}
-                    // cardNumber={appendSpace(item.card_number)}
-                    cardNumber={item.card_number}
-                    date={item.card_exp_date}
-                    onPress={() => {
-                      selectHandler(index);
-                    }}
-                    borderColor={index === selectItem ? COLORS.blue : null}
-                    borderWidth={index === selectItem ? RFValue(3) : null}
-                  />
-                );
-              }}
-            />
-          ):
-          (
-            <View
-              style={{
-                height: '100%',
-                width: '100%',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Text>لا يوجد بطاقة دفع حتي الأن</Text>
-            </View>
-          )  
+          Array.isArray(cards) && cards.length > 0 ?
+            (
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                data={cards}
+                renderItem={({ item, index }) => {
+                  return (
+                    <Visa
+                      master
+                      name={item.card_holder}
+                      // cardNumber={appendSpace(item.card_number)}
+                      cardNumber={item.card_number}
+                      date={item.card_exp_date}
+                      onPress={() => {
+                        selectHandler(index);
+                      }}
+                      borderColor={index === selectItem ? COLORS.blue : null}
+                      borderWidth={index === selectItem ? RFValue(3) : null}
+                    />
+                  );
+                }}
+              />
+            ) :
+            (
+              <View
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Text>لا يوجد بطاقة دفع حتي الأن</Text>
+              </View>
+            )
         ) : (
           <View
             style={{
@@ -232,7 +285,7 @@ const PaymentCreditCard = ({ navigation }) => {
             .then(res => {
               if (res == true) {
                 navigation.navigate('CompletedAppointment');
-              } 
+              }
               //
             });
         }}

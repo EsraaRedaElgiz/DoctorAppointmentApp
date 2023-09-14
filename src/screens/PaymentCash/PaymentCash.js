@@ -57,8 +57,23 @@ const PaymentCash = ({navigation}) => {
     } else if ((JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
       JSON.stringify(date).slice(6, 8)) == "ابريل") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
         JSON.stringify(date).slice(6, 8)) == "يونيو") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
-          JSON.stringify(date).slice(6, 8)) == "اغسطس") || (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
-            JSON.stringify(date).slice(6, 8)) == "اكتوبر")) {
+          JSON.stringify(date).slice(6, 8)) == "اغسطس") || (JSON.stringify(date).slice(9, 11) == "31" && getMonthName(
+            JSON.stringify(date).slice(6, 8)) == "اكتوبر")||
+            (JSON.stringify(date).slice(9, 11) == '31' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'يناير')||
+        (JSON.stringify(date).slice(9, 11) == '31' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'مارس')||
+        (JSON.stringify(date).slice(9, 11) == '31' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'مايو')||
+        (JSON.stringify(date).slice(9, 11) == '31' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'يوليو')||
+        (JSON.stringify(date).slice(9, 11) == '30' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'سبتمبر')||
+        (JSON.stringify(date).slice(9, 11) == '30' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'نوفمبر')||
+        (JSON.stringify(date).slice(9, 11) == '31' &&
+        getMonthName(JSON.stringify(date).slice(6, 8)) == 'ديسمبر')
+            ) {
       return "1"
     } else {
       return JSON.stringify(date).slice(9, 11) * 1 + 1
@@ -76,14 +91,49 @@ const PaymentCash = ({navigation}) => {
       JSON.stringify(date).slice(6, 8)) == "يونيو") {
         return "07"
 
-    } else if (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+    } else if (JSON.stringify(date).slice(9, 11) == "31" && getMonthName(
       JSON.stringify(date).slice(6, 8)) == "اغسطس") {
         return "09"
 
-    } else if (JSON.stringify(date).slice(9, 11) == "30" && getMonthName(
+    } else if (JSON.stringify(date).slice(9, 11) == "31" && getMonthName(
       JSON.stringify(date).slice(6, 8)) == "اكتوبر") {
         return "11"
 
+    }else if (
+      JSON.stringify(date).slice(9, 11) == '31' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'يناير'
+    ) {
+      return '02';
+    } else if (
+      JSON.stringify(date).slice(9, 11) == '31' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'مارس'
+    ) {
+      return '04';
+    }else if (
+      JSON.stringify(date).slice(9, 11) == '31' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'مايو'
+    ) {
+      return '06';
+    }else if (
+      JSON.stringify(date).slice(9, 11) == '31' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'يوليو'
+    ) {
+      return '08';
+    }else if (
+      JSON.stringify(date).slice(9, 11) == '30' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'سبتمبر'
+    ) {
+      return '10';
+    }else if (
+      JSON.stringify(date).slice(9, 11) == '30' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'نوفمبر'
+    ) {
+      return '12';
+    }else if (
+      JSON.stringify(date).slice(9, 11) == '31' &&
+      getMonthName(JSON.stringify(date).slice(6, 8)) == 'ديسمبر'
+    ) {
+      return '01';
     } else {
       return JSON.stringify(
         date,
